@@ -1,0 +1,975 @@
+---
+title: "DoSS Toolkit"
+subtitle: "Totally addicted to base"
+date: "17 February 2021"
+output: 
+  learnr::tutorial:
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(learnr)
+library(flair)
+library(gradethis)
+gradethis::gradethis_setup()
+# library(palmerpenguins)
+```
+
+
+
+
+
+## Introduction
+
+In this module, we are going to explore 'base R'. This means that we don't need to load any packages - we're working with functions that come 'out of the box' as it were. Base is a very stable collection of functions that have been refined over decades. This is in contrast to the 'tidyverse', which we introduced in other modules, which is much newer. Some folks are passionate about the differences between them, but they're just tools that we use as appropriate. In this module we are going to cover some base functions that you'll use again and again in your R journey, especially in statistics.
+
+
+
+
+
+
+
+
+
+
+## mean(), median(), sd(), lm(), summary()
+
+Written by Mariam Walaa.
+
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Use `mean()`, `median()`, and `sd()` to compute summary statistics 
+- Use `summary()` to compute summary statistics for numeric variables in a data frame
+- Use `lm()` to build linear regression models
+
+Prerequisite skills include:
+
+- Installing packages
+- Loading packages
+- Importing data
+
+Highlights:
+
+- 1-dimensional data can be summarized with `mean()`, `median()`, `sd()`
+- n-dimensional data can be summarized with `summary()`
+- `lm()` can be used to build linear regression models
+
+### Arguments
+
+#### mean()
+
+The `mean()` function takes the following as arguments:
+
+| Argument | Parameter | Details                                                 |
+|----------|-----------|---------------------------------------------------------|
+| x        | column    | this is the set of values to compute the average of     |
+| na.rm    | Boolean   | this is to indicate whether NA values should be ignored |
+
+You can read more about the arguments in the `mean()` function's documentation
+[here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/mean).
+
+#### median()
+
+The `median()` function takes the following as arguments:
+
+| Argument | Parameter | Details                                                 |
+|----------|-----------|---------------------------------------------------------|
+| x        | column    | this is the set of values to compute the median of      |
+| na.rm    | Boolean   | this is to indicate whether NA values should be ignored |
+
+You can read more about the arguments in the `median()` function's documentation
+[here](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/median).
+
+#### sd()
+
+The `sd()` function takes the following as arguments:
+
+| Argument | Parameter | Details                                                           |
+|----------|-----------|-------------------------------------------------------------------|
+| x        | column    | this is the set of values to compute the standard deviation of    |
+| na.rm    | Boolean   | this is to indicate whether NA values should be ignored           |
+
+You can read more about the arguments in the `sd()` function's documentation
+[here](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/sd).
+
+#### summary()
+
+The `summary()` function takes the following as arguments:
+
+| Argument | Parameter | Details                                                |
+|----------|-----------|--------------------------------------------------------|
+| object   | data      | this is the data to summarize (typically a data frame) |
+
+You can read more about the arguments in the `summary()` function's documentation
+[here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/summary).
+
+#### lm()
+
+The `lm()` function takes the following as arguments:
+
+| Argument | Parameter       | Details                                                       |
+|----------|-----------------|---------------------------------------------------------------|
+| formula  | Y ~ X1 + … + Xn | equation of linear regression model                           |
+| data     | data frame      | data frame containing variables for the model                 |
+| subset   | condition       | condition to filter data frame by prior to building the model |
+
+You can read more about the arguments in the `lm()` function's documentation
+[here](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm).
+
+### Overview
+
+This section will demonstrate how to use the `lm()` function to build simple and multiple
+linear regression models. We will be looking at a subset of the Broadway Grosses data set
+provided by Alex Cookson in this [Git
+repository](https://github.com/tacookson/data/tree/master/broadway-grosses). The Broadway
+Grosses data set comprises data on revenue and attendance figures for theaters that are
+part of The Broadway League.
+
+```{r summary-statistics, include = FALSE}
+broadway <- read_csv(
+  "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv")
+
+broadway <- broadway %>%
+  select(avg_ticket_price,
+         performances,
+         seats_in_theatre,
+         seats_sold,
+         show,
+         pct_capacity)
+```
+
+```{r summary-statistics-1}
+glimpse(broadway)
+```
+
+#### summary()
+
+We can print a summary of the variables in this data using the `summary()` function as
+follows.
+
+```{r summary-statistics-2}
+summary(broadway)
+```
+
+You'll notice the following about the output provided by `summary()`:
+
+* The only column of type `character` does not have a numeric summary. Instead, the length
+and class of the column is provided.
+* The remaining columns are of type `integer` and `double`, and all have a numeric
+summary. The numeric summary provides:
+  * Minimum, 1st Quantile, Median, Mean, 3rd Quantile, Maximum
+
+#### mean(), median(), and sd()
+
+We can also compute the mean, median, and standard deviation for 1-dimensional data, such
+as any numeric variable in the data set.
+
+```{r summary-statistics-3}
+mean(broadway$avg_ticket_price)
+```
+
+```{r summary-statistics-4}
+median(broadway$avg_ticket_price)
+```
+
+```{r summary-statistics-5}
+sd(broadway$avg_ticket_price)
+```
+
+Be careful with the type of values an object contains when you pass it to these functions.
+If the values include NAs, you will need to add `na.rm = TRUE`. If the values aren't
+numeric, you will need to convert them to numeric. You can take a look at the Data Types
+tutorial for more information on how to do this.
+
+#### lm()
+
+If we want to predict the number of seats sold in a week, there are several variables
+in the data set that may be helpful for making this prediction, such as the average ticket
+price, the number of performances taking place that week, and the theater's seat capacity.
+We can build a _multiple_ linear regression to make this prediction with this data.
+
+Before we build the regression model, let's take note of the components that this model
+will need to consist of:
+
+  1. The dependent variable that we want to predict (Highlighted in blue)
+  2. The independent variables that we want to make predictions with (Highlighted in pink)
+  3. The data frame that contains all of these variables (Highlighted in orange)
+
+```{r lm-multiple, include = FALSE}
+multiple_regression <- lm(formula = seats_sold ~
+                            avg_ticket_price + performances + seats_in_theatre,
+                          data = broadway)
+```
+```{r lm-multiple-1, echo = FALSE}
+decorate("lm-multiple") %>%
+  flair("broadway", color = "orange") %>%
+  flair("seats_sold", color = "cornflowerblue") %>%
+  flair("avg_ticket_price + performances + seats_in_theatre", color = "deeppink") %>%
+  knit_print.with_flair()
+```
+
+To view the results from this model, we can use the `summary()` function as follows:
+
+```{r summary-statistics-6}
+summary(multiple_regression)
+```
+
+We can also do a _simple_ linear regression with only one independent variable as follows:
+
+```{r lm-simple, include = FALSE}
+simple_regression <- lm(formula = seats_sold ~
+                          pct_capacity,
+                        data = broadway)
+```
+```{r lm-simple-1, echo = FALSE}
+decorate("lm-simple") %>%
+  flair("broadway", color = "orange") %>%
+  flair("seats_sold", color = "cornflowerblue") %>%
+  flair("pct_capacity", color = "deeppink") %>%
+  knit_print.with_flair()
+```
+
+We can view the results from the model again using `summary()`.
+
+```{r summary-statistics-7}
+summary(simple_regression)
+```
+
+#### Example: Combining `mean()`, `median()`, and `lm()`
+
+We can even use `mean()` and `median()` together with `lm()`. For example, we can make
+predictions for the mean and median value of an independent variable.
+
+```{r mean-lm, include = FALSE}
+predict(simple_regression,
+        data.frame(pct_capacity = mean(broadway$pct_capacity),
+                   na.rm = TRUE))
+```
+```{r mean-lm-1, echo = FALSE}
+decorate("mean-lm") %>%
+  flair("mean") %>%
+  knit_print.with_flair()
+```
+
+```{r median-lm, include = FALSE}
+predict(simple_regression,
+        data.frame(pct_capacity = median(broadway$pct_capacity),
+                   na.rm = TRUE))
+```
+```{r median-lm-1, echo = FALSE}
+decorate("median-lm") %>%
+  flair("median") %>%
+  knit_print.with_flair()
+```
+
+Notice that this code uses the `predict()` function which is not covered in this tutorial,
+but you can learn more about it in the documentation provided
+[here](https://www.rdocumentation.org/packages/raster/versions/3.4-5/topics/predict).
+
+### Exercises
+
+This section will ask you to complete exercises based on what you've learned from the
+previous section.
+
+#### Exercise 1
+
+We want to predict the number of seats sold `seats_sold` based on the number of
+performances `performances`. Fill in the blanks for the code below to create a simple
+linear regression model.
+
+```{r fill-in-lm, include = FALSE, results = FALSE}
+lm(formula = seats_sold ~ performances,
+   data = broadway)
+```
+```{r fill-in-lm-1, echo = FALSE}
+decorate("fill-in-lm") %>%
+  mask("lm") %>%
+  mask("seats_sold") %>%
+  mask("~") %>%
+  mask("performances") %>%
+  mask("broadway") %>%
+  knit_print.with_flair()
+```
+
+You'll notice that there are 5 blanks in total that you'll need to fill.
+
+```{r summary-fill-in-blanks, echo = FALSE}
+quiz(question("What should the first blank be?",
+              answer("summary"),
+              answer("predict"),
+              answer("lm", correct = TRUE),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("What should the second blank be?",
+              answer("pct_capacity"),
+              answer("seats_sold", correct = TRUE),
+              answer("formula"),
+              answer("performances"), 
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("What should the third blank be?",
+              answer("~", correct = TRUE),
+              answer(" = "),
+              answer("\\-"),
+              answer("+"),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("What should the fourth blank be?",
+              answer("pct_capacity"),
+              answer("seats_sold"),
+              answer("formula"),
+              answer("performances", correct = TRUE),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("What should the fifth blank be?",
+              answer("df"),
+              answer("data"),
+              answer("broadway", correct = TRUE),
+              random_answer_order = TRUE,
+              allow_retry = TRUE))
+```
+
+#### Exercise 2
+
+If we want to create a simple linear regression model for a _subset_ of the
+data, we will need to add another argument to `lm()` to let it know which subset we want.
+For example, we may want to create a regression for observations that have less than 12
+performances.
+
+Use the code from above in addition to the `subset` parameter to do this.
+
+```{r summary-statistics-exercise-2, exercise = TRUE, exercise.eval = TRUE}
+
+```
+
+```{r summary-statistics-exercise-2-solution, exercise = FALSE}
+lm(formula = seats_sold ~ performances,
+   data = broadway,
+   subset = performances < 12)
+```
+
+```{r summary-statistics-exercise-2-code-check}
+grade_code()
+```
+
+#### Exercise 3
+
+```{r summary-statistics-true-statements, echo = FALSE}
+question("Which of these are true? Check all true statements.",
+         answer(paste("It is possible to create a model for only a subset of the ",
+         "observations using lm()."), correct = TRUE),
+         answer(paste("It is possible to include multiple independent variables ",
+          "in the formula within lm()."), correct = TRUE),
+         answer("mean(), median(), and sd() exclude NAs from the calculation by default.",
+                message = paste("mean(), median(), and sd() do not exclude NAs from ",
+                                "the calculation by default. You need to let R know ",
+                                "that you may have NA values in your data.")),
+         answer("summary() does not provide any summary for non-numeric variables.",
+                message = paste("summary() provides a non-numeric summary for non-numeric ",
+                                "variables, which includes the variable class and length.")),
+         allow_retry = TRUE,
+         random_answer_order = TRUE)
+```
+
+### Common Mistakes & Errors
+
+Here are some common mistakes and errors you may come across:
+
+- You try to create a formula within the `lm()` function without using the appropriate
+operators (i.e., `~` to separate the dependent variable from the independent variable(s),
+or `+` to separate the independent variables)
+
+### Next Steps
+
+If you would like to read more about these functions, here are some additional resources
+you may find helpful:
+
+- [R for Data Science - Chapter 24: Model
+building](https://r4ds.had.co.nz/model-building.html).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## for() and while()
+ 
+Written by Yena Joo.
+
+### Introduction
+
+In this lesson, you will learn about "loops", and how to use the function `for` and `while`. It is one of the key concepts that is widely used and fundamental for any kind of programming languages.  
+
+#### What are Loops?
+
+**insert pics**
+Loops, or iterations are a step that the program automatically goes through a certain logical conditions or a range of a list, array, vector, dataset, and many more. Loop allows code to be executed repeatedly, which is used often in programming to repeat a specific block of code. You can make hundreds and thousands of redundant codes into a few lines of simple code using loops. 
+
+**You can iterate through:**  
+- vectors: `fruits <- c('apple', 'banana', 'mango')`  
+- lists: `list <- list(1, 2, "melon")`
+- datasets/tibble
+- range of numbers
+- sequence: `seq(from=0,to=8,by=2)`  
+
+
+**Prerequisite skills include:**  
+- You should be familiar with the basic data manipulation.  
+- You should understand how vectors, lists, tibble, etc. works  
+
+
+**Highlights:**  
+- How `for` and `while` loops work and some examples  
+- Differences between the two  
+- Nested Loops  
+- `break` in loops  
+
+#### Packages
+```{r, eval = FALSE}
+library(tidyverse)
+```
+
+### Video
+![upload video here!!!!]()
+
+### For Loop
+
+#### Structure 
+```{r, eval=F}
+for(var in iterable) { 
+  #statement
+  print(var)
+}
+#another statement
+```
+
+The structure of the for loop is simple. You start with `for()` to indicate that you are going to use the for loop. 
+The argument to the `for()` consists of a variable, which takes items from iterable one by one. Iterable is a collection of objects(like a list, vector, sequence, etc.)
+For each iteration in the `for` loop, a value is taken from the list and assigned to the variable, and the following statement in the curly braces, `{}` is evaluated. 
+
+Let's take a look at a simple example.
+```{r}
+index<-seq(1,10,by=2) 
+for(i in index){ 
+  print(i) 
+}
+```
+Here is sequences from 1 to 10, by 2. 
+If you iterate through the sequence using for loop and print each variable, each value is taken from the sequence and print, which is the statement in the curly braces `{}`.   
+
+
+#### Mutating a Dataset using `for()` loop
+
+Now, let's use a different dataset to add some new variables using for loop, and get some useful information. 
+Let's first create a simple dataset of grades of each student in `math`, `cs`, `sta` courses.
+
+```{r}
+set.seed(6055)
+student_id <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+math <- sample(c(60:100), size=10, replace=TRUE)
+cs <- sample(c(60:100), size=10, replace=TRUE)
+sta <- sample(c(60:100), size=10, replace=TRUE) 
+# tibble()
+student_data <- tibble(student_id, math, cs, sta)
+student_data
+
+# data.frame()
+student <- data.frame(student_id, math, cs, sta)
+student
+```
+
+Then, let's say we want to see each student's total mark as well as their average mark. First, we have to assign numeric variable names for `avg` and `tot`, and n is going to be the number of students, which is number of rows of the data. 
+```{r}
+# empty vector
+avg <- numeric()
+tot <- numeric()
+n <- nrow(student)  # number of students
+```
+
+
+We will now use `for` loop iterating from range 1 to the number of students, and for each iteration, we will assign `tot` be the total mark of `math`, `cs`, and `sta`. Average grade would be total grade divided by 3 courses. 
+
+```{r}
+# tot and avg
+for(i in 1:nrow(student)){
+  tot[i] <- student$math[i] + student$cs[i] + student$sta[i]
+  avg[i] <- round(tot[i]/3, 2)
+}
+
+# new col
+student$tot <- tot
+student$avg <- avg
+
+student
+```
+
+Let's say we want to know how many students got their average grade higher than 80 which is A. We can use `for` in this case, to go through each student's average grade, and determine if the average grade is over 80, we can increase the arbitrary variable assigned- `a`-  by 1 in each iteration. 
+
+```{r}
+a <- 0
+for (i in 1:nrow(student)) {
+  if(student$avg[i] >= 80){
+    a = a + 1
+  }
+}
+a
+```
+
+
+#### Nested `for()` Loop 
+
+A nested `for` loop is a loop within a loop. They are useful for when you want to repeat a statement several times for several things.
+
+Nested `for` loops are often used to manipulate a bi-dimensional array by setting its elements to specific values.  
+
+The placing of one loop inside the body of another loop is called nesting.  When you “nest” two loops, the outer loop takes control of the number of complete repetitions of the inner loop. Thus inner loop iterates n times where the length of the array of inner for loop is n, for every execution of Outer loop.
+
+Let's take a look at a simple example. 
+
+```{r}
+for(i in 1:2) {
+  for(j in 1:3) {
+    print(i*j);
+    }
+}
+```
+
+The outer for loop iterates through c(1, 2), and the inner loop is c(1, 2, 3)
+First, i = 1. We have to iterate through 1, 2, 3 now for j. `1*1`, `1*2`, `1*3` is executed respectively. Same for i = 2.  
+One thing you might have noticed, the number of 
+
+
+### while() loop
+
+- while loops are used to loop until a specific condition is met.
+- can be used when the exact number of iterations is not known a priori,
+
+#### Structure
+
+```{r, eval=F}
+while (condition) {
+  statement
+}
+```
+
+The structure of while loop is similar to the for loop. `condition` is evaluated whether it is `TRUE` or `False`. It enters the body of the loop, which is the `statement` when the result of the condition is `TRUE`. Then, after executing the statement, the same process is repeated until `condition` has a `FALSE` result, and the loop exits.
+
+
+#### Example
+
+Let's start with a simple example without using a dataset. 
+
+```{r}
+i <- 0 
+while (i < 5){
+  print(i)
+  i = i+1
+}
+i 
+```
+
+Here, the condition is `i < 5`, which evaluates `TRUE` in the first loop, since 1 < 5.  
+So, the loop enters the body, prints 1 , and i is incremented by 1 since the body is `i = i + 1`. In the next iteration, 2 < 5 so the loop repeats the same step, until i becomes 5. 5 is not smaller (`<`) than 5, which evaluates `FALSE` in the condition `i < 5`. Here, the loop terminates. 
+
+
+### Differences between for() vs while()
+
+- `For` is used when you know how many iterations the code should go through. 
+- `While` is used when the number of iteration depends on the condition, and evaluates whether the condition is `TRUE` or `FALSE`. If it is evaluated False, the loop terminates.
+- which means, In while loops, most of the time you will need to code the incrementation yourself such as `i = i + 1` so the loop would terminate at some point. 
+
+
+
+### Exercises
+
+#### Question 1 
+Here is a simple `for` loop code: 
+
+```{r eval = F}
+example <- c(1, 2, 3)
+for (i in example){
+  print(example[i])
+}
+```
+```{r forq1, echo = F, exercise.eval = TRUE}
+question_checkbox(
+  "What is the correct output of the code above? ",
+  answer("1 2 3 ", correct = T),
+  answer("(1, 2, 3) (1, 2, 3) (1, 2, 3) ", message = "Check the statement again"),
+  answer("3 2 1 ", correct = F),
+  answer("1", correct = F),
+  allow_retry = T,
+  random_answer_order = T,
+  incorrect = "Try again. You got this!"
+)
+
+```
+
+#### Question 2
+Here is a dataset of people who climbed Mount Himalayan. How many members were injured? Use `for` loop to get the answer.(Hint: look for the variable `injured` to set the `if` condition inside the loop)
+```{r, echo = F, message = F}
+members <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/members.csv')
+head(members)
+```
+
+
+```{r forq2, exercise.eval = TRUE, exercise=TRUE}
+x <- 0 
+
+```
+
+```{r forq2-solution}
+x <- 0 
+
+for (i in 1:nrow(members)){
+  if(members$injured[i] == T){
+    x = x + 1
+  }
+}
+x
+```
+
+#### Question 3
+The following is a simple `while` loop code. 
+
+```{r, eval = F}
+i = 15
+while (i > 10){
+  i = i -1
+}
+i 
+```
+```{r forq3, echo = F, exercise.eval = TRUE}
+question_checkbox(
+  "How many iterations does the while loop go through until it terminates?",
+  answer("3", correct = F),
+  answer("4 ", correct = F),
+  answer("5", correct = T),
+  answer("6", correct = F),
+  allow_retry = T,
+  random_answer_order = T,
+  incorrect = "Try again. You got this!"
+)
+
+```
+
+#### Question 4
+difference between while and for loop 
+Using `while`, write a code that will execute the same result as the given code. 
+
+```{r}
+
+```
+
+
+
+### Common Mistakes & Errors
+
+- If you only have one statement to execute, you don't need to put the curly braces `{}`. However, if you have multiple statements, `{}` is necessary. 
+- Be aware on your use of the iterable object. For example, `for (i in student)` would not execute the result you want in the previous example. 
+- Think carefully of what statement you're trying to iterate. 
+
+### Next Steps
+
+- Practice how to manipulate data using `for` loops
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## c(), seq(), seq_along() & rep()
+ 
+Written by Matthew Wankiewicz.
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Learn how to make vectors/lists using `c()`.
+- Create sequences using the `seq()` and `seq_along()` functions.
+- Replicate values in a vector using `rep()`.
+
+Prerequisite skills include:
+
+- General knowledge of using vectors in R.
+
+Highlights:
+
+- `c()` is useful for making vectors quickly.
+- `seq()` can help create sequences of numbers.
+- `seq_along()` can give you the position of... fill out
+- `rep()` can create a vector with a repeated value.
+
+### The content
+
+As you continue using to use R, you will find that making vectors will be something you use a lot. The `c()` function is amazing tool to help us create vectors. The `c()` function can make vectors from sets of numbers, letters, or both!
+
+Sometimes, you may find that you want to create different sequences of numbers, either for categorizing variables or just getting a list of random numbers. The `seq()` function is one of the best ways to achieve this. The `seq()` function gives us a list of numbers usually from 1 to the number you choose. You can also decide if the function skips numbers.
+
+The `seq_along()` function is useful for finding the index position of parts of a vector. Sometimes, you will have a vector will different values, and `seq_along()` is useful for finding which position the value is in.
+
+Another thing you may attempt to do in R is repeat values. Often times, you will repeat values when you want to make an "empty" vector which will store the results of simulations. The `rep()` function allows us to repeat strings or numbers a certain amount of times, which we can then save as a vector.
+
+### Arguments
+
+- **`c()`:** The `c()` function takes one main argument and includes optional arguments. The main argument for `c()` are the values that you want to save as a vector. The arguments used can be any set of numbers or words, or both. For example we would use an entry could be: `test <- c("This", "is", "example", 1)`.
+
+- **`seq()`:** The `seq()` function can take 1 to 3 entries, depending on how specific you want your set of numbers to be. If you want a list of numbers from 1 to any number, you can simply use `seq(n)` where n is the number you want to stop at (if you do `seq(2)`, it will return the numbers 1 and 2.). If you want to specify where to start or stop, you can use the arguments `from =` and `to =`, which tells R where it should start and end. Lastly, if you want to change the increment of your sequence, you can use the `by =` argument.
+
+- **`seq_along():`** The `seq_along()` function takes one argument. The argument it takes is a vector for which it will give the index position of a data point. For example, if we use the `test` vector from the `c()` example above, the output of `seq_along(test)` would be 1 2 3 4.
+
+- **`rep()`:** The `rep()` function takes two main arguments. The first argument is `x =`, or the vector/value you plan to repeat. The second argument is `times =`, the number of times you want to repeat the vector (if you don't enter a value it defaults to 1). If we use our `test` variable with the `rep()` function, we can repeat the values of the vector as many times as we want.
+
+### Other Optional Arguments
+
+- **`c()`:** The optional arguments for `c()` are `recursive =` and `use.names =`. The recursive function is useful when the items you are vectoring includes a list. If you set `recursive = TRUE` it breaks down the list and converts it into a vector. If `recursive = FALSE` the vector is saved as a list (by default, `recursive = FALSE`, and it usually stays that way). The argument `use.names =` tells R whether or not to keep the names of the lists present when the vector is saved.
+
+- **`seq()`:** The optional arguments for `seq()` are `length.out` and `along.with`. `length.out` tells R how many numbers you want to be present in the sequence of numbers. For example, if you set `length.out = 3` R will return 3 numbers, split up in even increments. `along.with =` is similar to length out, it takes a vector and returns the same amount of numbers as the length of that vector. If `along.with = 1:3`, it will return 3 numbers, split up in equal increments.
+
+- **`rep()`:** The optional argument for `rep()` are `length.out` and `each`. `length.out` tells R how long it wants the output vector to be, similar to the main argument `times`. `each` only applies when you plan to repeat a vector. `each()` tells R how many times the first element of the vector should be repeated before it moves on to repeating the second element.
+
+### Questions and Exercises
+
+#### `c()`
+
+**1.**
+```{r q1cFunction, echo=F}
+question_checkbox(
+  "What does the c() function do? (Select all that apply)",
+  answer("Creates a vector", correct = TRUE),
+  answer("Plots a graph", message = "Incorrect"),
+  answer("Repeats a certain value", message = "Incorrect."),
+  answer("Returns a sequence of numbers", message = "Incorrect."),
+  allow_retry = T,
+  random_answer_order = T
+)
+```
+
+**2. Using the `c()` function, save a vector with the numbers 21, 31, and 42 in it. (Add the c() function beside the arrow.)**
+
+```{r q2cFunction, exercise = TRUE}
+# Enter code below
+
+vector <- 
+vector
+```
+
+```{r q2cFunction-solution}
+
+vector <- c(21, 31, 42)
+vector
+```
+The `c()` function can save numbers but can also save words with numbers, try it out in the next exercise.
+
+**3. Save a vector with the numbers 21 and 31 along with the words "Statistics" and "Data"**
+
+```{r q3cFunction, exercise = TRUE}
+# Enter code below
+
+vector <- 
+vector
+```
+
+```{r q3cFunction-solution}
+
+vector <- c(21, 31, "Statistics", "Data")
+```
+
+#### `seq()`
+
+**1. Using the seq() function, return the sequence of numbers starting at 2 and ending at 20, increasing by 2's**
+
+```{r q1seqFunc, exercise = TRUE}
+# Enter code below
+
+
+```
+
+```{r q1seqFunc-solution}
+
+seq(from = 2, to = 20, by = 2)
+```
+
+**2.**
+```{r q2seqFunc, echo=F}
+question_checkbox(
+  "Which functions only returns a sequence of numbers? (Select all that apply.)",
+  answer("seq()", correct = TRUE),
+  answer("seq_along()", correct = TRUE),
+  answer("c()", message = "Incorrect."),
+  answer("rep()", message = "Although rep() does repeat values, it can repeat values that are not numbers."),
+  allow_retry = T,
+  random_answer_order = T
+)
+```
+
+**3. Using the `length.out` argument in the `seq()` function, return the sequence of FOUR numbers starting at 25 and ending at 100.**
+
+```{r q3seqFunc, exercise = TRUE}
+# Enter code below
+
+```
+
+```{r q3seqFunc-solution}
+
+seq(from = 25, to = 100, length.out = 4)
+```
+
+
+#### `seq_along()`
+
+**You can use the `seq_along()` function to find the index position of elements in a vector, run the code chunk below to see how it works**
+
+```{r seq-alongExample1, exercise = TRUE}
+vector <- c("dog", "cat", "fish", "cow")
+vector
+seq_along(vector)
+```
+
+
+**1. Now, create a vector containing the words "stats", "science", "math", "R" and use the `seq_along()` function to find the index positions of each word.**
+
+```{r seq-alongExercise1, exercise = TRUE}
+# Enter code below
+vector <- 
+
+```
+
+```{r seq-alongExercise1-solution}
+
+vector <- c("stats", "science", "math", "R")
+seq_along(vector)
+```
+
+#### `rep()`
+
+**1. Using the `rep()` function, repeat the word "dog" 7 times.**
+```{r q1repFunc, exercise = TRUE}
+# Enter code below
+
+
+```
+
+```{r q1repFunc-solution}
+
+rep(x = "dog", times = 7) 
+
+# OR
+
+rep("dog", 7)
+```
+
+**2. Save a vector with the words: "University", "of", and "Toronto". Once that vector is saved, use the `each` argument in the `rep()` function and repeat each word 3 times.**
+
+```{r q2repFunc, exercise = TRUE}
+# Enter code below
+vector <- 
+
+```
+
+```{r q2repFunc-solution}
+
+vector <- c("University", "of", "Toronto")
+rep(x = vector, each = 3)
+```
+
+### Common Mistakes & Errors
+
+Here are some common errors that can occur for each of the functions discussed in this section:
+
+
+**`c()`:**
+- Error: object 'string' not found
+This means that R thinks you're trying to save an existing vector under the name 'string' (will likely be different). To fix this, add quotations marks around the word that R is having an issue with. If that doesn't work, there may be a typo.
+
+**`seq()`:**
+- Some functions in R can work without specifically defining arguments (`ggplot(aes(x, y))` is the same as `ggplot(aes(x = x, y = y))`). The `seq()` function needs each argument to be written out if you plan to use more arguments than `from` and `to`.
+
+**`seq_along()`**
+- Error: object 'string' not found
+In this case, it means that the vector that R is trying to find does not exist. This likely means that there was a typo.
+
+**`rep()`**
+- Error: object 'string' not found
+As mentioned above, R does not recognize an object entered into the function. You likely have a typo or you should put quotation marks around the string you want to repeat.
+
+### Next Steps
+
+Some next steps include:
+
+- Looking at more examples of `rep()` and `seq()` in action: https://bookdown.org/ndphillips/YaRrr/vectors.html
+
+- R4DS's explanation of using iteration (include the `seq_along()` function): https://r4ds.had.co.nz/iteration.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Summary, and next steps
+
+
+In this level, we covered a lot of different funcations from base R that you'll use all the time in statistics courses. 
+
+
+
+
+
+
+
+

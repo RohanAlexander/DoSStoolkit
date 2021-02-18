@@ -1,0 +1,754 @@
+---
+title: "DoSS Toolkit"
+subtitle: "R Marky Markdown and the Funky Docs"
+date: "18 February 2021"
+output: 
+  learnr::tutorial:
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(learnr)
+library(flair)
+library(gradethis)
+gradethis::gradethis_setup()
+```
+
+
+
+
+
+## Introduction
+
+In this module, we are going to go through R Markdown. R Markdown is an incredibly powerful way of combining text and code, and you can produce html, pdf, word and many other outputs. Most of us learn it as a great way to write class assignments, but these days it's used for everything from making textbooks, websites, and is even the foundation on which these tutorials are based.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## R Markdown
+
+Written by Shirley Deng.
+
+### Introduction to R Markdown
+
+Have you ever found yourself typing up a report in Microsoft Word, tried to insert code, code output, images or math? It can be pretty cumbersome!
+
+R Markdown documents allow you to not only type up reports, as you would in a Word document, but allow you to embed R, Python and SQL code with (hopefully) a little less fuss.
+
+#### Why use R Markdown?
+
+R Markdown allows for our files to be reproducible - if you or someone else finds an error in your code, or there's a figure you want to fix, or there's just a typo with a symbol - there's no need to remake a new document from scratch. 
+
+Instead, you can edit the .Rmd file and "knit" (or compile) it to make your new html, .pdf or Word document. You can think of R Markdown as writing reports with code.
+
+### Creating an R Markdown file
+
+To start a .Rmd file in RStudio, click *File*, then *New File*, and select *R Markdown...*
+
+From there, we can select if we want our report to be in the form of an HTML page, pdf, or Word document, and give our report a title and author name.
+
+RStudio will then generate a .Rmd file with a little template for us
+
+#### Header Chunk
+
+We notice that the template starts off with something like the following chunk:
+
+```
+---
+title: "A Good, Creative Title"
+author: "Shirley Deng"
+date: "01/01/2021"
+output: pdf_document
+---
+```
+
+As you might guess, this creates a header for your report with the title, author and date specified.
+
+We can also change the output option if we have a change of heart and would prefer an HTML page or Word document:
+
+* `output: pdf_document`
+* `output: word_document`
+
+### Markdown
+
+Following the header chunk, we see a little section on R Markdown.
+
+Markdown is a way for us to format our report text, and the sections below will outline how to use it.
+
+#### Sections
+
+The two \#'s in front of *R Markdown* indicate that that line of text will be a header.
+
+Whenever we use \#'s to denote a header, this also creates a section in our final report document. We can view these sections by toggling the document outline with the following keyboard shortcuts:
+
+* Cmd+Shift+O on Mac
+* Ctrl+Shift+O on Windows and Linux
+
+For each \#, the smaller the header. We can use smaller headers to denote subsections.
+
+#### Paragraphs
+
+To indicate a new paragraph, place two spaces at the end of the line.
+
+For example, this line ends with two spaces...  
+And this text follows it.
+
+#### Bold Text
+
+We can bold text by putting a pair of asterisks around it, for example:
+
+We can write **bold** with \*\*bold\*\*
+
+#### Italicized Text
+
+We can make text italicized by either using a single asterisk around it, or underscores. For example:
+
+We can write *italics* with \*italics\* or \_italics\_
+
+#### Superscript
+
+We can make superscript by using a single underscore around it. For example:
+
+We can write this s^uperscript^ with s\^uperscript\^.
+
+#### Lists
+
+We can make lists by either using \* or \- as bullets.
+
+For example...
+
+\* this  
+\* would  
+\* make  
+
+the following list:
+
+* this
+* would
+* make
+
+And 
+
+\- this  
+\- also  
+\- makes  
+
+this list:
+
+- this
+- also
+- makes
+
+#### Sublists
+
+We can also use an indent to create a sublist.
+
+For example,
+
+\- this  
+  \- makes a sublist
+
+like so:
+
+- this
+  - makes a sublist
+  
+#### Escape
+
+There are some special characters that need an escape, a backslash, in order to display properly.
+
+In order to write this... | we'd have to write this
+------------------------- | -------------------------
+\$                        | \\$
+\&                        | \\&
+\%                        | \\%
+\#                        | \\#
+\_                        | \\_
+\{                        | \\{
+
+### Math
+
+Writing math in R Markdown is probably one of its best features. To do so, we use another format - LaTeX.
+
+Like how R Markdown can be likened to writing reports with code, we can liken LaTeX to writing mathematical equations with code.
+
+#### Delimiters
+
+Say we wanted to write the Pythagorean theorem, \(x^2 + y^2 = z^2 \).
+
+##### Inline
+
+If we want it inline, like above, we can write it as this: \\$\text{(}$ x\^2 + y\^2 = z\^2 \\$\text{)}$ 
+
+to get this: \( x^2 + y^2 = z^2 \)
+
+##### Centred Display
+
+If we have some math we'd like on its own line and centred, we can write this: \\$\text{[}$ x\^2 + y\^2 = z\^2 \\$\text{]}$ 
+
+to get this: \[ x^2 + y^2 = z^2 \]
+
+Alternatively, we can also write this: $\text{\$\$}$ x^2 + y^2 = z^2 $\text{\$\$}$
+
+to get this too: $$ x^2 + y^2 = z^2 $$
+
+##### Equation
+
+If we have multiple lines of math and we the entire ordeal to be numbered for reference, we can use equation delimiters.
+
+For example, if we wanted to write:
+
+\begin{equation}
+a = 1 \\
+b = 2
+\end{equation}
+
+WHY ISN'T IT NUMBERED?
+
+Then we can write:
+
+\\begin$\text{\{}$equation$\text{\}}$  
+a = 1 \\  
+b = 2
+\\end \{ equation\}
+
+##### Aligned
+
+But if we have multiple lines of math and don't it to be numbered, like this,
+
+\begin{aligned}
+a = 1 \\  
+b = 2
+\end{aligned}
+
+Then we can use aligned delimiters and write:
+
+\\begin$\text{\{}$aligned$\text{\}}$  
+a = 1 
+b = 2 \\
+\\end \{ aligned\}
+
+#### Superscript and Subscript
+
+#### Brackets and Parentheses
+
+#### Fractions and Binomials
+
+#### Integrals, Sums and Limits
+
+#### Common Symbols and Mathematical Operators
+
+https://www.overleaf.com/learn/latex/mathematical_expressions reference guide section
+
+
+### Code
+
+code chunks; how to write them 
+
+#### keyboard shortcut for chunk
+
+#### chunk options
+
+#### setting the language
+
+#### inline code for referencing
+
+
+### Resources and references
+
+cheatsheets
+RStudio's tutorial
+
+#### References
+
+https://rmarkdown.rstudio.com/
+
+https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf
+
+https://rmarkdown.rstudio.com/lesson-1.html
+
+https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf
+
+https://kbroman.org/datacarpentry_R_2018-06-04/04-rmarkdown.html
+
+https://ourcodingclub.github.io/tutorials/rmarkdown/
+
+https://www.overleaf.com/learn/latex/mathematical_expressions
+
+https://www.overleaf.com/learn/latex/Operators
+
+https://www.overleaf.com/learn/latex/Integrals,_sums_and_limits
+
+https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts
+
+https://faculty.math.illinois.edu/~hildebr/tex/course/intro2.html
+
+https://tex.stackexchange.com/questions/34580/escape-character-in-latex
+
+https://cran.r-project.org/web/packages/stationery/vignettes/Rmarkdown.pdf
+
+
+
+
+
+
+
+
+## Sectioning, bold, italics, maths
+
+*Coming soon!*
+
+
+## Figures and cross-references
+
+*Coming soon!*
+
+
+## Top matter: title, date, author, abstract
+
+*Coming soon!*
+
+
+
+
+
+
+
+
+
+
+
+## Tables: kable, kableextra, gt
+
+Written by Yena Joo.
+
+### Introduction
+In the research papers, tables are used all the time. However, the dataframe itself looks unorganized and latex-y when the R file is converted into PDF or html. To make a nice and beautiful tables, we use kable and kableextra.  
+
+
+In this lesson, you will learn how to:
+- Create Tables In LaTeX, HTML, Markdown 
+- build common complex tables and manipulate table styles using `kableExtra`
+
+
+Prerequisite skills include:
+- manipulate dataset
+- You don't need much pre requisite for this chapter :)
+
+Highlights:
+- How to create tables for HTML and PDF
+
+
+#### Packages  
+Packages `knitr` and `kableExtra` are needed.
+```{r, warning = F}
+#install.packages("knitr")
+#install.packages("kableExtra")
+library(knitr)
+library(kableExtra)
+```
+
+
+### Basic Kable
+
+Let's use the dataset mtcars, which is the built-in data set in R. by using `kbl` or `kable`, it creates the most basic HTML output.  
+```{r}
+kable(head(mtcars))
+#kbl(head(mtcars))
+```
+#### Arguments of `kable()`
+```
+kable(x, format, digits = getOption("digits"), row.names = NA, 
+  col.names = NA, align, caption = NULL, label = NULL, 
+  format.args = list(), escape = TRUE, ...)
+```
+
+#### Formatting of `kable`
+You can set the format of the table among `format =` `pipe`, `latex`, or `html`.  
+You can also add a title to the table using `caption = add a title` argument. 
+`digits = ` allows you to round and format the numbers in the table. 
+```{r}
+dt <- head(mtcars[1:3,])
+kable(dt, format = "html", caption = "Title of the table",  booktabs = TRUE, digits = 1)
+```
+
+### `kable_styling()`
+
+You can apply themes using `kable_styling()` to make the tables look more fancy and neat. `kable_styling()` will automatically apply twitter bootstrap theme to the table.
+```{r}
+#exclude rows
+kable(head(mtcars[1:3,]))  %>%
+  kable_styling()
+```
+
+Using `kable_styling`, you can also adjust the size and position of the table, font sizes, etc as the following: 
+```{r}
+kable(dt) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left", font_size = 10)
+```
+The specifications of the arguments can be found at:   https://www.rdocumentation.org/packages/kableExtra/versions/1.3.1/topics/kable_styling
+
+
+
+### How to put multiple tables side by side
+You can pass a list of dataframes to `kable()` which generates side-by-side tables. 
+Here, I will split `mtcars` dataset into two tables, and put them side by side using `kable(list(datasets))`.  
+```{r}
+data1 <- head(mtcars[1:3, 1:3])
+data2 <- head(mtcars[, 4:7])
+kable(
+  list(data1, data2),
+  caption = 'Tables side by side.',
+  booktabs = TRUE, valign = 't'
+)
+```
+This feature only works for html and pdf output. 
+
+Another way to put tables side by side is to use `kables()`. 
+```{r}
+kables(list(
+  kable(data1, caption = "first table"), 
+  kable(data2, caption= "second table")))
+```
+By using `kables` function, you can pass the list of `kable()` objects to it. You can also set different titles for each table. 
+
+### GT Table
+The gt package is used to produce nice-looking display tables. Here, we distinguish between data tables(tibbles, dataframes, etc) and the display tables easily found in articles, and web pages. 
+
+In order to produce the gt table, gt package is needed. So let's install the package and call the library. 
+```{r}
+#install.packages("gt")
+library("gt")
+```
+
+Given that `data` is a tibble which we have a suitable input for gt.
+
+We use `gt()` function. If we pass the tibble to the gt() function, we’ll get a gt Table as output
+```{r}
+mt = tibble(head(mtcars))
+mt_table = gt(data = mt)
+
+# Show the gt Table
+mt_table
+```
+
+#### Add parts to the gt Table
+You can add titles and labels for various levels on the gt Tables.
+The picture below shows the parts you can put the title/labels at. 
+![](https://gt.rstudio.com/reference/figures/gt_parts_of_a_table.svg)
+To add a title, you used the `tab_header` function to add labels or titles. 
+```{r}
+mt_table <- 
+mt_table %>%
+  tab_header(
+    title = "This is a title",
+    subtitle = "This is a subtitle"
+  ) 
+mt_table
+```
+
+### Exercises
+
+#### Question 1
+create a table that has a title "This is a table", bootstrap options being `stripe`, and having full width, with a right position, using `data`
+```{r q1_kable, exercise.eval = TRUE, exercise=TRUE}
+data <- head(mtcars)
+```
+
+```{r q1_kable-solution}
+data <- head(mtcars)
+kable(data, caption = "This is a table", bootstrap_options = 'striped', position = "right", full_width = T)
+```
+#### Question 2
+
+Put the following dataframes side by side, with the title "Tbales are side by side". 
+```{r q2_kable, exercise.eval = TRUE, exercise=TRUE}
+data_1 <- head(mtcars[1:2, 1:2])
+data_2 <- head(mtcars[, 5:7])
+
+```
+
+```{r q2_kable-solution}
+kable(
+  list(data_1, data_2),
+  caption = 'Tables are side by side.'
+)
+```
+
+
+
+### References
+
+#### Next Steps
+Create some fancy tables using kable & kableExtra :)
+
+#### Reference
+advanced information could be found at: https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## References and Bibtex
+
+Written by Yena Joo.
+
+
+### Introduction
+
+Of course we can manually cite and reference using citation maker online, but we can also use some functions in R Markdown to cite.   
+In this lesson, you will learn how to:  
+- cite the references!
+
+
+
+### Bibliographies
+
+```
+---
+output: html_document
+bibliography: references.bib
+--- 
+```
+
+#### Placement
+
+you will want to end your document with an appropriate header:  
+
+```
+# Reference
+``` 
+
+### Citations
+
+Citations go inside square brackets and are separated by semicolons. Each citation must have a key, composed of ‘@’ + the citation identifier from the database, and may optionally have a prefix, a locator, and a suffix. Here are some examples:
+
+```
+Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].
+
+Blah blah [@doe99, pp. 33-35, 38-39 and *passim*].
+
+Blah blah [@smith04; @doe99].
+```
+
+#### Citing R packages using `citation()` function
+
+You need to cite the packages `citation("package name")`. You can get the citation information for R packages like this: 
+
+```{r}
+print(citation("knitr"))
+```
+
+
+
+
+
+
+
+
+
+### Common Mistakes & Errors
+
+
+### Next Steps
+
+### Reference
+https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## PDF outputs
+
+Written by Yena Joo.
+
+### Introduction
+We are going to learn how to produce a PDF in R Markdown.  
+
+
+Prerequisite skills include:
+- You should know how to use RMarkdown. 
+
+Highlights:
+- use of YAML metadata
+
+### The content
+You have to use R Notebook or R Markdown to produce a PDF. When you open the Notebook, you specify the pdf_document output format in the YAML metadata. To have a PDF format, the Rmd file should look something like this:  
+
+This is the original format of the notebook metadata.  
+```
+---
+title: "Title"
+author: "Author"
+date: "Feb 7, 2021"
+output: html_document
+---
+```
+
+Since we want the pdf output, change the `html_document` to `pdf_document`. 
+
+```
+---
+title: "Title"
+author: "Author"
+date: "Feb 7, 2021"
+output: pdf_document
+---
+```
+
+You can add a table of contents by writing `toc: true`.  
+You can also specify the depth of headers that it applies to using `toc_depth`.  
+You can add section numbering to headers using `number_sections`:   
+```
+---
+title: "Title"
+author: "Author"
+date: "Feb 7, 2021"
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
+---
+```
+
+
+You can enhance the default display of data frames using `df_print`. 
+```
+---
+title: "Title"
+author: "Author"
+date: "Feb 7, 2021"
+output:
+  pdf_document:
+    df_print: kable
+--- 
+```
+
+### Exercises
+
+#### Question 1
+```{r q1_pdf, echo=F}
+question_checkbox(
+  "What is the correct command to create table of contents? ",
+  answer("toc: false", correct = F),
+  answer("toc: 1", correct = F),
+  answer("toc_depth: true ", correct = F),
+  answer("toc: true", correct = T),
+  answer("toc_depth: 2", correct = F),
+  allow_retry = T,
+  random_answer_order = T,
+  incorrect = "Try again. You got this!"
+)
+```
+
+
+#### Question 2
+modify the metadata so it changes into the pdf document with table of contents with depth of the header being 3, and add numbering to the header section. 
+```{r q2_pdf, exercise.eval = F, exercise=TRUE, eval = F}
+---
+title: "Title"
+author: "Author"
+date: "Feb 7, 2021"
+output: html_document
+---
+```
+```{r q2_pdf-solution, eval= F}
+---
+title: "Title"
+author: "Author"
+date: "Feb 7, 2021"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+---
+```
+
+
+### Next Steps
+Using all the functions we learned so far, try to write a paper of your interest, cite the sources, and knit to PDF to create a perfect professional paper. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Summary, and next steps
+
+
+In this level, we touched on some useful data manipulation methods that you'll come across fairly often.
+
+
+
+
+
+
+
+

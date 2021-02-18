@@ -1,0 +1,1353 @@
+---
+title: "DoSS Toolkit"
+subtitle: "He was a d8er boi"
+date: "17 February 2021"
+output: 
+  learnr::tutorial:
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(learnr)
+library(flair)
+library(gradethis)
+gradethis::gradethis_setup()
+# library(palmerpenguins)
+```
+
+
+
+
+
+## Introduction
+
+In this module, we are going to explore data in R. In its heart of hearts, R is a statistical programming language, so it was made for data. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## class() and basics of data types
+
+*Coming soon!*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Strings with paste and glue and stringr
+
+Written by Marija Pejcinovska.
+
+### Introduction  
+
+
+In this lesson we'll cover a couple of ways in which you can paste strings to your data. We'll use the `paste()` and `paste0()` functions, both of which are part of base R,  as well as the `glue()` function in the `glue` package. As part of this tutorial, you will also get a first taste of the `stringr` package, which is a wonderful tool for handling strings.  
+
+Prerequisite skills:
+
+- Exposure to most of the material in the yellow-level tutorials would be helpful.
+
+
+### Paste strings and data with `paste()` and `paste0()`
+
+`paste()` and `paste0()` are handy R functions used for concatenating strings and/or data. One of the main difference between the two is the default setting in their arguments, specifically the argument used to denote the way in which results should be separated. Both `paste()` and `paste0()` convert all passed objects to character vectors.   
+
+Both functions have the following two arguments: `sep = ` and `collapse = `.
+
+Let's see `paste()` in action first.   
+
+You can pass individual objects to `paste()`
+```{r}
+
+paste(1, "a", "b")
+
+```
+ or pass vectors.
+```{r}
+paste(1:3, c("a", "b", "c"))
+```
+Notice that when the arguments passed are vectors, the concatenation happens term-by-term. Vector arguments are recycled as necessary.  
+For instance, note the difference between
+```{r}
+paste(1:2, "a", "b", "c")
+```
+and 
+```{r}
+paste(1:2, c("a", "b", "c"))
+```
+You can see that in the latter example the concatenation is term-by-term and the sequence `1:2` is getting recycled (i.e. restarted) to match the length of `c("a", "b", "c")`.  
+
+The argument `sep = ` in the function controls which character string is used to separate the terms. By default, the `paste()` function sets `sep = " "`, meaning concatenated terms are separated by empty space. We can set the separator to be any string character we'd like. 
+
+```{r}
+## Leaving no space
+paste(1:2, c("a", "b", "c"), sep = "")
+
+## Concatenating with a dash
+paste(1:2, c("a", "b", "c"), sep = "-")
+
+## Concatenating with a random letter
+paste(1:2, c("a", "b", "c"), sep = "Y")
+
+##..and so on
+```
+
+If a value is specified for the argument `collapse = `, the elements in the result are then turned into a single string, with the components being separated by the character string provided in `collapse`. For instance, we can turn 
+```{r}
+paste(1:2, c("a", "b", "c"), sep = "-")
+```
+into a single string as
+```{r}
+paste(1:2, c("a", "b", "c"), sep = "-", collapse = ", ")
+```
+
+where we've used `,  ` ` ` (comma with a blank space) as a separator.
+
+The most preferred separator tends to be the "no space" one. This is the default setting of `paste0`.
+
+Run the following code to see the difference between `paste` and `paste0`
+
+```{r ex1_paste_, exercise=TRUE, exercise.lines=5}
+
+paste("I", "Love", "R","!")
+
+paste0("I", "Love", "R", "!")
+
+
+```
+
+Of course, you might be interested in a more sophisticated collection of objects to paste. For instance, suppose you needed to work with a combination of character strings and existing R objects.
+
+```{r student-example-paste}
+student <- c("Rohan", "Monica")
+badges <- c(2,4)
+term <- c("Fall", "Spring")
+
+paste(student, "collected", badges, "DoSS tool-kit badges in the", term )
+
+```
+
+
+### "Gluing" your data with the `glue` package
+
+
+\
+The `glue` package is designed to make it easier to "stitch" or interpolate (or "glue") your data into strings. Its main function is quite similar in flavor to `paste()` (and `paste0()`), but a bit easier to use (this is especially true when compared to `sprintf()`; a function that we have not discussed here, but can similarly be used to concatenate strings and data).  
+
+You can download `glue` the usual way you would install all your other packages, that is, by calling `install.packages("glue")`.
+
+#### The functions of `glue`
+
+The glue package has three primary functions, `glue()`, `glue_data()` and `glue_collapse()`.   
+
+The **`glue()` function** works a bit like the `paste()` function. In the case of `glue()`, however, we use `{}` to wrap the R code we wish to reference inside the string. This makes it a bit more manageable compared to all the quotation marks, commas, and separators we need to keep track of when using `paste()`.
+
+Let's refer back to our example from earlier and check out the syntax for `glue()`. Note that now everything is placed inside a single set of quotation marks and R objects are referenced within the string by wrapping them up in curly brackets. 
+
+```{r student-example-glue}
+library(glue)
+
+student <- c("Rohan", "Monica")
+badges <- c(2,4)
+term <- c("Fall", "Spring")
+
+glue("{student} collected {badges} DoSS tool-kit badges in {term}")
+
+```
+
+Here we've called the R objects `student`, `badges`, and `term` by wrapping them up in `{}`. 
+
+If you wish to use something other than `{}`, you can specify different opening and closing delimiters by using the `.open = ` and `.close = ` arguments in the `glue` function. For instance, let's surround the code we wish to evaluate by `<` at the beginning and `]` at the end.
+
+```{r student-example-glue2}
+student <- c("Owen", "Monica")
+badges <- c(2,4)
+term <- c("Fall", "Spring")
+
+glue("<student] collected <badges] DoSS tool-kit badges in <term]", .open = "<", .close = "]")
+
+```
+
+The function **`glue_data()`** works much like `glue()` but it is easier to use in piped chains (recall the pipe operator, ` %>% `). It was designed to look up R objects (those objects that are to be evaluated inside the string) in the first argument passed (usually this would be your data), rather than the calling environment.
+
+As an example run the following code. See what happens if you change `glue_data()` below with `glue()`.
+```{r penguin-example-glue-data, exercise = TRUE, exercise.lines=12}
+
+library(palmerpenguins)
+# Check the data out
+penguins %>% 
+  head()
+
+# "Glue" some data elements together
+penguins %>% 
+  slice(1:4) %>% 
+  glue_data("This {species} penguin living on {island} \\
+            island has flipper length {flipper_length_mm} mm") 
+
+# note: the "\\" symbol in the string code above is simply to force the string to appear as one line. 
+
+```
+
+
+Finally, the **`glue_collapse()` function** concatenates multiple values into one. This function has a particularly clever and useful argument called `last` which allows you to change the separator for the last value (a feature not available in `paste()`).
+
+```{r}
+glue_collapse({letters[1:3]}, sep = ", ", last = ", and ")
+
+```
+
+
+### First taste of the `stringr` package
+
+As a budding data scientist, you may have discovered that data analysis tasks usually involve spending an outsize portion of your time cleaning and processing data (it's a very special tax you have to pay before you get to the "fun" data scienc-y bits and pieces!!).   
+
+On occasion your data may contain lots of text or strings. The `stringr` package, which is part of the core *tidyverse*, is a wonderful collection of functions that make string manipulation easier.   
+
+This section is intended to get you started with the `stringr` package and involves just a brief introduction to the `str_detect()` and `str_replace()` functions in `stringr`.   
+
+All functions in this package begin with the `str_` prefix and have easy to remember, intuitive names. 
+
+For instance, `str_detect()` allows you to check whether a vector of characters contains a particular pattern, in other words, it allows you to *detect* a pattern in a string. The function returns a logical vector of the same length as the input, where `TRUE` indicates the pattern has been matched in that index. 
+
+Let's check this out.
+```{r str-detect-1}
+
+my_vec <- c("r", "R", "I love R", "why?", "what is this?")
+
+my_vec %>% 
+  str_detect(.,"r")
+
+my_vec %>% 
+  str_detect(.,"wh")
+```
+
+Note that the pattern detection is case sensitive. 
+
+`str_replace()`, on the other hand, allows you to replace a matched pattern with an entirely new string (or an empty string, if what you  wish to do is remove the pattern; see also `str_remove()`). 
+
+```{r str-remove-1}
+my_vec 
+
+my_vec %>% 
+  str_replace(., "\\?", " code")
+
+```
+
+The first argument tells you what object we are evaluating (in the pipe chain `.` indicates the object `my_vec`), the second argument is the pattern we are trying to find a match for (note that since ? is a special character we need to escape it by placing `\\` before `?`). The final argument here is the string we wish to replace our matched pattern with (in our case that's the string "code"). 
+
+This is just a small slice of what the `stringr` package has to offer. Be on the lookout for future tutorials with more on strings and regular expressions. 
+
+
+### Exercises
+
+
+Consider the first few rows of the penguin data we saw in an example earlier. For this exercise we'll call the sliced data `small-penguins`. To refresh your memory of what the data frame looks like it's been reproduced here (use the arrows to navigate left and right through the columns). 
+
+```{r small_penguins, echo=TRUE}
+small_penguins <- penguins %>% 
+  slice(1:10)
+small_penguins
+```
+
+
+
+```{r small_penguins0, echo=TRUE}
+library(palmerpenguins)
+small_penguins <- penguins %>% 
+  slice(1:7)
+small_penguins
+```
+
+**Exercise 1**
+
+Use an appropriate function from the `glue` package to produce the following string "This penguin is of the species XXX from island XXX and has body mass of XXX g" describing the 6th penguin in `small_penguins`, where the three XXX should be species, island name, and body mass respectively.
+
+
+```{r ex1_glue_data, exercise=TRUE, exercise.lines=8, exercise.eval=FALSE, exercise.setup = "small_penguins"}
+
+small_penguins %>% 
+
+  
+
+```
+
+```{r ex1_glue_data-solution}
+
+small_penguins %>% 
+  slice(6) %>% 
+  glue_data("This penguin is of the species {species} from island {island} and has body mass of {body_mass_g} g" )
+  
+```
+
+
+
+**Exercise 2**
+
+Using `glue()` and `glue_collapse()` manipulate the vectors `quant` and `food` below to get the following single string "1 sushi roll, 2 tacos, and 3 cakes"
+
+```{r ex2_glue_collapse, exercise=TRUE, exercise.lines=8, exercise.eval=FALSE}
+
+quant <- 1:3
+food <- c("sushi roll", "tacos", "cakes")
+
+
+```
+
+```{r ex2_glue_collapse-solution}
+
+quant <- 1:3
+food <- c("sushi roll", "tacos", "cakes")
+
+glue_collapse((glue("{quant} {food}")),sep=", ", last=", and ")
+  
+```
+
+
+**Exercise 3**  
+
+Back to our `small_penguins` data from Exercise 1.
+
+Use `str_detect()` and `filter()` to subset the `small_penguins` data to include only female penguins. 
+
+```{r ex3_str-detect, exercise=TRUE, exercise.lines=8, exercise.eval=FALSE, exercise.setup = "small_penguins"}
+
+small_penguins %>% 
+
+  
+
+```
+
+```{r ex3_str-detect-solution}
+
+small_penguins %>% 
+  filter(str_detect(sex, "fe"))
+  
+```
+
+
+
+
+
+**Exercise 4**  
+
+
+Use  `mutate()` to create a new variable `island_short` where with the help of `str_replace` you remove the pattern "ersen"  from the island name.
+```{r ex4_str-remove, exercise=TRUE, exercise.lines=8, exercise.eval=FALSE, exercise.setup = "small_penguins"}
+
+small_penguins %>% 
+
+  
+
+```
+
+```{r ex4_str-remove-solution}
+
+ small_penguins %>% 
+  mutate(island_short = str_replace(island, pattern = "ersen", replacement = ""))
+
+```
+
+
+
+
+### Next Steps
+
+
+- This tutorial only briefly introduced you to the capabilities of the `stringr` package. Future tutorials will revisit this package and dive deeper into some of its functions. In the meantime you can learn more about this package in Hadley Wickham's book *"R for Data Science"*. The link here takes you to the chapter on strings which also introduces you to regular expressions (regular expressions are a bit tedious, but you might learn to like them if you end up working with text data a lot). https://r4ds.had.co.nz/strings.html 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Vectors, matrices, dataframes and tibbles
+
+Written by Matthew Wankiewicz.
+
+### Introduction
+
+In this lesson, you will learn:
+
+- What a vector is and how to create one in R.
+- The difference between matrices, dataframes and tibbles.
+- How to create matrices, dataframes and tibbles in R.
+
+Prerequisite skills include:
+
+- Familiarity with `c()` function
+- R installed on your computer/RStudio cloud account
+
+Highlights:
+
+- Vectors are data structures in R which can contain numbers, words, or logical operators among others.
+  - The `c()` function is usually the main way of creating vectors.
+- Matrices are objects in R that contain rows and columns. These matrices can be added and subtracted along with other matrices.
+  - The `matrix()` function helps with creating matrices.
+- Dataframes are objects in R which are similar to matrices. Dataframes can be built out of multiple vectors.
+  - The `data.frame()` function allows us to create dataframes in R.
+- Tibbles are dataframes, but they are easier to use with functions in R. Since R has been in use for many years, tibbles allow us to do more with data, when compared to dataframes.
+  - The `tibble()` function creates tibbles in R.
+
+### The content
+
+- Vectors are a type of data structure in R which contains observations of the same type. Vectors can include sets of numbers, a group of names or a group of randomly selected logical operators (True or False). When creating a vector, R requires all elements of the vector to be the same type, this means that it is possible to create vectors with numbers and words, but the numbers will be stored as characters. 
+
+- Matrices are two dimensional and are similar to the structure of vectors. Matrices can contain words and numbers, but are mainly used with numbers. Matrices are usually created with numbers because there is the ability to conduct matrix operations like addition, subtraction, division and multiplication between different matrices. Matrices have a fixed number of rows and columns.
+
+- Dataframes are another way of storing data and are mainly used for storing tables. The benefit to using dataframes over matrices is when your data contains numbers and words. Dataframes are able to contain columns of numbers and columns of words while matrices can only contain numbers or words. Dataframes are also useful because it is possible to conduct operations between columns, which will be shown in the Questions section of this lesson.
+
+- As mentioned in the introduction, tibbles are very similar to dataframes but they are more compatible with current uses for R. This is because some older operations in R aren't as useful as they were when R was created, so tibbles had to be created to make some operations run better. Tibbles are created using the `tibble()` function which can be found in the `tidyverse` package, which is different than the other data types discussed above, because they can be created using the base R functions. 
+
+### Arguments
+
+- **`c()`:** The `c()` function takes one main argument and includes optional arguments. The main argument for `c()` are the values that you want to save as a vector. The arguments used can be any set of numbers or words, or both. For example we would use an entry could be: `test <- c("This", "is", "example", 1)`. If you do save numbers in words in the same vector, R will convert the number into a character instead of keeping it as an integer.
+
+- **`matrix()`:** The `matrix()` function takes 5 arguments, 3 of them are the most important. The first one is `data`, which is the data you plan to make a matrix with, this can contain multiple vectors. The next argument is `nrow` which is the number of rows you want to have and `ncol` which is the number of columns you want to include in your matrix.
+
+- **`data.frame()`:** The main argument that `data.frame()` takes is the data that you want to become a dataframe. To name the columns, you can write `"name" = c()` where c() is the vector of numbers/words. You can name each column by repeating the `"name" = c()` line. The other important argument is `row.names`. For this argument you can write a name for each row in a vector that has the same length as the number of rows as your dataframe. 
+
+- **`tibble()`:** Similar to `data.frame()`, the main argument for `tibble()` is the data you want to turn into a tibble. The data can include vectors, matrices and even dataframes. You can name the columns in a similar way to `data.frame()` by writing the name and then the data you want to be stored in that column.
+
+### Other Optional Arguments
+
+- **`c()`:** The optional arguments for `c()` are `recursive =` and `use.names =`. The recursive function is useful when the items you are vectoring includes a list. If you set `recursive = TRUE` it breaks down the list and converts it into a vector. If `recursive = FALSE` the vector is saved as a list (by default, `recursive = FALSE`, and it usually stays that way). The argument `use.names =` tells R whether or not to keep the names of the lists present when the vector is saved.
+
+- **`matrix()`:** There are two optional arguments, `byrow` and `dimnames`. `byrow` can either be true or false, if false, the entries for the matrix are added by filling out the columns as opposed to filling out the data row by row. `dimnames` allows you to name the rows and the columns of your matrix.
+
+- **`data.frame()`:** `data.frame()` contains 4 optional arguments. `check.rows` checks if the rows are consistent in their length and names. `check.names` checks if your column names are unique and there aren't any repeats. `fix.empty.names` automatically names any columns with missing variable names (this is set to true by default). Lastly, `stringsAsFactors` converts character vectors into factors if set to true (set to true by default).
+
+- **`tibble()`:** There are two optional arguments for `tibble()`, they are `.rows` and `.name_repair`. `.rows` tells R how many rows you want your tibble to be, you do not have to fill this argument out but it can be useful if you want to confirm that your data has the same amount of rows as you wish. If the number of rows given into the main argument does not match the `.rows` argument, an error will occur. `.name_repair` helps fix issues with column names, it has 5 types of repair. "Minimal" does not change or check column names, "Unique" makes sure names are not empty, "check_unique" makes sure the names are unique, "universal" checks that the names are unique and follow proper syntax. The final option for `.name_repair` is a custom function you can create on your own so the names follow a certain style.
+
+
+### Questions
+
+#### Vectors
+
+You can easily create vectors using the `c()` function. Run the code chunk below to see.
+```{r ex1vectors, exercise = T}
+vector1 <- c(1, 2, 3, 4)
+vector1
+```
+
+As mentioned in previous sections of this lesson, you can create a vector of both numbers and words, but the numbers will be saved as characters.
+```{r ex2vectors, exercise = T}
+vector2 <- c("stats", "is", "number", 1)
+vector2
+
+# using class tells us the class of the objects in the vector 
+class(vector2)
+```
+
+You can also index vectors by using square brackets ([]). To index a value of an R vector, write the vector name and then in the square brackets, the position of that value in the vector.
+```{r ex3vectors, exercise = T}
+vector <- c("a", "b", "c", "d", "e") # save our vector
+
+vector[3] # if we want to select c, it is the third element so we write vector[3]
+
+vector[-3] # if we want to return the vector without the letter c, type vector[-3]
+```
+
+We can also add, subtract, multiply and divide vectors.
+```{r add-vectors, exercise = TRUE}
+vec1 <- c(2, 4, 6)
+vec2 <- c(3, 6, 9)
+
+vec1 + vec2
+vec1*vec2
+```
+
+#### Matrices
+
+If we use the matrix function on a set of numbers without specifying the number of rows/columns, you get a matrix with one column.
+```{r ex1matrices, exercise = T}
+matrix1 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9))
+matrix1
+```
+
+Using the `nrow` and `ncol` arguments, we can tell R how we want our matrix to look. 
+```{r ex2matrices, exercise = T}
+matrix2 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3)
+matrix2
+```
+
+The next chunk will show the use the `byrow` argument to fill out our matrix. You will notice that when comparing the output of this chunk to the one above, other than the diagonals, the entries are all different.
+```{r ex3matrices, exercise = T}
+matrix3 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = T)
+matrix3
+```
+
+We can also add, subtract, multiply and divide matrices
+```{r add-matrices, exercise = TRUE}
+mat1 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = T)
+mat1
+mat2 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = F)
+mat2
+
+mat1 - mat2
+
+mat1/mat2
+```
+
+Matrices can be indexed.
+```{r index-matrices, exercise = TRUE}
+mat2 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = F)
+mat2
+
+mat2[3,3] # third row, third column
+```
+
+
+
+#### Dataframes
+
+As mentioned in the Arguments section, there are many ways to create a dataframe. For this one, we'll just insert two vectors into the function, without naming them.
+```{r ex1Dataframes, exercise = T}
+data.frame(c(1,2,3), c(2,4,6))
+```
+We can see that without naming the vectors, `data.frame()` names the rows "c.1..2..3" and "c.2..4..6".
+
+
+Now we can do the same as above, but save the vectors beforehand and then add them into the function.
+```{r ex2Dataframes, exercise = T}
+vector1 <- c(1:3) # this is another way writing 1,2,3
+data.frame(vector1, vector2 = c(2,4,6))
+```
+
+We can also take a matrix and convert the matrix into a dataframe. We can also use the `row.names` argument.
+```{r ex3Dataframes, exercise = T}
+mat <- matrix(1:9, nrow = 3)
+mat
+
+df <- data.frame(mat, row.names = c("a", "b", "c"))
+df
+```
+
+
+For the last example of making dataframes, we will make use of the `check.names` and `stringsAsFactors` arguments
+```{r ex4Dataframes, exercise = T}
+vector1 <- c(1:3)
+df <- data.frame(vector1, vector1 = c("one", "two", "three"), check.names = T)
+df
+```
+We can see that the dataframe has two columns, vector1 and vector1.1 and if we don't do that, the columns will have the same name and will be a headache to work with.
+
+
+We can also index values in dataframes.
+```{r ex5Dataframes, exercise = T}
+df <- data.frame(c(1,2,3), c(2,4,6), c(3, 6, 9))
+
+df[2,2] #to select the number 4 in the center we write df[2,2]
+
+df[,2] # to return the whole 2nd column, write df[,2]
+
+df[2,] # to select only the 2nd row, write df[2,]
+
+df[-1,] # you can also return dataframes without rows/columns by including "-"
+```
+
+#### Tibbles
+
+Like dataframes, tibbles can be created from vectors
+```{r ex1Tibbles, exercise = T}
+vector1 <- c(1:3)
+vector2 <- c(2,4,6)
+
+data <- tibble(vector1, vector2)
+data
+```
+
+Tibbles can also be created from matrices. This can be done using the `as_tibble()` function.
+```{r ex2Tibbles, exercise = T, warning=F}
+mat1 <- matrix(1:9, nrow = 3, ncol = 3) # 3x3 matrix
+mat1
+
+tib <- as_tibble(mat1)
+tib
+```
+
+Similarly, dataframes can be converted into tibbles.
+```{r ex3Tibbles, exercise = T}
+df1 <- data.frame("id" = c(1,2,3), "sport" = c("soccer", "baseball", "basketball"),
+                  "name" = c("Messi", "Bichette", "James"))
+df1
+
+tibble(df1, .rows = 3) # we can use .rows to confirm that there will be 3 rows.
+```
+
+Tibbles can also be indexed.
+```{r index-tibbles, exercise = T}
+tib1 <- tibble(data.frame("id" = c(1,2,3), "sport" = c("soccer", "baseball", "basketball"),
+                  "name" = c("Messi", "Bichette", "James")))
+tib1
+
+tib1[1,3] # 1st row, 3rd column
+```
+
+
+Lastly, you can make tibbles where the columns are mathematical operations between columns.
+```{r ex4Tibbles, exercise = T}
+col1 <- c(1:10)
+tibble(col1, col2 = col1+10, col3 = (col1+col2)*100)
+```
+
+
+### Exercises
+
+```{r quiz1-vectors, echo=F}
+question_checkbox( "1. Which data types are part of base R? Select all that apply.",
+  answer("Tibbles"),
+  answer("Dataframes", correct = T),
+  answer("Vectors", correct = T),
+  answer("Matrices", correct = T),
+  incorrect = paste0("Incorrect."),
+  allow_retry = T,
+  random_answer_order = T
+)
+```
+
+
+**2.** This question will combine vectors and dataframes. Create two vectors, the first one (call it 'numbers') containing the numbers 10, 20, 30 and 40, and the second one (call it 'cities') containing the words: 'Toronto', 'New York', 'Boston' and 'Vancouver'. Now, take those two vectors and turn them into a dataframe. (Hint: The `c()` and `data.frame()` function will be very helpful.)
+```{r quiz2-vectors, exercise = TRUE}
+# Enter code below
+numbers <- 
+cities <- 
+```
+
+```{r quiz2-vectors-solution}
+
+numbers <- c(10, 20, 30, 40)
+cities <- c('Toronto', 'New York', 'Boston', 'Vancouver')
+data.frame(numbers, cities)
+```
+
+**3.** Make a tibble with the first column being the set of numbers from 1 to 10, the second column being the first column times 7 and the third column being the sum of columns 1 and 2.
+
+```{r quiz3-vectors, exercise = TRUE}
+# enter code below
+col1 <- 
+```
+
+```{r quiz3-vectors-solution}
+
+col1 <- c(1:10)
+tibble(col1, col2 = col1*7, col3 = col1 + col2) 
+
+# OR
+
+col1 <- c(1:10)
+col2 <- col1*7
+col3 <- col1 + col2
+
+tibble(col1, col2, col3)
+```
+
+
+**4.** The next question follows the code chunk below.
+
+```{r quiz4-tibble, results = "hide"}
+cities <- c("Toronto", "New York", "Vancouver", "Montreal", "Chicago", "Los Angeles")
+rank <- c(1, 2, 3, 4, 5, 6)
+
+tibble(cities, rank, pop = rank*1000, 
+       rank_plus_pop = rank + pop)
+```
+
+```{r quiz4-tibble1, echo=F}
+question("How many columns are present in the data?",
+         answer("4", correct = TRUE),
+         answer("3"),
+         answer("2"),
+         answer("5"))
+```
+
+```{r quiz4-tibble2, echo=F}
+question("What would be that class of the output of the `tibble` function?",
+         answer("Vector"),
+         answer("Matrix"),
+         answer("Tibble or (tbl)", correct = T),
+         answer("None of the options."))
+```
+
+```{r quiz4-tibble3, echo=F}
+question("How many rows will the data have?",
+         answer("7"),
+         answer("3"),
+         answer("6", correct = T),
+         answer("5"))
+```
+
+
+**5.** For this exercise, create a dataframe containing 3 vectors: one containing a set of 5 numbers, another containing a set of 5 animals and another containing a set of 5 cities. Name the columns of this dataframe 'id', 'animal', 'city'. Save this dataframe under the name 'df' and then convert it into a tibble.
+```{r vec-df-ex1, exercise = TRUE}
+# enter code below
+```
+
+```{r vec-df-ex1-solution}
+
+# Your answers may be different
+df <- data.frame(id = c(1:5), animal = c("Dog", "Cat", "Goat", "Bird", "Lion"),
+                 city = c("Toronto", "San Diego", "New York", "Boston", "Washington")
+                 )
+tibble(df)
+
+# OR
+
+id <- c(1:5)
+animal <- c("Dog", "Cat", "Goat", "Bird", "Lion")
+city <- c("Toronto", "San Diego", "New York", "Boston", "Washington")
+
+df <- data.frame(id, animal, city)
+tibble(df)
+```
+
+### Common Mistakes & Errors
+
+- **Vectors**
+  - If you try to index a vector and the vector returns 'NA', that likely means that you are trying to index an element that isn't in your vector. To fix this, you need to include a number that is **less than or equal to** the length of your vector.
+
+- **Matrices**
+  - Error in matrix[n,m] : subscript out of bounds
+    - This error means that you are trying to index a point in the matrix that doesn't exist. Similar to vectors, move the subscript to be inside the lengths of your matrix.
+  - In matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 4, byrow = F) :
+  data length [9] is not a sub-multiple or multiple of the number of rows [4]
+    - This error means that the number of rows you are trying to use does not fit the amount of numbers you want to use in the matrix. If you want **n** rows, make sure the length of your matrix is divisible by **n**.
+  - Error in mat1 + mat2 : non-conformable arrays
+    - This error occurs when you try to do mathematical operations on matrices that aren't compatible. This goes back to linear algebra where you need to have similar length between matrices to conduct operations between them.
+  
+- **Dataframes**
+  - Similar to matrices and vectors, you can encounter issues with indexing. Once again, make sure you keep you indexing within the limits of your dataframe.
+  - Error in data.frame(c(1, 2, 3), c("a", "b")) : 
+  arguments imply differing number of rows: 3, 2
+    - This error will occur when the vectors you are trying to make into a dataframe have different lengths. To fix this, make sure your vectors are the same length.
+
+- **Tibbles**
+  - Often times, you can use functions like `filter()` or `group_by()` on tibbles and usually when you encounter errors, the error will be with how the function is executed. 
+  - Error: Tibble columns must have compatible sizes.
+    - This means that when you used the tibble function, the vectors you included were not the same length. To fix this, make sure all vectors are of the same length.
+
+### Next Steps
+
+Now that you understand what vectors, matrices, dataframes and tibbles are. Some next steps include:
+
+- Using dplyr functions with tibbles: https://uomresearchit.github.io/r-tidyverse-intro/04-dplyr/
+- Looking at R for Data Science's chapter on tibbles: https://r4ds.had.co.nz/tibbles.html
+- The vector chapter in R4DS: https://r4ds.had.co.nz/vectors.html
+
+
+
+
+
+
+
+## length(), nrow(), and ncol()
+
+*Coming soon*
+
+
+
+## names(), cbind(), and rbind().
+
+*Coming soon!*
+
+## left_join(), anti_join(), full_join, etc
+
+*Coming soon!*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## set.seed(), runif(), rnorm() and sample()
+
+Written by Haoluan Chen.
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Generate numbers from a uniform distribution or normal distribution 
+- Sample from a collection of numbers
+
+Prerequisite skills include:
+
+- Run code in R
+- Basic knowledge of uniform distribution and normal distribution and sampling
+
+Highlights:
+
+- Generate random value from a uniform distribution and normal distribution
+- Generate random value from a set
+- `set.seed()` for reproducibility 
+
+
+### The content
+
+Simulation is an important topic in statistics because it helps you understand how random data might be generated. For some experiments, you may want to simulate values from probability distributions. In R, we can use `runif()` and `rnorm()` function to generate random number from uniform distribution or normal distributionr. Also, we can randomly sample from a set of numbers by using the sample() function. 
+
+#### runif()
+
+The `runif()` function generate random numbers from a uniform distribution.  
+
+##### Arguments
+
+It takes in three parameters: `n`, `min` and `max`. The parameter `n` specifies the number of random value you want to generate. The parameter `min` and `max` specify the range of the uniform distribution. The default of min and max are 0 and 1.
+
+Arguments | What does it mean
+------------- | -------------
+n (required) | number of random value you want to generate (numeric)
+min (optional) | the minimum value of the uniform distribution you are sampling from (numeric)
+max (optional)| the maximum value of the uniform distribution you are sampling from (numeric)
+
+
+##### Example
+
+```{r setseedex1}
+runif(3)
+```
+The above code means to generate three random numbers from unif(0,1) where unif is a uniform distribution with a minimum value of 0 and maximum value of 1.
+
+What if you want to generate number from `unif(2,8)` uniformly?
+
+In `runif()` function, we can specify the min and max to be 2 and 8 to generate three numbers from unif(2,8):
+
+```{r setseedex2}
+runif(3, 2, 8)
+```
+
+#### rnorm()
+
+In R, we can use `rnorm()` function to generate numbers from a normal distribution. 
+
+##### Arguments
+It takes in three parameters: `n`, `mean`, and `sd`. The parameter `n` specifies the number of random values you want to generate. The parameter `mean` and `sd` specifies the mean and standard deviation of the normal distribution you wish to sample. The default of `mean` and `sd` are 0 and 1.
+
+Arguments | What does it mean
+------------- | -------------
+n (required) | number of random value you want to generate (numeric)
+mean (optional) | the mean value of the normal distribution you are sampling from (numeric)
+sd (optional)| the standard deviation of the normal distribution you are sampling from (numeric)
+
+##### Example
+Let's say we want to generate 5 random number from a normal distribution with `mean = 0` and `sd = 2`.
+
+```{r setseedex3}
+rnorm(5, sd = 2)
+```
+
+Here, we set the `n` to be 5 and `sd` to be 2, because we want to generate five random numbers from a normal distribution with a standard deviation of 2. We do not have to specify the mean value here because the default of the mean parameter is 0, which is exactly what we want. 
+
+What if we want to generate 5 number from normal(10,2)?
+
+```{r setseedex4}
+rnorm(5, 10, 2)
+```
+Here, we generated 5 numbers from normal(10,2) distribution.
+
+#### sample()
+In R, we can using sample() to randomly sample numbers from a collection of numbers. 
+
+##### Arguments
+It takes in three parameters: x, size, and replace. The x is the vector of one or more elements that you wish to sample. The parameter size specifies the number of random values you want to generate. The parameter replace is a logical variable; true if you want to sample with replacement. 
+
+When replace is set to true, you will be sampling from the same set of numbers for each generation. When replace is set to false, every time you sample a number, it will be taken out of the vector x for the next number generation. 
+
+Arguments | What does it mean
+------------- | -------------
+x (required) | vector of one or more elements that you are sampling from
+size (required) | number of random value you want to generate (numeric)
+replace (optional)| true if you want to sample with replacement (logical)
+
+##### Examples
+
+```{r setseedex5}
+x <- c(1, 2, 3, 4, 5, 6)
+```
+
+Here, we have a vector containing 6 numbers to simulate rolling dice. Let's roll the dice 6 times and see what we get:
+
+```{r setseedex6}
+sample(x, 6, replace = TRUE)
+```
+What if we set the replace to `FALSE`?
+```{r setseed, include=FALSE}
+set.seed(1)
+```
+
+
+```{r ex7}
+sample(x, 6, replace = FALSE)
+```
+When setting the replace to `FALSE`, the numbers are taken out for each round of sampling. Here, our first number is 1, which means that the second number will only be a sample from the set {2,3,4,5,6}. The 1 will be taken out of the vector for this sampling process. So, that is why we always get each number to appear once in the simulation.  
+
+
+#### set.seed()
+
+```{r undosetseed, include=FALSE}
+set.seed(Sys.time())
+```
+
+Let's run our dice simulation twice and see what happens (run the following code twice)
+
+```{r setseedex8, exercise=TRUE, exercise.lines = 3}
+sample(x, 6, replace = TRUE)
+```
+
+We get different results every time we run the simulation simulation, because we randomly sampled from 1-6 with replacement. What if you want to reuse the result from one simulation? Sometimes you do not want your result to change every time you run the function. This is what `set.seed()` does. 
+
+When you use `set.seed()` function before your simulation, the simulation output will be the same every time. 
+
+##### Arguments
+
+The `set.seed()` function takes in a number, and it can be any number.
+
+##### Example
+
+Let's use `set.seed()` before we do the dice simulation
+
+Please run the following code twice. 
+
+```{r setseedex9, exercise=TRUE, exercise.lines = 2}
+set.seed(2)
+sample(x, 6, replace = TRUE)
+```
+
+This also works for `runif()`, `rnorm()` and other simulation functions. Once you use `set.seed()` your simulation will always produce the same result. 
+
+### Exercises
+
+#### Exercise 1
+
+Please generate 10 random values from unif(-1,1) 
+
+```{r setseedexercise1, exercise=TRUE, exercise.lines = 2}
+
+```
+
+#### Exercise 2
+Please generate 10 random values from normal(0,5)
+```{r setseedexercise2, exercise=TRUE, exercise.lines = 2}
+
+```
+
+
+#### Exercise 3
+
+```{r setseedexercise3, echo = FALSE}
+question("Which of the following code simulates rolling a fair dice 5 times?",
+          answer("sample(c(1, 2, 3, 4, 5, 6), 5, replace = TRUE)", correct = TRUE),
+          answer("sample(c(1, 2, 3, 4, 5, 6), 5, replace = FALSE)"),
+          answer("sample(c(1, 2, 3, 4, 5, 6), 5)"),
+          answer("runif(5, 1, 6)"),
+          allow_retry = TRUE)
+
+```
+
+#### Exercise 4
+
+Please generate 10 random values from normal(10,5) and calculate the mean.
+```{r setseedexercise4, exercise=TRUE, exercise.lines = 2}
+
+```
+
+#### Exercise 5
+
+Please generate 1000 random values from normal(10,5) and calculate the mean. 
+```{r setseedexercise5, exercise=TRUE, exercise.lines = 2}
+
+```
+
+#### Exercise 6
+
+Run your code from exercise 4 and 5 few times and compare the results, what did you notice?
+
+```{r setseedexercise6}
+
+```
+
+
+#### Exercise 7
+
+```{r setseedexercise7, echo = FALSE}
+question("How do you obtain the same simulation result in Exercise 4 and 5",
+          answer("You do not have to do anything, the simulation result will always be the same"),
+          answer("Use set.seed() function before you run the simulation", correct = TRUE),
+          answer("Set the set.seed parameter to TRUE"),
+          answer("Use sample() function instead of rnorm"),
+          allow_retry = TRUE)
+
+```
+
+
+![Exercise 1 & 2](https://youtu.be/2HMfMnvSVkg)
+![Exercise 4 & 5 & 6](https://youtu.be/HJtZfqgc6fY)
+
+
+### Common Mistakes & Errors
+
+- Make sure you have input parameter in the right order!
+
+### Next Steps
+
+Sometimes you need to do additional things to make your simulated more similar to your data. You can take a look on this book: R Programming for Data Science: https://bookdown.org/rdpeng/rprogdatascience/simulation.html. It has videos that explains simulation concepts and simulating a linear model. 
+
+You can also generate binomial random variables using `rbinom()`, and Poisson random variables using `rpois()`, among others!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Simulating regression datasets
+
+Written by Mariam Walaa.
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Set the seed to take a snapshot of code results.
+- Sample data to simulate different scenarios.
+- Build regression models from simulated data.
+
+Prerequisite skills include:
+
+- Some familiarity with `set.seed()`, `runif()`, `rnorm()`, `sample()`
+
+Highlights:
+
+- `set.seed()` is used to set the seed for the next code chunk you run.
+- `rnorm()` and `runif()` can be used to take points from distributions.
+
+### Arguments
+
+#### set.seed()
+
+The `set.seed()` function takes the following as arguments:
+
+| Argument | Parameter | Details                                                                     |
+|----------|-----------|-----------------------------------------------------------------------------|
+| seed     | number    | a number of your choice that acts as a setting to reproduce random samples  |
+
+You can read more about the arguments in the `set.seed()` function by running
+`?set.seed()` in your console.
+
+#### runif()
+
+The `runif()` function takes the following as arguments:
+
+| Argument | Parameter | Details                                                            |
+|----------|-----------|--------------------------------------------------------------------|
+| n        | number    | this is number of values to take from a *uniform* distribution     |
+| min      | number    | this is lower bound of desired interval of values                  |
+| max      | number    | this is upper bound of desired interval of values                  |
+
+You can read more about the arguments in the `runif()` function by running `?runif()` in
+your console.
+
+#### rnorm()
+
+The `rnorm()` function takes the following as arguments:
+
+| Argument | Parameter | Details                                                     |
+|----------|-----------|-------------------------------------------------------------|
+| n        | number    | this is number of values to take from *normal* distribution |
+| mean     | number    | this is desired mean of the normal distribution             |
+| sd       | number    | this is standard deviation of the normal distribution       |
+
+You can read more about the arguments in the `rnorm()` function by running `?rnorm()` in
+your console.
+
+#### sample()
+
+The `sample()` function takes the following as arguments:
+
+| Argument | Parameter | Details                                                                 |
+|----------|-----------|-------------------------------------------------------------------------|
+| x        | vector    | this is a vector `c(...)` of elements we want to sample                 |
+| size     | number    | this is the total number of observations we want to have                |
+| replace  | Boolean   | this is whether you want to repeat occurrence of some elements          |
+| prob     | vector    | this is a vector `c(…)` of probabilities of occurrence for each element |
+
+You can read more about the arguments in the `sample()` function by running `?sample()` in
+your console.
+
+### Overview
+
+Sometimes, we have to execute code that has some randomness to it. When we want to ensure
+that the results we get are reproducible, we can use the `set.seed()` function to "take a
+snapshot" of the results we got and "save it". The `set.seed()` function associates the
+value we chose with the code we executed and the results we got. A common case where this
+is needed is when we simulate data.
+
+Let's set the seed to 1 and sample 5 values from the normal distribution.
+
+```{r simulating-data}
+set.seed(1)
+rnorm(5)
+```
+
+Now let's sample 5 values from the normal distribution again without setting the seed.
+
+```{r simulating-data-1}
+rnorm(5)
+```
+
+We get different values. Let's sample 5 values again after setting the same seed.
+
+```{r simulating-data-2}
+set.seed(1)
+rnorm(5)
+```
+
+We get the same initial 5 values!
+
+Let's create a simulated data set of course evaluation scores for an instructor.
+
+```{r simulating-data-3}
+set.seed(2)
+
+evaluations <- tibble(inspirational = rnorm(n = 100, mean = 3, sd = 2),
+                      recommended = runif(n = 100, min = 3, max = 4))
+```
+
+We have generated this reproducible data set by:
+
+1. Using `set.seed()` to ensure this data frame is reproducible from this code
+2. Using `rnorm()` to take 50 values from a _normal_ distribution with a mean of 3 and
+standard deviation of 2. This represents a normal distribution of students who have
+provided scores averaging 3 with a standard deviation of 2 for an instructor's course in
+terms of how inspirational it is.
+3. Using `runif()` to take 50 values from a _uniform_ distribution with a minimum of 2 and
+a maximum of 5. This represents a uniform distribution of students who have provided
+scores in an interval of 3-4 for an instructor's course in terms of whether they recommend
+it.
+
+We may use this data set to build a regression models using the `lm()` function as follows.
+
+```{r simulating-data-4}
+lm(recommended ~ inspirational, data = evaluations)
+```
+
+### Exercises
+
+#### Exercise 1
+
+We want to add an additional variable `workload` to the evaluations data set containing
+simulated data about how the students scored the course's workload.
+
+Write the code you would assign to the `workload` variable if we wanted to simulate points
+from the uniform distribution with values ranging from 2 to 5.
+
+```{r simulate-data-exercise-1, exercise = TRUE, exercise.eval = TRUE}
+
+```
+
+```{r simulate-data-exercise-1-solution, exercise = FALSE}
+runif(n = 100, min = 2, max = 5)
+```
+
+```{r simulate-data-exercise-1-code-check}
+grade_code()
+```
+
+#### Exercise 2
+
+We have a list of course codes associated with all of the courses run by this instructor
+and we want to simulate the above data corresponding to different courses. Let's say this
+data represents STA130, STA220, STA302, STA303, and STA304, and STA130 students are more
+likely to have completed a course evaluation than students from other courses.
+
+Fill in the blanks for the code below to create data that represents the above scenario.
+
+```{r fill-in-sample, include = FALSE, results = FALSE}
+sample(x = c("STA130", "STA220", "STA302", "STA303", "STA304"),
+       size = 100,
+       replace = TRUE,
+       prob = c(0.6, 0.4, 0.4, 0.4, 0.4))
+```
+```{r fill-in-sample-1, echo = FALSE}
+decorate("fill-in-sample") %>%
+  mask("x") %>%
+  mask("size") %>%
+  mask("replace ") %>%
+  mask("prob") %>%
+  knit_print.with_flair()
+```
+
+You'll notice that there are 4 blanks in total that you'll need to fill.
+
+```{r fill-in-sample-2, echo = FALSE}
+quiz(question("What should the first blank be?",
+              answer("n"),
+              answer("x", correct = TRUE),
+              answer("c"),
+              answer("size"),
+              answer("replace"),
+              answer("prob"),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("What should the second blank be?",
+              answer("n"),
+              answer("x"),
+              answer("c"),
+              answer("size", correct = TRUE),
+              answer("replace"),
+              answer("prob"),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("What should the third blank be?",
+              answer("n"),
+              answer("x"),
+              answer("c"),
+              answer("size"),
+              answer("replace", correct = TRUE),
+              answer("prob"),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("What should the fourth blank be?",
+              answer("n"),
+              answer("x"),
+              answer("c"),
+              answer("size"),
+              answer("replace"),
+              answer("prob", correct = TRUE),
+              random_answer_order = TRUE,
+              allow_retry = TRUE))
+```
+
+### Common Mistakes & Errors
+
+Here are some common mistakes and errors you may come across:
+
+- You may be confusing some of the arguments for different distribution functions. Make
+sure you're using `runif()` to sample points from the _uniform_ distribution and `rnorm()`
+to sample points from the _normal_ distribution.
+- You may be misusing some of the arguments for a function like `sample()`. Make sure you
+read the argument descriptions as well as the given examples in the documentation.
+- You may forget to set the seed before running a chunk of code, or you may be using a
+different value for a seed to obtain results you previously got with your code.
+
+### Next Steps
+
+If you would like to learn more about these functions, read the documentation associated
+with each of the functions.
+
+To simulate a more "realistic" dataset, try writing it down on paper first, and then think about which parts are random, then translate it to code! For example, if you think some number $y$ is related *linearly* to $x$ with a slope of 0.3, with some random measurement error, you could write it down on paper like this:
+$$
+y = 0.3\cdot x + error
+$$
+Translating it to code might look like:
+
+```{r}
+x <- 2 # set some value of x
+measurement_error <- rnorm(1) # normally distributed measurement error
+
+y <- 0.3*x + rnorm(1) # calculate value of y
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Summary, and next steps
+
+
+In this level, we touched on some useful data manipulation methods that you'll come across fairly often.
+
+
+
+
+
+
+
+

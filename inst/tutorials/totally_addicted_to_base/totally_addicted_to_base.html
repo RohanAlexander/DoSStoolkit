@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="date" content="2021-02-17" />
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="true" />
+
+<title>DoSS Toolkit</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/67b7f5fc779e4cfdfd0f021d3d7745b6b6e17149/inst/rmd/h/default.html#L296-L362 -->
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+<!-- end tabsets -->
+
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<div id="section-introduction" class="section level2">
+<h2>Introduction</h2>
+<p>In this module, we are going to explore ‘base R’. This means that we don’t need to load any packages - we’re working with functions that come ‘out of the box’ as it were. Base is a very stable collection of functions that have been refined over decades. This is in contrast to the ‘tidyverse’, which we introduced in other modules, which is much newer. Some folks are passionate about the differences between them, but they’re just tools that we use as appropriate. In this module we are going to cover some base functions that you’ll use again and again in your R journey, especially in statistics.</p>
+</div>
+<div id="section-mean-median-sd-lm-summary" class="section level2">
+<h2>mean(), median(), sd(), lm(), summary()</h2>
+<p>Written by Mariam Walaa.</p>
+<div id="section-introduction-1" class="section level3">
+<h3>Introduction</h3>
+<p>In this lesson, you will learn how to:</p>
+<ul>
+<li>Use <code>mean()</code>, <code>median()</code>, and <code>sd()</code> to compute summary statistics</li>
+<li>Use <code>summary()</code> to compute summary statistics for numeric variables in a data frame</li>
+<li>Use <code>lm()</code> to build linear regression models</li>
+</ul>
+<p>Prerequisite skills include:</p>
+<ul>
+<li>Installing packages</li>
+<li>Loading packages</li>
+<li>Importing data</li>
+</ul>
+<p>Highlights:</p>
+<ul>
+<li>1-dimensional data can be summarized with <code>mean()</code>, <code>median()</code>, <code>sd()</code></li>
+<li>n-dimensional data can be summarized with <code>summary()</code></li>
+<li><code>lm()</code> can be used to build linear regression models</li>
+</ul>
+</div>
+<div id="section-arguments" class="section level3">
+<h3>Arguments</h3>
+<div id="section-mean" class="section level4">
+<h4>mean()</h4>
+<p>The <code>mean()</code> function takes the following as arguments:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Parameter</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>x</td>
+<td>column</td>
+<td>this is the set of values to compute the average of</td>
+</tr>
+<tr class="even">
+<td>na.rm</td>
+<td>Boolean</td>
+<td>this is to indicate whether NA values should be ignored</td>
+</tr>
+</tbody>
+</table>
+<p>You can read more about the arguments in the <code>mean()</code> function’s documentation <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/mean">here</a>.</p>
+</div>
+<div id="section-median" class="section level4">
+<h4>median()</h4>
+<p>The <code>median()</code> function takes the following as arguments:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Parameter</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>x</td>
+<td>column</td>
+<td>this is the set of values to compute the median of</td>
+</tr>
+<tr class="even">
+<td>na.rm</td>
+<td>Boolean</td>
+<td>this is to indicate whether NA values should be ignored</td>
+</tr>
+</tbody>
+</table>
+<p>You can read more about the arguments in the <code>median()</code> function’s documentation <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/median">here</a>.</p>
+</div>
+<div id="section-sd" class="section level4">
+<h4>sd()</h4>
+<p>The <code>sd()</code> function takes the following as arguments:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Parameter</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>x</td>
+<td>column</td>
+<td>this is the set of values to compute the standard deviation of</td>
+</tr>
+<tr class="even">
+<td>na.rm</td>
+<td>Boolean</td>
+<td>this is to indicate whether NA values should be ignored</td>
+</tr>
+</tbody>
+</table>
+<p>You can read more about the arguments in the <code>sd()</code> function’s documentation <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/sd">here</a>.</p>
+</div>
+<div id="section-summary" class="section level4">
+<h4>summary()</h4>
+<p>The <code>summary()</code> function takes the following as arguments:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Parameter</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>object</td>
+<td>data</td>
+<td>this is the data to summarize (typically a data frame)</td>
+</tr>
+</tbody>
+</table>
+<p>You can read more about the arguments in the <code>summary()</code> function’s documentation <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/summary">here</a>.</p>
+</div>
+<div id="section-lm" class="section level4">
+<h4>lm()</h4>
+<p>The <code>lm()</code> function takes the following as arguments:</p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="18%" />
+<col width="70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Parameter</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>formula</td>
+<td>Y ~ X1 + … + Xn</td>
+<td>equation of linear regression model</td>
+</tr>
+<tr class="even">
+<td>data</td>
+<td>data frame</td>
+<td>data frame containing variables for the model</td>
+</tr>
+<tr class="odd">
+<td>subset</td>
+<td>condition</td>
+<td>condition to filter data frame by prior to building the model</td>
+</tr>
+</tbody>
+</table>
+<p>You can read more about the arguments in the <code>lm()</code> function’s documentation <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm">here</a>.</p>
+</div>
+</div>
+<div id="section-overview" class="section level3">
+<h3>Overview</h3>
+<p>This section will demonstrate how to use the <code>lm()</code> function to build simple and multiple linear regression models. We will be looking at a subset of the Broadway Grosses data set provided by Alex Cookson in this <a href="https://github.com/tacookson/data/tree/master/broadway-grosses">Git repository</a>. The Broadway Grosses data set comprises data on revenue and attendance figures for theaters that are part of The Broadway League.</p>
+<pre class="r"><code>glimpse(broadway)</code></pre>
+<pre><code>## Rows: 47,524
+## Columns: 6
+## $ avg_ticket_price &lt;dbl&gt; 30.42, 27.25, 33.75, 20.87, 20.78, 31.96, 28.33, 18.…
+## $ performances     &lt;dbl&gt; 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 0, 8, 8, 0…
+## $ seats_in_theatre &lt;dbl&gt; 1655, 1472, 1088, 682, 684, 1018, 1336, 1368, 1482, …
+## $ seats_sold       &lt;dbl&gt; 9281, 8167, 7386, 4586, 2938, 7992, 10831, 5672, 120…
+## $ show             &lt;chr&gt; &quot;42nd Street&quot;, &quot;A Chorus Line&quot;, &quot;Aren&#39;t We All?&quot;, &quot;A…
+## $ pct_capacity     &lt;dbl&gt; 0.7010, 0.6935, 0.8486, 0.8405, 0.5369, 0.9813, 1.01…</code></pre>
+<div id="section-summary-1" class="section level4">
+<h4>summary()</h4>
+<p>We can print a summary of the variables in this data using the <code>summary()</code> function as follows.</p>
+<pre class="r"><code>summary(broadway)</code></pre>
+<pre><code>##  avg_ticket_price  performances    seats_in_theatre   seats_sold   
+##  Min.   :  0.00   Min.   : 0.000   Min.   :   0     Min.   :    0  
+##  1st Qu.: 43.37   1st Qu.: 8.000   1st Qu.:1021     1st Qu.: 5442  
+##  Median : 60.23   Median : 8.000   Median :1181     Median : 7736  
+##  Mean   : 67.91   Mean   : 7.238   Mean   :1238     Mean   : 7893  
+##  3rd Qu.: 84.65   3rd Qu.: 8.000   3rd Qu.:1509     3rd Qu.:10187  
+##  Max.   :511.58   Max.   :17.000   Max.   :1969     Max.   :24305  
+##      show            pct_capacity   
+##  Length:47524       Min.   :0.0000  
+##  Class :character   1st Qu.:0.6914  
+##  Mode  :character   Median :0.8330  
+##                     Mean   :0.8028  
+##                     3rd Qu.:0.9538  
+##                     Max.   :1.5536</code></pre>
+<p>You’ll notice the following about the output provided by <code>summary()</code>:</p>
+<ul>
+<li>The only column of type <code>character</code> does not have a numeric summary. Instead, the length and class of the column is provided.</li>
+<li>The remaining columns are of type <code>integer</code> and <code>double</code>, and all have a numeric summary. The numeric summary provides:
+<ul>
+<li>Minimum, 1st Quantile, Median, Mean, 3rd Quantile, Maximum</li>
+</ul></li>
+</ul>
+</div>
+<div id="section-mean-median-and-sd" class="section level4">
+<h4>mean(), median(), and sd()</h4>
+<p>We can also compute the mean, median, and standard deviation for 1-dimensional data, such as any numeric variable in the data set.</p>
+<pre class="r"><code>mean(broadway$avg_ticket_price)</code></pre>
+<pre><code>## [1] 67.91474</code></pre>
+<pre class="r"><code>median(broadway$avg_ticket_price)</code></pre>
+<pre><code>## [1] 60.235</code></pre>
+<pre class="r"><code>sd(broadway$avg_ticket_price)</code></pre>
+<pre><code>## [1] 38.58942</code></pre>
+<p>Be careful with the type of values an object contains when you pass it to these functions. If the values include NAs, you will need to add <code>na.rm = TRUE</code>. If the values aren’t numeric, you will need to convert them to numeric. You can take a look at the Data Types tutorial for more information on how to do this.</p>
+</div>
+<div id="section-lm-1" class="section level4">
+<h4>lm()</h4>
+<p>If we want to predict the number of seats sold in a week, there are several variables in the data set that may be helpful for making this prediction, such as the average ticket price, the number of performances taking place that week, and the theater’s seat capacity. We can build a <em>multiple</em> linear regression to make this prediction with this data.</p>
+<p>Before we build the regression model, let’s take note of the components that this model will need to consist of:</p>
+<ol style="list-style-type: decimal">
+<li>The dependent variable that we want to predict (Highlighted in blue)</li>
+<li>The independent variables that we want to make predictions with (Highlighted in pink)</li>
+<li>The data frame that contains all of these variables (Highlighted in orange)</li>
+</ol>
+<pre><code class='language-r'><code>multiple_regression <- lm(formula = <span style='color:cornflowerblue'>seats_sold</span> ~<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='color:deeppink'>avg_ticket_price + performances + seats_in_theatre</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = <span style='color:orange'>broadway</span>)</code></code></pre>
+<p>To view the results from this model, we can use the <code>summary()</code> function as follows:</p>
+<pre class="r"><code>summary(multiple_regression)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = seats_sold ~ avg_ticket_price + performances + seats_in_theatre, 
+##     data = broadway)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -11449.0   -962.5    214.0   1162.6  13054.3 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      -2.849e+03  3.597e+01  -79.20   &lt;2e-16 ***
+## avg_ticket_price  1.655e+01  2.040e-01   81.11   &lt;2e-16 ***
+## performances      1.637e+02  3.556e+00   46.05   &lt;2e-16 ***
+## seats_in_theatre  6.813e+00  2.222e-02  306.66   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1697 on 47520 degrees of freedom
+## Multiple R-squared:  0.7164, Adjusted R-squared:  0.7164 
+## F-statistic: 4.002e+04 on 3 and 47520 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>We can also do a <em>simple</em> linear regression with only one independent variable as follows:</p>
+<pre><code class='language-r'><code>simple_regression <- lm(formula = <span style='color:cornflowerblue'>seats_sold</span> ~<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='color:deeppink'>pct_capacity</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = <span style='color:orange'>broadway</span>)</code></code></pre>
+<p>We can view the results from the model again using <code>summary()</code>.</p>
+<pre class="r"><code>summary(simple_regression)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = seats_sold ~ pct_capacity, data = broadway)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -9555.8 -1611.3  -178.6  1829.4 15925.8 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -1228.73      52.92  -23.22   &lt;2e-16 ***
+## pct_capacity 11363.63      64.39  176.49   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2476 on 47522 degrees of freedom
+## Multiple R-squared:  0.3959, Adjusted R-squared:  0.3959 
+## F-statistic: 3.115e+04 on 1 and 47522 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="section-example-combining-mean-median-and-lm" class="section level4">
+<h4>Example: Combining <code>mean()</code>, <code>median()</code>, and <code>lm()</code></h4>
+<p>We can even use <code>mean()</code> and <code>median()</code> together with <code>lm()</code>. For example, we can make predictions for the mean and median value of an independent variable.</p>
+<pre><code class='language-r'><code>predict(simple_regression,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.frame(pct_capacity = <span style='background-color:#ffff7f'>mean</span>(broadway$pct_capacity),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;na.rm = TRUE))</code></code></pre>
+<pre><code>
+##       1 
+## 7893.45
+</code></pre>
+<pre><code class='language-r'><code>predict(simple_regression,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data.frame(pct_capacity = <span style='background-color:#ffff7f'>median</span>(broadway$pct_capacity),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;na.rm = TRUE))</code></code></pre>
+<pre><code>
+##       1 
+## 8237.17
+</code></pre>
+<p>Notice that this code uses the <code>predict()</code> function which is not covered in this tutorial, but you can learn more about it in the documentation provided <a href="https://www.rdocumentation.org/packages/raster/versions/3.4-5/topics/predict">here</a>.</p>
+</div>
+</div>
+<div id="section-exercises" class="section level3">
+<h3>Exercises</h3>
+<p>This section will ask you to complete exercises based on what you’ve learned from the previous section.</p>
+<div id="section-exercise-1" class="section level4">
+<h4>Exercise 1</h4>
+<p>We want to predict the number of seats sold <code>seats_sold</code> based on the number of performances <code>performances</code>. Fill in the blanks for the code below to create a simple linear regression model.</p>
+<pre><code class='language-r'><code><span style='background-color:#ffff7f'> &nbsp;</span>(formula = <span style='background-color:#ffff7f'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span style='background-color:#ffff7f'> </span> <span style='background-color:#ffff7f'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>,<br>&nbsp;&nbsp;&nbsp;data = <span style='background-color:#ffff7f'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>)</code></code></pre>
+<p>You’ll notice that there are 5 blanks in total that you’ll need to fill.</p>
+<p><div class="panel-heading tutorial-quiz-title"><span data-i18n="text.quiz">Quiz</span></div></p>
+<div class="panel panel-default">
+<div data-label="summary-fill-in-blanks-1" class="tutorial-question panel-body">
+<div id="summary-fill-in-blanks-1-answer_container" class="shiny-html-output"></div>
+<div id="summary-fill-in-blanks-1-message_container" class="shiny-html-output"></div>
+<div id="summary-fill-in-blanks-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="summary-fill-in-blanks-2" class="tutorial-question panel-body">
+<div id="summary-fill-in-blanks-2-answer_container" class="shiny-html-output"></div>
+<div id="summary-fill-in-blanks-2-message_container" class="shiny-html-output"></div>
+<div id="summary-fill-in-blanks-2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="summary-fill-in-blanks-3" class="tutorial-question panel-body">
+<div id="summary-fill-in-blanks-3-answer_container" class="shiny-html-output"></div>
+<div id="summary-fill-in-blanks-3-message_container" class="shiny-html-output"></div>
+<div id="summary-fill-in-blanks-3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="summary-fill-in-blanks-4" class="tutorial-question panel-body">
+<div id="summary-fill-in-blanks-4-answer_container" class="shiny-html-output"></div>
+<div id="summary-fill-in-blanks-4-message_container" class="shiny-html-output"></div>
+<div id="summary-fill-in-blanks-4-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="summary-fill-in-blanks-5" class="tutorial-question panel-body">
+<div id="summary-fill-in-blanks-5-answer_container" class="shiny-html-output"></div>
+<div id="summary-fill-in-blanks-5-message_container" class="shiny-html-output"></div>
+<div id="summary-fill-in-blanks-5-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-exercise-2" class="section level4">
+<h4>Exercise 2</h4>
+<p>If we want to create a simple linear regression model for a <em>subset</em> of the data, we will need to add another argument to <code>lm()</code> to let it know which subset we want. For example, we may want to create a regression for observations that have less than 12 performances.</p>
+<p>Use the code from above in addition to the <code>subset</code> parameter to do this.</p>
+<div class="tutorial-exercise" data-label="summary-statistics-exercise-2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="summary-statistics-exercise-2-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>lm(formula = seats_sold ~ performances,
+   data = broadway,
+   subset = performances &lt; 12)</code></pre>
+</div>
+</div>
+<div id="section-exercise-3" class="section level4">
+<h4>Exercise 3</h4>
+<div class="panel panel-default">
+<div data-label="summary-statistics-true-statements" class="tutorial-question panel-body">
+<div id="summary-statistics-true-statements-answer_container" class="shiny-html-output"></div>
+<div id="summary-statistics-true-statements-message_container" class="shiny-html-output"></div>
+<div id="summary-statistics-true-statements-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+</div>
+<div id="section-common-mistakes-errors" class="section level3">
+<h3>Common Mistakes &amp; Errors</h3>
+<p>Here are some common mistakes and errors you may come across:</p>
+<ul>
+<li>You try to create a formula within the <code>lm()</code> function without using the appropriate operators (i.e., <code>~</code> to separate the dependent variable from the independent variable(s), or <code>+</code> to separate the independent variables)</li>
+</ul>
+</div>
+<div id="section-next-steps" class="section level3">
+<h3>Next Steps</h3>
+<p>If you would like to read more about these functions, here are some additional resources you may find helpful:</p>
+<ul>
+<li><a href="https://r4ds.had.co.nz/model-building.html">R for Data Science - Chapter 24: Model building</a>.</li>
+</ul>
+</div>
+</div>
+<div id="section-for-and-while" class="section level2">
+<h2>for() and while()</h2>
+<p>Written by Yena Joo.</p>
+<div id="section-introduction-2" class="section level3">
+<h3>Introduction</h3>
+<p>In this lesson, you will learn about “loops”, and how to use the function <code>for</code> and <code>while</code>. It is one of the key concepts that is widely used and fundamental for any kind of programming languages.</p>
+<div id="section-what-are-loops" class="section level4">
+<h4>What are Loops?</h4>
+<p><strong>insert pics</strong> Loops, or iterations are a step that the program automatically goes through a certain logical conditions or a range of a list, array, vector, dataset, and many more. Loop allows code to be executed repeatedly, which is used often in programming to repeat a specific block of code. You can make hundreds and thousands of redundant codes into a few lines of simple code using loops.</p>
+<p><strong>You can iterate through:</strong><br />
+- vectors: <code>fruits &lt;- c('apple', 'banana', 'mango')</code><br />
+- lists: <code>list &lt;- list(1, 2, "melon")</code> - datasets/tibble - range of numbers - sequence: <code>seq(from=0,to=8,by=2)</code></p>
+<p><strong>Prerequisite skills include:</strong><br />
+- You should be familiar with the basic data manipulation.<br />
+- You should understand how vectors, lists, tibble, etc. works</p>
+<p><strong>Highlights:</strong><br />
+- How <code>for</code> and <code>while</code> loops work and some examples<br />
+- Differences between the two<br />
+- Nested Loops<br />
+- <code>break</code> in loops</p>
+</div>
+<div id="section-packages" class="section level4">
+<h4>Packages</h4>
+<pre class="r"><code>library(tidyverse)</code></pre>
+</div>
+</div>
+<div id="section-video" class="section level3">
+<h3>Video</h3>
+<div class="figure">
+<img src="" alt="" />
+<p class="caption">upload video here!!!!</p>
+</div>
+</div>
+<div id="section-for-loop" class="section level3">
+<h3>For Loop</h3>
+<div id="section-structure" class="section level4">
+<h4>Structure</h4>
+<pre class="r"><code>for(var in iterable) { 
+  #statement
+  print(var)
+}
+#another statement</code></pre>
+<p>The structure of the for loop is simple. You start with <code>for()</code> to indicate that you are going to use the for loop. The argument to the <code>for()</code> consists of a variable, which takes items from iterable one by one. Iterable is a collection of objects(like a list, vector, sequence, etc.) For each iteration in the <code>for</code> loop, a value is taken from the list and assigned to the variable, and the following statement in the curly braces, <code>{}</code> is evaluated.</p>
+<p>Let’s take a look at a simple example.</p>
+<pre class="r"><code>index&lt;-seq(1,10,by=2) 
+for(i in index){ 
+  print(i) 
+}</code></pre>
+<pre><code>## [1] 1
+## [1] 3
+## [1] 5
+## [1] 7
+## [1] 9</code></pre>
+<p>Here is sequences from 1 to 10, by 2. If you iterate through the sequence using for loop and print each variable, each value is taken from the sequence and print, which is the statement in the curly braces <code>{}</code>.</p>
+</div>
+<div id="section-mutating-a-dataset-using-for-loop" class="section level4">
+<h4>Mutating a Dataset using <code>for()</code> loop</h4>
+<p>Now, let’s use a different dataset to add some new variables using for loop, and get some useful information. Let’s first create a simple dataset of grades of each student in <code>math</code>, <code>cs</code>, <code>sta</code> courses.</p>
+<pre class="r"><code>set.seed(6055)
+student_id &lt;- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+math &lt;- sample(c(60:100), size=10, replace=TRUE)
+cs &lt;- sample(c(60:100), size=10, replace=TRUE)
+sta &lt;- sample(c(60:100), size=10, replace=TRUE) 
+# tibble()
+student_data &lt;- tibble(student_id, math, cs, sta)
+student_data</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["student_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["math"],"name":[2],"type":["int"],"align":["right"]},{"label":["cs"],"name":[3],"type":["int"],"align":["right"]},{"label":["sta"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"67","3":"87","4":"66"},{"1":"2","2":"72","3":"92","4":"88"},{"1":"3","2":"81","3":"99","4":"73"},{"1":"4","2":"62","3":"94","4":"100"},{"1":"5","2":"62","3":"86","4":"98"},{"1":"6","2":"80","3":"93","4":"63"},{"1":"7","2":"65","3":"74","4":"86"},{"1":"8","2":"96","3":"97","4":"86"},{"1":"9","2":"96","3":"66","4":"66"},{"1":"10","2":"83","3":"72","4":"87"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code># data.frame()
+student &lt;- data.frame(student_id, math, cs, sta)
+student</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["student_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["math"],"name":[2],"type":["int"],"align":["right"]},{"label":["cs"],"name":[3],"type":["int"],"align":["right"]},{"label":["sta"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"67","3":"87","4":"66"},{"1":"2","2":"72","3":"92","4":"88"},{"1":"3","2":"81","3":"99","4":"73"},{"1":"4","2":"62","3":"94","4":"100"},{"1":"5","2":"62","3":"86","4":"98"},{"1":"6","2":"80","3":"93","4":"63"},{"1":"7","2":"65","3":"74","4":"86"},{"1":"8","2":"96","3":"97","4":"86"},{"1":"9","2":"96","3":"66","4":"66"},{"1":"10","2":"83","3":"72","4":"87"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Then, let’s say we want to see each student’s total mark as well as their average mark. First, we have to assign numeric variable names for <code>avg</code> and <code>tot</code>, and n is going to be the number of students, which is number of rows of the data.</p>
+<pre class="r"><code># empty vector
+avg &lt;- numeric()
+tot &lt;- numeric()
+n &lt;- nrow(student)  # number of students</code></pre>
+<p>We will now use <code>for</code> loop iterating from range 1 to the number of students, and for each iteration, we will assign <code>tot</code> be the total mark of <code>math</code>, <code>cs</code>, and <code>sta</code>. Average grade would be total grade divided by 3 courses.</p>
+<pre class="r"><code># tot and avg
+for(i in 1:nrow(student)){
+  tot[i] &lt;- student$math[i] + student$cs[i] + student$sta[i]
+  avg[i] &lt;- round(tot[i]/3, 2)
+}
+
+# new col
+student$tot &lt;- tot
+student$avg &lt;- avg
+
+student</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["student_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["math"],"name":[2],"type":["int"],"align":["right"]},{"label":["cs"],"name":[3],"type":["int"],"align":["right"]},{"label":["sta"],"name":[4],"type":["int"],"align":["right"]},{"label":["tot"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["avg"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"67","3":"87","4":"66","5":"220","6":"73.33"},{"1":"2","2":"72","3":"92","4":"88","5":"252","6":"84.00"},{"1":"3","2":"81","3":"99","4":"73","5":"253","6":"84.33"},{"1":"4","2":"62","3":"94","4":"100","5":"256","6":"85.33"},{"1":"5","2":"62","3":"86","4":"98","5":"246","6":"82.00"},{"1":"6","2":"80","3":"93","4":"63","5":"236","6":"78.67"},{"1":"7","2":"65","3":"74","4":"86","5":"225","6":"75.00"},{"1":"8","2":"96","3":"97","4":"86","5":"279","6":"93.00"},{"1":"9","2":"96","3":"66","4":"66","5":"228","6":"76.00"},{"1":"10","2":"83","3":"72","4":"87","5":"242","6":"80.67"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Let’s say we want to know how many students got their average grade higher than 80 which is A. We can use <code>for</code> in this case, to go through each student’s average grade, and determine if the average grade is over 80, we can increase the arbitrary variable assigned- <code>a</code>- by 1 in each iteration.</p>
+<pre class="r"><code>a &lt;- 0
+for (i in 1:nrow(student)) {
+  if(student$avg[i] &gt;= 80){
+    a = a + 1
+  }
+}
+a</code></pre>
+<pre><code>## [1] 6</code></pre>
+</div>
+<div id="section-nested-for-loop" class="section level4">
+<h4>Nested <code>for()</code> Loop</h4>
+<p>A nested <code>for</code> loop is a loop within a loop. They are useful for when you want to repeat a statement several times for several things.</p>
+<p>Nested <code>for</code> loops are often used to manipulate a bi-dimensional array by setting its elements to specific values.</p>
+<p>The placing of one loop inside the body of another loop is called nesting. When you “nest” two loops, the outer loop takes control of the number of complete repetitions of the inner loop. Thus inner loop iterates n times where the length of the array of inner for loop is n, for every execution of Outer loop.</p>
+<p>Let’s take a look at a simple example.</p>
+<pre class="r"><code>for(i in 1:2) {
+  for(j in 1:3) {
+    print(i*j);
+    }
+}</code></pre>
+<pre><code>## [1] 1
+## [1] 2
+## [1] 3
+## [1] 2
+## [1] 4
+## [1] 6</code></pre>
+<p>The outer for loop iterates through c(1, 2), and the inner loop is c(1, 2, 3) First, i = 1. We have to iterate through 1, 2, 3 now for j. <code>1*1</code>, <code>1*2</code>, <code>1*3</code> is executed respectively. Same for i = 2.<br />
+One thing you might have noticed, the number of</p>
+</div>
+</div>
+<div id="section-while-loop" class="section level3">
+<h3>while() loop</h3>
+<ul>
+<li>while loops are used to loop until a specific condition is met.</li>
+<li>can be used when the exact number of iterations is not known a priori,</li>
+</ul>
+<div id="section-structure-1" class="section level4">
+<h4>Structure</h4>
+<pre class="r"><code>while (condition) {
+  statement
+}</code></pre>
+<p>The structure of while loop is similar to the for loop. <code>condition</code> is evaluated whether it is <code>TRUE</code> or <code>False</code>. It enters the body of the loop, which is the <code>statement</code> when the result of the condition is <code>TRUE</code>. Then, after executing the statement, the same process is repeated until <code>condition</code> has a <code>FALSE</code> result, and the loop exits.</p>
+</div>
+<div id="section-example" class="section level4">
+<h4>Example</h4>
+<p>Let’s start with a simple example without using a dataset.</p>
+<pre class="r"><code>i &lt;- 0 
+while (i &lt; 5){
+  print(i)
+  i = i+1
+}</code></pre>
+<pre><code>## [1] 0
+## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4</code></pre>
+<pre class="r"><code>i </code></pre>
+<pre><code>## [1] 5</code></pre>
+<p>Here, the condition is <code>i &lt; 5</code>, which evaluates <code>TRUE</code> in the first loop, since 1 &lt; 5.<br />
+So, the loop enters the body, prints 1 , and i is incremented by 1 since the body is <code>i = i + 1</code>. In the next iteration, 2 &lt; 5 so the loop repeats the same step, until i becomes 5. 5 is not smaller (<code>&lt;</code>) than 5, which evaluates <code>FALSE</code> in the condition <code>i &lt; 5</code>. Here, the loop terminates.</p>
+</div>
+</div>
+<div id="section-differences-between-for-vs-while" class="section level3">
+<h3>Differences between for() vs while()</h3>
+<ul>
+<li><code>For</code> is used when you know how many iterations the code should go through.</li>
+<li><code>While</code> is used when the number of iteration depends on the condition, and evaluates whether the condition is <code>TRUE</code> or <code>FALSE</code>. If it is evaluated False, the loop terminates.</li>
+<li>which means, In while loops, most of the time you will need to code the incrementation yourself such as <code>i = i + 1</code> so the loop would terminate at some point.</li>
+</ul>
+</div>
+<div id="section-exercises-1" class="section level3">
+<h3>Exercises</h3>
+<div id="section-question-1" class="section level4">
+<h4>Question 1</h4>
+<p>Here is a simple <code>for</code> loop code:</p>
+<pre class="r"><code>example &lt;- c(1, 2, 3)
+for (i in example){
+  print(example[i])
+}</code></pre>
+<div class="panel panel-default">
+<div data-label="forq1" class="tutorial-question panel-body">
+<div id="forq1-answer_container" class="shiny-html-output"></div>
+<div id="forq1-message_container" class="shiny-html-output"></div>
+<div id="forq1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-question-2" class="section level4">
+<h4>Question 2</h4>
+Here is a dataset of people who climbed Mount Himalayan. How many members were injured? Use <code>for</code> loop to get the answer.(Hint: look for the variable <code>injured</code> to set the <code>if</code> condition inside the loop)
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["expedition_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["member_id"],"name":[2],"type":["chr"],"align":["left"]},{"label":["peak_id"],"name":[3],"type":["chr"],"align":["left"]},{"label":["peak_name"],"name":[4],"type":["chr"],"align":["left"]},{"label":["year"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["season"],"name":[6],"type":["chr"],"align":["left"]},{"label":["sex"],"name":[7],"type":["chr"],"align":["left"]},{"label":["age"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["citizenship"],"name":[9],"type":["chr"],"align":["left"]},{"label":["expedition_role"],"name":[10],"type":["chr"],"align":["left"]},{"label":["hired"],"name":[11],"type":["lgl"],"align":["right"]},{"label":["highpoint_metres"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["success"],"name":[13],"type":["lgl"],"align":["right"]},{"label":["solo"],"name":[14],"type":["lgl"],"align":["right"]},{"label":["oxygen_used"],"name":[15],"type":["lgl"],"align":["right"]},{"label":["died"],"name":[16],"type":["lgl"],"align":["right"]},{"label":["death_cause"],"name":[17],"type":["chr"],"align":["left"]},{"label":["death_height_metres"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["injured"],"name":[19],"type":["lgl"],"align":["right"]},{"label":["injury_type"],"name":[20],"type":["chr"],"align":["left"]},{"label":["injury_height_metres"],"name":[21],"type":["dbl"],"align":["right"]}],"data":[{"1":"AMAD78301","2":"AMAD78301-01","3":"AMAD","4":"Ama Dablam","5":"1978","6":"Autumn","7":"M","8":"40","9":"France","10":"Leader","11":"FALSE","12":"NA","13":"FALSE","14":"FALSE","15":"FALSE","16":"FALSE","17":"NA","18":"NA","19":"FALSE","20":"NA","21":"NA"},{"1":"AMAD78301","2":"AMAD78301-02","3":"AMAD","4":"Ama Dablam","5":"1978","6":"Autumn","7":"M","8":"41","9":"France","10":"Deputy Leader","11":"FALSE","12":"6000","13":"FALSE","14":"FALSE","15":"FALSE","16":"FALSE","17":"NA","18":"NA","19":"FALSE","20":"NA","21":"NA"},{"1":"AMAD78301","2":"AMAD78301-03","3":"AMAD","4":"Ama Dablam","5":"1978","6":"Autumn","7":"M","8":"27","9":"France","10":"Climber","11":"FALSE","12":"NA","13":"FALSE","14":"FALSE","15":"FALSE","16":"FALSE","17":"NA","18":"NA","19":"FALSE","20":"NA","21":"NA"},{"1":"AMAD78301","2":"AMAD78301-04","3":"AMAD","4":"Ama Dablam","5":"1978","6":"Autumn","7":"M","8":"40","9":"France","10":"Exp Doctor","11":"FALSE","12":"6000","13":"FALSE","14":"FALSE","15":"FALSE","16":"FALSE","17":"NA","18":"NA","19":"FALSE","20":"NA","21":"NA"},{"1":"AMAD78301","2":"AMAD78301-05","3":"AMAD","4":"Ama Dablam","5":"1978","6":"Autumn","7":"M","8":"34","9":"France","10":"Climber","11":"FALSE","12":"NA","13":"FALSE","14":"FALSE","15":"FALSE","16":"FALSE","17":"NA","18":"NA","19":"FALSE","20":"NA","21":"NA"},{"1":"AMAD78301","2":"AMAD78301-06","3":"AMAD","4":"Ama Dablam","5":"1978","6":"Autumn","7":"M","8":"25","9":"France","10":"Climber","11":"FALSE","12":"6000","13":"FALSE","14":"FALSE","15":"FALSE","16":"FALSE","17":"NA","18":"NA","19":"FALSE","20":"NA","21":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="tutorial-exercise" data-label="forq2" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>x &lt;- 0 </code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="forq2-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>x &lt;- 0 
+
+for (i in 1:nrow(members)){
+  if(members$injured[i] == T){
+    x = x + 1
+  }
+}
+x</code></pre>
+</div>
+</div>
+<div id="section-question-3" class="section level4">
+<h4>Question 3</h4>
+<p>The following is a simple <code>while</code> loop code.</p>
+<pre class="r"><code>i = 15
+while (i &gt; 10){
+  i = i -1
+}
+i </code></pre>
+<div class="panel panel-default">
+<div data-label="forq3" class="tutorial-question panel-body">
+<div id="forq3-answer_container" class="shiny-html-output"></div>
+<div id="forq3-message_container" class="shiny-html-output"></div>
+<div id="forq3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-question-4" class="section level4">
+<h4>Question 4</h4>
+<p>difference between while and for loop Using <code>while</code>, write a code that will execute the same result as the given code.</p>
+</div>
+</div>
+<div id="section-common-mistakes-errors-1" class="section level3">
+<h3>Common Mistakes &amp; Errors</h3>
+<ul>
+<li>If you only have one statement to execute, you don’t need to put the curly braces <code>{}</code>. However, if you have multiple statements, <code>{}</code> is necessary.</li>
+<li>Be aware on your use of the iterable object. For example, <code>for (i in student)</code> would not execute the result you want in the previous example.</li>
+<li>Think carefully of what statement you’re trying to iterate.</li>
+</ul>
+</div>
+<div id="section-next-steps-1" class="section level3">
+<h3>Next Steps</h3>
+<ul>
+<li>Practice how to manipulate data using <code>for</code> loops</li>
+</ul>
+</div>
+</div>
+<div id="section-c-seq-seq_along-rep" class="section level2">
+<h2>c(), seq(), seq_along() &amp; rep()</h2>
+<p>Written by Matthew Wankiewicz.</p>
+<div id="section-introduction-3" class="section level3">
+<h3>Introduction</h3>
+<p>In this lesson, you will learn how to:</p>
+<ul>
+<li>Learn how to make vectors/lists using <code>c()</code>.</li>
+<li>Create sequences using the <code>seq()</code> and <code>seq_along()</code> functions.</li>
+<li>Replicate values in a vector using <code>rep()</code>.</li>
+</ul>
+<p>Prerequisite skills include:</p>
+<ul>
+<li>General knowledge of using vectors in R.</li>
+</ul>
+<p>Highlights:</p>
+<ul>
+<li><code>c()</code> is useful for making vectors quickly.</li>
+<li><code>seq()</code> can help create sequences of numbers.</li>
+<li><code>seq_along()</code> can give you the position of… fill out</li>
+<li><code>rep()</code> can create a vector with a repeated value.</li>
+</ul>
+</div>
+<div id="section-the-content" class="section level3">
+<h3>The content</h3>
+<p>As you continue using to use R, you will find that making vectors will be something you use a lot. The <code>c()</code> function is amazing tool to help us create vectors. The <code>c()</code> function can make vectors from sets of numbers, letters, or both!</p>
+<p>Sometimes, you may find that you want to create different sequences of numbers, either for categorizing variables or just getting a list of random numbers. The <code>seq()</code> function is one of the best ways to achieve this. The <code>seq()</code> function gives us a list of numbers usually from 1 to the number you choose. You can also decide if the function skips numbers.</p>
+<p>The <code>seq_along()</code> function is useful for finding the index position of parts of a vector. Sometimes, you will have a vector will different values, and <code>seq_along()</code> is useful for finding which position the value is in.</p>
+<p>Another thing you may attempt to do in R is repeat values. Often times, you will repeat values when you want to make an “empty” vector which will store the results of simulations. The <code>rep()</code> function allows us to repeat strings or numbers a certain amount of times, which we can then save as a vector.</p>
+</div>
+<div id="section-arguments-1" class="section level3">
+<h3>Arguments</h3>
+<ul>
+<li><p><strong><code>c()</code>:</strong> The <code>c()</code> function takes one main argument and includes optional arguments. The main argument for <code>c()</code> are the values that you want to save as a vector. The arguments used can be any set of numbers or words, or both. For example we would use an entry could be: <code>test &lt;- c("This", "is", "example", 1)</code>.</p></li>
+<li><p><strong><code>seq()</code>:</strong> The <code>seq()</code> function can take 1 to 3 entries, depending on how specific you want your set of numbers to be. If you want a list of numbers from 1 to any number, you can simply use <code>seq(n)</code> where n is the number you want to stop at (if you do <code>seq(2)</code>, it will return the numbers 1 and 2.). If you want to specify where to start or stop, you can use the arguments <code>from =</code> and <code>to =</code>, which tells R where it should start and end. Lastly, if you want to change the increment of your sequence, you can use the <code>by =</code> argument.</p></li>
+<li><p><strong><code>seq_along():</code></strong> The <code>seq_along()</code> function takes one argument. The argument it takes is a vector for which it will give the index position of a data point. For example, if we use the <code>test</code> vector from the <code>c()</code> example above, the output of <code>seq_along(test)</code> would be 1 2 3 4.</p></li>
+<li><p><strong><code>rep()</code>:</strong> The <code>rep()</code> function takes two main arguments. The first argument is <code>x =</code>, or the vector/value you plan to repeat. The second argument is <code>times =</code>, the number of times you want to repeat the vector (if you don’t enter a value it defaults to 1). If we use our <code>test</code> variable with the <code>rep()</code> function, we can repeat the values of the vector as many times as we want.</p></li>
+</ul>
+</div>
+<div id="section-other-optional-arguments" class="section level3">
+<h3>Other Optional Arguments</h3>
+<ul>
+<li><p><strong><code>c()</code>:</strong> The optional arguments for <code>c()</code> are <code>recursive =</code> and <code>use.names =</code>. The recursive function is useful when the items you are vectoring includes a list. If you set <code>recursive = TRUE</code> it breaks down the list and converts it into a vector. If <code>recursive = FALSE</code> the vector is saved as a list (by default, <code>recursive = FALSE</code>, and it usually stays that way). The argument <code>use.names =</code> tells R whether or not to keep the names of the lists present when the vector is saved.</p></li>
+<li><p><strong><code>seq()</code>:</strong> The optional arguments for <code>seq()</code> are <code>length.out</code> and <code>along.with</code>. <code>length.out</code> tells R how many numbers you want to be present in the sequence of numbers. For example, if you set <code>length.out = 3</code> R will return 3 numbers, split up in even increments. <code>along.with =</code> is similar to length out, it takes a vector and returns the same amount of numbers as the length of that vector. If <code>along.with = 1:3</code>, it will return 3 numbers, split up in equal increments.</p></li>
+<li><p><strong><code>rep()</code>:</strong> The optional argument for <code>rep()</code> are <code>length.out</code> and <code>each</code>. <code>length.out</code> tells R how long it wants the output vector to be, similar to the main argument <code>times</code>. <code>each</code> only applies when you plan to repeat a vector. <code>each()</code> tells R how many times the first element of the vector should be repeated before it moves on to repeating the second element.</p></li>
+</ul>
+</div>
+<div id="section-questions-and-exercises" class="section level3">
+<h3>Questions and Exercises</h3>
+<div id="section-c" class="section level4">
+<h4><code>c()</code></h4>
+<p><strong>1.</strong></p>
+<div class="panel panel-default">
+<div data-label="q1cFunction" class="tutorial-question panel-body">
+<div id="q1cFunction-answer_container" class="shiny-html-output"></div>
+<div id="q1cFunction-message_container" class="shiny-html-output"></div>
+<div id="q1cFunction-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p><strong>2. Using the <code>c()</code> function, save a vector with the numbers 21, 31, and 42 in it. (Add the c() function beside the arrow.)</strong></p>
+<div class="tutorial-exercise" data-label="q2cFunction" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code># Enter code below
+
+vector &lt;- 
+vector</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="q2cFunction-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>vector &lt;- c(21, 31, 42)
+vector</code></pre>
+</div>
+<p>The <code>c()</code> function can save numbers but can also save words with numbers, try it out in the next exercise.</p>
+<p><strong>3. Save a vector with the numbers 21 and 31 along with the words “Statistics” and “Data”</strong></p>
+<div class="tutorial-exercise" data-label="q3cFunction" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code># Enter code below
+
+vector &lt;- 
+vector</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="q3cFunction-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>vector &lt;- c(21, 31, &quot;Statistics&quot;, &quot;Data&quot;)</code></pre>
+</div>
+</div>
+<div id="section-seq" class="section level4">
+<h4><code>seq()</code></h4>
+<p><strong>1. Using the seq() function, return the sequence of numbers starting at 2 and ending at 20, increasing by 2’s</strong></p>
+<div class="tutorial-exercise" data-label="q1seqFunc" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code># Enter code below</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="q1seqFunc-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>seq(from = 2, to = 20, by = 2)</code></pre>
+</div>
+<p><strong>2.</strong></p>
+<div class="panel panel-default">
+<div data-label="q2seqFunc" class="tutorial-question panel-body">
+<div id="q2seqFunc-answer_container" class="shiny-html-output"></div>
+<div id="q2seqFunc-message_container" class="shiny-html-output"></div>
+<div id="q2seqFunc-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p><strong>3. Using the <code>length.out</code> argument in the <code>seq()</code> function, return the sequence of FOUR numbers starting at 25 and ending at 100.</strong></p>
+<div class="tutorial-exercise" data-label="q3seqFunc" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code># Enter code below</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="q3seqFunc-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>seq(from = 25, to = 100, length.out = 4)</code></pre>
+</div>
+</div>
+<div id="section-seq_along" class="section level4">
+<h4><code>seq_along()</code></h4>
+<p><strong>You can use the <code>seq_along()</code> function to find the index position of elements in a vector, run the code chunk below to see how it works</strong></p>
+<div class="tutorial-exercise" data-label="seq-alongExample1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>vector &lt;- c(&quot;dog&quot;, &quot;cat&quot;, &quot;fish&quot;, &quot;cow&quot;)
+vector
+seq_along(vector)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p><strong>1. Now, create a vector containing the words “stats”, “science”, “math”, “R” and use the <code>seq_along()</code> function to find the index positions of each word.</strong></p>
+<div class="tutorial-exercise" data-label="seq-alongExercise1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code># Enter code below
+vector &lt;- </code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="seq-alongExercise1-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>vector &lt;- c(&quot;stats&quot;, &quot;science&quot;, &quot;math&quot;, &quot;R&quot;)
+seq_along(vector)</code></pre>
+</div>
+</div>
+<div id="section-rep" class="section level4">
+<h4><code>rep()</code></h4>
+<strong>1. Using the <code>rep()</code> function, repeat the word “dog” 7 times.</strong>
+<div class="tutorial-exercise" data-label="q1repFunc" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code># Enter code below</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="q1repFunc-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>rep(x = &quot;dog&quot;, times = 7) 
+
+# OR
+
+rep(&quot;dog&quot;, 7)</code></pre>
+</div>
+<p><strong>2. Save a vector with the words: “University”, “of”, and “Toronto”. Once that vector is saved, use the <code>each</code> argument in the <code>rep()</code> function and repeat each word 3 times.</strong></p>
+<div class="tutorial-exercise" data-label="q2repFunc" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code># Enter code below
+vector &lt;- </code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="q2repFunc-solution" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>vector &lt;- c(&quot;University&quot;, &quot;of&quot;, &quot;Toronto&quot;)
+rep(x = vector, each = 3)</code></pre>
+</div>
+</div>
+</div>
+<div id="section-common-mistakes-errors-2" class="section level3">
+<h3>Common Mistakes &amp; Errors</h3>
+<p>Here are some common errors that can occur for each of the functions discussed in this section:</p>
+<p><strong><code>c()</code>:</strong> - Error: object ‘string’ not found This means that R thinks you’re trying to save an existing vector under the name ‘string’ (will likely be different). To fix this, add quotations marks around the word that R is having an issue with. If that doesn’t work, there may be a typo.</p>
+<p><strong><code>seq()</code>:</strong> - Some functions in R can work without specifically defining arguments (<code>ggplot(aes(x, y))</code> is the same as <code>ggplot(aes(x = x, y = y))</code>). The <code>seq()</code> function needs each argument to be written out if you plan to use more arguments than <code>from</code> and <code>to</code>.</p>
+<p><strong><code>seq_along()</code></strong> - Error: object ‘string’ not found In this case, it means that the vector that R is trying to find does not exist. This likely means that there was a typo.</p>
+<p><strong><code>rep()</code></strong> - Error: object ‘string’ not found As mentioned above, R does not recognize an object entered into the function. You likely have a typo or you should put quotation marks around the string you want to repeat.</p>
+</div>
+<div id="section-next-steps-2" class="section level3">
+<h3>Next Steps</h3>
+<p>Some next steps include:</p>
+<ul>
+<li><p>Looking at more examples of <code>rep()</code> and <code>seq()</code> in action: <a href="https://bookdown.org/ndphillips/YaRrr/vectors.html" class="uri">https://bookdown.org/ndphillips/YaRrr/vectors.html</a></p></li>
+<li><p>R4DS’s explanation of using iteration (include the <code>seq_along()</code> function): <a href="https://r4ds.had.co.nz/iteration.html" class="uri">https://r4ds.had.co.nz/iteration.html</a></p></li>
+</ul>
+</div>
+</div>
+<div id="section-summary-and-next-steps" class="section level2">
+<h2>Summary, and next steps</h2>
+<p>In this level, we covered a lot of different funcations from base R that you’ll use all the time in statistics courses.</p>
+
+<script type="application/shiny-prerendered" data-context="server-start">
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(learnr)
+library(flair)
+library(gradethis)
+gradethis::gradethis_setup()
+# library(palmerpenguins)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::clear_exercise_setup_chunks()
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::event_trigger(session, "session_stop")
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_setup_chunk("__setup__", c("knitr::opts_chunk$set(echo = TRUE)", "", "library(tidyverse)", 
+"library(learnr)", "library(flair)", "library(gradethis)", "gradethis::gradethis_setup()", 
+"# library(palmerpenguins)"), overwrite = FALSE)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_setup_chunk("__setup__", c("knitr::opts_chunk$set(echo = TRUE)", "", "library(tidyverse)", 
+"library(learnr)", "library(flair)", "library(gradethis)", "gradethis::gradethis_setup()", 
+"# library(palmerpenguins)"), overwrite = FALSE)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "summary-fill-in-blanks-1", 
+    question = structure("What should the first blank be?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_a36d7d8", 
+        option = "summary", value = "summary", label = structure("summary", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7f7fcc1", 
+        option = "predict", value = "predict", label = structure("predict", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4b97b2c", 
+        option = "lm", value = "lm", label = structure("lm", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "summary-fill-in-blanks-1-answer", question = "summary-fill-in-blanks-1"), 
+    loading = structure("<strong>Loading:<\u002fstrong> \nWhat should the first blank be?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+    "character")), random_answer_order = TRUE, allow_retry = TRUE, 
+    seed = 1722761091.69778, options = list()), class = c("learnr_radio", 
+"tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "summary-fill-in-blanks-2", 
+    question = structure("What should the second blank be?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_6fa124f", 
+        option = "pct_capacity", value = "pct_capacity", label = structure("pct_capacity", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b4f3965", 
+        option = "seats_sold", value = "seats_sold", label = structure("seats_sold", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_56269c1", 
+        option = "formula", value = "formula", label = structure("formula", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_281f014", 
+        option = "performances", value = "performances", label = structure("performances", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "summary-fill-in-blanks-2-answer", question = "summary-fill-in-blanks-2"), 
+    loading = structure("<strong>Loading:<\u002fstrong> \nWhat should the second blank be?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+    "character")), random_answer_order = TRUE, allow_retry = TRUE, 
+    seed = 117916927.445091, options = list()), class = c("learnr_radio", 
+"tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "summary-fill-in-blanks-3", 
+    question = structure("What should the third blank be?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_e779275", 
+        option = "~", value = "~", label = structure("~", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_142932d", 
+        option = " = ", value = " = ", label = structure("= ", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b852d10", 
+        option = "\\-", value = "\\-", label = structure("-", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8c75c9a", 
+        option = "+", value = "+", label = structure("+", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "summary-fill-in-blanks-3-answer", question = "summary-fill-in-blanks-3"), 
+    loading = structure("<strong>Loading:<\u002fstrong> \nWhat should the third blank be?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+    "character")), random_answer_order = TRUE, allow_retry = TRUE, 
+    seed = 2070821552.5357, options = list()), class = c("learnr_radio", 
+"tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "summary-fill-in-blanks-4", 
+    question = structure("What should the fourth blank be?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_7cf2be7", 
+        option = "pct_capacity", value = "pct_capacity", label = structure("pct_capacity", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bdee38b", 
+        option = "seats_sold", value = "seats_sold", label = structure("seats_sold", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2320225", 
+        option = "formula", value = "formula", label = structure("formula", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8ef9d8", 
+        option = "performances", value = "performances", label = structure("performances", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "summary-fill-in-blanks-4-answer", question = "summary-fill-in-blanks-4"), 
+    loading = structure("<strong>Loading:<\u002fstrong> \nWhat should the fourth blank be?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+    "character")), random_answer_order = TRUE, allow_retry = TRUE, 
+    seed = 667902633.688984, options = list()), class = c("learnr_radio", 
+"tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "summary-fill-in-blanks-5", 
+    question = structure("What should the fifth blank be?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_79fe171", 
+        option = "df", value = "df", label = structure("df", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_292bb22", 
+        option = "data", value = "data", label = structure("data", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a60e2d3", 
+        option = "broadway", value = "broadway", label = structure("broadway", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "summary-fill-in-blanks-5-answer", question = "summary-fill-in-blanks-5"), 
+    loading = structure("<strong>Loading:<\u002fstrong> \nWhat should the fifth blank be?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+    "character")), random_answer_order = TRUE, allow_retry = TRUE, 
+    seed = 1802920963.16045, options = list()), class = c("learnr_radio", 
+"tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-summary-statistics-exercise-2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-summary-statistics-exercise-2-code-editor`)), session)
+output$`tutorial-exercise-summary-statistics-exercise-2-output` <- renderUI({
+  `tutorial-exercise-summary-statistics-exercise-2-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("summary-statistics-exercise-2", list(setup = NULL, chunks = list(list(label = "summary-statistics-exercise-2", 
+    code = "", opts = list(label = "\"summary-statistics-exercise-2\"", 
+        exercise = "TRUE", exercise.eval = "TRUE"), engine = "r")), 
+    code_check = structure("grade_code()", chunk_opts = list(
+        label = "summary-statistics-exercise-2-code-check")), 
+    error_check = NULL, check = NULL, solution = structure(c("lm(formula = seats_sold ~ performances,", 
+    "   data = broadway,", "   subset = performances < 12)"), chunk_opts = list(
+        label = "summary-statistics-exercise-2-solution", exercise = FALSE)), 
+    options = list(eval = TRUE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, strip.white = TRUE, 
+        size = "normalsize", background = "#F7F7F7", cache = 0, 
+        cache.path = "totally_addicted_to_base_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "totally_addicted_to_base_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
+        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+        exercise.error.check.code = "grade_this_code()", label = "summary-statistics-exercise-2", 
+        exercise = TRUE, exercise.eval = TRUE, code = "", out.width.px = 624, 
+        out.height.px = 384, params.src = "summary-statistics-exercise-2, exercise = TRUE, exercise.eval = TRUE", 
+        fig.alt = NULL, fig.num = 0L, exercise.df_print = "paged"), 
+    engine = "r"))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "summary-statistics-true-statements", 
+    question = structure("Which of these are true? Check all true statements.", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_d9e23e8", 
+        option = "It is possible to create a model for only a subset of the  observations using lm().", 
+        value = "It is possible to create a model for only a subset of the  observations using lm().", 
+        label = structure("It is possible to create a model for only a subset of the  observations using lm().", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_fa34dcf", 
+        option = "It is possible to include multiple independent variables  in the formula within lm().", 
+        value = "It is possible to include multiple independent variables  in the formula within lm().", 
+        label = structure("It is possible to include multiple independent variables  in the formula within lm().", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1721cac", 
+        option = "mean(), median(), and sd() exclude NAs from the calculation by default.", 
+        value = "mean(), median(), and sd() exclude NAs from the calculation by default.", 
+        label = structure("mean(), median(), and sd() exclude NAs from the calculation by default.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("mean(), median(), and sd() do not exclude NAs from  the calculation by default. You need to let R know  that you may have NA values in your data.", html = TRUE, class = c("html", 
+        "character"))), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f834cc4", 
+        option = "summary() does not provide any summary for non-numeric variables.", 
+        value = "summary() does not provide any summary for non-numeric variables.", 
+        label = structure("summary() does not provide any summary for non-numeric variables.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("summary() provides a non-numeric summary for non-numeric  variables, which includes the variable class and length.", html = TRUE, class = c("html", 
+        "character"))), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "summary-statistics-true-statements-answer", 
+        question = "summary-statistics-true-statements"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of these are true? Check all true statements.\n<br/><br/><br/>", html = TRUE, class = c("html", 
+    "character")), random_answer_order = TRUE, allow_retry = TRUE, 
+    seed = 461930306.784897, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "forq1", question = structure("What is the correct output of the code above? ", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_42f73cc", 
+    option = "1 2 3 ", value = "1 2 3 ", label = structure("1 2 3 ", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_54568c2", 
+    option = "(1, 2, 3) (1, 2, 3) (1, 2, 3) ", value = "(1, 2, 3) (1, 2, 3) (1, 2, 3) ", 
+    label = structure("(1, 2, 3) (1, 2, 3) (1, 2, 3) ", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("Check the statement again", html = TRUE, class = c("html", 
+    "character"))), class = c("tutorial_question_answer", "tutorial_quiz_answer"
+)), structure(list(id = "lnr_ans_31d2272", option = "3 2 1 ", 
+    value = "3 2 1 ", label = structure("3 2 1 ", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_475c350", 
+    option = "1", value = "1", label = structure("1", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Try again. You got this!", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Try again. You got this!", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "forq1-answer", question = "forq1"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat is the correct output of the code above? \n<br/><br/><br/>", html = TRUE, class = c("html", 
+"character")), random_answer_order = TRUE, allow_retry = TRUE, 
+    seed = 1133095803.47236, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-forq2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-forq2-code-editor`)), session)
+output$`tutorial-exercise-forq2-output` <- renderUI({
+  `tutorial-exercise-forq2-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("forq2", list(setup = NULL, chunks = list(list(label = "forq2", code = "x <- 0 \n", 
+    opts = list(label = "\"forq2\"", exercise.eval = "TRUE", 
+        exercise = "TRUE"), engine = "r")), code_check = NULL, 
+    error_check = NULL, check = NULL, solution = structure(c("x <- 0 ", 
+    "", "for (i in 1:nrow(members)){", "  if(members$injured[i] == T){", 
+    "    x = x + 1", "  }", "}", "x"), chunk_opts = list(label = "forq2-solution")), 
+    options = list(eval = TRUE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, strip.white = TRUE, 
+        size = "normalsize", background = "#F7F7F7", cache = 0, 
+        cache.path = "totally_addicted_to_base_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "totally_addicted_to_base_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
+        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+        exercise.error.check.code = "grade_this_code()", label = "forq2", 
+        exercise.eval = TRUE, exercise = TRUE, code = c("x <- 0 ", 
+        ""), out.width.px = 624, out.height.px = 384, params.src = "forq2, exercise.eval = TRUE, exercise=TRUE", 
+        fig.alt = NULL, fig.num = 0, exercise.df_print = "paged"), 
+    engine = "r"))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "forq3", question = structure("How many iterations does the while loop go through until it terminates?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_d3072b", 
+    option = "3", value = "3", label = structure("3", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f248cad", 
+    option = "4 ", value = "4 ", label = structure("4 ", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_22d390", 
+    option = "5", value = "5", label = structure("5", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3e656bf", 
+    option = "6", value = "6", label = structure("6", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Try again. You got this!", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Try again. You got this!", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "forq3-answer", question = "forq3"), loading = structure("<strong>Loading:<\u002fstrong> \nHow many iterations does the while loop go through until it terminates?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+"character")), random_answer_order = TRUE, allow_retry = TRUE, 
+    seed = 893173714.584084, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "q1cFunction", 
+    question = structure("What does the c() function do? (Select all that apply)", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_ab0197", 
+        option = "Creates a vector", value = "Creates a vector", 
+        label = structure("Creates a vector", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_fec64f3", 
+        option = "Plots a graph", value = "Plots a graph", label = structure("Plots a graph", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("Incorrect", html = TRUE, class = c("html", 
+        "character"))), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_23f4c81", 
+        option = "Repeats a certain value", value = "Repeats a certain value", 
+        label = structure("Repeats a certain value", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("Incorrect.", html = TRUE, class = c("html", 
+        "character"))), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_53a7a44", 
+        option = "Returns a sequence of numbers", value = "Returns a sequence of numbers", 
+        label = structure("Returns a sequence of numbers", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("Incorrect.", html = TRUE, class = c("html", 
+        "character"))), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "q1cFunction-answer", question = "q1cFunction"), 
+    loading = structure("<strong>Loading:<\u002fstrong> \nWhat does the c() function do? (Select all that apply)\n<br/><br/><br/>", html = TRUE, class = c("html", 
+    "character")), random_answer_order = TRUE, allow_retry = TRUE, 
+    seed = 1592373397.25849, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-q2cFunction-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-q2cFunction-code-editor`)), session)
+output$`tutorial-exercise-q2cFunction-output` <- renderUI({
+  `tutorial-exercise-q2cFunction-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("q2cFunction", list(setup = NULL, chunks = list(list(label = "q2cFunction", 
+    code = "# Enter code below\n\nvector <- \nvector", opts = list(
+        label = "\"q2cFunction\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = structure(c("", 
+    "vector <- c(21, 31, 42)", "vector"), chunk_opts = list(label = "q2cFunction-solution")), 
+    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, strip.white = TRUE, 
+        size = "normalsize", background = "#F7F7F7", cache = 0, 
+        cache.path = "totally_addicted_to_base_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "totally_addicted_to_base_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
+        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+        exercise.error.check.code = "grade_this_code()", label = "q2cFunction", 
+        exercise = TRUE, code = c("# Enter code below", "", "vector <- ", 
+        "vector"), out.width.px = 624, out.height.px = 384, params.src = "q2cFunction, exercise = TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r"))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-q3cFunction-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-q3cFunction-code-editor`)), session)
+output$`tutorial-exercise-q3cFunction-output` <- renderUI({
+  `tutorial-exercise-q3cFunction-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("q3cFunction", list(setup = NULL, chunks = list(list(label = "q3cFunction", 
+    code = "# Enter code below\n\nvector <- \nvector", opts = list(
+        label = "\"q3cFunction\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = structure(c("", 
+    "vector <- c(21, 31, \"Statistics\", \"Data\")"), chunk_opts = list(
+        label = "q3cFunction-solution")), options = list(eval = FALSE, 
+        echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
+        collapse = FALSE, prompt = FALSE, comment = NA, highlight = FALSE, 
+        strip.white = TRUE, size = "normalsize", background = "#F7F7F7", 
+        cache = 0, cache.path = "totally_addicted_to_base_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "totally_addicted_to_base_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
+        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+        exercise.error.check.code = "grade_this_code()", label = "q3cFunction", 
+        exercise = TRUE, code = c("# Enter code below", "", "vector <- ", 
+        "vector"), out.width.px = 624, out.height.px = 384, params.src = "q3cFunction, exercise = TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r"))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-q1seqFunc-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-q1seqFunc-code-editor`)), session)
+output$`tutorial-exercise-q1seqFunc-output` <- renderUI({
+  `tutorial-exercise-q1seqFunc-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("q1seqFunc", list(setup = NULL, chunks = list(list(label = "q1seqFunc", code = "# Enter code below\n\n", 
+    opts = list(label = "\"q1seqFunc\"", exercise = "TRUE"), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
+    solution = structure(c("", "seq(from = 2, to = 20, by = 2)"
+    ), chunk_opts = list(label = "q1seqFunc-solution")), options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, strip.white = TRUE, size = "normalsize", 
+        background = "#F7F7F7", cache = 0, cache.path = "totally_addicted_to_base_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "totally_addicted_to_base_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
+        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+        exercise.error.check.code = "grade_this_code()", label = "q1seqFunc", 
+        exercise = TRUE, code = c("# Enter code below", "", ""
+        ), out.width.px = 624, out.height.px = 384, params.src = "q1seqFunc, exercise = TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r"))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "q2seqFunc", 
+    question = structure("Which functions only returns a sequence of numbers? (Select all that apply.)", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_cf022ef", 
+        option = "seq()", value = "seq()", label = structure("seq()", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_15e24cf", 
+        option = "seq_along()", value = "seq_along()", label = structure("seq_along()", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1f5cf69", 
+        option = "c()", value = "c()", label = structure("c()", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("Incorrect.", html = TRUE, class = c("html", 
+        "character"))), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_71c45", 
+        option = "rep()", value = "rep()", label = structure("rep()", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("Although rep() does repeat values, it can repeat values that are not numbers.", html = TRUE, class = c("html", 
+        "character"))), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "q2seqFunc-answer", question = "q2seqFunc"), 
+    loading = structure("<strong>Loading:<\u002fstrong> \nWhich functions only returns a sequence of numbers? (Select all that apply.)\n<br/><br/><br/>", html = TRUE, class = c("html", 
+    "character")), random_answer_order = TRUE, allow_retry = TRUE, 
+    seed = 1485726594.30815, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-q3seqFunc-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-q3seqFunc-code-editor`)), session)
+output$`tutorial-exercise-q3seqFunc-output` <- renderUI({
+  `tutorial-exercise-q3seqFunc-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("q3seqFunc", list(setup = NULL, chunks = list(list(label = "q3seqFunc", code = "# Enter code below\n", 
+    opts = list(label = "\"q3seqFunc\"", exercise = "TRUE"), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
+    solution = structure(c("", "seq(from = 25, to = 100, length.out = 4)"
+    ), chunk_opts = list(label = "q3seqFunc-solution")), options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, strip.white = TRUE, size = "normalsize", 
+        background = "#F7F7F7", cache = 0, cache.path = "totally_addicted_to_base_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "totally_addicted_to_base_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
+        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+        exercise.error.check.code = "grade_this_code()", label = "q3seqFunc", 
+        exercise = TRUE, code = c("# Enter code below", ""), 
+        out.width.px = 624, out.height.px = 384, params.src = "q3seqFunc, exercise = TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r"))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-seq-alongExample1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-seq-alongExample1-code-editor`)), session)
+output$`tutorial-exercise-seq-alongExample1-output` <- renderUI({
+  `tutorial-exercise-seq-alongExample1-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("seq-alongExample1", list(setup = NULL, chunks = list(list(label = "seq-alongExample1", 
+    code = "vector <- c(\"dog\", \"cat\", \"fish\", \"cow\")\nvector\nseq_along(vector)", 
+    opts = list(label = "\"seq-alongExample1\"", exercise = "TRUE"), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
+    solution = NULL, options = list(eval = FALSE, echo = TRUE, 
+        results = "markup", tidy = FALSE, tidy.opts = NULL, collapse = FALSE, 
+        prompt = FALSE, comment = NA, highlight = FALSE, strip.white = TRUE, 
+        size = "normalsize", background = "#F7F7F7", cache = 0, 
+        cache.path = "totally_addicted_to_base_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "totally_addicted_to_base_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
+        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+        exercise.error.check.code = "grade_this_code()", label = "seq-alongExample1", 
+        exercise = TRUE, code = c("vector <- c(\"dog\", \"cat\", \"fish\", \"cow\")", 
+        "vector", "seq_along(vector)"), out.width.px = 624, out.height.px = 384, 
+        params.src = "seq-alongExample1, exercise = TRUE", fig.num = 0, 
+        exercise.df_print = "paged"), engine = "r"))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-seq-alongExercise1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-seq-alongExercise1-code-editor`)), session)
+output$`tutorial-exercise-seq-alongExercise1-output` <- renderUI({
+  `tutorial-exercise-seq-alongExercise1-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("seq-alongExercise1", list(setup = NULL, chunks = list(list(label = "seq-alongExercise1", 
+    code = "# Enter code below\nvector <- \n", opts = list(label = "\"seq-alongExercise1\"", 
+        exercise = "TRUE"), engine = "r")), code_check = NULL, 
+    error_check = NULL, check = NULL, solution = structure(c("", 
+    "vector <- c(\"stats\", \"science\", \"math\", \"R\")", "seq_along(vector)"
+    ), chunk_opts = list(label = "seq-alongExercise1-solution")), 
+    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, strip.white = TRUE, 
+        size = "normalsize", background = "#F7F7F7", cache = 0, 
+        cache.path = "totally_addicted_to_base_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "totally_addicted_to_base_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
+        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+        exercise.error.check.code = "grade_this_code()", label = "seq-alongExercise1", 
+        exercise = TRUE, code = c("# Enter code below", "vector <- ", 
+        ""), out.width.px = 624, out.height.px = 384, params.src = "seq-alongExercise1, exercise = TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r"))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-q1repFunc-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-q1repFunc-code-editor`)), session)
+output$`tutorial-exercise-q1repFunc-output` <- renderUI({
+  `tutorial-exercise-q1repFunc-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("q1repFunc", list(setup = NULL, chunks = list(list(label = "q1repFunc", code = "# Enter code below\n\n", 
+    opts = list(label = "\"q1repFunc\"", exercise = "TRUE"), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
+    solution = structure(c("", "rep(x = \"dog\", times = 7) ", 
+    "", "# OR", "", "rep(\"dog\", 7)"), chunk_opts = list(label = "q1repFunc-solution")), 
+    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, strip.white = TRUE, 
+        size = "normalsize", background = "#F7F7F7", cache = 0, 
+        cache.path = "totally_addicted_to_base_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "totally_addicted_to_base_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
+        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+        exercise.error.check.code = "grade_this_code()", label = "q1repFunc", 
+        exercise = TRUE, code = c("# Enter code below", "", ""
+        ), out.width.px = 624, out.height.px = 384, params.src = "q1repFunc, exercise = TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r"))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-q2repFunc-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-q2repFunc-code-editor`)), session)
+output$`tutorial-exercise-q2repFunc-output` <- renderUI({
+  `tutorial-exercise-q2repFunc-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache("q2repFunc", list(setup = NULL, chunks = list(list(label = "q2repFunc", code = "# Enter code below\nvector <- \n", 
+    opts = list(label = "\"q2repFunc\"", exercise = "TRUE"), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
+    solution = structure(c("", "vector <- c(\"University\", \"of\", \"Toronto\")", 
+    "rep(x = vector, each = 3)"), chunk_opts = list(label = "q2repFunc-solution")), 
+    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, strip.white = TRUE, 
+        size = "normalsize", background = "#F7F7F7", cache = 0, 
+        cache.path = "totally_addicted_to_base_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "totally_addicted_to_base_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, tutorial = TRUE, exercise.timelimit = 60, 
+        exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, ...) \n{\n    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, ...)\n}", 
+        exercise.error.check.code = "grade_this_code()", label = "q2repFunc", 
+        exercise = TRUE, code = c("# Enter code below", "vector <- ", 
+        ""), out.width.px = 624, out.height.px = 384, params.src = "q2repFunc, exercise = TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r"))
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9008"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9008"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9008"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["i18n"]},{"type":"character","attributes":{},"value":["1.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/i18n"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["i18next.min.js","tutorial-i18n-init.js"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["<script id=\"i18n-cstm-trns\" type=\"application/json\">{\"language\":\"en\",\"resources\":{\"en\":{\"translation\":{\"button\":{\"runcode\":\"Run Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hints\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Next Hint\",\"hintprev\":\"Previous Hint\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copy to Clipboard\",\"startover\":\"Start Over\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continue\",\"submitanswer\":\"Submit Answer\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Previous Topic\",\"nexttopic\":\"Next Topic\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Try Again\"},\"text\":{\"startover\":\"Start Over\",\"areyousure\":\"Are you sure you want to start over? (all exercise progress will be reset)\",\"youmustcomplete\":\"You must complete the\",\"exercise\":\"exercise\",\"exercise_plural\":\"exercises\",\"inthissection\":\"in this section before continuing.\",\"code\":\"Code\",\"enginecap\":\"{{engine}} $t(text.code)\",\"quiz\":\"Quiz\"}}},\"fr\":{\"translation\":{\"button\":{\"runcode\":\"Lancer le Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Indication\",\"hint_plural\":\"Indications\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Indication Suivante\",\"hintprev\":\"Indication Précédente\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copier dans le Presse-papier\",\"startover\":\"Recommencer\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuer\",\"submitanswer\":\"Soumettre\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Chapitre Précédent\",\"nexttopic\":\"Chapitre Suivant\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Réessayer\"},\"text\":{\"startover\":\"Recommencer\",\"areyousure\":\"Êtes-vous certains de vouloir recommencer? (La progression sera remise à zéro)\",\"youmustcomplete\":\"Vous devez d'abord compléter\",\"exercise\":\"l'exercice\",\"exercise_plural\":\"des exercices\",\"inthissection\":\"de cette section avec de continuer.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\"}}},\"es\":{\"translation\":{\"button\":{\"runcode\":\"Ejecutar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Pista\",\"hint_plural\":\"Pistas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Siguiente pista\",\"hintprev\":\"Pista anterior\",\"solution\":\"Solución\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar al portapapeles\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar respuesta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tema anterior\",\"nexttopic\":\"Tema siguiente\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Volver a intentar\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"¿De verdad quieres empezar de nuevo? (todo el progreso del ejercicio se perderá)\",\"youmustcomplete\":\"Debes completar\",\"exercise\":\"el ejercicio\",\"exercise_plural\":\"los ejercicios\",\"inthissection\":\"en esta sección antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Cuestionario\"}}},\"emo\":{\"translation\":{\"button\":{\"runcode\":\"🏃\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"💡\",\"hint_plural\":\"$t(button.hint)\",\"hinttitle\":\"$t(button.hint)\",\"solution\":\"🎯\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"📋\",\"startover\":\"⏮\",\"startovertitle\":\"Start Over\",\"continue\":\"✅\",\"submitanswer\":\"🆗\",\"submitanswertitle\":\"Submit Answer\",\"previoustopic\":\"⬅\",\"nexttopic\":\"➡\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"🔁\"},\"text\":{\"startover\":\"⏮\",\"areyousure\":\"🤔\",\"youmustcomplete\":\"⚠️ 👉 🧑‍💻\",\"exercise\":\"\",\"exercise_plural\":\"\",\"inthissection\":\"\",\"code\":\"💻\",\"enginecap\":\"$t(text.code) {{engine}}\"}}}}}<\/script>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.1.9008"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.css","css/v4-shims.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.6"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9008"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9008"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9008"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9008"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81]}},"value":[{"type":"character","attributes":{},"value":["assertthat","backports","base","broom","cellranger","checkmate","cli","colorspace","compiler","crayon","curl","datasets","DBI","dbplyr","digest","dplyr","ellipsis","evaluate","fansi","fastmap","flair","forcats","fs","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","haven","hms","htmltools","htmlwidgets","httpuv","httr","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","methods","mime","modelr","munsell","pillar","pkgconfig","promises","purrr","R6","Rcpp","readr","readxl","reprex","rlang","rmarkdown","rprojroot","rstudioapi","rvest","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","tools","utf8","utils","vctrs","withr","xfun","xml2","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.2.1","1.2.1","4.0.3","0.7.4","1.1.0","2.0.0","2.3.0","2.0-0","4.0.3","1.4.1","4.3","4.0.3","1.1.1","2.1.0","0.6.27","1.0.4","0.3.1","0.14","0.4.2","1.1.0","0.0.2","0.5.1","1.5.0","0.1.0","3.3.3","1.4.2","0.2.0.9001","4.0.3","4.0.3","4.0.3","0.3.0","2.3.1","1.0.0","0.5.1.9000","1.5.3","1.5.5","1.4.2","1.7.2","1.31","1.1.0.1","0.10.1.9008","0.2.0","1.7.9.2","2.0.1","1.1","4.0.3","0.9","0.1.8","0.5.0","1.4.7","2.0.3","1.2.0.1","0.3.4","2.5.0","1.0.6","1.4.0","1.3.1","1.0.0","0.4.10","2.6","2.0.2","0.13","0.3.6","1.1.1","1.6.0","4.0.3","1.5.3","1.4.0","3.0.6","1.1.2","1.1.0","1.3.0","4.0.3","1.1.4","4.0.3","0.3.6","2.4.1","0.21","1.3.2","1.8-4","2.2.1"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">DoSS Toolkit</h2>
+<h3 class="subtitle"><em>Totally addicted to base</em></h3>
+<h4 class="date"><em>17 February 2021</em></h4>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>

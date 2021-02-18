@@ -1,0 +1,1252 @@
+---
+title: "DoSS Toolkit"
+subtitle: "To ggplot or not to ggplot"
+date: "17 February 2021"
+output: 
+  learnr::tutorial:
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(learnr)
+library(flair)
+library(gradethis)
+gradethis::gradethis_setup()
+# library(palmerpenguins)
+```
+
+
+
+
+
+## Introduction
+
+I hope that this module will make you love plotting your data. When you're using data, there's almost nothing more important than just showing the data that you're interested in. The `ggplot2` package has become the go-to for graphing in R.
+
+It's a powerful and versatile tool and I think that you're going to love learning about it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## ggplot2::ggplot()
+
+Written by Shirley Deng.
+
+### Introduction to `ggplot()`
+
+Have you ever made a plot in base R? It's not very pretty. 
+
+Let's make one right now using the builtin `mtcars` dataset to take a look - below is a scatterplot made with base R.
+
+``` {r, ggplot-base-ex}
+plot(x = mtcars$wt, 
+     y = mtcars$mpg,
+     main = "Miles vs. Weight", 
+     xlab = "Car Weight (1000 lbs)", 
+     ylab = "Miles per US Gallon",
+     pch = 16
+)
+```
+
+Alternatively, we can make the same plot with the `ggplot2` package, using `ggplot()` and `geom_point()`.
+
+``` {r, ggplot-alt-ex}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(title = "Miles vs. Weight", 
+       x = "Car Weight (1000 lbs)", 
+       y = "Miles per US Gallon") +
+  theme_classic() +
+  theme(plot.title = element_text(hjust=0.5))
+```
+
+But `ggplot2` also allows us to customize our plots, and even plot them together as one figure.
+
+``` {r, ggplot-alt-ex-pretty}
+library(ggpubr)
+
+base_plot <- mtcars %>% 
+  ggplot(aes(x = wt, y = mpg))
+
+grey_plot <- base_plot +
+  geom_point(color = "#7570b3") +
+  labs(x = "Car Weight (1000 lbs)", y = "Miles per US Gallon", 
+       caption = "Using theme_grey()") +
+  theme_grey()
+
+minimal_plot <- base_plot + 
+  geom_point(color = "#66a61e") +
+  labs(x = "Car Weight (1000 lbs)", y = NULL, 
+       caption = "Using theme_minimal()") +
+  theme_minimal()
+
+theme_plots <- ggarrange(grey_plot, minimal_plot)
+theme_plots_title <- text_grob("Miles vs. Weight", face = "bold")
+annotate_figure(theme_plots, top = theme_plots_title)
+```
+
+Looks cleaner, right? Or at least more fun.
+
+### Using `ggplot()`
+
+#### What is `ggplot()` for?
+
+`ggplot2` is a package that allows us to make graphics in R. It's a part of the `tidyverse`, so when you load the `tidyverse` package, you've loaded `ggplot2` too.
+
+```{r ggplot-setup, eval=FALSE}
+library(tidyverse)
+```
+
+The `ggplot2::ggplot()` function is used to initialize plots in R. We use it to indicate the base of our plot - what data we're working with, and any plot aesthetics we'll be using.
+
+From there, we can add on layers to specify what the actual plots will be. This includes information on the type of graph we want, what we want its axes to look like, what we want its labels to look like, etc. 
+
+It may seem farfetched now, in the middle of a *pandemic*, but imagine going to a restaurant to eat. 
+
+You'd get seated in the restaurant you're going to eat in before you start to order food. We can think of `ggplot()` as getting seated in the restaurant, and adding additional layers as ordering food. You can add as many layers as you want at any time, just like how you can also order as many menu items as you want at any time.
+
+
+#### What arguments does `ggplot()` take?
+
+* `.data`: the dataframe we're working with as a base
+* `.mapping`: the aesthetics we're working with as a base - more on this below.
+
+#### What are aesthetics?
+
+That's a separate course in philosophy. 
+
+But, for our purposes, this argument is used to specify which variables of the dataframe we want to use for our plot's axes, among other options.
+
+For example, with our `mtcars` example from earlier, we wanted the `wt` variable on the x-axis and the `mpg` variable on the y-axis, so we used `mapping = aes(x = wt, y = mpg)`.
+
+##### Exercise 1
+
+What if we wanted to switch the axes, with `mpg` on the x-axis and `wt` on the x-axis? Try completing the code below to generate the plot.
+
+```{r ggplot-exercise1, exercise=TRUE}
+mtcars %>% 
+  ggplot(aes( , )) +
+  geom_point() +
+  labs(title = "Weight vs. Miles", 
+       x = "Miles per US Gallon",
+       y = "Car Weight (1000 lbs)")
+```
+
+```{r ggplot-exercise1-hint}
+aes(x = mpg, y = wt)
+```
+
+#### What else do we need to use `ggplot()` ? Layers
+
+Once we've set our `ggplot()` aesthetics, we need to specify what exactly we want to plot by using layers. This includes the type of plot - we use geom layers to do so.
+
+Some common geoms include:
+
+* `geom_bar()` - bar plot
+* `geom_boxplot()` - box and whiskers plot
+* `geom_histogram()` - histogram
+* `geom_point()` - scatterplot
+
+In Exercise 1 and our previous examples, we used `geom_point()` to specify that we wanted to plot a scatterplot.
+
+##### Example 1
+
+Let's take a look at the following example:
+
+```{r ggplot-example1, eval=FALSE}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(title = "Miles vs. Weight", 
+       x = "Car Weight (1000 lbs)", 
+       y = "Miles per US Gallon")
+```
+
+After we called `ggplot()`, we used a `+` to connect it with our `geom_point()`.
+
+Similarly, we added another layer - labels. We used another `+` to connect the labels `labs()` with the rest of the figure.
+
+There are also layers for changing the appearance of our plots. For example, `theme_void()` removes the axes and axes' labels:
+
+```{r ggplot-example1-void}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(title = "Miles vs. Weight", 
+       x = "Car Weight (1000 lbs)", 
+       y = "Miles per US Gallon") +
+  theme_void()
+```
+
+
+##### Exercise 2
+
+Notice that in Example 1, we specified the labels layer `labs()` first, and then used the `theme_void()` layer. 
+
+What if we used `theme_void()` first, and then `labs()`? Complete the code below.
+
+
+```{r ggplot-exercise2, exercise=TRUE}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  
+```
+
+```{r ggplot-exercise2-hint}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  theme_void() +
+  labs(title = "Miles vs. Weight", 
+       x = "Car Weight (1000 lbs)", 
+       y = "Miles per US Gallon")
+```
+
+Notice that we have no axes, but we do have axes labels, so the order we use our layers matters!
+
+
+### Handy Layers
+
+There are a number of other layers you might find handy for making plots and figures with `ggplot()`:
+
+#### Labels
+
+We saw earlier that we could specify labels using `labs()`, like in Example 1: 
+
+```{r ggplot-labels1}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(title = "Miles vs. Weight", 
+       x = "Car Weight (1000 lbs)", 
+       y = "Miles per US Gallon")
+```
+
+We can also make the exact same plot specifying labels separately in their own layers with `ggtitle()`, `xlab()`, and `ylab()`:
+
+```{r ggplot-labels2}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  ggtitle("Miles vs. Weight") + 
+  xlab("Car Weight (1000 lbs)") +
+  ylab("Miles per US Gallon")
+```
+
+#### Adjusting title positions
+
+Notice from our Labels section examples that by default, `ggplot()` will position our titles to the right.
+
+We can position the title to the centre using `theme(plot.title = element_text(hjust=0.5))`:
+
+```{r ggplot-titlecentre}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(title = "Miles vs. Weight", 
+       x = "Car Weight (1000 lbs)", 
+       y = "Miles per US Gallon") +
+  theme(plot.title = element_text(hjust=0.5))
+```
+
+#### Legends
+
+#### Faceting
+
+
+### Additional Resources and References
+
+* [`ggplot2` cheatsheet for quick reference](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+
+* [`ggplot2` complete reference](https://ggplot2.tidyverse.org/reference/)
+
+* [`ggplot2` themes reference](https://ggplot2.tidyverse.org/reference/ggtheme.html)
+
+* [`ggplot2` title positioning](https://rpubs.com/tuyenhavan/282317)
+
+* [`ggpubr` package reference, which can be helpful for arranging plots in a grid](https://cran.r-project.org/web/packages/ggpubr/ggpubr.pdf)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Bar charts
+
+Written by Matthew Wankiewicz.
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Plot bar charts using the `ggplot` package
+- Customize bar charts with `ggplot`
+
+Prerequisite skills include:
+
+- Having `ggplot` installed and loaded
+- Basic familiarity with `ggplot`
+
+Highlights:
+
+- Bar charts are the best way to display categorical data.
+- The `ggplot` function allows you to customize your bar graphs.
+
+### The content
+
+When you encounter a dataset that does not include numerical data, the best way to visualize what you are working with is a bar chart. Generally, bar charts will have the categorical variable on the x-axis, and the count/percentage on the y-axis.
+
+Bar charts are different from graphs like histograms because histograms display numerical variables while bar charts work best for categorical.
+
+Bar charts are useful for getting a view of how your data looks and seeing which groups appear the most. 
+
+### Arguments
+
+The main arguments for making bar charts is part of the `ggplot` function:
+
+- **data:** This represents the dataset you plan to use. You can either write `data = dataframe` or you can pipe the dataset into `ggplot`.
+- **`aes():`** This is where you place the argument that decides which variable you are focusing on.
+  - `x = variable:` This is the variable you want to display.
+  - `fill = variable:` This can change the fill of your bar depending on the different options in your variable. 
+- **`geom_bar():`** This is where you put any arguments to change the looks of your graph, whether it's colour or size of the bars.
+  - **`fill:`** This argument decides the colour of the inside of the bars.
+  - **`colour:`** This argument decides the colour of the outline of the bars.
+- The `labs` function is useful for adding titles and subtitles to your graph.
+  
+
+### Other Optional Arguments
+
+Some optional arguments for the `geom_bar()` function include:
+
+  - **`width:`** This argument changes the width of the bars, it defaults at 0.9.
+  - **`alpha:`** Changes the transparency of the bars.
+
+
+### Questions
+
+For this module, we will be using lemur data from Alex Cookson, https://github.com/tacookson/data/tree/master/duke-lemur-center.
+
+```{r read-data-bargraph, message=F}
+animals <- read_tsv("https://raw.githubusercontent.com/tacookson/data/master/duke-lemur-center/animals.txt")
+```
+
+Let's start with plotting a simple bar chart of the sex of the animals in the dataset. We will see that R names the x and y axis but does not add a title.
+```{r bar-chart-1, exercise = T}
+animals %>% ggplot(aes(sex)) + 
+  geom_bar()
+```
+
+We can also change the colours of the inside of the bars, using the fill argument. If we set it equal to green, we will get green bars.
+```{r bar-chart-fill, exercise = T}
+animals %>% ggplot(aes(sex)) +
+  geom_bar(fill = "green")
+```
+
+Similarly, we can also change the colour of the outline of the bars. If we set it to red, the outline of the bars will be red.
+```{r bar-chart-colour, exercise = T}
+animals %>% ggplot(aes(sex)) +
+  geom_bar(colour = "red")
+```
+
+Both the fill and colour arguments can be combined in the same call of the `geom_bar()` function
+
+```{r bar-chart-fill-col, exercise = T}
+animals %>% ggplot(aes(sex)) +
+  geom_bar(fill = "white", colour = "red")
+```
+
+You can also change the colour/fill by adding the argument to the `aes()` expression. Doing this will give a specific colour for each value in your fill variable.
+```{r bar-chart-fill-aes, exercise = T}
+animals %>% ggplot(aes(sex, fill = birth_type)) +
+  geom_bar(colour = "black")
+```
+
+#### Optional Arguments
+
+Using the same data, we can change the width of the bars. Using a width greater than 0.9 will make the bars wider, and using a width smaller than 0.9 will make them thinner.
+
+```{r bar-chart-width, exercise = T}
+animals %>% ggplot(aes(sex)) +
+  geom_bar(fill = "white", colour = "red", 
+           width = 1) 
+```
+
+#### Adding labels to your bar charts
+
+The `labs` function helps add labels such as titles, subtitles, and labels for the x and y axis.
+```{r bar-chart-title, exercise = T}
+animals %>% ggplot(aes(sex)) +
+  geom_bar(fill = "white", colour = "red") +
+  labs(title = "My bar chart's title",
+       subtitle = "Using animal data",
+       x = "Sex",
+       y = "Count")
+```
+
+For the most part, you wont really need to change the y-axis as it just gives the count, but make sure to change the x-axis if it is a confusing variable name.
+
+#### Plotting numeric variables
+
+You can still create bar charts using numeric variables, provided that there aren't too many different numbers present.
+
+```{r bar-chart-numeric, warning=F, exercise = T}
+animals %>% 
+  ggplot(aes(litter_size)) +
+  geom_bar() +
+  labs(title = "Distribution of Litter Sizes",
+       x = "Litter Size")
+```
+
+#### Rotating your bar chart
+
+The `coord_flip` function works to rotate the bar chart, giving a different view of the data. It also helps display the labels on the x-axis if they are overlapped. For this example, we can rotate the graph that was plotted above.
+
+```{r bar-graph-coord-flip, warning=F, exercise = T}
+animals %>% 
+  ggplot(aes(litter_size)) +
+  geom_bar() +
+  labs(title = "Distribution of Litter Sizes",
+       x = "Litter Size") +
+  coord_flip()
+```
+
+
+### Exercises
+
+#### Plot a Simple Bar Chart
+
+Create a bar chart of the type of birth for the lemurs in the `animals` dataset. (Hint: the variable for type of birth is `birth_type`)
+```{r bar-chart-q1, exercise = TRUE}
+# Enter code below
+animals
+```
+
+```{r bar-chart-q1-solution}
+
+animals %>% 
+  ggplot(aes(birth_type)) +
+  geom_bar()
+```
+
+#### Making your bar chart a little more interesting
+
+For this exercise, pick any colour to fill the bars of the bar chart and another colour for the outline. This time, plot the different types of species present in the dataset (don't worry about the labels overlapping, we'll address that later.)
+```{r bar-chart-q2, exercise = TRUE}
+# Enter code below, choose any colour you want
+
+```
+
+```{r bar-chart-q2-solution}
+
+animals %>% 
+  ggplot(aes(species)) + 
+  geom_bar(fill = "blue", colour = "green")
+```
+
+Since there were so many unique names in the species variable, it causes the x-axis labels to overlap. We can fix this using `coord_flip`, try it out for yourself! Plot the same graph as above, but use the `coord_flip` function
+
+```{r bar-chart-q2-2, exercise = TRUE}
+# Enter solution below
+
+```
+
+```{r bar-chart-q2-2-solution}
+
+animals %>% 
+  ggplot(aes(species)) + 
+  geom_bar(fill = "blue", colour = "green") + 
+  coord_flip()
+```
+
+#### Using the `aes()` fill option
+
+For this exercise, plot the distribution of species of Lemur present in the dataset. Then, fill each bar depending on the sex of the lemur.
+```{r bar-chart-q3, exercise = TRUE}
+
+animals %>% 
+```
+
+```{r bar-chart-q3-solution}
+
+animals %>% 
+  ggplot(aes(species, fill = sex)) + 
+  geom_bar() + 
+  coord_flip()
+```
+
+#### Check your understanding
+
+The next questions will focus on the plot below
+
+```{r bar-chart-quiz, echo=FALSE}
+animals %>% 
+  ggplot(aes(taxonomic_code)) +
+  geom_bar() + 
+  coord_flip() +
+  labs(title = "Distribution of Taxonomic Codes",
+       x = "Taxonomic Code")
+```
+
+```{r bar-chart-quiz-1, echo=FALSE}
+question("Select the functions that it looks like were used to make this bar chart.",
+         answer("ggplot", correct = T),
+         answer("coord_flip", correct = T),
+         answer("geom_bar", correct = T),
+         answer("geom_point", correct = F))
+```
+
+```{r bar-chart-quiz-2, echo=FALSE}
+question("If I wanted to change the colour of the **inside** of the bars, which argument would I need to use?",
+         answer("fill = colour", correct = T),
+         answer("colour = colour", correct = F),
+         answer("inside = colour", correct = F),
+         answer("bar_colour = colour", correct = F))
+```
+
+```{r bar-chart-quiz-3, echo=FALSE}
+question("What code chunk would make a plot identical to the plot above. (Feel free to copy these into your own R file)",
+  answer("animals %>% 
+  ggplot(aes(taxonomic_code)) +
+  geom_bar() +
+  labs(title = 'Distribution of Taxonomic Codes',
+       x = 'Taxonomic Code')", correct = F),
+  answer("animals %>% 
+  ggplot(aes(taxonomic_code)) +
+  geom_bar()", correct = FALSE),
+  answer("animals %>% 
+  ggplot(aes(taxonomic_code)) +
+  geom_bar() + 
+  coord_flip() +
+  labs(title = 'Distribution of Taxonomic Codes',
+       x = 'Taxonomic Code')", correct = T),
+  answer("animals %>% 
+  ggplot(aes(taxonomic_code)) +
+  geom_bar() + 
+  coord_flip()", correct = FALSE))
+```
+
+
+### Common Mistakes & Errors
+
+- If the outline for graphs shows up but there are no bars present, it likely occurred because you didn't add `geom_bar` to your expression.
+  
+- If your labels appear to overlap, you can try using `coord_flip` to space them out a bit. If that doesn't work, you can add the `theme` function and change the size, and angle of the text. For example, `theme(axis.text.x = element_text(angle=90))` puts the text at a 90 degree angle.
+
+- When connecting `ggplot` to `geom_bar` make sure you use a plus sign (+) instead of the pipe operator. 
+
+- If you get an error saying "object not found", it means that you may have missed a quotation mark around a colour or made a typo when referencing a variable.
+
+### Next Steps
+
+For more information on bar charts in R you can look at http://www.sthda.com/english/wiki/ggplot2-barplots-quick-start-guide-r-software-and-data-visualization
+
+Another great resource for the different type of bar charts you can make in R is https://www.learnbyexample.org/r-bar-plot-ggplot2/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Histograms
+
+Written by Haoluan Chen.
+
+
+### Introduction
+
+
+```{r, echo = FALSE, out.width="90%"}
+knitr::include_graphics("https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/ggplot2_exploratory.png?raw=true")
+```
+
+[Image by Allison Horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/ggplot2_exploratory.png)
+
+In this lesson, you will learn how to:
+
+- Create a histogram in R using ggplot2 package
+
+- Customize your histogram
+
+Prerequisite skills include:
+
+- Install and load ggplot2 packages
+
+- Basics of using ggplot2: e.g. `ggplot()`, `aes()`.
+
+Highlights:
+
+- Create a histogram with a real dataset
+
+### Making and customizing histograms
+
+#### What is a histogram?
+
+A histogram is a visual representation of the distribution of numerical data. It allows you to easily see where your data is concentrated and the variation of the data. It can help visually answer questions like:
+
+* what values in the dataset appear most often?
+* what is the range of values found in my data?
+
+Here, we have a book dataset from Alex Cookson. This dataset contains 9,000 children's books that have been rated from 1-5 stars. 
+
+```{r, eval = TRUE, include = FALSE}
+books <- readr::read_tsv(system.file("extdata", "childrens-books.txt", package = "DoSStoolkit", mustWork = TRUE))
+```
+
+
+```{r histogramdata, eval = FALSE, result = 'hide'}
+
+
+books <- readr::read_tsv("childrens-books.txt")
+
+
+```
+
+We can see that `rating` is a numerical variable, so we can create a histogram to visualize the rating distribution. 
+
+Using the following code, we can create our first and simplest histogram in R!
+
+```{r histogramsimple}
+books %>% 
+  ggplot(aes(rating)) + 
+  geom_histogram()
+```
+
+For the histogram it only requires one numeric variable as input (`rating` in this case). The function `geom_histogram()` automatically counts the number of numerical values that lie within specific ranges, called bins. Bins are defined by their lower bounds (inclusive); the upper bound is the lower bound of the next bin. 
+
+Looking at the histogram above, we can see that the x-axis (`rating`) is divided into small blocks (bins) and the y-axis represents the number if observations lie within that block. The warning is telling you there is missing values in the rating. We can ignore this for now.
+
+
+#### Other Optional Arguments
+
+In the geom_histogram function, we can adjust our bins' size, titles of the histogram, and color of our histogram. 
+
+##### Bin size
+
+We can adjust the bin size of our histogram by setting the optional parameter binwidth. 
+
+```{r histogrambins}
+books %>% 
+  ggplot(aes(rating)) + 
+  geom_histogram(binwidth = 1)
+```
+
+Here, I am setting the bin width equal to 1. This means that we divide the rating into bins of range 1. In this case, we have a bin with range [2.5,3.5), [3.5,4.5), and [4.5,5.5). Then, we count the number of ratings that lies within this range. From the above histogram, we can see that there is about 8000 books lies within the range of [3,4).
+
+Without specifying the binwidth, geom_histogram will automatically find an optimal bindwith. 
+ 
+
+##### Color and fill
+
+```{r histogramcolor}
+books %>% 
+  ggplot(aes(rating)) + 
+  geom_histogram(color ="red", fill = "light blue")
+```
+
+The color parameter specify the color of the boundary of each bin and the fill parameter specify the color of the bin. You can create change the color of your histogram to make more unique and appealing.
+
+##### Title, and name of the axises
+
+Using the `labs()` function in ggplot2 we can change the title and the name of the axes. 
+```{r histogramlables}
+books %>% 
+  ggplot(aes(rating)) + 
+  geom_histogram(color ="red", fill = "light blue") +
+  labs(title = "A historgram of children's book rating", 
+       x = "Book rating", y = "Number of books")
+```
+
+In the `labs()` function, `title` specifies the title of your plot, `x` specifies the name of the x-axis and `y` specifies the name of the y-axis.  
+
+
+### Exercises
+
+#### Exercise 1
+
+Please create a histogram for the ratings of the books that are published in 2010
+**Hint: filter in dplyr package maybe helpful**
+
+```{r histogramex1, exercise=TRUE, exercise.lines = 3}
+
+```
+
+#### Exercise 2
+
+Please change the bin width of your histogram in Exercise 1 to 0.2
+```{r histogramex2, exercise=TRUE, exercise.lines = 4}
+
+```
+
+#### Exercise 3
+
+Please change the colour and the fill of your histogram in Exercise 1 
+You can choose any colour you like from this website: https://www.rapidtables.com/web/color/RGB_Color.html
+You may use the colour name or the Hex code provided in the website.
+
+```{r histogramex3, exercise=TRUE, exercise.lines = 4}
+
+```
+
+
+#### Exercise 4
+
+```{r, echo = FALSE}
+books %>% 
+  ggplot(aes(rating)) + 
+  geom_histogram(binwidth = 0.5, color = 'light blue', fill = 'light blue')
+```
+
+
+
+
+```{r histogramex4, echo = FALSE}
+question("Which of the following code can produce above histogram? (Try to run the code on your computer!)",
+          answer("geom_histogram(binwidth = 0.1, color = 'light blue')"),
+          answer("books %>% ggplot(aes(rating)) + geom_histogram(binwidth = 0.5, color = 'light blue')"),
+          answer("books %>% ggplot(aes(rating)) + geom_histogram(binwidth = 0.5, color = 'light blue', fill = 'light blue')", correct = TRUE),
+          answer("books %>% ggplot(aes(rating)) + geom_histogram(binwidth = 0.1, color = 'light blue', fill = 'light blue')"),
+          allow_retry = TRUE)
+
+```
+
+
+#### Video Solutions
+
+![Exercise 1](https://youtu.be/85R2xZK97o4)
+![Exercise 2](https://youtu.be/cJHxbn2-R-4)
+![Exercise 3](https://youtu.be/FOaQIlORfdU)
+
+
+### Common Mistakes & Errors
+
+- Make sure your input variable is a numeric variable.
+- Make sure you are using `+` to connect the `ggplot()` and `geom_histogram()`, not the pipe operator `%>%` 
+- Check you have closed all the bracket
+
+### Next Steps
+
+For next step, you can customize your histogram with different colour, labels and change the line types. You can find examples in this website: http://www.sthda.com/english/wiki/ggplot2-histogram-plot-quick-start-guide-r-software-and-data-visualization
+
+In this website https://www.r-graph-gallery.com/histogram.html, you can find different types of histogram you can make in R it has codes that you can follow along. On the main page, there are many other types of visual representations you can build in R, such as box plot and scatter plot:https://www.r-graph-gallery.com/index.html 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Scatterplots
+
+*Coming soon!*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Various useful options including: facets, labels, and colours, breaks_pretty(), other
+
+Written by Yena Joo.
+
+### Introduction
+We learned how to create plots so far, now we are going to learn how to apply some additional functions to the graph to give them some changes. 
+
+In this lesson, you will learn how to:  
+- facet plots  
+- label plots  
+- change colors of the plots  
+- function `breaks_pretty()`  
+
+**Prerequisite skills include:**
+
+- You should be familiar with ggplot now. 
+- You also should be able to read and manipulate datasets. 
+
+**Highlights:**  
+Everything about how to make plots prettier!!
+
+#### Packages  
+```{r}
+library(ggplot2)
+```
+
+
+### Faceting
+With faceting, you can make multi-panel plots and control how the scales of one panel relate to the scales of another. Which means, it partitions a plot into multiple panels. Each panel shows a different subset of the data.
+
+There are two main functions for faceting :  
+- `facet_grid()`: produces a 2d grid of panels defined by variables which form the rows and columns.  
+- `facet_wrap()`:  "wraps" a 1d ribbon of panels into 2d.  
+
+#### `facet_grid()`
+facet_grid(x ~ y) will display x*y plots even if some plots are empty.  
+
+**Facet with one variable**  
+
+Here, I am using a dataset that contains the information of members who climbed the mountain Himalaya. Let's say, I would like to see the distribution of the sex of the members. 
+```{r  message = F, warning = F}
+members <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/members.csv')
+hist_p <- members %>% ggplot(aes(age)) + geom_histogram(fill = "light blue", bins = 10)
+
+# Split in vertical direction
+hist_p + facet_grid(sex ~ .)
+# Split in horizontal direction
+hist_p + facet_grid(. ~ sex)
+```
+Splitting in vertical direction can be done with putting whichever variable you want to facet on the left, `facet_grid(variable ~ .)`. Putting the variable on the right side would split horizontally.  
+
+
+**Facet with two variables**   
+You can also facet with two variables. Here, I will facet with variables `success` and `injured`. Since they are both type boolean, it would be better to label the categories using `labeller = label_both`. 
+```{r, message = F, warning = F}
+hist_p + facet_grid(success ~ injured, labeller=label_both)
+```
+ 
+ 
+
+#### `facet_wrap()`
+Facets can be placed side by side using the function facet_wrap() as follow :
+```{r message = F, warning = F}
+hist_p + facet_wrap(~ sex, , ncol=3)
+```
+`facet_wrap(x ~ y)`displays only the plots having actual values.
+THe function displays plots for every combination of the selected two variables.
+
+
+
+### Labelling ggplot
+
+ggplots can be labeled using `labs()`as follow:
+
+
+
+```{r, eval = TRUE, include = FALSE}
+japanese_blooming <- readr::read_csv(system.file("extdata", "temperatures-modern.csv", package = "DoSStoolkit", mustWork = TRUE))
+```
+
+
+
+
+```{r, eval = FALSE}
+japanese_blooming <- readr::read_csv("temperatures-modern.csv")
+```
+
+
+```{r}
+japanese_blooming %>% 
+  ggplot(aes(mean_temp_c)) + geom_histogram(fill = "pink", bins = 20) + 
+  labs(title = "This is a title",
+  subtitle = "This is a subtitle",
+  caption = "This is a caption",
+  tag = "This is a tag", 
+  x = "This is a x-axis label",
+  y= "This is an y-axis label")
+```
+ 
+#### Arguements for `labs()`
+
+- title: The text for the title.  
+- subtitle: The text for the subtitle for the plot which will be displayed below the title.  
+- caption: The text for the caption which will be displayed in the bottom-right of the plot by default.  
+- tag: The text for the tag label which will be displayed at the top-left of the plot by default.  
+- label: The title of the respective axis (for xlab() or ylab()) or of the plot (for ggtitle()).  
+- x: x-axis label  
+- y: y-axis label  
+
+#### Labeling without using `labs()`  
+
+- `xlab()` and `ylab()` adds the x-axis and y-axis labels.  
+- `ggtitle("title", subtitle = "subtitle")` adds a title and a subtitle.
+
+```{r}
+japanese_blooming %>% 
+  ggplot(aes(mean_temp_c)) + geom_histogram(fill = "pink", bins = 20) + 
+  xlab("another way to add x-axis label") + 
+  ylab("another way to add y-axis label") + 
+  ggtitle("Another way to add a title", subtitle = "Another way to add a subtitle")
+```
+
+
+
+### How to change colors of ggplot
+
+#### Change to a single color
+For plots such as boxplots and histogram, you can choose what color you want to "fill" and what color you want as an outline of the graph. When making ggplots, you just add `geom_PLOTTYPE(fill = "color", color = "color")`.
+```{r}
+# box plot
+ggplot(mtcars, aes(group=vs, y=wt)) +
+  geom_boxplot(fill='pink', color="red")
+# scatter plot
+ggplot(mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(color="dark red")
+```
+
+#### Change color by groups
+Also, you can set the color by groups of variable. It automatically sets up a legend of changing colors depending on the variable value, using `fill` or `color` `= VARIABLE NAME`. 
+```{r}
+# Box plot
+ggplot(mtcars, aes(group=vs, y=wt, fill = vs)) +
+  geom_boxplot()
+
+# Scatter plot
+ggplot(mtcars, aes(x=wt, y=mpg, color= mpg)) + geom_point()
+```
+
+
+#### basic theme changing
+theme_gray : gray background color and white grid lines   
+theme_bw : white background and gray grid lines   
+theme_linedraw : black lines around the plot  
+theme_light : light gray lines and axis (more attention towards the data)  
+theme_void: Empty theme, useful for plots with non-standard coordinates or for drawings
+theme_dark(): Dark background designed to make colours pop out  
+
+The functions theme_xx() can take the two arguments below :
+
+base_size : base font size (to change the size of all plot text elements)
+base_family : base font family
+
+*Note that, the function theme_set() changes the theme for the entire session.*   
+(The detailed information of the basic theme changing can be found at: http://www.sthda.com/english/wiki/ggplot2-themes-and-background-colors-the-3-elements)
+
+### `pretty_breaks()` or `breaks_pretty()` 
+`breaks_pretty()` uses default R break algorithm as implemented in pretty(). This is used often for splitting date/times. For example, when you want to divide 24 hours into 10 blocks, you would use the function `breaks_pretty` to split the time. 
+
+```{r, eval = F}
+pretty_breaks(n = 5, ...)
+breaks_pretty()
+```
+
+arguments:  
+n: desired number of breaks  
+...: other arguments passed on `pretty`  
+
+```{r}
+library(scales)
+one_month <- as.POSIXct(c("2020-05-01", "2020-06-01"))
+demo_datetime(one_month, breaks = breaks_pretty(4))
+
+# Tightly spaced date breaks often need custom labels too
+demo_datetime(one_month, breaks = pretty_breaks(12))
+demo_datetime(one_month,
+  breaks = breaks_pretty(12),
+  labels = label_date_short()
+)
+```
+in the parameter, you put the desired number of breaks. However, you may get slightly more or less breaks than what you put. 
+For example, I can request to break number from 1 to 10 into 5 parts. 
+```{r}
+a <- breaks_pretty(5)(1:10)
+a
+```
+Then it returns 6 parts, which is slightly more than what I requested.  
+
+Another example is to break dates into multiple parts.
+```{r}
+b <- pretty_breaks(n = 12)(as.Date(c("2020-01-01", "2021-01-01")))
+b
+```
+
+
+
+### Exercises
+
+#### Question 1
+using `facet_grid()`, divide the plot below by variable `vs`. 
+```{r q1_usefuloptions, exercise=TRUE, exercise.eval = TRUE}
+mtcars %>% ggplot(aes(y = mpg, x = cyl)) + geom_point()
+```
+
+```{r q1_usefuloptions-solution}
+plot <- mtcars %>% ggplot(aes(y = mpg, x = cyl)) + geom_point()
+plot + facet_grid(vs ~ .)
+```
+
+
+#### Question 2
+Label the following graph. Title should be 'scatter plot of mtcars', x-axis should be 'wt' and y-axis should be 'mpg'. 
+```{r q2_usefuloptions, exercise=TRUE, exercise.eval = TRUE}
+ggplot(mtcars, aes(x=wt, y=mpg, color= mpg)) + geom_point()
+```
+
+```{r q2_usefuloptions-solution, exercise=TRUE, exercise.eval = TRUE}
+ggplot(mtcars, aes(x=wt, y=mpg, color= mpg)) + geom_point()
+```
+
+#### Question 3
+Change the color of the scatter plot to 'pink'. 
+```{r, q3_usefuloptions, exercise=TRUE, exercise.eval = TRUE}
+ggplot(mtcars, aes(x=wt, y=mpg)) + 
+  geom_point()
+```
+```{r, q3_usefuloptions-solution, exercise=TRUE, exercise.eval = TRUE}
+ggplot(mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(color = 'pink')
+```
+
+
+### Next Steps
+
+Good visualizations can help the audience/readers remember the information or the message the plot contains. Try to make plots using useful options to make the graph readable & attractive.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Saving graphs and changing their size and other options
+
+Written by Yena Joo.
+
+
+### Introduction
+There are some situations where you may need pictures of the plots when writing on blogs or sending emails about the data you're analyzing. In that case, you would wonder  how to save and upload the plots created in r.  
+
+In this lesson, you will learn how to:
+- save graphs
+- change graph sizes
+
+**Prerequisite skills include:**  
+- You should know how to create graphs using `plot()` or `ggplot()`
+- You should know the formats of the image (such as png, jpeg, pdf)
+
+**Highlights:**  
+- jpeg, png, pdf  
+- `ggsave()`  
+- `unlink()`  
+
+
+### Saving Graphs 
+
+#### Save as Jpeg image
+Set the file name for the plot you are going to save using the function `jpeg(file = filename.jpeg)`, if you want to save as jpeg image. 
+We need to call the function `dev.off()` after plotting, which will return control to the screen.  
+```{r}
+jpeg(file="plot1.jpeg")
+ggplot(mtcars, aes(x=wt, y=mpg, color= wt)) + geom_point()
+dev.off()
+```
+
+
+#### Save as png image
+We can set the resolution we want using the `width` and `height` arguments.
+We can also set the full local path of the file we want to save if we don’t want to save it in the current directory.  
+
+You can save the file as png image by using the function `png(file = "filepath/filename.png")`. 
+```{r}
+png(file = "plot2.png", width = 500, height = 300)
+ggplot(mtcars, aes(mpg, wt)) + geom_point()
+dev.off()
+```
+
+#### Save as pdf file
+
+To save a plot as pdf format, we do the following using `pdf(file = 'filename.pdf')`. 
+```{r}
+pdf(file = "plot3.pdf")
+ggplot(mtcars, aes(mpg, wt)) + geom_point()
+dev.off()
+```
+
+
+#### Delete the saved image/file
+What if we want to delete the file from the directory? We can delete the file using the function `base::unlink('FILE NAME')`. 
+```{r}
+unlink("plot3.pdf")
+```
+
+#### `ggsave()`
+
+Instead of using dev.off(), there is another function we can use to save the created plots. We use `ggsave()` to the ggplots. Make sure put the correct format of the file after the file name as follows: 
+```{r}
+ggplot(mtcars, aes(mpg, wt)) + geom_point()
+ggsave("plot4.pdf")
+ggsave("plot4.png")
+ggsave("plot4.jpeg")
+ggsave("mtcars.pdf", width = 20, height = 20, units = "cm")
+```
+
+
+### Exercises
+
+#### Question 1
+Modify this code so you can save the following scatter plot into 10 x 10 cm graph in jpeg format, using `ggsave`. The file name should be `answer1`. 
+```{r q1_save, exercise.eval = TRUE, exercise=TRUE}
+ggplot(mtcars, aes(mpg, wt)) + geom_point()
+```
+
+```{r q1_save-solution}
+ggplot(mtcars, aes(mpg, wt)) + geom_point()
+ggsave("answer1.jpeg", width = 10, height = 10, units = "cm")
+```
+
+#### Question 2
+Now, delete the file using `unlink`. 
+```{r q2_save, exercise.eval = TRUE, exercise=TRUE}
+
+```
+
+```{r q2_save-solution}
+unlink("answer1.jpeg")
+```
+
+
+#### Question 3
+Now, using `dev.off()`, save the following plot as pdf. The name of the file should be ```iloveplot.pdf```. 
+```{r q3_save, exercise.eval = TRUE, exercise=TRUE}
+ggplot(mtcars, aes(x=wt, y=mpg, color= wt)) + geom_point()
+```
+
+```{r q3_save-solution}
+jpeg(file="iloveplot.pdf")
+ggplot(mtcars, aes(x=wt, y=mpg, color= wt)) + geom_point()
+dev.off()
+```
+
+
+### Next Steps
+
+#### Common Mistakes & Errors
+- Be careful when you set the local file path. 
+
+
+#### Next Steps
+- You can use the saved graph in your documents such as word, pptx, or even post the pictures online.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Summary, and next steps
+
+
+In this level, we touched on some useful data manipulation methods that you'll come across fairly often.
+
+
+
+
+
+
+
+
+
+
+
+
+
