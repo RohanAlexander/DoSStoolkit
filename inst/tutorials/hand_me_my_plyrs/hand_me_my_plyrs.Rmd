@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Hand me my plyrs"
-date: "17 February 2021"
+date: "18 February 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -32,6 +32,27 @@ The key package within the `tidyverse` is called `dplyr`, which is pronounced 'd
 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/l15xQTf1m4A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+
+
+
+
+
+
+
+
+
+## What is the tidyverse?
+
+*Coming soon*
+
+
+
+
+
+
 
 
 
@@ -79,7 +100,7 @@ where they live. There are 344 rows and 8 columns in this data set.
 knitr::include_graphics("images/32_penguins.png")
 ```
 
-Figure: The Palmer Penguins.
+Figure: The Palmer Penguins
 Credits: Allison Horst
 
 Here's a simple example using base R's `summary()` without the pipe.
@@ -162,7 +183,7 @@ ex1_sol <- penguins %>%
          species == "female") %>%
   summary()
 ```
-```{r exercise-1-check}
+```{r pipe-exercise-1-check}
 grade_result(pass_if(~identical(.result, ex1_sol)))
 ```
 
@@ -224,6 +245,8 @@ If you would like to read more about the pipe operator, here are some additional
 resources you may find helpful:
 
 - [R For Data Science: Chapter 18 - Pipes](https://r4ds.had.co.nz/pipes.html)
+
+
 
 
 

@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Totally addicted to base"
-date: "17 February 2021"
+date: "18 February 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -27,6 +27,25 @@ gradethis::gradethis_setup()
 ## Introduction
 
 In this module, we are going to explore 'base R'. This means that we don't need to load any packages - we're working with functions that come 'out of the box' as it were. Base is a very stable collection of functions that have been refined over decades. This is in contrast to the 'tidyverse', which we introduced in other modules, which is much newer. Some folks are passionate about the differences between them, but they're just tools that we use as appropriate. In this module we are going to cover some base functions that you'll use again and again in your R journey, especially in statistics.
+
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ccbvKaQeKRY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+
+
+
+
+
+
+
+## What is base?
+
+*Coming soon!*
+
+
 
 
 

@@ -36,6 +36,15 @@ In this module, we are going to explore data in R. In its heart of hearts, R is 
 
 
 
+## An overview of R and data
+
+*Coming soon!*
+
+
+
+
+
+
 
 
 
@@ -784,15 +793,396 @@ Now that you understand what vectors, matrices, dataframes and tibbles are. Some
 
 
 
-## length(), nrow(), and ncol()
-
-*Coming soon*
 
 
 
-## names(), cbind(), and rbind().
 
-*Coming soon!*
+
+
+
+
+
+
+
+
+
+## length(), nrow() and ncol()
+
+Written by Isaac Ehrlich.
+
+### Introduction
+
+Understanding the size and dimensions of your variables can be important in a variety of contexts.
+
+In this lesson, you will learn how to
+
+- Use `length()` to find the length of vectors
+- Use `nrow()` and `ncol()` to find the dimensions of matrices and data frames
+
+Prerequisites:
+
+- Understanding how to create vectors and data frames and their basic principles
+
+### Arguments
+
+####length()
+`length()` returns the length (number of items) in a vector. The only argument that `length()` takes is the vector.
+
+```{r lengthExample}
+x <- c("a", "b", "c", "d")
+length(x)
+```
+
+
+#### nrow() and ncol()
+
+`nrow()` and `ncol()` return the number of rows and columns of matrices and data frames, respectively. The only argument that `nrow()` and `ncol()` take is the matrix or data frame.
+
+```{r nrowExample}
+df <- data.frame(col1 = c("a", "b", "c", "d"), col2 = c(1,2,3,4))
+df
+
+# Number of Rows:
+nrow(df)
+
+# Number of Columns:
+ncol(df)
+```
+
+
+### Questions and Exercises
+
+####  length()
+
+For questions about `length()` we will be using the built in vector `fruit`, a vector of fruit names.
+
+**1.**
+
+```{r length-q1, echo = FALSE}
+question("length() returns the following information:",
+answer("The number of characters in a string"),
+answer("The number of objects in a vector", correct = TRUE),
+answer("The length (in centimeters) printing a vector will occupy on your screen"),
+allow_retry = TRUE)
+```
+
+
+**2. Save the length of the vector `fruit` as the variable `fruit_len`**
+
+```{r length-q2, echo = FALSE, exercise = TRUE}
+# Enter your code below
+
+fruit_len <- 
+fruit_len
+```
+
+```{r length-q2-solution}
+fruit_len <- length(fruit)
+
+```
+
+**3. Using indexing and the `length()` function, return the final object in `fruit`**
+
+```{r length-q3, echo = FALSE, exercise = TRUE}
+# Enter your code below
+
+last_fruit <- 
+last_fruit
+```
+
+```{r length-q3-solution}
+last_fruit <- fruit[length(fruit)]
+```
+
+#### nrow() and ncol()
+
+For questions about `nrow()` and `ncol()` we will be using the data frame `starwars`, which contians Star Wars characters and information about them, and a secret matrix.
+
+**1. Save the number of rows and number of columns in `starwars`**
+
+```{r nrow-q1, echo = FALSE, exercise = TRUE}
+# Enter your code below
+
+starwars_rows <- 
+starwars_cols <- 
+
+starwars_rows
+starwars_cols
+```
+
+```{r nrow-q1-solution}
+starwars_rows <- nrow(starwars)
+starwars_cols <- ncol(starwars)
+```
+
+**2. I've created a matrix, `secret_matrix`, the dimensions of which are a secret. Without printing out the number of rows and columns, check to see if `secret_matrix` is a square matrix (i.e. it has the same number of rows and columns)**
+
+```{r, echo = FALSE}
+secret_matrix <- matrix(1:12, 3, 4)
+```
+
+
+```{r nrow-q2, echo = FALSE, exercise = TRUE}
+# Enter your code below
+
+```
+
+```{r nrow-q2-solution}
+nrow(secret_matrix) == ncol(secret_matrix)
+```
+
+**3. Using indexing, `nrow()`, and `ncol()`, in one line, save the value in the bottom right corner of the matrix `secret_matrix`.**
+
+```{r nrow-q3, echo = FALSE, exercise = TRUE}
+# Enter your code below
+bottom_right_value <- secret_matrix[]
+
+bottom_right_value
+```
+
+```{r nrow-q3-solution}
+bottom_right_value <- secret_matrix[nrow(secret_matrix), ncol(secret_matrix)]
+```
+
+### Special Cases & Common Mistakes
+
+#### length()
+
+* Remember that `length()` returns the number of objects in a vector, not the number of digits or characters in a string. See examples below.
+```{r length-special-ex1}
+length("This sentence has 31 characters")
+length(c("This sentence has 31 characters", "This sentence has 7 less"))
+```
+
+* Although a vector is the correct input into `length()`, if the input is a dataframe, the output will be equal to the number of columns.
+```{r length-special-ex2}
+length(starwars) == ncol(starwars)
+```
+
+* If the input is a matrix, the output will be equal to the number of entries in the matrix.
+```{r length-special-ex3}
+length(secret_matrix) == nrow(secret_matrix) * ncol(secret_matrix)
+```
+
+
+#### nrow() and ncol()
+
+* Using a vector as input to `nrow()` or `ncol()` will output `NULL`
+```{r nrow-special}
+nrow(fruit)
+ncol(fruit)
+```
+
+
+### Overview and Next Steps
+
+`length()`, `nrow()`, and `ncol()`, are useful functions for finding the dimensions of variables. In the next section, we will continue exploring data frames and how to manipulate them.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## names(), rbind() and cbind()
+
+Written by Isaac Ehrlich.
+
+### Introduction
+
+For certain tasks, you may need to combine data frames and find information about them.
+
+In this lesson, you will learn how to
+
+* Use `names()` to find the column names of data frames
+* Use `rbind()` to combine two or more data frames by row
+* Use `cbind()` to combine two or more data frames by column
+
+Prerequisites:
+
+* Understanding how to data frames and their basic principles
+
+### Arguments
+
+#### names()
+The primary purpose of `names()` is to return the column names of a data frame. The only argument that `names()` takes is the data frame.
+```{r names-ex}
+head(starwars)
+names(starwars)
+```
+
+Using indexing, `names()` can also be used to change the column names of a data frame.
+```{r}
+# Change the tenth column name to home-planet
+names(starwars)[10] <- "home-planet"
+names(starwars)
+```
+
+#### rbind()
+The purpose of `rbind()` is to combine two (or more) data frames by row. The arguments to `rbind()` are two (or more) data frames. These data frames must have the same number of columns, and must have the same column names as well.
+```{r}
+letter_df <- data.frame(numbers = 1:26, strings = letters)
+words_df <- data.frame(numbers = 27:1006, strings = words)
+
+character_df <- rbind(letter_df, words_df)
+names(character_df)
+dim(character_df) # shows the number of rows and columns
+
+```
+
+#### cbind()
+The purpose of `cbind()` is to combine two (or more) data frames by column. The arguments to `cbind()` are two (or more) data frames. These data frames must have the same number of rows, or the number of rows must be multiples of one another. Note, in the case that the number of rows are multiples, the rows in the smaller data frame are repeated so they match the longer data frame.
+```{r}
+index_df <- data.frame(numbers = 1:5, letters = c("a", "b", "c", "d", "e"))
+names_df <- data.frame(vegetables = c("arugula", "broccoli", "cauliflower", "dill", "endive"),
+                       fruits = c("apricot", "banana", "cherry", "date", "elderberry"),
+                       flowers = c("aster", "begonia", "crocus", "daffodil", "echium"))
+
+combined_df <- cbind(index_df, names_df)
+names(combined_df)
+dim(combined_df) # shows the number of rows and columns
+
+```
+
+
+### Questions and Exercises
+
+#### names
+
+**1. Using the `presidential` data frame, save the column names, and then change the name of the second column to `inauguration-date**
+
+```{r names-q1, echo = FALSE, exercise = TRUE}
+# Enter your code below
+
+# Save column names
+presidential_col_names <- 
+presidential_col_names
+  
+
+# Change the second column name
+
+
+# Finally, print out the new column names
+names(presidential)
+```
+
+```{r names-q1-solution}
+presidential_col_names <- names(presidential)
+
+names(presidential)[2] <- "inauguration-date"
+```
+
+
+#### rbind()
+
+**2.**
+```{r rbind-q2, echo = FALSE}
+question("If you were to rbind() a data frame to itself, ",
+answer("the number of columns would double"),
+answer("the number of rows would double", correct = TRUE),
+answer("both the number of rows and the number of columns would double"),
+allow_retry = TRUE)
+```
+
+
+**3.**
+
+```{r rbind-q3, echo = FALSE}
+question("Select the following true statements about rbind() arguments",
+answer("The data frames must have the same number of columns", correct = TRUE),
+answer("The data frames must have the same number of rows"),
+answer("The column names of the data frames must be the same", correct = TRUE),
+answer("The data frames must have the same name"),
+allow_retry = TRUE)
+```
+
+**4. Bind the `presidential` data set to itself using `rbind()`.** 
+```{r rbind-q4, echo = FALSE, exercise = TRUE}
+# Enter your code below
+
+double_presidential <- 
+  
+dim(presidential)  
+dim(double_presidential)
+```
+
+```{r rbind-q4-solution}
+double_presidential <- rbind(presidential, presidential)
+```
+
+
+#### cbind()
+
+**5.**
+```{r cbind-q5, echo = FALSE}
+question("If you were to cbind() a data frame to itself, ",
+answer("the number of columns would double", correct = TRUE),
+answer("the number of rows would double"),
+answer("both the number of rows and the number of columns would double"),
+allow_retry = TRUE)
+```
+
+**6. Bind the `presidential` data set to itself using `cbind()`.** 
+```{r cbind-q6, echo = FALSE, exercise = TRUE}
+# Enter your code below
+
+double_presidential <- 
+  
+dim(presidential)  
+dim(double_presidential)
+```
+
+```{r cbind-q6-solution}
+double_presidential <- cbind(presidential, presidential)
+```
+
+### Special Cases & Common Mistakes
+
+The most common error with `rbind()` and `cbind()` occurs when the data frames do not meet the requirements (e.g. data frames have different number of columns for `rbind()` or different number of rows for `cbind()`). These will result in error messages such as "numbers of columns of arguments do not match" or "arguments imply differing number of rows". 
+
+Similarly, if the names of the columns do not match, `rbind()` will give a "names do not match previous names" error. You can use `names()` to check against this error.
+
+
+### Overview & Next Steps
+
+`names()` will return the column names of data frames and can be used to change column names as well. `rbind()` and `cbind()` combine data frames either by row or by column.
+
+In the next section, we will continue learning how to manipulate data frames.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## left_join(), anti_join(), full_join, etc
 

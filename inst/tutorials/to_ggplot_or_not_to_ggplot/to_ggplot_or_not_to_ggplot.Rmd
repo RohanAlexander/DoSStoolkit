@@ -48,7 +48,7 @@ It's a powerful and versatile tool and I think that you're going to love learnin
 
 
 
-## ggplot2::ggplot()
+## What is ggplot()?
 
 Written by Shirley Deng.
 
