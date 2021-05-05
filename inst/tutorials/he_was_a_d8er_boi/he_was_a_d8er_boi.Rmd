@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "He was a d8er boi"
-date: "17 February 2021"
+date: "4 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -18,6 +18,9 @@ library(flair)
 library(gradethis)
 gradethis::gradethis_setup()
 # library(palmerpenguins)
+library(glue)
+library(stringr)
+library(palmerpenguins)
 ```
 
 
@@ -36,9 +39,6 @@ In this module, we are going to explore data in R. In its heart of hearts, R is 
 
 
 
-## An overview of R and data
-
-*Coming soon!*
 
 
 
@@ -46,19 +46,146 @@ In this module, we are going to explore data in R. In its heart of hearts, R is 
 
 
 
+## Overview of R and data
+
+Written by Haoluan Chen.
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Get an overview of your dataset using head(), tail(), glimpse() and summary()
+
+Prerequisite skills include:
+
+- setup RStudio
+- run R code in the console
+- Install and load packages
+
+Highlights:
+
+- Using head(), tail(), glance() and summary() to understand your dataset
+
+
+### The content
+
+After you load your dataset into R, you should start looking into the data to see what kinds of data you are working with.
+
+Here are some useful functions that can help you to understand your dataset. 
+
+
+### head()
+The head() function takes in two parameters. The first parameter is the data frame, and the second parameter is the first number of rows you want to look at. (The "head" of your dataset)
+
+```{r headex}
+head(mtcars,3)
+```
+
+Here I have set the n equal to 3, so we are looking at the first three row of the mtcars dataset. 
 
 
 
+### tail()
+The tail() function also takes in two parameters. The first parameter is the data frame, and the second parameter is the last number of rows you want to look at. (The "tail" of your dataset) 
+
+
+```{r tailex}
+tail(mtcars, 3)
+```
+
+Here I have set the n equal to 3, so we are looking at the last three row of the mtcars dataset. 
+
+### glimpse()
+
+The glimpse() function takes in one parameter, which is the data frame. This function can tell you the number of rows and columns for your dataset. Additionally, you can get the name, data type, and first few observations of each variable.  
+
+```{r glimpseex}
+glimpse(mtcars)
+```
+
+Here, we see that the table mtcars contains 32 rows and 11 columns of data. All of the variables in this table are double-precision floating-point number, because <dbl> represents the double data type.
+
+### summary()
+
+Next, you may want to look at the summary statistics of your data set. The function summary can produce the following summary statistics for each of the variables. 
+
+- Min. : minimum value of the variable 
+- 1st.Qu. : the first quartile of the variable
+- Median: median of the variable
+- Mean: mean of the variable
+- 3rd Qu. : the third quartile of the variable
+- Max. maximum value of the variable
+
+
+```{r sumex}
+summary(mtcars)
+```
+
+What happens if you have other data types in your dataset? Here is a dataset called scores. It contains three variables student_ID, gender, and test_score. 
+
+
+```{r sumex2}
+scores <- tibble(student_ID = c("1", "2", "3", "4", "5", "6"),
+                 gender = as.factor(c("male", "male", "male","female","female","female")),
+               test_score = c(87, 76, 61, 80, 72, 69),
+               )
+scores
+```
+
+```{r sumex3}
+glimpse(scores)
+```
+
+Using the glimpse function, we know that student_ID is a character data type, gender is a factor data type, and test_score is a double data type.
+
+
+```{r sumex4}
+summary(scores)
+```
+
+For character data type (student_ID), we see the length, class, and Mode of this variable. Length tells us the number of observations, class, and Mode tells us the data type. 
+
+For factor data type(gender), we have the count of each factor. In this dataset, there are three female students and three male students. 
+
+For double data type(test_score), we have the summary statistics as we have seen before. 
+
+### Exercises
+
+### Exercise 1
+
+```{r headex2, echo = FALSE}
+question("If you want to look at the first 5 rows of the mtcars dataset, which code should you use?",
+          answer("head(mtcars,3)", correct = TRUE),
+          answer("tail(mtcars, 3)"),
+          answer("glimpse(mtcars)"),
+          answer("summary(mtcars)"),
+          allow_retry = TRUE)
+
+``` 
+
+### Exercise 2
+
+```{r summaryex, echo = FALSE}
+question("What is the output of summary() function for factor data type?",
+          answer("Summary statistics such as min and max"),
+          answer("Data type"),
+          answer("Count of each factor", correct = TRUE),
+          answer("Number of factors in the variable"),
+          allow_retry = TRUE)
+
+``` 
+
+### Exercise 3
+
+Here, we have a book dataset from Alex Cookson. This dataset contains 9,000 children's books that have been rated from 1-5 stars. Run the following code to your R and use the functions you learned in this tutorial to explore this dataset!
+
+**books <- read_tsv("https://raw.githubusercontent.com/tacookson/data/master/childrens-book-ratings/childrens-books.txt")**
 
 
 
-
-## class() and basics of data types
-
-*Coming soon!*
-
-
-
+### Next Steps
+Once you have fully understood the dataset you are working with. You may start using plots to get a graphical representation of your dataset. 
+You may read this chapter for more information! https://r4ds.had.co.nz/data-visualisation.html 
 
 
 
@@ -75,16 +202,17 @@ In this module, we are going to explore data in R. In its heart of hearts, R is 
 
 ## Strings with paste and glue and stringr
 
-Written by Marija Pejcinovska.
+Written by Marija Pejcinovska
+
 
 ### Introduction  
-
 
 In this lesson we'll cover a couple of ways in which you can paste strings to your data. We'll use the `paste()` and `paste0()` functions, both of which are part of base R,  as well as the `glue()` function in the `glue` package. As part of this tutorial, you will also get a first taste of the `stringr` package, which is a wonderful tool for handling strings.  
 
 Prerequisite skills:
 
 - Exposure to most of the material in the yellow-level tutorials would be helpful.
+
 
 
 ### Paste strings and data with `paste()` and `paste0()`
@@ -119,13 +247,13 @@ You can see that in the latter example the concatenation is term-by-term and the
 The argument `sep = ` in the function controls which character string is used to separate the terms. By default, the `paste()` function sets `sep = " "`, meaning concatenated terms are separated by empty space. We can set the separator to be any string character we'd like. 
 
 ```{r}
-## Leaving no space
+### Leaving no space
 paste(1:2, c("a", "b", "c"), sep = "")
 
-## Concatenating with a dash
+### Concatenating with a dash
 paste(1:2, c("a", "b", "c"), sep = "-")
 
-## Concatenating with a random letter
+### Concatenating with a random letter
 paste(1:2, c("a", "b", "c"), sep = "Y")
 
 ##..and so on
@@ -169,14 +297,11 @@ paste(student, "collected", badges, "DoSS tool-kit badges in the", term )
 
 ### "Gluing" your data with the `glue` package
 
-
-\
 The `glue` package is designed to make it easier to "stitch" or interpolate (or "glue") your data into strings. Its main function is quite similar in flavor to `paste()` (and `paste0()`), but a bit easier to use (this is especially true when compared to `sprintf()`; a function that we have not discussed here, but can similarly be used to concatenate strings and data).  
 
 You can download `glue` the usual way you would install all your other packages, that is, by calling `install.packages("glue")`.
 
 #### The functions of `glue`
-
 The glue package has three primary functions, `glue()`, `glue_data()` and `glue_collapse()`.   
 
 The **`glue()` function** works a bit like the `paste()` function. In the case of `glue()`, however, we use `{}` to wrap the R code we wish to reference inside the string. This makes it a bit more manageable compared to all the quotation marks, commas, and separators we need to keep track of when using `paste()`.
@@ -184,8 +309,6 @@ The **`glue()` function** works a bit like the `paste()` function. In the case o
 Let's refer back to our example from earlier and check out the syntax for `glue()`. Note that now everything is placed inside a single set of quotation marks and R objects are referenced within the string by wrapping them up in curly brackets. 
 
 ```{r student-example-glue}
-library(glue)
-
 student <- c("Rohan", "Monica")
 badges <- c(2,4)
 term <- c("Fall", "Spring")
@@ -213,17 +336,17 @@ As an example run the following code. See what happens if you change `glue_data(
 ```{r penguin-example-glue-data, exercise = TRUE, exercise.lines=12}
 
 library(palmerpenguins)
-# Check the data out
+## Check the data out
 penguins %>% 
   head()
 
-# "Glue" some data elements together
+## "Glue" some data elements together
 penguins %>% 
   slice(1:4) %>% 
   glue_data("This {species} penguin living on {island} \\
             island has flipper length {flipper_length_mm} mm") 
 
-# note: the "\\" symbol in the string code above is simply to force the string to appear as one line. 
+## note: the "\\" symbol in the string code above is simply to force the string to appear as one line. 
 
 ```
 
@@ -291,7 +414,6 @@ small_penguins
 
 
 ```{r small_penguins0, echo=TRUE}
-library(palmerpenguins)
 small_penguins <- penguins %>% 
   slice(1:7)
 small_penguins
@@ -299,11 +421,12 @@ small_penguins
 
 **Exercise 1**
 
-Use an appropriate function from the `glue` package to produce the following string "This penguin is of the species XXX from island XXX and has body mass of XXX g" describing the 6th penguin in `small_penguins`, where the three XXX should be species, island name, and body mass respectively. (Hint: Start with `small_penguins %>%`)
+Use an appropriate function from the `glue` package to produce the following string "This penguin is of the species XXX from island XXX and has body mass of XXX g" describing the 6th penguin in `small_penguins`, where the three XXX should be species, island name, and body mass respectively.
 
 
 ```{r ex1_glue_data, exercise=TRUE, exercise.lines=8, exercise.eval=FALSE, exercise.setup = "small_penguins"}
 
+small_penguins %>% 
 
   
 
@@ -391,595 +514,7 @@ small_penguins %>%
 ### Next Steps
 
 
-- This tutorial only briefly introduced you to the capabilities of the `stringr` package. Future tutorials will revisit this package and dive deeper into some of its functions. In the meantime you can learn more about this package in Hadley Wickham's book *"R for Data Science"*. The link here takes you to the chapter on strings which also introduces you to regular expressions (regular expressions are a bit tedious, but you might learn to like them if you end up working with text data a lot). https://r4ds.had.co.nz/strings.html 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Vectors, matrices, dataframes and tibbles
-
-Written by Matthew Wankiewicz.
-
-### Introduction
-
-In this lesson, you will learn:
-
-- What a vector is and how to create one in R.
-- The difference between matrices, dataframes and tibbles.
-- How to create matrices, dataframes and tibbles in R.
-
-Prerequisite skills include:
-
-- Familiarity with `c()` function
-- R installed on your computer/RStudio cloud account
-
-Highlights:
-
-- Vectors are data structures in R which can contain numbers, words, or logical operators among others.
-  - The `c()` function is usually the main way of creating vectors.
-- Matrices are objects in R that contain rows and columns. These matrices can be added and subtracted along with other matrices.
-  - The `matrix()` function helps with creating matrices.
-- Dataframes are objects in R which are similar to matrices. Dataframes can be built out of multiple vectors.
-  - The `data.frame()` function allows us to create dataframes in R.
-- Tibbles are dataframes, but they are easier to use with functions in R. Since R has been in use for many years, tibbles allow us to do more with data, when compared to dataframes.
-  - The `tibble()` function creates tibbles in R.
-
-### The content
-
-- Vectors are a type of data structure in R which contains observations of the same type. Vectors can include sets of numbers, a group of names or a group of randomly selected logical operators (True or False). When creating a vector, R requires all elements of the vector to be the same type, this means that it is possible to create vectors with numbers and words, but the numbers will be stored as characters. 
-
-- Matrices are two dimensional and are similar to the structure of vectors. Matrices can contain words and numbers, but are mainly used with numbers. Matrices are usually created with numbers because there is the ability to conduct matrix operations like addition, subtraction, division and multiplication between different matrices. Matrices have a fixed number of rows and columns.
-
-- Dataframes are another way of storing data and are mainly used for storing tables. The benefit to using dataframes over matrices is when your data contains numbers and words. Dataframes are able to contain columns of numbers and columns of words while matrices can only contain numbers or words. Dataframes are also useful because it is possible to conduct operations between columns, which will be shown in the Questions section of this lesson.
-
-- As mentioned in the introduction, tibbles are very similar to dataframes but they are more compatible with current uses for R. This is because some older operations in R aren't as useful as they were when R was created, so tibbles had to be created to make some operations run better. Tibbles are created using the `tibble()` function which can be found in the `tidyverse` package, which is different than the other data types discussed above, because they can be created using the base R functions. 
-
-### Arguments
-
-- **`c()`:** The `c()` function takes one main argument and includes optional arguments. The main argument for `c()` are the values that you want to save as a vector. The arguments used can be any set of numbers or words, or both. For example we would use an entry could be: `test <- c("This", "is", "example", 1)`. If you do save numbers in words in the same vector, R will convert the number into a character instead of keeping it as an integer.
-
-- **`matrix()`:** The `matrix()` function takes 5 arguments, 3 of them are the most important. The first one is `data`, which is the data you plan to make a matrix with, this can contain multiple vectors. The next argument is `nrow` which is the number of rows you want to have and `ncol` which is the number of columns you want to include in your matrix.
-
-- **`data.frame()`:** The main argument that `data.frame()` takes is the data that you want to become a dataframe. To name the columns, you can write `"name" = c()` where c() is the vector of numbers/words. You can name each column by repeating the `"name" = c()` line. The other important argument is `row.names`. For this argument you can write a name for each row in a vector that has the same length as the number of rows as your dataframe. 
-
-- **`tibble()`:** Similar to `data.frame()`, the main argument for `tibble()` is the data you want to turn into a tibble. The data can include vectors, matrices and even dataframes. You can name the columns in a similar way to `data.frame()` by writing the name and then the data you want to be stored in that column.
-
-### Other Optional Arguments
-
-- **`c()`:** The optional arguments for `c()` are `recursive =` and `use.names =`. The recursive function is useful when the items you are vectoring includes a list. If you set `recursive = TRUE` it breaks down the list and converts it into a vector. If `recursive = FALSE` the vector is saved as a list (by default, `recursive = FALSE`, and it usually stays that way). The argument `use.names =` tells R whether or not to keep the names of the lists present when the vector is saved.
-
-- **`matrix()`:** There are two optional arguments, `byrow` and `dimnames`. `byrow` can either be true or false, if false, the entries for the matrix are added by filling out the columns as opposed to filling out the data row by row. `dimnames` allows you to name the rows and the columns of your matrix.
-
-- **`data.frame()`:** `data.frame()` contains 4 optional arguments. `check.rows` checks if the rows are consistent in their length and names. `check.names` checks if your column names are unique and there aren't any repeats. `fix.empty.names` automatically names any columns with missing variable names (this is set to true by default). Lastly, `stringsAsFactors` converts character vectors into factors if set to true (set to true by default).
-
-- **`tibble()`:** There are two optional arguments for `tibble()`, they are `.rows` and `.name_repair`. `.rows` tells R how many rows you want your tibble to be, you do not have to fill this argument out but it can be useful if you want to confirm that your data has the same amount of rows as you wish. If the number of rows given into the main argument does not match the `.rows` argument, an error will occur. `.name_repair` helps fix issues with column names, it has 5 types of repair. "Minimal" does not change or check column names, "Unique" makes sure names are not empty, "check_unique" makes sure the names are unique, "universal" checks that the names are unique and follow proper syntax. The final option for `.name_repair` is a custom function you can create on your own so the names follow a certain style.
-
-
-### Questions
-
-#### Vectors
-
-You can easily create vectors using the `c()` function. Run the code chunk below to see.
-```{r ex1vectors, exercise = T}
-vector1 <- c(1, 2, 3, 4)
-vector1
-```
-
-As mentioned in previous sections of this lesson, you can create a vector of both numbers and words, but the numbers will be saved as characters.
-```{r ex2vectors, exercise = T}
-vector2 <- c("stats", "is", "number", 1)
-vector2
-
-# using class tells us the class of the objects in the vector 
-class(vector2)
-```
-
-You can also index vectors by using square brackets ([]). To index a value of an R vector, write the vector name and then in the square brackets, the position of that value in the vector.
-```{r ex3vectors, exercise = T}
-vector <- c("a", "b", "c", "d", "e") # save our vector
-
-vector[3] # if we want to select c, it is the third element so we write vector[3]
-
-vector[-3] # if we want to return the vector without the letter c, type vector[-3]
-```
-
-We can also add, subtract, multiply and divide vectors.
-```{r add-vectors, exercise = TRUE}
-vec1 <- c(2, 4, 6)
-vec2 <- c(3, 6, 9)
-
-vec1 + vec2
-vec1*vec2
-```
-
-#### Matrices
-
-If we use the matrix function on a set of numbers without specifying the number of rows/columns, you get a matrix with one column.
-```{r ex1matrices, exercise = T}
-matrix1 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9))
-matrix1
-```
-
-Using the `nrow` and `ncol` arguments, we can tell R how we want our matrix to look. 
-```{r ex2matrices, exercise = T}
-matrix2 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3)
-matrix2
-```
-
-The next chunk will show the use the `byrow` argument to fill out our matrix. You will notice that when comparing the output of this chunk to the one above, other than the diagonals, the entries are all different.
-```{r ex3matrices, exercise = T}
-matrix3 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = T)
-matrix3
-```
-
-We can also add, subtract, multiply and divide matrices
-```{r add-matrices, exercise = TRUE}
-mat1 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = T)
-mat1
-mat2 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = F)
-mat2
-
-mat1 - mat2
-
-mat1/mat2
-```
-
-Matrices can be indexed.
-```{r index-matrices, exercise = TRUE}
-mat2 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = F)
-mat2
-
-mat2[3,3] # third row, third column
-```
-
-
-
-#### Dataframes
-
-As mentioned in the Arguments section, there are many ways to create a dataframe. For this one, we'll just insert two vectors into the function, without naming them.
-```{r ex1Dataframes, exercise = T}
-data.frame(c(1,2,3), c(2,4,6))
-```
-We can see that without naming the vectors, `data.frame()` names the rows "c.1..2..3" and "c.2..4..6".
-
-
-Now we can do the same as above, but save the vectors beforehand and then add them into the function.
-```{r ex2Dataframes, exercise = T}
-vector1 <- c(1:3) # this is another way writing 1,2,3
-data.frame(vector1, vector2 = c(2,4,6))
-```
-
-We can also take a matrix and convert the matrix into a dataframe. We can also use the `row.names` argument.
-```{r ex3Dataframes, exercise = T}
-mat <- matrix(1:9, nrow = 3)
-mat
-
-df <- data.frame(mat, row.names = c("a", "b", "c"))
-df
-```
-
-
-For the last example of making dataframes, we will make use of the `check.names` and `stringsAsFactors` arguments
-```{r ex4Dataframes, exercise = T}
-vector1 <- c(1:3)
-df <- data.frame(vector1, vector1 = c("one", "two", "three"), check.names = T)
-df
-```
-We can see that the dataframe has two columns, vector1 and vector1.1 and if we don't do that, the columns will have the same name and will be a headache to work with.
-
-
-We can also index values in dataframes.
-```{r ex5Dataframes, exercise = T}
-df <- data.frame(c(1,2,3), c(2,4,6), c(3, 6, 9))
-
-df[2,2] #to select the number 4 in the center we write df[2,2]
-
-df[,2] # to return the whole 2nd column, write df[,2]
-
-df[2,] # to select only the 2nd row, write df[2,]
-
-df[-1,] # you can also return dataframes without rows/columns by including "-"
-```
-
-#### Tibbles
-
-Like dataframes, tibbles can be created from vectors
-```{r ex1Tibbles, exercise = T}
-vector1 <- c(1:3)
-vector2 <- c(2,4,6)
-
-data <- tibble(vector1, vector2)
-data
-```
-
-Tibbles can also be created from matrices. This can be done using the `as_tibble()` function.
-```{r ex2Tibbles, exercise = T, warning=F}
-mat1 <- matrix(1:9, nrow = 3, ncol = 3) # 3x3 matrix
-mat1
-
-tib <- as_tibble(mat1)
-tib
-```
-
-Similarly, dataframes can be converted into tibbles.
-```{r ex3Tibbles, exercise = T}
-df1 <- data.frame("id" = c(1,2,3), "sport" = c("soccer", "baseball", "basketball"),
-                  "name" = c("Messi", "Bichette", "James"))
-df1
-
-tibble(df1, .rows = 3) # we can use .rows to confirm that there will be 3 rows.
-```
-
-Tibbles can also be indexed.
-```{r index-tibbles, exercise = T}
-tib1 <- tibble(data.frame("id" = c(1,2,3), "sport" = c("soccer", "baseball", "basketball"),
-                  "name" = c("Messi", "Bichette", "James")))
-tib1
-
-tib1[1,3] # 1st row, 3rd column
-```
-
-
-Lastly, you can make tibbles where the columns are mathematical operations between columns.
-```{r ex4Tibbles, exercise = T}
-col1 <- c(1:10)
-tibble(col1, col2 = col1+10, col3 = (col1+col2)*100)
-```
-
-
-### Exercises
-
-```{r quiz1-vectors, echo=F}
-question_checkbox( "1. Which data types are part of base R? Select all that apply.",
-  answer("Tibbles"),
-  answer("Dataframes", correct = T),
-  answer("Vectors", correct = T),
-  answer("Matrices", correct = T),
-  incorrect = paste0("Incorrect."),
-  allow_retry = T,
-  random_answer_order = T
-)
-```
-
-
-**2.** This question will combine vectors and dataframes. Create two vectors, the first one (call it 'numbers') containing the numbers 10, 20, 30 and 40, and the second one (call it 'cities') containing the words: 'Toronto', 'New York', 'Boston' and 'Vancouver'. Now, take those two vectors and turn them into a dataframe. (Hint: The `c()` and `data.frame()` function will be very helpful.)
-```{r quiz2-vectors, exercise = TRUE}
-# Enter code below
-numbers <- 
-cities <- 
-```
-
-```{r quiz2-vectors-solution}
-
-numbers <- c(10, 20, 30, 40)
-cities <- c('Toronto', 'New York', 'Boston', 'Vancouver')
-data.frame(numbers, cities)
-```
-
-**3.** Make a tibble with the first column being the set of numbers from 1 to 10, the second column being the first column times 7 and the third column being the sum of columns 1 and 2.
-
-```{r quiz3-vectors, exercise = TRUE}
-# enter code below
-col1 <- 
-```
-
-```{r quiz3-vectors-solution}
-
-col1 <- c(1:10)
-tibble(col1, col2 = col1*7, col3 = col1 + col2) 
-
-# OR
-
-col1 <- c(1:10)
-col2 <- col1*7
-col3 <- col1 + col2
-
-tibble(col1, col2, col3)
-```
-
-
-**4.** The next question follows the code chunk below.
-
-```{r quiz4-tibble, results = "hide"}
-cities <- c("Toronto", "New York", "Vancouver", "Montreal", "Chicago", "Los Angeles")
-rank <- c(1, 2, 3, 4, 5, 6)
-
-tibble(cities, rank, pop = rank*1000, 
-       rank_plus_pop = rank + pop)
-```
-
-```{r quiz4-tibble1, echo=F}
-question("How many columns are present in the data?",
-         answer("4", correct = TRUE),
-         answer("3"),
-         answer("2"),
-         answer("5"))
-```
-
-```{r quiz4-tibble2, echo=F}
-question("What would be that class of the output of the `tibble` function?",
-         answer("Vector"),
-         answer("Matrix"),
-         answer("Tibble or (tbl)", correct = T),
-         answer("None of the options."))
-```
-
-```{r quiz4-tibble3, echo=F}
-question("How many rows will the data have?",
-         answer("7"),
-         answer("3"),
-         answer("6", correct = T),
-         answer("5"))
-```
-
-
-**5.** For this exercise, create a dataframe containing 3 vectors: one containing a set of 5 numbers, another containing a set of 5 animals and another containing a set of 5 cities. Name the columns of this dataframe 'id', 'animal', 'city'. Save this dataframe under the name 'df' and then convert it into a tibble.
-```{r vec-df-ex1, exercise = TRUE}
-# enter code below
-```
-
-```{r vec-df-ex1-solution}
-
-# Your answers may be different
-df <- data.frame(id = c(1:5), animal = c("Dog", "Cat", "Goat", "Bird", "Lion"),
-                 city = c("Toronto", "San Diego", "New York", "Boston", "Washington")
-                 )
-tibble(df)
-
-# OR
-
-id <- c(1:5)
-animal <- c("Dog", "Cat", "Goat", "Bird", "Lion")
-city <- c("Toronto", "San Diego", "New York", "Boston", "Washington")
-
-df <- data.frame(id, animal, city)
-tibble(df)
-```
-
-### Common Mistakes & Errors
-
-- **Vectors**
-  - If you try to index a vector and the vector returns 'NA', that likely means that you are trying to index an element that isn't in your vector. To fix this, you need to include a number that is **less than or equal to** the length of your vector.
-
-- **Matrices**
-  - Error in matrix[n,m] : subscript out of bounds
-    - This error means that you are trying to index a point in the matrix that doesn't exist. Similar to vectors, move the subscript to be inside the lengths of your matrix.
-  - In matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 4, byrow = F) :
-  data length [9] is not a sub-multiple or multiple of the number of rows [4]
-    - This error means that the number of rows you are trying to use does not fit the amount of numbers you want to use in the matrix. If you want **n** rows, make sure the length of your matrix is divisible by **n**.
-  - Error in mat1 + mat2 : non-conformable arrays
-    - This error occurs when you try to do mathematical operations on matrices that aren't compatible. This goes back to linear algebra where you need to have similar length between matrices to conduct operations between them.
-  
-- **Dataframes**
-  - Similar to matrices and vectors, you can encounter issues with indexing. Once again, make sure you keep you indexing within the limits of your dataframe.
-  - Error in data.frame(c(1, 2, 3), c("a", "b")) : 
-  arguments imply differing number of rows: 3, 2
-    - This error will occur when the vectors you are trying to make into a dataframe have different lengths. To fix this, make sure your vectors are the same length.
-
-- **Tibbles**
-  - Often times, you can use functions like `filter()` or `group_by()` on tibbles and usually when you encounter errors, the error will be with how the function is executed. 
-  - Error: Tibble columns must have compatible sizes.
-    - This means that when you used the tibble function, the vectors you included were not the same length. To fix this, make sure all vectors are of the same length.
-
-### Next Steps
-
-Now that you understand what vectors, matrices, dataframes and tibbles are. Some next steps include:
-
-- Using dplyr functions with tibbles: https://uomresearchit.github.io/r-tidyverse-intro/04-dplyr/
-- Looking at R for Data Science's chapter on tibbles: https://r4ds.had.co.nz/tibbles.html
-- The vector chapter in R4DS: https://r4ds.had.co.nz/vectors.html
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## length(), nrow() and ncol()
-
-Written by Isaac Ehrlich.
-
-### Introduction
-
-Understanding the size and dimensions of your variables can be important in a variety of contexts.
-
-In this lesson, you will learn how to
-
-- Use `length()` to find the length of vectors
-- Use `nrow()` and `ncol()` to find the dimensions of matrices and data frames
-
-Prerequisites:
-
-- Understanding how to create vectors and data frames and their basic principles
-
-### Arguments
-
-####length()
-
-`length()` returns the length (number of items) in a vector. The only argument that `length()` takes is the vector.
-
-```{r lengthExample}
-x <- c("a", "b", "c", "d")
-length(x)
-```
-
-
-#### nrow() and ncol()
-
-`nrow()` and `ncol()` return the number of rows and columns of matrices and data frames, respectively. The only argument that `nrow()` and `ncol()` take is the matrix or data frame.
-
-```{r nrowExample}
-df <- data.frame(col1 = c("a", "b", "c", "d"), col2 = c(1,2,3,4))
-df
-
-# Number of Rows:
-nrow(df)
-
-# Number of Columns:
-ncol(df)
-```
-
-
-### Questions and Exercises
-
-####  length()
-
-For questions about `length()` we will be using the built in vector `fruit`, a vector of fruit names.
-
-**1.**
-
-```{r length-q1, echo = FALSE}
-question("length() returns the following information:",
-answer("The number of characters in a string"),
-answer("The number of objects in a vector", correct = TRUE),
-answer("The length (in centimeters) printing a vector will occupy on your screen"),
-allow_retry = TRUE)
-```
-
-
-**2. Save the length of the vector `fruit` as the variable `fruit_len`**
-
-```{r length-q2, echo = FALSE, exercise = TRUE}
-# Enter your code below
-
-fruit_len <- 
-fruit_len
-```
-
-```{r length-q2-solution}
-fruit_len <- length(fruit)
-
-```
-
-**3. Using indexing and the `length()` function, return the final object in `fruit`**
-
-```{r length-q3, echo = FALSE, exercise = TRUE}
-# Enter your code below
-
-last_fruit <- 
-last_fruit
-```
-
-```{r length-q3-solution}
-last_fruit <- fruit[length(fruit)]
-```
-
-#### nrow() and ncol()
-
-For questions about `nrow()` and `ncol()` we will be using the data frame `starwars`, which contians Star Wars characters and information about them, and a secret matrix.
-
-**1. Save the number of rows and number of columns in `starwars`**
-
-```{r nrow-q1, echo = FALSE, exercise = TRUE}
-# Enter your code below
-
-starwars_rows <- 
-starwars_cols <- 
-
-starwars_rows
-starwars_cols
-```
-
-```{r nrow-q1-solution}
-starwars_rows <- nrow(starwars)
-starwars_cols <- ncol(starwars)
-```
-
-**2. I've created a matrix, `secret_matrix`, the dimensions of which are a secret. Without printing out the number of rows and columns, check to see if `secret_matrix` is a square matrix (i.e. it has the same number of rows and columns)**
-
-```{r, echo = FALSE}
-secret_matrix <- matrix(1:12, 3, 4)
-```
-
-
-```{r nrow-q2, echo = FALSE, exercise = TRUE}
-# Enter your code below
-
-```
-
-```{r nrow-q2-solution}
-nrow(secret_matrix) == ncol(secret_matrix)
-```
-
-**3. Using indexing, `nrow()`, and `ncol()`, in one line, save the value in the bottom right corner of the matrix `secret_matrix`.**
-
-```{r nrow-q3, echo = FALSE, exercise = TRUE}
-# Enter your code below
-bottom_right_value <- secret_matrix[]
-
-bottom_right_value
-```
-
-```{r nrow-q3-solution}
-bottom_right_value <- secret_matrix[nrow(secret_matrix), ncol(secret_matrix)]
-```
-
-### Special Cases & Common Mistakes
-
-#### length()
-
-* Remember that `length()` returns the number of objects in a vector, not the number of digits or characters in a string. See examples below.
-```{r length-special-ex1}
-length("This sentence has 31 characters")
-length(c("This sentence has 31 characters", "This sentence has 7 less"))
-```
-
-* Although a vector is the correct input into `length()`, if the input is a dataframe, the output will be equal to the number of columns.
-```{r length-special-ex2}
-length(starwars) == ncol(starwars)
-```
-
-* If the input is a matrix, the output will be equal to the number of entries in the matrix.
-```{r length-special-ex3}
-length(secret_matrix) == nrow(secret_matrix) * ncol(secret_matrix)
-```
-
-
-#### nrow() and ncol()
-
-* Using a vector as input to `nrow()` or `ncol()` will output `NULL`
-```{r nrow-special}
-nrow(fruit)
-ncol(fruit)
-```
-
-
-### Overview and Next Steps
-
-`length()`, `nrow()`, and `ncol()`, are useful functions for finding the dimensions of variables. In the next section, we will continue exploring data frames and how to manipulate them.
-
-
-
+- This tutorial only briefly introduced you to the capabilities of the `stringr` package. Future tutorials will revisit this package and dive deeper into some of its functions. In the meantime you can learn more about this package in Hadley Wichkam's book *"R for Data Science"*. The link here takes you to the chapter on strings which also introduces you to regular expressions (regular expressions are a bit tedious, but you might learn to like them if you end up working with text data a lot). https://r4ds.had.co.nz/strings.html 
 
 
 
@@ -1167,45 +702,411 @@ In the next section, we will continue learning how to manipulate data frames.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## left_join(), anti_join(), full_join, etc
-
-*Coming soon!*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## set.seed(), runif(), rnorm() and sample()
+## left_join(), anti_join(), full_join(), etc
 
 Written by Haoluan Chen.
 
 ### Introduction
+
+In this lesson, you will learn how to:
+
+- Join two tables by using left_join(), right_join(), full_join() 
+  , inner_join and anti_join()
+
+Prerequisite skills include:
+
+- Install and load dplyr package
+
+Highlights:
+
+- Learn how two join two tables  
+
+### The content
+
+Sometimes you may want to combine two data frames into a single table.
+Here we have one table which contains data such as the student id and their grade. And we have another table that includes demographic information about the student.
+
+```{r joindata}
+test_score <- tribble(~student_id, ~grade
+                  ,'1',  94
+                  ,'2',  90
+                  ,'3',  88
+                  ,'4',  75
+                  ,'5',  66
+                  )
+student_info <- tribble(~student_id, ~age,~gender
+                  ,'1', 18, 'F'
+                  ,'2', 20, 'F'
+                  ,'4', 25, 'M'
+                  ,'6', 21, 'M'
+                  ,'7', 23, 'F'
+                  )
+test_score
+student_info
+```
+
+Using dplyr within R, we can easily import our data and join these tables, using the following join types.
+
+- Left Join (left_join)
+- Right Join (right_join)
+- Full Join (full_join)
+- Inner Join (inner_join)
+- Anti Join (anti_join)
+
+The general syntax of these joins is as follows:
+
+join_type(firstTable, secondTable, by=columnTojoinOn)
+
+We’ll now run through an example of using each of these join types on our two tables.
+
+
+### left_join()
+
+left_join will take all of the values from the table we specify as left (e.g., the first one) and match them to records from the table on the right (e.g., the second one) by the variable we specified. If there is no match in the second table, it will show NULL for the values in the second table. For example, if we left joined test_score to student_info, our data would look as follows:
+
+```{r leftjoin}
+leftJoinDf <- left_join(test_score,student_info,by='student_id')
+leftJoinDf
+```
+
+
+### right_join()
+
+One of the easiest ways to consider a right join is the opposite of a left join! In this instance, the table specified second within the join statement will be the one that the new table takes all of its values from. If there is no match in the first table (the table specified first in the argument), it will return NULL for the values in the first table that did not find a match. In this instance, if we right joined student_info to test_score, our data would look as follows:
+
+```{r rightjoin}
+rightJoinDf <- right_join(test_score,student_info,by='student_id')
+rightJoinDf
+```
+
+### full_join()
+
+The full join returns all of the data in a new table, whether it matches on either the left or right tables. If the specified variable match on two tables, then a join will be executed. Otherwise, it will return NULL in places where a matching row does not exist.
+
+```{r fulljoin}
+FullJoinDf <- full_join(test_score,student_info,by='student_id')
+FullJoinDf
+```
+
+### inner_join()
+
+inner_join creates a new table that only contains matched rows in both tables. 
+For example, if we decided to join by student_id, the new table would contain rows 1 and 2:
+
+```{r innerjoin}
+InnerJoinDf <- inner_join(test_score,student_info,by='student_id')
+InnerJoinDf
+```
+
+### anti_join()
+
+An anti join will return all of the rows from the first table where there are no matching values from the second.
+
+An example of this is shown below:
+
+```{r antijoin}
+AntiJoinDf <- anti_join(test_score,student_info,by='student_id')
+AntiJoinDf
+```
+
+
+
+
+
+### Exercises
+
+```{r joinex1}
+test_score <- tribble(~student_id, ~grade
+                  ,'1',  94
+                  ,'2',  90
+                  ,'3',  88
+                  ,'4',  75
+                  ,'5',  66
+                  )
+student_info <- tribble(~student_id, ~age,~gender
+                  ,'1', 18, 'F'
+                  ,'3', 20, 'F'
+                  ,'5', 25, 'M'
+                  ,'7', 21, 'M'
+                  ,'9', 23, 'F'
+                  )
+test_score
+student_info
+```
+
+#### Exercises 1
+
+```{r joinex2, echo = FALSE}
+question("Which set of student id is in the output of left_join(test_score, student_info)",
+          answer("1, 2, 3, 4, 5", correct = TRUE),
+          answer("1, 3, 5"),
+          answer("7, 9"),
+          answer("1, 2, 3, 4, 5, 7, 9"),
+          allow_retry = TRUE)
+
+``` 
+
+#### Exercises 2
+
+```{r joinex3, echo = FALSE}
+question("Which set of student id is in the output of right_join(test_score, student_info)",
+          answer("1, 3, 5"),
+          answer("7, 9"),
+          answer("1, 3, 5, 7, 9", correct = TRUE),
+          answer("1, 2, 3, 4, 5, 7, 9"),
+          allow_retry = TRUE)
+
+``` 
+
+#### Exercises 3
+
+```{r joinex4, echo = FALSE}
+question("Which set of student id is in the output of inner_join(test_score, student_info)",
+          answer("1, 3, 5", correct = TRUE),
+          answer("7, 9"),
+          answer("1, 3, 5, 7, 9"),
+          answer("1, 2, 3, 4, 5, 7, 9"),
+          allow_retry = TRUE)
+
+``` 
+
+
+#### Exercises 4
+
+```{r joinex5, echo = FALSE}
+question("Which set of student id is in the output of full_join(test_score, student_info)",
+          answer("1, 3, 5"),
+          answer("7, 9"),
+          answer("1, 3, 5, 7, 9"),
+          answer("1, 2, 3, 4, 5, 7, 9", correct = TRUE),
+          allow_retry = TRUE)
+
+``` 
+
+
+### Common Mistakes & Errors
+
+- Make sure there is at least one common variable in the tables you joining
+- Think about how you want to join the table and use the appropriate join function
+
+### Next Steps
+
+You can read through R for Data Science Chapter 13 Relational(working with multiple tables) data (https://r4ds.had.co.nz/relational-data.html) for a more detailed explanation and visualization. 
+
+Here is the documentation for all the joins function in dplyr package: https://dplyr.tidyverse.org/reference/join.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Looking for Missing Data
+
+Written by Mariam Walaa.
+
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Find _implicitly_ missing data
+
+Prerequisite skills include:
+
+- Piping
+
+Highlights:
+
+- Use complete() and fill() to find implicit missing data
+
+### Overview
+
+In applied statistics, when we think of looking for missing data, the first thought that
+may come to mind is that we are looking for NA values in the data set. However, that is
+not the only type of missing data that we may have. We may also want to ask ourselves: Are
+there missing _variables_ in the data? Are there missing _observations_ in the data?
+
+These may be difficult questions to ask, especially if we do not know what our data
+represents well. A simpler question that we may ask, however, is: does our data set
+contain all possible combinations of some collection of variables?
+
+While that may be a more directly answerable questionable, it is still difficult to try to
+understand what exactly this may mean. Let’s try to break this down using some concrete,
+hypothetical data.
+
+Suppose we have a data set representing student grades for a collection of required first
+year courses for the statistics major: STA130, CSC108, MAT137, at the end of their first
+year. However, some students have not finished all three courses and may be taking some in
+the summer.
+
+Let's start by loading the tidyverse.
+
+```{r missing-data-1}
+library(tidyverse)
+```
+
+Here is our hypothetical data.
+
+```{r missing-data-2, include = FALSE}
+first_year <- tibble(student_id = c(1, 1, 1, 2, 2, 3, 4, 4, 4, 5, 5, 6),
+                     course = c("STA130", "CSC108", "MAT137",
+                                "STA130", "CSC108", "STA130",
+                                "STA130", "CSC108", "MAT137",
+                                "STA130", "MAT137", "MAT137"),
+                     grade = round(rnorm(n = 12, mean = 80, sd = 4)))
+```
+
+```{r missing-data-3}
+first_year
+```
+
+As you can see, our data is missing some rows that would correspond to courses that 
+students have yet to complete.
+
+Suppose, for some reason, that you want to count the number of courses that are left
+for all students to take until they have completed all their requirements, or maybe you
+want to try predicting the grades a student will get on their remaining courses.
+
+Regardless, you will need to "manipulate" this data set to make it so that you can see
+which courses students have yet to complete.
+
+The `complete()` function is the perfect tool for this. We can do this as follows.
+
+```{r missing-data-4, include = FALSE}
+first_year %>%
+  complete(student_id, course)
+```
+```{r missing-data-4-flair, echo = FALSE}
+decorate("missing-data-4") %>%
+  flair("complete", color = "hotpink") %>%
+  knit_print.with_flair()
+```
+
+
+What this function does is very interesting and simple! All it does is give us rows that
+represent courses students still haven't completed, that we of course still don't have
+their grades for.
+
+**Aside**: You might wonder how this function does all this work for us. There's a lot
+that happens here. You might guess that it first takes all the possible combinations of
+values for each of this pair of variables (How many are there?), then it excludes the ones
+that already appear in the data, and adds the ones that do not appear in the data. Then it
+fills the remainder of the new observations with NA values since we don't have its data.
+This function does a lot of work, but it doesn't do it all on its own. It takes from other
+functions `expand()`, `dplyr::left_join()`, and `replace_na()`. We call this function a
+_wrapper_ around these other functions.
+
+### Video
+
+![](https://youtu.be/1zowsiffKHg)
+
+### Arguments
+
+### complete()
+
+The `complete()` function takes the following as arguments:
+
+| Argument | Parameter        | Details                                           |
+| -------- | ---------------- | ------------------------------------------------- |
+| data     | input data frame | data whose columns we'll use to find missing data |
+| …        | vector           | columns to find and complete all combinations for |
+| fill     | named list       | values to fill the cells for newly added rows     |
+
+You can read more about the arguments in the `complete()` function's reference
+[here](https://tidyr.tidyverse.org/reference/complete.html) or with `?complete`.
+
+### fill()
+
+The `fill()` function takes the following as arguments:
+
+| Argument   | Parameter        | Details                                               |
+| ---------- | ---------------- | ----------------------------------------------------- |
+| data       | input data frame | dataframe whose columns we use to fill missing data   |
+| …          | vector           | columns to find and complete all combinations for     |
+| .direction | string           | 'up', 'down', 'downup' for direction to fill values   |
+
+You can read more about the arguments in the `fill()` function's reference
+[here](https://tidyr.tidyverse.org/reference/fill.html) or with `?fill`.
+
+### Exercises
+
+There are many ways to fill the data we got above. If, for some reason, we wanted to fill
+it based on the past or the next value, we can use the fill() function.
+
+If, however, we wanted to fill all the empty values with a specific number, we could use
+the 'fill' parameter within the complete() function.
+
+#### Exercise 1
+
+Referencing the Arguments section, try to fill it based on the _past_ value using the
+fill() function.
+
+```{r missing-data-exercise-1, exercise = TRUE}
+
+```
+
+```{r missing-data-exercise-1-sol, echo = FALSE}
+ex1_sol <- first_year %>%
+  complete(student_id, course) %>%
+  fill(grade, .direction = 'down')
+```
+
+```{r missing-data-exercise-1-check}
+grade_result(pass_if(~identical(.result, ex1_sol)))
+```
+
+#### Exercise 2
+
+Referencing the Arguments section, try to fill all the empty values with a specific number
+'0' using the 'fill' parameter within the complete() function.
+
+```{r missing-data-exercise-2, exercise = TRUE}
+
+```
+
+```{r missing-data-exercise-2-sol, echo = FALSE}
+ex2_sol <- first_year %>%
+  complete(student_id, course, fill = list(grade = 0))
+```
+
+```{r missing-data-exercise-2-check}
+grade_result(pass_if(~identical(.result, ex2_sol)))
+```
+
+### Next Steps
+
+If you would like to learn more about the complete() and fill() functions, you will find these resources from tidyr very helpful:
+
+- [tidyr: Complete a data frame with missing combinations of data](https://tidyr.tidyverse.org/reference/complete.html)
+- [tidyr: Fill in missing values with previous or next value](https://tidyr.tidyverse.org/reference/fill.html)
+
+
+
+
+
+
+
+
+
+
+
+
+
+## set.seed(), runif(), rnorm(), and sample()
+
+Written by Haoluan Chen.
+
+
+### Introduction
+
 
 In this lesson, you will learn how to:
 
@@ -1226,9 +1127,11 @@ Highlights:
 
 ### The content
 
+
 Simulation is an important topic in statistics because it helps you understand how random data might be generated. For some experiments, you may want to simulate values from probability distributions. In R, we can use `runif()` and `rnorm()` function to generate random number from uniform distribution or normal distributionr. Also, we can randomly sample from a set of numbers by using the sample() function. 
 
 #### runif()
+
 
 The `runif()` function generate random numbers from a uniform distribution.  
 
@@ -1245,7 +1148,8 @@ max (optional)| the maximum value of the uniform distribution you are sampling f
 
 ##### Example
 
-```{r setseedex1}
+
+```{r ex1}
 runif(3)
 ```
 The above code means to generate three random numbers from unif(0,1) where unif is a uniform distribution with a minimum value of 0 and maximum value of 1.
@@ -1254,15 +1158,17 @@ What if you want to generate number from `unif(2,8)` uniformly?
 
 In `runif()` function, we can specify the min and max to be 2 and 8 to generate three numbers from unif(2,8):
 
-```{r setseedex2}
+```{r ex2}
 runif(3, 2, 8)
 ```
 
 #### rnorm()
 
+
 In R, we can use `rnorm()` function to generate numbers from a normal distribution. 
 
 ##### Arguments
+
 It takes in three parameters: `n`, `mean`, and `sd`. The parameter `n` specifies the number of random values you want to generate. The parameter `mean` and `sd` specifies the mean and standard deviation of the normal distribution you wish to sample. The default of `mean` and `sd` are 0 and 1.
 
 Arguments | What does it mean
@@ -1272,9 +1178,10 @@ mean (optional) | the mean value of the normal distribution you are sampling fro
 sd (optional)| the standard deviation of the normal distribution you are sampling from (numeric)
 
 ##### Example
+
 Let's say we want to generate 5 random number from a normal distribution with `mean = 0` and `sd = 2`.
 
-```{r setseedex3}
+```{r ex3}
 rnorm(5, sd = 2)
 ```
 
@@ -1282,15 +1189,17 @@ Here, we set the `n` to be 5 and `sd` to be 2, because we want to generate five 
 
 What if we want to generate 5 number from normal(10,2)?
 
-```{r setseedex4}
+```{r ex4}
 rnorm(5, 10, 2)
 ```
 Here, we generated 5 numbers from normal(10,2) distribution.
 
 #### sample()
+
 In R, we can using sample() to randomly sample numbers from a collection of numbers. 
 
 ##### Arguments
+
 It takes in three parameters: x, size, and replace. The x is the vector of one or more elements that you wish to sample. The parameter size specifies the number of random values you want to generate. The parameter replace is a logical variable; true if you want to sample with replacement. 
 
 When replace is set to true, you will be sampling from the same set of numbers for each generation. When replace is set to false, every time you sample a number, it will be taken out of the vector x for the next number generation. 
@@ -1300,31 +1209,49 @@ Arguments | What does it mean
 x (required) | vector of one or more elements that you are sampling from
 size (required) | number of random value you want to generate (numeric)
 replace (optional)| true if you want to sample with replacement (logical)
+prob (optional) | a vector of probability weights for obtaining the elements of the vector being sampled.
 
 ##### Examples
 
-```{r setseedex5}
-x <- c(1, 2, 3, 4, 5, 6)
+
+```{r ex5}
+
 ```
 
 Here, we have a vector containing 6 numbers to simulate rolling dice. Let's roll the dice 6 times and see what we get:
 
-```{r setseedex6}
+
+```{r ex6}
+x <- c(1, 2, 3, 4, 5, 6)
+set.seed(2)
 sample(x, 6, replace = TRUE)
 ```
-What if we set the replace to `FALSE`?
-```{r setseed, include=FALSE}
-set.seed(1)
-```
+
+**Don't worry about set.seed(1), you will learn in this tutorial!**
+What if we set the replace to `FALSE`? 
 
 
 ```{r ex7}
+set.seed(1)
 sample(x, 6, replace = FALSE)
 ```
-When setting the replace to `FALSE`, the numbers are taken out for each round of sampling. Here, our first number is 1, which means that the second number will only be a sample from the set {2,3,4,5,6}. The 1 will be taken out of the vector for this sampling process. So, that is why we always get each number to appear once in the simulation.  
+
+As we see that when `replace = TRUE`, we obtain repeated sample of 6 and 1. However, when `replace = FALSE`, there is no repeated sample in the output. 
+
+When setting the replace to `FALSE`, the numbers are taken out for each round of sampling. Here, our first number is 5, which means that the second number will only be a sample from the set {2,3,4,5,6}. The 1 will be taken out of the vector for this sampling process. So, that is why we always get each number to appear once in the simulation.  
+
+Using the prob argument, we can assign the probability of each elements the vector being sampled.
+For example, for a unfair dice, The probability of getting a 6 is 40% and the probability of getting any other number are 12%. We may simulate this unfair dice using sample() function and setting the prob argument. 
+
+```{r}
+set.seed(2)
+sample(x, 6, replace = TRUE, prob = c(0.12, 0.12, 0.12, 0.12, 0.12, 0.4))
+```
+
 
 
 #### set.seed()
+
 
 ```{r undosetseed, include=FALSE}
 set.seed(Sys.time())
@@ -1332,7 +1259,7 @@ set.seed(Sys.time())
 
 Let's run our dice simulation twice and see what happens (run the following code twice)
 
-```{r setseedex8, exercise=TRUE, exercise.lines = 3}
+```{r ex8, exercise=TRUE, exercise.lines = 3}
 sample(x, 6, replace = TRUE)
 ```
 
@@ -1342,15 +1269,17 @@ When you use `set.seed()` function before your simulation, the simulation output
 
 ##### Arguments
 
+
 The `set.seed()` function takes in a number, and it can be any number.
 
 ##### Example
+
 
 Let's use `set.seed()` before we do the dice simulation
 
 Please run the following code twice. 
 
-```{r setseedex9, exercise=TRUE, exercise.lines = 2}
+```{r ex9, exercise=TRUE, exercise.lines = 2}
 set.seed(2)
 sample(x, 6, replace = TRUE)
 ```
@@ -1359,24 +1288,28 @@ This also works for `runif()`, `rnorm()` and other simulation functions. Once yo
 
 ### Exercises
 
+
 #### Exercise 1
+
 
 Please generate 10 random values from unif(-1,1) 
 
-```{r setseedexercise1, exercise=TRUE, exercise.lines = 2}
+```{r exercise1, exercise=TRUE, exercise.lines = 2}
 
 ```
 
 #### Exercise 2
+
 Please generate 10 random values from normal(0,5)
-```{r setseedexercise2, exercise=TRUE, exercise.lines = 2}
+```{r exercise2, exercise=TRUE, exercise.lines = 2}
 
 ```
 
 
 #### Exercise 3
 
-```{r setseedexercise3, echo = FALSE}
+
+```{r exercise3, echo = FALSE}
 question("Which of the following code simulates rolling a fair dice 5 times?",
           answer("sample(c(1, 2, 3, 4, 5, 6), 5, replace = TRUE)", correct = TRUE),
           answer("sample(c(1, 2, 3, 4, 5, 6), 5, replace = FALSE)"),
@@ -1388,31 +1321,35 @@ question("Which of the following code simulates rolling a fair dice 5 times?",
 
 #### Exercise 4
 
+
 Please generate 10 random values from normal(10,5) and calculate the mean.
-```{r setseedexercise4, exercise=TRUE, exercise.lines = 2}
+```{r exercise4, exercise=TRUE, exercise.lines = 2}
 
 ```
 
 #### Exercise 5
 
+
 Please generate 1000 random values from normal(10,5) and calculate the mean. 
-```{r setseedexercise5, exercise=TRUE, exercise.lines = 2}
+```{r exercise5, exercise=TRUE, exercise.lines = 2}
 
 ```
 
 #### Exercise 6
 
+
 Run your code from exercise 4 and 5 few times and compare the results, what did you notice?
 
-```{r setseedexercise6}
+```{r exercise6}
 
 ```
 
 
 #### Exercise 7
 
-```{r setseedexercise7, echo = FALSE}
-question("How do you obtain the same simulation result in Exercise 4 and 5",
+
+```{r exercise7, echo = FALSE}
+question("How would you ensure that the simulations in Exercises 4 and 5 give the same result every time?",
           answer("You do not have to do anything, the simulation result will always be the same"),
           answer("Use set.seed() function before you run the simulation", correct = TRUE),
           answer("Set the set.seed parameter to TRUE"),
@@ -1428,9 +1365,11 @@ question("How do you obtain the same simulation result in Exercise 4 and 5",
 
 ### Common Mistakes & Errors
 
+
 - Make sure you have input parameter in the right order!
 
 ### Next Steps
+
 
 Sometimes you need to do additional things to make your simulated more similar to your data. You can take a look on this book: R Programming for Data Science: https://bookdown.org/rdpeng/rprogdatascience/simulation.html. It has videos that explains simulation concepts and simulating a linear model. 
 
@@ -1451,13 +1390,7 @@ You can also generate binomial random variables using `rbinom()`, and Poisson ra
 
 
 
-
-
-
-
-
-
-## Simulating regression datasets
+## Simulating Datasets From Regression
 
 Written by Mariam Walaa.
 
@@ -1465,168 +1398,177 @@ Written by Mariam Walaa.
 
 In this lesson, you will learn how to:
 
-- Set the seed to take a snapshot of code results.
-- Sample data to simulate different scenarios.
-- Build regression models from simulated data.
+- Simulate data from regression 
 
 Prerequisite skills include:
 
-- Some familiarity with `set.seed()`, `runif()`, `rnorm()`, `sample()`
+- Familiarity with `set.seed()`, `runif()`, `rnorm()`, `sample()` 
 
-Highlights:
+Highlights
 
-- `set.seed()` is used to set the seed for the next code chunk you run.
-- `rnorm()` and `runif()` can be used to take points from distributions.
-
-### Arguments
-
-#### set.seed()
-
-The `set.seed()` function takes the following as arguments:
-
-| Argument | Parameter | Details                                                                     |
-|----------|-----------|-----------------------------------------------------------------------------|
-| seed     | number    | a number of your choice that acts as a setting to reproduce random samples  |
-
-You can read more about the arguments in the `set.seed()` function by running
-`?set.seed()` in your console.
-
-#### runif()
-
-The `runif()` function takes the following as arguments:
-
-| Argument | Parameter | Details                                                            |
-|----------|-----------|--------------------------------------------------------------------|
-| n        | number    | this is number of values to take from a *uniform* distribution     |
-| min      | number    | this is lower bound of desired interval of values                  |
-| max      | number    | this is upper bound of desired interval of values                  |
-
-You can read more about the arguments in the `runif()` function by running `?runif()` in
-your console.
-
-#### rnorm()
-
-The `rnorm()` function takes the following as arguments:
-
-| Argument | Parameter | Details                                                     |
-|----------|-----------|-------------------------------------------------------------|
-| n        | number    | this is number of values to take from *normal* distribution |
-| mean     | number    | this is desired mean of the normal distribution             |
-| sd       | number    | this is standard deviation of the normal distribution       |
-
-You can read more about the arguments in the `rnorm()` function by running `?rnorm()` in
-your console.
-
-#### sample()
-
-The `sample()` function takes the following as arguments:
-
-| Argument | Parameter | Details                                                                 |
-|----------|-----------|-------------------------------------------------------------------------|
-| x        | vector    | this is a vector `c(...)` of elements we want to sample                 |
-| size     | number    | this is the total number of observations we want to have                |
-| replace  | Boolean   | this is whether you want to repeat occurrence of some elements          |
-| prob     | vector    | this is a vector `c(…)` of probabilities of occurrence for each element |
-
-You can read more about the arguments in the `sample()` function by running `?sample()` in
-your console.
+- We can recover the linear regression model from simulated data
 
 ### Overview
 
-Sometimes, we have to execute code that has some randomness to it. When we want to ensure
-that the results we get are reproducible, we can use the `set.seed()` function to "take a
-snapshot" of the results we got and "save it". The `set.seed()` function associates the
-value we chose with the code we executed and the results we got. A common case where this
-is needed is when we simulate data.
+In the previous section, we learned about how to simulate data. We can build
+regression models from this simulated data. However, another thing we can do with these
+functions is build simulated data _from_ regression models.
 
-Let's set the seed to 1 and sample 5 values from the normal distribution.
+For example, suppose you were not given a data set but instead was told of the
+distributions of some variables and given their coefficients for a linear regression
+model. We can use this information to _create_ the simulated data!
 
-```{r simulating-data}
-set.seed(1)
-rnorm(5)
-```
+### Idea
+##### Written by Michael Chong
 
-Now let's sample 5 values from the normal distribution again without setting the seed.
+To simulate a data set, try writing it down on paper first, and then
+think about which parts are random, then translate it to code! For example, if you think
+some number $y$ is related *linearly* to $x$ with a slope of 0.3, with some random
+measurement error, you could write it down on paper like this:
+
+$$
+y = 0.3\cdot x + error
+$$
+
+Translating it to code might look like:
 
 ```{r simulating-data-1}
-rnorm(5)
+x <- 2 # set some value of x
+measurement_error <- rnorm(1) # normally distributed measurement error
+
+y <- 0.3*x + rnorm(1) # calculate value of y
 ```
 
-We get different values. Let's sample 5 values again after setting the same seed.
+### Example
+
+Suppose that, while looking at course evaluations and course averages, we have observed
+that there may be some relationship between the course evaluation average and the overall
+course average. While we don't have access to the full data corresponding to a course,
+suppose we are given a *linear regression* for this data. I.e., we are given a slope and
+intercept.
+
+We want to use this information to simulate the data _from_ the linear regression.
+
+Let's start with loading the tidyverse.
 
 ```{r simulating-data-2}
-set.seed(1)
-rnorm(5)
+library(tidyverse)
 ```
 
-We get the same initial 5 values!
+We can simulate the data as follows.
 
-Let's create a simulated data set of course evaluation scores for an instructor.
-
-```{r simulating-data-3}
+```{r simulating-data-3, include = FALSE}
 set.seed(2)
 
-evaluations <- tibble(inspirational = rnorm(n = 100, mean = 3, sd = 2),
-                      recommended = runif(n = 100, min = 3, max = 4))
+grading_trend <- tibble(course = sample(x = c("STA130", "CSC108", "MAT137"),
+                                        size = 50, replace = TRUE),
+                        term = sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
+                        course_avg = rnorm(n = 50, mean = 80, sd = 5),
+                        error = rnorm(n = 50, mean = 0, sd = 1),
+                        evaluations_avg = course_avg * 4.5 + error)
+```
+```{r simulating-data-4, echo = FALSE}
+decorate("simulating-data-3") %>%
+  flair("evaluations_avg = course_avg * 4.5 + error", color = "hotpink") %>%
+  knit_print.with_flair()
 ```
 
-We have generated this reproducible data set by:
+Let's see what this relationship looks like visually, with the regression line.
 
-1. Using `set.seed()` to ensure this data frame is reproducible from this code
-2. Using `rnorm()` to take 50 values from a _normal_ distribution with a mean of 3 and
-standard deviation of 2. This represents a normal distribution of students who have
-provided scores averaging 3 with a standard deviation of 2 for an instructor's course in
-terms of how inspirational it is.
-3. Using `runif()` to take 50 values from a _uniform_ distribution with a minimum of 2 and
-a maximum of 5. This represents a uniform distribution of students who have provided
-scores in an interval of 3-4 for an instructor's course in terms of whether they recommend
-it.
+```{r simulating-data-5}
+grading_trend %>% 
+  ggplot(aes(x = course_avg, y = evaluations_avg)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, formula = 'y ~ x')
+```
 
 We may use this data set to build a regression models using the `lm()` function as follows.
 
-```{r simulating-data-4}
-lm(recommended ~ inspirational, data = evaluations)
+```{r simulating-data-6}
+lm(evaluations_avg ~ course_avg, data = grading_trend)
+```
+
+As we expect, creating this linear regression model successfully recovers the original
+slope of 4.5!
+
+**Question**: Why might we want to do this? One reason may be
+that we want to see how much we can vary our sample while maintaining that same regression
+line (this may be referred to as slope sensitivity, according to [this blog
+post](https://towardsdatascience.com/linear-regression-simulation-to-understand-slope-sensitivity-ab6887d45fe1)).
+
+Here is an illustration given three different samples generated to satisfy this regression line.
+
+```{r simulating-data-7, warning = FALSE, message = FALSE, echo = FALSE, fig.height = 4, fig.width = 10}
+# Resource for code: https://www.tellingstorieswithdata.com/its-just-a-linear-model.html#overview 
+tibble(
+  sample = c(
+    rep.int(x = "sample 1", times = 50),
+    rep.int(x = "sample 2", times = 50),
+    rep.int(x = "sample 3", times = 50)
+  ),
+  course = c(
+    sample(x = c("STA130", "CSC108", "MAT137"), size = 50, replace = TRUE),
+    sample(x = c("STA130", "CSC108", "MAT137"), size = 50, replace = TRUE),
+    sample(x = c("STA130", "CSC108", "MAT137"), size = 50, replace = TRUE)
+  ),
+  term = c(
+    sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
+    sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
+    sample(x = c("F", "W", "S"), size = 50, replace = TRUE)
+  ),
+  course_avg = c(
+    sample1 = rnorm(n = 50, mean = 80, sd = 5),
+    sample2 = rnorm(n = 50, mean = 80, sd = 5),
+    sample3 = rnorm(n = 50, mean = 80, sd = 5)
+  ),
+  error = c(
+    error1 = rnorm(n = 50, mean = 0, sd = 1),
+    error2 = rnorm(n = 50, mean = 0, sd = 1),
+    error3 = rnorm(n = 50, mean = 0, sd = 1)
+  ),
+  evaluations_avg = c(
+    course_avg[1:50] * 4.5 + error[1:50],
+    course_avg[51:100] * 4.5 + error[51:100],
+    course_avg[101:150] * 4.5 + error[101:150]
+  )
+) %>%
+  ggplot(aes(x = course_avg, y = evaluations_avg)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, formula = 'y ~ x') + 
+  facet_wrap(vars(sample))
 ```
 
 ### Exercises
 
+There are many functions involved when it comes to trying to simulate a data set. These
+exercises will help you better learn which functions to use for which parts of the
+simulation.
+
 #### Exercise 1
 
-We want to add an additional variable `workload` to the evaluations data set containing
-simulated data about how the students scored the course's workload.
+When simulating a data set, you will likely need to work with various types of variables
+-- continuous variables, discrete variables, numeric variables, and non-numeric variables.
 
-Write the code you would assign to the `workload` variable if we wanted to simulate points
-from the uniform distribution with values ranging from 2 to 5.
+When it comes to discrete variables (whether numeric, non-numeric, or a mix of both), you
+will likely want to see a repetition of a finite set of values. There is a certain
+function out of the handful of functions we learned about for simulating datasets that
+will be helpful for this task.
 
-```{r simulate-data-exercise-1, exercise = TRUE, exercise.eval = TRUE}
-
-```
-
-```{r simulate-data-exercise-1-solution, exercise = FALSE}
-runif(n = 100, min = 2, max = 5)
-```
-
-```{r simulate-data-exercise-1-code-check}
-grade_code()
-```
-
-#### Exercise 2
-
-We have a list of course codes associated with all of the courses run by this instructor
-and we want to simulate the above data corresponding to different courses. Let's say this
-data represents STA130, STA220, STA302, STA303, and STA304, and STA130 students are more
-likely to have completed a course evaluation than students from other courses.
+For this exercise, you'll try to simulate data points for a discrete variable representing
+the number of times you might pick out a red ball from a jar full of blue, red, and yellow
+balls. Suppose you'll pick out a ball 10 times and put it back every time, and that each
+ball has equal probability of being picked.
 
 Fill in the blanks for the code below to create data that represents the above scenario.
 
-```{r fill-in-sample, include = FALSE, results = FALSE}
-sample(x = c("STA130", "STA220", "STA302", "STA303", "STA304"),
-       size = 100,
+```{r simulate-fill-in-sample, include = FALSE, results = FALSE}
+sample(x = c("Red", "Blue", "Yellow"),
+       size = 10,
        replace = TRUE,
-       prob = c(0.6, 0.4, 0.4, 0.4, 0.4))
+       prob = c(0.33, 0.33, 0.33))
 ```
-```{r fill-in-sample-1, echo = FALSE}
-decorate("fill-in-sample") %>%
+```{r simulate-fill-in-sample-1, echo = FALSE}
+decorate("simulate-fill-in-sample") %>%
   mask("x") %>%
   mask("size") %>%
   mask("replace ") %>%
@@ -1636,7 +1578,7 @@ decorate("fill-in-sample") %>%
 
 You'll notice that there are 4 blanks in total that you'll need to fill.
 
-```{r fill-in-sample-2, echo = FALSE}
+```{r simulate-fill-in-sample-2, echo = FALSE}
 quiz(question("What should the first blank be?",
               answer("n"),
               answer("x", correct = TRUE),
@@ -1675,6 +1617,42 @@ quiz(question("What should the first blank be?",
               allow_retry = TRUE))
 ```
 
+#### Exercise 2
+
+Suppose we are given a regression model with a slope of 4.5, and we want to simulate a 
+dataset from the regression model with the previous scenario. What is wrong with this
+data-generating code?
+
+```{r simulate-data-exercise-2, exercise = TRUE, exercise.eval = TRUE}
+set.seed(2)
+grading_trend <- tibble(course = sample(x = c("STA130", "CSC109", "MAT137"),
+                                        size = 50, replace = TRUE),
+                        term = sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
+                        course_avg = rnorm(n = 50, mean = 80, sd = 5),
+                        evaluations_avg = rnorm(n = 50, mean = 4, sd = 2))
+```
+
+```{r simulate-data-exercise-2-hint-1}
+# It "works", in the sense that we get meaningful output, but it is not the output we want for this problem!
+```
+```{r simulate-data-exercise-2-hint-2}
+# If you're really stuck, try looking at the code we used for this above, and determine what's different
+```
+
+```{r simulate-data-exercise-2-solution, exercise = FALSE}
+set.seed(2)
+grading_trend <- tibble(course = sample(x = c("STA130", "CSC109", "MAT137"),
+                                        size = 50, replace = TRUE),
+                        term = sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
+                        course_avg = rnorm(n = 50, mean = 80, sd = 5),
+                        error = rnorm(n = 50, mean = 0, sd = 1),
+                        evaluations_avg = course_avg * 4.5 + error)
+```
+
+```{r simulate-data-exercise-2-code-check}
+grade_code()
+```
+
 ### Common Mistakes & Errors
 
 Here are some common mistakes and errors you may come across:
@@ -1690,23 +1668,765 @@ different value for a seed to obtain results you previously got with your code.
 ### Next Steps
 
 If you would like to learn more about these functions, read the documentation associated
-with each of the functions.
+with each of the functions. But if you would like to learn more about simulating datasets
+from a regression model, please take a look at the following:
 
-To simulate a more "realistic" dataset, try writing it down on paper first, and then think about which parts are random, then translate it to code! For example, if you think some number $y$ is related *linearly* to $x$ with a slope of 0.3, with some random measurement error, you could write it down on paper like this:
-$$
-y = 0.3\cdot x + error
-$$
-Translating it to code might look like:
+- [Telling Stories With Data -- It's Just a Linear Model](https://www.tellingstorieswithdata.com/its-just-a-linear-model.html#overview)
 
-```{r}
-x <- 2 # set some value of x
-measurement_error <- rnorm(1) # normally distributed measurement error
 
-y <- 0.3*x + rnorm(1) # calculate value of y
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Advanced mutating and summarising
+
+Written by Mariam Walaa.
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Use across() with summarise()
+- Apply conditions within summarise() and mutate() (_coming soon!_)
+
+Prerequisite skills include:
+
+- Familiarity with summarize()
+- Familiarity with mutate()
+- Familarity with conditional statements (_coming soon!_)
+
+Highlights:
+
+- Use across() to summarize across a defined selection of columns
+- Use summarize() and mutate() along with conditional statements (_coming soon!_)
+
+### Overview
+
+This section will demonstrate how to use the `summarise()` function with `across()` to 
+summarize variables and groups within a variable in a data set.
+
+We will be looking at a data set of Broadway shows with variables about the performances,
+attendance, and revenue for theaters that are part of The Broadway League. You can learn
+more about the data set provided by Alex Cookson in [the dataset
+repository](https://github.com/tacookson/data) as well as this corresponding [blog
+post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/).
+
+#### Video
+
+![](https://youtu.be/3mmbPjgzzeY)
+
+### Questions
+
+Let's start with loading the tidyverse and looking at the data.
+
+```{r load-tidyverse}
+library(tidyverse)
+```
+
+```{r across-1, include = FALSE}
+broadway <- read_csv(
+  "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv",
+  guess_max = 10000)
+
+broadway <- broadway %>%
+  select(week_ending,
+         show,
+         theatre,
+         weekly_gross,
+         avg_ticket_price,
+         top_ticket_price,
+         performances,
+         previews)
+```
+
+```{r across-2}
+broadway
+```
+
+#### Question 1
+
+What is the minimum and maximum number of performances _and_ previews per week?
+
+Method: Use `across()` to select specific columns to summarize them with multiple
+summary functions.
+
+```{r across-3, include = FALSE}
+broadway %>%
+  group_by(week_ending) %>%
+  summarise(across(.cols = c("performances", "previews"),
+                   .fns = list(min = min, max = max)),
+            .groups = 'drop')
+```
+```{r across-4, echo = FALSE}
+decorate("across-3") %>%
+  flair("across", color = "blue") %>%
+  flair(".cols", color = "deeppink") %>%
+  flair(".fns", color = "orange") %>%
+  knit_print.with_flair()
+```
+
+Here's what this chunk of code does:
+
+* Groups the data by week using `group_by()` 
+* Selects columns to summarize by passing a vector to `.cols` in `across()` (Highlighted in pink) 
+* Defines summary functions by passing a list to `.fns` in `across()` (Highlighted in orange)
+
+You can learn more about `across()` by running `?across` in your console.
+
+#### Question 2
+
+How do we provide a numeric summary for every show happening in a particular week?
+
+```{r across-5}
+broadway %>%
+  group_by(week_ending, show) %>%
+  summarise(across(where(is.numeric), mean, na.rm = TRUE),
+            .groups = 'drop')
+```
+
+This chunk of code summarizes every show happening in some particular week by every
+numeric variable that is available in the data set. This helps us easily see things like
+the average ticket price and the number of performances each show had in a particular
+week.
+
+### Arguments
+
+The `across()` function takes the following as arguments:
+
+| Argument | Parameter | Details                                           |
+| -------- | --------- | ------------------------------------------------- |
+| .fns     |           | can pass a list of functions or a single function |
+| .cols    | vector    | vector with column names to apply functions to    |
+
+You can read more about the arguments in the `across()` function's documentation
+[here](https://dplyr.tidyverse.org/reference/across.html). Note that the arguments for 
+across() will depend on your use case.
+
+#### Exercise
+
+Count the number of distinct shows and distinct theatres using summarise() and across(). 
+
+**Tip**: Try to use the data type for shows and theatres columns!
+
+```{r across-exercise-1, exercise = TRUE}
+
+```
+
+```{r across-exercise-1-sol, echo = FALSE}
+ex1_sol <- broadway %>%
+  summarise(across(where(is.character), n_distinct),
+            .groups = 'drop')
+```
+
+```{r across-exercise-1-check}
+grade_result(pass_if(~identical(.result, ex1_sol)))
+```
+
+### Next Steps
+
+If you would like to learn more about using across() with summarise, you may find the following resource helpful:
+
+- [dplyr: Apply a function (or functions) across multiple columns](https://dplyr.tidyverse.org/reference/across.html) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Tidying up datasets
+
+Written by Mariam Walaa.
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Use recode()
+- Use coalesce()
+- Use lag() and lead()
+- Use replace_na(), drop_na()
+- Use n_distinct(), distinct()
+
+Prerequisite skills include:
+
+- Familiarity with NA values
+- Familiarity with data types 
+
+Highlights:
+
+- Use **replace_na()** and **drop_na()** to work with NA values
+- Use **n_distinct()** and **distinct()** to look at unique rows
+- Use **lag()** and **lead()** to push a set of values forward or backward in a vector
+- Use **coalesce()** to look at the first occurrence of a non-NA value across vectors
+- Use **recode()** to change certain values to something else that is of the same data type
+
+### Video
+
+![](https://youtu.be/0lz5kRNbQso)
+
+### Arguments
+
+#### recode()
+
+The `recode()` function takes the following as arguments:
+
+| Argument | Parameter | Details                                                                       |
+| -------- | --------- | ----------------------------------------------------------------------------- |
+| .x       | vector    | the vector you want to modify                                                 |
+| ...      | old value | old value = new value; assign a new value to the old value you want to modify |
+
+You can read more about the arguments in the `recode()` function's documentation
+[here](https://dplyr.tidyverse.org/reference/recode.html).
+
+#### replace_na()
+
+The `replace_na()` function takes the following as arguments:
+
+| Argument | Parameter        | Details                                                  |
+| -------- | ---------------- | -------------------------------------------------------- |
+| data     | input data frame | data frame with columns we want to replace NAs for       |
+| replace  | list             | list of values for each column to replace their NAs with |
+
+You can read more about the arguments in the `replace_na()` function's documentation
+[here](https://tidyr.tidyverse.org/reference/replace_na.html).
+
+#### coalesce()
+
+The `coalesce()` function takes the following as arguments:
+
+| Argument | Parameter      | Details                                                           |
+| -------- | -------------- | ----------------------------------------------------------------- |
+| …        | set of vectors | set of vectors to extract series of first non-empty elements from |
+
+You can read more about the arguments in the `coalesce()` function's documentation
+[here](https://dplyr.tidyverse.org/reference/coalesce.html).
+
+#### n_distinct()
+
+The `n_distinct()` function takes the following as arguments:
+
+| Argument | Parameter      | Details                                                 |
+| -------- | -------------- | ------------------------------------------------------- |
+| …        | set of vectors | set of vectors to count number of distinct elements for |
+
+You can read more about the arguments in the `n_distinct()` function's documentation
+[here](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/n_distinct).
+
+#### distinct()
+
+The `distinct()` function takes the following as arguments:
+
+| Argument | Parameter | Details                            |
+| -------- | --------- | ---------------------------------- |
+| .data    | tibble    | tibble to return distinct rows for |
+
+You can read more about the arguments in the `distinct()` function's documentation
+[here](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/distinct).
+
+#### drop_na()
+
+The `drop_na()` function takes the following as arguments:
+
+| Argument | Parameter        | Details                                                    |
+| -------- | ---------------- | ---------------------------------------------------------- |
+| data     | input data frame | data frame with columns we want to drop rows with NAs for  |
+| …        | vector           | columns you want to drop observations for if they have NAs |
+
+You can read more about the arguments in the `drop_na()` function's documentation
+[here](https://www.rdocumentation.org/packages/tidyr/versions/0.8.0/topics/drop_na).
+
+#### lag(), lead()
+
+The `lag()` and `lead()` functions take the following as arguments:
+
+| Argument | Parameter | Details                                                 |
+| -------- | --------- | ------------------------------------------------------- |
+| x        | vector    | vector of values to work with                           |
+| n        | number    | number of positions to lead ('pull') or lag ('push') by |
+| default  | number    | value to fill the empty spots with                      |
+
+You can read more about the arguments in the function documentation
+[here](https://dplyr.tidyverse.org/reference/lead-lag.html).
+
+### Exercise
+
+Match each of the function names to their descriptions.
+
+| Function      | Description                                                                                            |
+| ------------- | ------------------------------------------------------------------------------------------------------ |
+| A             | This function "pulls" a vector "backward" by n positions and fills with NAs.                           |
+| B             | This function provides all the distinct values in a vector.                                            |
+| C             | This function replaces NA values with a specified value.                                               |
+| D             | This function counts the number of distinct values in a vector.                                        |
+| E             | This function "pushes" a vector "forward" by n positions and fills with NAs.                           |
+| F             | This function returns the first non-NA value at each row of a set of data.                             |
+| G             | This function takes out all the rows that include NA values.                                           |
+| H             | This function allows you to change values of certain categories into new values of the same data type. |
+
+
+```{r matching, echo = FALSE}
+quiz(question("Which function is A?",
+              answer("coalesce()"),
+              answer("lag()"),
+              answer("recode()"),
+              answer("lead()", correct = TRUE),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("Which function is B?",
+              answer("coalesce()"),
+              answer("drop_na()"),
+              answer("n_distinct()"),
+              answer("distinct()", correct = TRUE),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("Which function is C?",
+              answer("drop_na()"),
+              answer("replace_na()", correct = TRUE),
+              answer("distinct()"),
+              answer("n_distinct()"),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("Which function is D?",
+              answer("n_distinct()", correct = TRUE),
+              answer("distinct()"),
+              answer("recode()"),
+              answer("coalesce()"),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("Which function is E?",
+              answer("coalesce()"),
+              answer("lead()"),
+              answer("recode()"),
+              answer("lag()", correct = TRUE),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("Which function is F?",
+              answer("coalesce()", correct = TRUE),
+              answer("lead()"),
+              answer("recode()"),
+              answer("lag()"),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("Which function is G?",
+              answer("replace_na()"),
+              answer("lag()"),
+              answer("drop_na()", correct = TRUE),
+              answer("lead()"),
+              random_answer_order = TRUE,
+              allow_retry = TRUE),
+     question("Which function is H?",
+              answer("coalesce()"),
+              answer("lag()"),
+              answer("recode()", correct = TRUE),
+              answer("distinct()"),
+              random_answer_order = TRUE,
+              allow_retry = TRUE))
+```
+
+### Next Steps
+
+If you are looking for more information on some of these functions, please check out the following resources:
+
+- [dplyr: Compute lagged or leading values](https://dplyr.tidyverse.org/reference/lead-lag.html)
+- [dplyr: Recode values](https://dplyr.tidyverse.org/reference/recode.html)
+- [tidyr: Replace NAs with specified values](https://tidyr.tidyverse.org/reference/replace_na.html)
+- [dplyr: Find first non-missing element](https://dplyr.tidyverse.org/reference/coalesce.html)
+- [n_distinct: Efficiently count the number of unique values in a set of vector](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/n_distinct)
+- [distinct: Select distinct/unique rows](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/distinct)
+- [drop_na: Drop rows containing missing values](https://www.rdocumentation.org/packages/tidyr/versions/0.8.0/topics/drop_na)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Forcats and Factors
+
+Written by Matthew Wankiewicz.
+
+```{r forcats-tidyverse, echo=FALSE}
+library(tidyverse)
+```
+
+```{r forcats-data-readin, echo=F, warning=F, message=F}
+expeditions <- read_csv("https://raw.githubusercontent.com/tacookson/data/master/himalayan-expeditions/expeditions.csv")
+```
+
+
+### Introduction
+
+In this lesson, you will learn about:
+
+- Factors in R, how they work, what they do.
+- The `forcats` package.
+
+Highlights:
+
+- Factors are a way of storing data in R. Instead of having many different combinations like a list of names or numbers, factors are usually created to represent a fixed number of values, such as levels (high, low, medium) or times (early, late, on-time). In other words, factors represent categorical data in R.
+- `forcats` contains many functions that allow you to work with factors for plotting or further data analysis.
+
+
+### The Content
+
+Factors represent categorical variables in R. Factors are stored as integer levels in R, meaning that each level of a factor will be represented by an integer so R knows which one represents the maximum and minimum. Factors can be comprised of both integers and characters but the levels of these factors will be displayed as characters. The `factor` function can be used to create factors in R, it takes a vector of data and will turn it into a factor. This function can be used on columns in datasets to convert a column of data from numeric/character to a factor. 
+
+`forcats` is a package that contains various functions to manipulate factors, it exists as its own package but is also included in the `tidyverse` package as well. The main goals of these functions are to help reorder and change factor levels, this is done by changing which levels appear at the front/back and also combining levels into other ones. 
+
+A helpful cheatsheet for `forcats` can be found [here.](https://github.com/rstudio/cheatsheets/blob/master/factors.pdf)
+
+### Factors
+
+The `factor` function allows you to take a vector and turn it into a factor. The vector used can be made up of characters or integers. Its main argument is the vector that you want to turn into a factor. An example of this is shown below. 
+
+```{r factor-ex1}
+factor_vector <- c(1,2,3)
+factor(factor_vector)
+```
+
+In addition to the main argument, `factor` also has some optional arguments. These include `levels`, `labels` and `exclude`. `levels` tells R what the order of the levels are of your factor (which is highest/lowest), if you leave it empty it will make the levels in alphabetical order or increasing order for integers. `labels` will create labels for your factor and will set the order of your factor. `exclude` will take out a level that appears in your factor and replace those values with `<NA>`. 
+
+We can change the levels of our `factor_vector` from earlier using the `levels` argument.
+```{r factor-levels}
+factor_vector <- c(1,2,3)
+factor(factor_vector, levels = c(2,1,3)) ## set levels to 2,1,3
+```
+
+
+Using the `labels` argument, we can rename the levels of `factor_vector`. This will rename 1 to 'one', 2 to 'two' and 3 to 'three'.
+```{r factor-labels}
+factor_vector <- c(1,2,3)
+factor(factor_vector, labels = c('one', 'two', 'three')) ## set labels to 'one', 'two', 'three'
+```
+
+Using `exclude` we can exclude the number two from our factor.
+```{r factor-exclude}
+factor_vector <- c(1,2,3)
+factor(factor_vector, exclude = 2)
+```
+
+If you want to test if a column or set of data is a factor, you can use `is.factor`.
+
+```{r is-factor}
+factor_vector <- c(1,2,3)
+new_factor <- factor(factor_vector, exclude = 2)
+
+is.factor(new_factor)
+```
+
+You can also check the levels of a factor using `levels`
+
+```{r factor-levels-func}
+factor_vector <- c(1,2,3)
+new_factor <- factor(factor_vector)
+
+levels(new_factor)
+```
+
+
+### Forcats
+
+There are many useful functions in the `forcats` library but this lesson will mainly focus on `fct_relevel` and `fct_reorder` while also looking briefly at `fct_count`, `fct_c` and `fct_lump`.
+
+#### `fct_count`
+
+This function can be used to count the number of values in each level of your factor. It takes one main argument, the factor you want to count. The other optional arguments (`sort`, `prop`) sort the most common levels to the top and can compute the proportion of the levels represented.
+
+```{r fct-count}
+random_factor <- factor(c(1,1,1,2,3,4,2,3,2,1,4,3,3,3,2,1))
+fct_count(random_factor)
+
+fct_count(random_factor, sort = TRUE)
+
+fct_count(random_factor, sort = TRUE, prop = TRUE)
+```
+
+#### `fct_c` 
+
+This function takes factors with different levels and can combine them into one factor with the levels from the other factors. The only argument it takes are the factors you want to combine. We see that when using it on factors with levels 'a' and 'b' it will combine them into one factor with levels 'a' and 'b'. 
+
+```{r fct-c}
+factor_a <- factor("a")
+factor_b <- factor("b")
+
+fct_c(factor_a, factor_b)
+```
+
+#### `fct_lump` functions
+
+This group of functions takes levels and brings them together to form a level called "other". The functions include:
+
+  - `fct_lump_min:` This function takes a factor and a number which tells R whether to include the level in other. An optional argument is called `other_level`, this will change the name of the "other" level.
+  - `fct_lump_prop:` This function will lump levels that appear less than a certain proportion of times. For example, you can lump functions that make up less than 15% of your data. 
+  - `fct_lump_n:` This function lumps all of the levels except the n most frequent ones.
+  
+```{r fct-lump}
+random_factor <- factor(c(1,1,1,2,3,4,2,3,2,1,4,3,3,3,2,1,1))
+
+fct_lump_n(random_factor, 2) ## keep the 2 most frequent levels
+fct_lump_prop(random_factor, .25) ## lump levels which appear less than 25 % of time
+fct_lump_min(random_factor, 3) ## lump levels which appear less than 3 times
+```
+
+
+#### `fct_reorder` 
+This function is useful when working with factors because it allows you to reorder a factor you are working with by another variable. For example, you can reorder a factor with levels of different sports by the average height for the sports listed. The first argument for this function is the factor/variable you plan to re-order and the second will be the variable you are sorting the factor by.
+
+Using the `expeditions` data which looks at Himalayan expeditions, we can reorder the levels of the seasons by the average peak height for each season. As you can see, by adding the `mutate` line we can change the order of the levels depending on the mean height reached that season.
+```{r reorder-expedition}
+data_ex <- expeditions %>% 
+  group_by(season) %>% 
+  summarise(mean_height = mean(highpoint_metres, na.rm = T))
+
+data_ex %>% 
+  ggplot(aes(season, mean_height)) +
+  geom_col() +
+  labs(title = "Plot without fct_reorder")
+
+data_ex %>% 
+  mutate(season = fct_reorder(season, mean_height)) %>% 
+  ggplot(aes(season, mean_height)) +
+  geom_col() +
+  labs(title = "Plot with fct_reorder")
+
+data_sorted <- data_ex %>% 
+  mutate(season = fct_reorder(season, desc(mean_height)))
+
+levels(as.factor(data_ex$season))
+levels(data_sorted$season)
+```
+We can see that the original order was alphabetical while the new sorted one is not.
+
+
+`fct_reorder` can also be used to sort factors in descending order. We will use the same dataset, but this time we will order the levels of seasons decreasing by number of staff hired
+```{r fct-reorder-desc}
+crew_group <-expeditions %>% 
+  group_by(season) %>% 
+  summarise(mean_staff = mean(hired_staff, na.rm = T))
+
+crew_group %>% 
+  ggplot(aes(season, mean_staff)) +
+  geom_col() +
+  labs(title = "Plot without fct_reorder")
+
+crew_group %>% 
+  mutate(season = fct_reorder(season, desc(mean_staff))) %>% 
+  ggplot(aes(season, mean_staff)) +
+  geom_col() +
+  labs(title = "Plot with fct_reorder")
+
+data_sorted <- crew_group %>% 
+  mutate(season = fct_reorder(season, desc(mean_staff)))
+
+levels(as.factor(crew_group$season))
+levels(data_sorted$season)
+```
+Once again we see that the order of levels has switched from alphabetical to a different order.
+
+
+
+#### `fct_relevel`
+
+This function is used to change the levels of a factor. When R deals with levels in a factor, it sorts the levels of the factor in alphabetical order. This means that if your factor includes temperatures like "hot", "cold" and "medium", R will make the levels "cold", "hot", "medium". This can be tricky when classifying the factor because you may want it in increasing temperature or certain order. 
+
+  - `fct_relevel` takes three arguments: the factor you want to relevel, the new order of the levels and `after` which tells R where you want the new order to occur (you can set `after=Inf` to bring your order to the end.)
+  
+If you have a factor with levels "hot", "cold" and "medium", R will sort the levels alphabetically, meaning the order will be "cold", "hot" and then "medium". `fct_relevel` is one way to put the levels in the correct order. There are many ways to change the order, you can either write the order yourself or just move hot to the end using `after = Inf`.
+
+```{r fct-relevel}
+temperatures <- factor(c("hot", "cold", "medium"))
+levels(temperatures)
+
+## use fct_relevel
+
+fct_relevel(temperatures, "hot", after = Inf)
+```
+
+Another example of using `fct_relevel` is with the expedition data. We can use it to change the levels of the `termination_reason` to place Successful expeditions at the top of the levels.
+```{r relevel-example}
+termination_levels <- levels(as.factor(expeditions$termination_reason))
+reordered_levels <- fct_relevel(termination_levels, "Success (claimed)", "Success (main peak)",
+            "Success (subpeak)")
+
+levels(reordered_levels)
+```
+Now we have successes at the top.
+
+You can also include a function in `fct_relevel` to change up the order of your levels. You can use functions like `sample`, `sort` or `rev` to change the order. 
+```{r relevel-rev}
+termination_levels <- levels(as.factor(expeditions$termination_reason))
+## use sample to make the order of levels randomized
+
+levels(fct_relevel(termination_levels, sample))
+```
+
+
+### Exercises
+
+These next exercises will use a dataset which looks at the various countries who have given gifts to the United States, along with the monetary value of these gifts. While the original dataset has almost every country in the world, we will focus on a smaller portion of the countries. 
+
+```{r read-in-countries, echo=FALSE, message=FALSE}
+gifts <- read_csv("https://raw.githubusercontent.com/tacookson/data/master/us-government-gifts/gifts.csv")
+
+plot_countries <- c("Australia", "Canada", "Mexico", "Brazil", "Germany", "Italy", 
+         "France", "Spain", "England")
+
+gifts <- gifts %>% 
+  filter(donor_country %in% plot_countries)
+
+glimpse(gifts)
+```
+
+
+Using `fct_reorder` change the order of the `donor_country` levels to be in order of `mean_value`.
+
+```{r forcats-test-1, exercise = TRUE}
+gifts_grouped <- gifts %>% 
+  group_by(donor_country) %>% 
+  summarise(mean_value = mean(value_usd, na.rm = T))
+### Enter solution below
+
+```
+
+```{r forcats-test-1-solution}
+gifts_grouped <- gifts %>% 
+  group_by(donor_country) %>% 
+  summarise(mean_value = mean(value_usd, na.rm = T))
+### Enter solution below
+fct_reorder(gifts_grouped$donor_country, gifts_grouped$mean_value)
+```
+
+Now, using `fct_reorder` change the order of the `donor_country` levels to be decreasing by `mean_value`. (Bonus: use the new order to make a plot, steps are very similar to the earlier examples) 
+
+```{r forcats-test-2, exercise = TRUE}
+gifts_grouped <- gifts %>% 
+  group_by(donor_country) %>% 
+  summarise(mean_value = mean(value_usd, na.rm = T))
+### Enter solution below
+
+```
+
+```{r forcats-test-2-solution}
+gifts_grouped <- gifts %>% 
+  group_by(donor_country) %>% 
+  summarise(mean_value = mean(value_usd, na.rm = T))
+### Enter solution below
+fct_reorder(gifts_grouped$donor_country, desc(gifts_grouped$mean_value))
+
+### BONUS
+gifts_grouped %>% 
+  mutate(donor_country = fct_reorder(donor_country, desc(mean_value))) %>% 
+  ggplot(aes(donor_country, mean_value)) +
+  geom_col()
+```
+
+
+Using `fct_relevel`, change the order of the levels for `gifts$donor_country` to be randomly sampled.
+
+```{r forcats-test-3, exercise = TRUE}
+
+```
+
+```{r forcats-test-3-solution}
+fct_relevel(gifts$donor_country, sample)
+```
+
+This final exercise will combine the uses of different `forcats` functions and will still use the `gifts` data. 
+Using one of the `fct_lump_` functions, lump all but 5 of the `donor_country` levels into other (save it under `gifts_lumped`). Next, using `fct_relevel` change the order to be in a random order (save under `gifts_lumped` again). Finally, using a `forcats` function count how many entries are in each level.
+
+```{r forcats-test-4, exercise = TRUE}
+
+```
+
+```{r forcats-test-4-solution}
+gifts_lumped <- fct_lump_n(gifts$donor_country, 5)
+gifts_lumped <- fct_relevel(gifts_lumped, rev)
+fct_count(gifts_lumped)
 ```
 
 
 
+```{r forcats-mult-choice, results = "hide"}
+factor_example <- factor(c(rep("dog", 20), rep("cat", 19), 
+                    rep("fish", 12), rep("cow", 9),
+                    rep("bird", 24)))
+
+fct_relevel(factor_example, "fish", "dog") 
+
+fct_lump_n(factor_example, 2)
+```
+
+```{r forcats-mult-choice-1, echo=F}
+question("What is the order of the levels before we run `fct_relevel`?",
+         answer("dog, cat, fish, cow, bird"),
+         answer("bird, cat, cow, dog, fish", correct = TRUE),
+         answer("bird, dog, cat, fish, cow"),
+         answer("The order is random"),
+         allow_retry = T)
+```
+
+```{r forcats-mult-choice-2, echo=F}
+question("After running `fct_relevel` what is the new order of the levels?",
+         answer("fish, dog, bird, cat, cow", correct = TRUE),
+         answer("bird, cat, cow, dog, fish"),
+         answer("fish, dog, other"),
+         answer("The order is still random"),
+         allow_retry = T)
+```
+
+```{r forcats-mult-choice-3, echo=F}
+question("After running `fct_lump_n`, which 2 levels are kept out of other?",
+         answer("bird", correct = TRUE),
+         answer("cat"),
+         answer("cow"),
+         answer("dog", correct = TRUE),
+         answer("fish"),
+         allow_retry = T)
+```
+
+
+### Common Mistakes & Errors
+
+- `Error: "f" must be a factor (or character vector).`
+  - This error will occur if you try to call `forcats` functions on non-factors. To fix this, ensure you are using a factor. 
+  
+- `argument ".x" is missing, with no default`
+  - This error will occur if you are missing an argument in your function call. Double check that you have filled out all arguments.
+
+### Next Steps
+
+Now that you're familiar with the `forcats` package, here are some additional resources to help continue your learning:
+
+- The `forcats` website which includes more examples and information about the most important functions: https://forcats.tidyverse.org/
+
+- R for Data Science's chapter about factors. This chapter gives another lesson on factors and also uses the `forcats` package to work with factors: https://r4ds.had.co.nz/factors.html
+
+- The factors chapter from Jenny Bryan's STAT 545 book: https://stat545.com/factors-boss.html
 
 
 
@@ -1718,6 +2438,889 @@ y <- 0.3*x + rnorm(1) # calculate value of y
 
 
 
+
+## More on strings
+
+Written by Annie Collins.
+
+### More on strings
+
+Written by Annie Collins.
+
+#### Introduction
+
+In this lesson, we will be covering some additional functions that will help us work with text data. If you have not already done so, please feel free to look through the previous lesson "Strings with paste and glue and stringr" for more functions and examples of working with strings that might help your understanding of this lesson's content.
+
+In this lesson, you will learn how to:
+
+- Expand deliminated text data in a data frame using `separate()` and`separate_rows()`; and,
+- Extract and manipulate text data in character vectors using `str_match()`, and `str_remove()`
+
+Prerequisite skills include:
+
+- Some knowledge from the previous strings lesson in this module, as well as the `stringr` and `tidyr` packages.
+
+#### Separate text-based data frames using separate() and separate_rows()
+
+`separate()` and `separate_rows()` allow you to split up a single column of text data in different ways.
+
+`separate()` divides a single column of text data into multiple columns. There are several arguments that allow you to specify how this is done. We will focus on a the most significant ones to start:
+
+| Argument | Parameter | Details
+| -------- | --------- | ----------------------------------------- |
+| data     | data frame | A data frame |
+| col | number OR string | The name or position of the column containing the data to be separated |
+| into | vector | A character vector of the names you wish to give to the newly created columns. You can omit columns by putting `NA` in the corresponding place within this vector. The length of your input must match the largest number of columns produced by separating one of the cells in `col`, otherwise the excess columns will be omitted  |
+| sep | number OR string | Indicates how text will be separated. Defaults to splitting at any non-alpha numeric characters. If you use a number, the column will split at the specified position within each string. If you use a character, the text will split at every instance of that character and the character will be omitted from the outputted columns. |
+
+To see `separate()` in action, let's look at the following data frame called `dinner_party` which contains a list of guests for a dinner party and their food choices for a three course meal consisting of soup, salad, and a main course.
+
+```{r}
+guest <- c("Annie", "Mariam", "Haoluan", "Shirley", "Rohan", "Sam")
+food <- c("butternut squash, ceasar, lasagna", "italian wedding, garden, chicken", "italian wedding, ceasar, lasagna", "italian wedding, ceasar, lasagna", "butternut squash, garden, chicken", "butternut squash, garden, lasagna")
+dinner_party <- data.frame(guest, food)
+dinner_party
+```
+
+Right now the guests' orders are listed together in the column called `food`, but the data might be easier to read if each person's order for each course was in its own column. Run the code below to see how this can be accomplished.
+
+```{r separate-example-1, exercise=TRUE, echo=FALSE}
+
+separate(dinner_party, food, c("soup", "salad", "main course"), sep = ",")
+
+## We can also exlude the salad column in the output by using the following code instead
+## separate(dinner_party, food, c("soup", NA, "main course"), sep = ",")
+
+```
+
+Using `separate()`, we now can see each course as its own column and all the commas have been removed. Note that it's important to specify `sep = ","` in this case, since the default option would separate by spaces as well and split soup orders into separate columns which is not what we intended.
+
+We can split up the information contained in the `food` column in a different way using `separate_rows()`. As the name might suggest, this function will split each string into distinct rows instead of columns. The syntax and arguments are similar to `separate()`:
+
+| Argument | Parameter | Details
+| -------- | --------- | ----------------------------------------- |
+| data     | data frame | A data frame |
+| ... | string | The name(s) of the column(s) containing the data to be separated. Multiple columns can be inputted if their lengths are compatible (ie. the same number of new rows will be created once they are separated). Otherwise, an error will be raised. |
+| sep | number OR string | Character between values to be separated. Defaults to any non-alpha-numeric characters. |
+
+Notice that we don't need to worry about the name or number of new columns since none will be created. Once the data in the indicated column(s) has separated into additional rows, the data from accompanying columns will be duplicated to fill in the new row's remaining cells.
+
+Run the code below and observe the difference between `separate()` and `separate_rows()`.
+
+```{r separate-example-2, exercise=TRUE, echo=FALSE}
+separate_rows(dinner_party, food, sep = ",")
+```
+
+#### Trouble Shooting separate()
+
+Sometimes it is hard to know exactly how many columns your data will create when using `separate()`, which can lead to errors or unintended results when specifying the `into` argument. The function comes with a few *additional* arguments to help you control what happens in these scenarios. Note that this applies only when `sep` is a string, since if `sep` is numeric the column in question is always separated into two columns at the indicated location.
+
+| Argument | Parameter | Details
+| -------- | --------- | ----------------------------------------- |
+| extra | string | Used to control what happens if there are extra columns created once all the names from `sep` are used. There are two options (not including the default, "warn"): **"drop"**, which will exclude any additional columns created, or **"merge"**, which will split the text at most `length(into)` times (so the last column indicated by `into` will contain unseparated data). |
+| fill | string | Used to control what happens if there are not enough columns created to match the names indicated in `into`. There are two options (not including the default, "warn"): **"right"**, which fills the data frame with missing values on the right, and **"left"**, which fills the data frame with missing values on the left of the actual data. |
+
+Run and edit the code below and observe the difference between the scenarios.
+
+```{r separate-exercise-3, exercise=TRUE}
+letters <- data.frame(x = c("a.b", "a.b.c", "a.b.c.d"))
+letters
+
+## Too many columns created - try "drop" and "merge" in place of "warn"
+separate(letters, x, c("A", "B"), extra = "warn")
+
+## Not enough columns created - try "left" and "right" in place of "warn"
+separate(letters, x, c("A", "B", "C", "D"), fill = "warn")
+
+```
+
+
+#### Working with text data using str_match() and str_remove()
+
+`str_match()` and `str_remove()` are functions from the `stringr` package that can be used to manipulate character vectors in different ways.
+
+`str_match()` identifies the first instance of a given pattern within each element of a character vector by returning a new vector indicating the string found that matches the pattern. This is particularly useful for data that follows a set structure, such as phone numbers or postal codes. `str_match()` returns a character matrix, in which the first column contains the complete match and subsequent columns contain any matching sub-groups within the full match. 
+
+`str_remove()` removes the first instance of a given pattern within each string in a character vector, returning an updated character vector.
+
+Both functions take the same two arguments:
+
+| Argument | Parameter | Details
+| -------- | --------- | ----------------------------------------- |
+| string | vector | Your character vector |
+| pattern | string | The pattern to look for in `string` (either a general pattern or a specific string). |
+
+Consider this vector called `postal_codes` containing 30 Toronto postal codes.
+
+```{r postal-codes, include=FALSE}
+set.seed(900)
+postal_codes <- c("M5S2W8")
+front <- c("M5S", "M5R", "M5T", "M4W", "M4Y", "M4V")
+i = 1
+while (i < 30) {
+  a <- sample(front, 1)
+  b <- sample(1:9, 1)
+  c <- sample(LETTERS, 1)
+  d <- sample(1:9, 1)
+  new <- paste0(a, b, c, d)
+  postal_codes <- append(postal_codes, new)
+  i <- i + 1
+}
+```
+```{r}
+postal_codes
+```
+
+Suppose we want to identify the postal codes in this vector from areas surrounding the University of Toronto, which begin with "M5S". We can use the code below to do so.
+
+```{r}
+
+str_match(postal_codes, "M5S[1-9][A-Z][1-9]") 
+## The input for pattern here essentially means "M5S followed by any combination of the format number-letter-number"
+```
+
+We now have a vector containing only the postal codes of interest, and we could manipulate it further to remove the NA's if desired. Now suppose we actually wanted to remove these postal codes from the original data. This is where we could use `str_remove()`.
+
+```{r}
+str_remove(postal_codes, "M5S[1-9][A-Z][1-9]")
+```
+
+We now have a vector with blank strings instead of postal codes that begin with "M5S".
+
+It is important to note that `str_match()` and `str_detect()` only operate on the first instance of the indicated pattern within each element of a string (this isn't so obvious in our postal code example since each string is rather simple and short). Both `str_match()` and `str_remove()` have accompanying functions `str_match_all()` and `str_remove_all()` which apply their functionality to *every* instance of the inputted pattern within the inputted character vector. Run the code below on a simpler vector to examine the difference.
+
+```{r all-exercise-, exercise = TRUE}
+## Match
+rhyme <- c("she", "sells", "sea", "shells")
+
+str_match(rhyme, "s")
+
+str_match_all(rhyme, "s")
+```
+```{r all-exercise-2, exercise = TRUE}
+## Remove
+rhyme <- c("she", "sells", "sea", "shells")
+
+str_remove(rhyme, "s")
+
+str_remove_all(rhyme, "s")
+```
+
+#### Questions
+
+These questions will refer to the following data set called `groceries`.
+
+```{r, echo=FALSE}
+groceries <- data.frame(food = c("bananas,apples,rice,pasta,tofu,pizza"), drinks = c("tea,coffee,juice,wine"))
+groceries
+```
+
+```{r separate-q-1, echo=FALSE}
+question("How many rows will the output of \"separate_rows(groceries, drinks)\" have?",
+         answer("4", correct=TRUE),
+         answer("5"),
+         answer("6"),
+         answer("Error"))
+```
+```{r separate-q-2, echo=FALSE}
+question("How many rows will the output of \"separate_rows(groceries, food, drinks)\" have?",
+         answer("4"),
+         answer("5"),
+         answer("6"),
+         answer("Error", correct = TRUE),
+         correct = "Correct! Given the default \"sep\" value, \"drinks\" would separate into four new rows while \"food\" would separate into six, causing an error to be raised")
+```
+```{r separate-q-3, echo=FALSE}
+question("Suppose I execute \"separate(groceries, drinks, into=c(\"A\", \"B\", \"C\", \"D\", \"E\"), fill=\"left\")\". What will the second column of the outputted data frame contain?",
+         answer("bananas,apples,rice,pasta,tofu,pizza"),
+         answer("tea"),
+         answer("NA", correct = TRUE),
+         answer("Error")
+         )
+```
+```{r separate-q-4, echo=FALSE}
+question("Suppose I execute \"separate(groceries, drinks, into=c(\"A\", \"B\", \"C\"), extra=\"merge\")\". What will the final column of the outputted data frame contain?",
+         answer("juice"),
+         answer("wine"),
+         answer("juice,wine", correct = TRUE),
+         answer("Error")
+         )
+```
+
+#### Exercises
+
+##### Exercise 1
+
+Replicate the following data set, beginning with `groceries` as above.
+```{r, echo=FALSE}
+groceries %>% separate(drinks, into=c("1", "2", "3", "4")) %>% separate_rows(food)
+
+```
+
+```{r separate-exercise-1, exercise=TRUE}
+
+```
+```{r separate-exercise-1-solution}
+groceries %>% separate(drinks, into=c("1", "2", "3", "4")) %>% separate_rows(food)
+## Can switch order of the functions for the same result
+```
+
+##### Exercise 3
+
+Using the `postal_codes` data from previous examples, remove every number from the data.
+
+```{r remove-exercise-1, exercise=TRUE}
+
+```
+```{r remove-exercise-1-solution}
+postal_codes %>% str_remove_all("[1-9]")
+```
+
+
+##### Exercise 2
+
+Using the `postal_codes` data from previous examples, create a vector that contains only the last three characters of all postal codes beginning with "M5S".
+```{r remove-exercise-2, exercise=TRUE}
+
+```
+```{r remove-exercise-2-solution}
+postal_codes %>% str_match("M5S[1-9][A-Z][1-9]") %>% str_remove("M5S")
+```
+
+#### Next Steps
+
+Now that you are familiar with some functions that work with strings, you are well set up to explore other features that `stringr` has to offer. A good place to start is the `stringr` [cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/strings.pdf) which outlines a myriad of tools for working with strings and text-based data in R.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Working with Dates
+
+Written by Mariam Walaa.
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Work with dates using the lubridate library
+
+Prerequisite skills include:
+
+- Loading libraries
+- Using mutate() and summarise()
+
+Highlights:
+
+- Loading the lubridate library separately from tidyverse
+- Making use of lubridate's today() and now() functions
+- Learning how to extract information from a date-time column
+
+
+### Overview
+
+Let's start by loading the tidyverse.
+
+```{r dates-1, eval = TRUE}
+library(tidyverse)
+```
+
+Notice that lubridate is not listed as one of the libraries loaded into your R session
+when you load tidyverse (which you can view in your output on your own RStudio), and this
+is because it is not part of the core tidyverse so it will need to be loaded separately.
+
+```{r dates-2}
+library(lubridate)
+```
+
+Two of the functions the lubridate library will give us is today() and now(), which we can
+immediately start to use, without data or parameters.
+
+```{r dates-3}
+today()
+```
+
+```{r dates-4}
+now()
+```
+
+We'll look at Caribou data from Alex Cookson's dataset repository for this tutorial.
+
+```{r dates-5, include = FALSE}
+caribou <- read_csv("https://raw.githubusercontent.com/tacookson/data/master/caribou-location-tracking/locations.csv")
+```
+
+```{r dates-6}
+glimpse(caribou)
+```
+
+We can see that the timestamp column has an associated data type 'dttm'. This stands for
+date-time.
+
+Given this is already the correct data type, we can extract a lot of information from it
+using lubridate functions.
+
+```{r dates-7}
+# extracting year
+caribou %>% mutate(year = year(timestamp))
+
+# extracting week day
+caribou %>% mutate(week_day = wday(timestamp))
+
+# extracting whether it's a leap year!
+caribou %>% mutate(leap_year = leap_year(timestamp))
+```
+
+You can see there are many possibilities with the lubridate package. Check out the
+cheatsheet to learn more!
+
+### Exercises
+
+#### Exercise 1
+
+Extract month, day, and year into separate columns at once using mutate.
+
+```{r dates-exercise-1, exercise = TRUE}
+
+```
+```{r dates-exercise-1-sol, echo = FALSE}
+ex1_sol <- caribou %>% mutate(month = month(timestamp),
+                              day = day(timestamp),
+                              year = year(timestamp))
+```
+```{r dates-exercise-1-check}
+grade_result(pass_if(~identical(.result, ex1_sol)))
+```
+
+#### Exercise 2
+
+Find the earliest and latest dates in the timestamp column.
+
+```{r dates-exercise-2, exercise = TRUE}
+
+```
+```{r dates-exercise-2-sol, echo = FALSE}
+ex2_sol <- caribou %>% summarise(min(timestamp), max(timestamp))
+```
+```{r dates-exercise-2-check}
+grade_result(pass_if(~identical(.result, ex2_sol)))
+```
+
+**Hint**: Remember the summary functions you learned in summarize tutorial!
+
+### Common Mistakes & Errors
+
+- You might try to apply lubridate functions on to a column that looks like a timestamp
+column, but it may still not be of the appropriate data type, which is either 'dt', 'tm',
+or 'dttm'. Be sure to convert to the proper data type first!
+
+### Next Steps
+
+If yo would like to learn more about handling dates and times in R, as well as the
+tidyverse lubridate package, please read the following:
+
+- [R For Data Science:  16 Dates and times](https://r4ds.had.co.nz/dates-and-times.html)
+- [Lubridate Package Documentation](https://lubridate.tidyverse.org/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Cleaning Datasets With Janitor
+
+Written by Mariam Walaa.
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Improve column names in your dataset
+- Handle duplicate or partially-duplicate data
+
+Prerequisite skills include:
+
+- Installing and loading packages
+
+Highlights:
+
+- You can make column names cleaner using janitor's clean_names()
+- You can handle duplicate or partially duplicate data using janitor's get_dupes()
+
+### Overview
+
+> "The [janitor](https://garthtarr.github.io/meatR/janitor.html) package is a R package
+that has simple functions for examining and cleaning dirty data. The main janitor
+functions: perfectly format data frame column names; isolate partially-duplicate records;
+and provide quick tabulations (i.e., frequency tables and crosstabs)."
+
+As the description says, the janitor package will help you with cleaning any dirty dataset
+you have. It's not part of the tidyverse so you'll have to install it and then load it
+separately as follows.
+
+```{r janitor-1}
+library(janitor)
+```
+
+One important thing in data analysis that you'll see up come up very frequently when you
+work with your datasets is _duplication_. This is one area where the janitor package will
+help.
+
+Another more obvious area that the janitor package will help with is your column names. We
+don't always get to choose our column names (because, most times, we're not creating our
+own data, but we're getting data from another source), and so sometimes we might end up
+with column names that aren't so easy to work with.
+
+You can also do more cool things with the janitor package like creating crosstabs, but for
+this tutorial, we'll just focus mainly on how to make your dataset cleaner with better
+variable names and handling duplicate data.
+
+### Arguments
+
+### clean_names()
+
+The `clean_names()` function takes the following as arguments:
+
+| Argument | Parameter            | Details                                        |
+| -------- | -------------------- | ---------------------------------------------- |
+| dat*     | input data frame     |                                                |
+| case     | 'title' for big caps | default is 'snake'; see to_any_case for more   |
+
+You can read more about the arguments in the `clean_names()` function's documentation
+[here](https://garthtarr.github.io/meatR/janitor.html#clean_names()).
+
+### get_dupes()
+
+The `get_dupes()` function takes the following as arguments:
+
+| Argument | Parameter        | Details                                         |
+| -------- | ---------------- | ----------------------------------------------- |
+| dat*     | input data frame |                                                 |
+| …        | vector           | vector containing column names we want to check |
+
+You can read more about the arguments in the `get_dupes()` function's documentation
+[here](https://garthtarr.github.io/meatR/janitor.html#get_dupes()).
+
+### Exercises
+
+Let's start by loading tidyverse since we'll be needing the pipe function, etc.
+```{r janitor-2}
+library(tidyverse)
+```
+
+```{r janitor-data, include = FALSE}
+grades <- tibble(`Student Initials` = c("AH", "AE", "HS", "ES", "BT"),
+                 `Grade Midterm 1` = c(100, 86, 90, 64, 100),
+                 `Grade Midterm 2` = c(90, 83, 79, 64, 90),
+                 `Final Grade %` = c(95, 84.5, 84.5, 64, 95))
+```
+
+Consider this small dataset of grades.
+
+```{r janitor-3}
+grades
+```
+
+Using the clean_names() function from janitor, we get:
+
+```{r janitor-4}
+grades %>% clean_names()
+```
+
+Notice how now everything is lowercased with _ as a separator, and any special characters
+like % are converted to words to retain their meaning. clean_names() would also handle
+column names that are duplicated, but that's not demonstrated here since we already had
+unique columns.
+
+#### Exercise 1
+
+If, for some reason, you wanted to preserve some existing columns from being cleaned, how
+would you use the clean_names() function on only the columns you want to clean? For
+example, supposed you wanted to keep the Final Grade % column as is.
+
+**Hint**: You'll need to use functions outside of the janitor package to help with this!
+Remember the dplyr functions.
+
+```{r janitor-exercise-1, exercise = TRUE}
+
+```
+
+```{r janitor-exercise-1-solution, exercise = FALSE}
+grades %>%
+  select(-`Final Grade %`) %>%
+  clean_names()
+```
+
+```{r janitor-exercise-1-code-check}
+grade_code()
+```
+
+#### Exercise 2
+
+If you wanted to restore the upper casing for some columns, how would you do that?
+
+**Tip**: Take a look at the Arguments section and see what you can use!
+
+Store the cleaned data from above in an object called 'clean', then apply the new cleaning
+step to it.
+
+```{r janitor-exercise-2, exercise = TRUE}
+clean <- 
+clean %>%
+```
+
+```{r janitor-exercise-2-solution, exercise = FALSE}
+clean <- grades %>% clean_names()
+clean %>% clean_names(case = "title")
+```
+
+```{r janitor-exercise-2-code-check}
+grade_code()
+```
+
+#### Exercise 3
+
+Try using the `get_dupes()` function to get duplicate rows from the cleaned grades data
+`clean`.
+
+```{r include = FALSE}
+clean <- grades %>% clean_names()
+```
+
+```{r janitor-exercise-3, exercise = TRUE}
+
+```
+
+```{r janitor-exercise-3-solution, exercise = FALSE}
+clean %>% get_dupes()
+```
+
+```{r janitor-exercise-3-code-check}
+grade_code()
+```
+
+What was the result? Did you get anything?
+
+#### Exercise 4
+
+Look at the data carefully and try to see why you didn't get anything even though it looks
+like two rows are very similar. How can you modify the function call so that you get the
+_partially_ duplicate data?
+
+```{r janitor-exercise-4, exercise = TRUE}
+
+```
+
+```{r janitor-exercise-4-solution, exercise = FALSE}
+clean %>% get_dupes(c("grade_midterm_1", "grade_midterm_2", "final_grade_percent"))
+```
+
+```{r janitor-exercise-4-code-check}
+grade_code()
+```
+
+### Next Steps
+
+If you would like to learn more, please read about the janitor package in its documentation [here](https://garthtarr.github.io/meatR/janitor.html).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## tidyr 'Hello World' and more from tidyr
+
+Written by Mariam Walaa.
+
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Do more with tidyr functions, such as advanced nesting
+
+Prerequisite skills include:
+
+- Previous tutorials involving tidyr functions
+
+Highlights:
+
+- Hello World: Using tidyr functions to clean a non-tidy dataset
+- Advanced nesting
+
+### Overview
+
+When it comes to creating and working with datasets, one key point is *standardization*.
+Datasets must be standardized! Imagine if every dataset was unique in its structure, how
+difficult it would be for data scientists and analysts to work on them. Everyone would
+have a vastly different workflow needed to reach the analysis step, and people would have
+a harder time collaborating with each other and evaluating each other's results. That is
+why datasets must be *standardized*.
+
+You may ask yourself: How do we standardize a dataset, and to what extent? In [Hadley
+Wickham's Tidy Data paper](https://vita.had.co.nz/papers/tidy-data.html) from 2014, Hadley
+introduces 3 rules every dataset must follow in order to be deemed _tidy_.
+
+This is a good paper to read, but if you don't have time, here is an illustration that
+summarizes these 3 rules, by Allison Horst.
+
+```{r tidyr-image-1, echo = FALSE, out.width="90%"}
+knitr::include_graphics("images/59_tidy-data.jpg")
+```
+
+Credits: Allison Horst
+
+As the title says, this section will provide you with a summary of some functions you have
+met in previous tutorials, as well as introduce you to some more functions from tidyr that
+you haven't met yet.
+
+```{r tidyr-image-2, echo = FALSE, out.width="90%"}
+knitr::include_graphics("images/59_tidy-data-2.jpg")
+```
+
+Credits: Allison Horst
+
+As you may have already heard, tidying data (and data preparation, in general) is a big
+part of data analysis! In fact, it may be even bigger than other parts of data analysis.
+So if you feel overwhelmed while learning how to tidy or clean a dataset, don't worry,
+it's natural and there's a lot to digest, especially because datasets can be so uniquely
+messy (as Hadley Wickham's quote says in the picture above)
+
+Instead of worrying about how to clean your dataset, though, we can start off a little
+easier, and just try to get a grasp for what each function is for and maybe even a little
+bit about how they work behind the scenes (You might find it helpful to try to understand
+what the function is doing behind the scenes, and that way, you'll be able to better
+remember what it does and why it does it).
+
+### Hello world!
+
+Imagine you're on your first data internship, and your manager gives you your first
+project. They give you a single CSV file and tell you to spend a couple of hours exploring
+the file in R and come back to them with questions.
+
+The first thing you do, of course, is load and view the file in R. As you do this, you're
+immediately confused by the structure. This isn't what you've seen in your data courses!
+The variables are rows not columns, and the observations are columns not rows! You take a
+deeper look and you see that some variables don't even show the data. It looks like
+they're hidden behind some text. You're _really_ confused. What now?
+
+Let's take a look at this data.
+
+```{r tidyr-data, include = FALSE}
+messy_data <- tibble(n_lines = list(100, 200, 300),
+                       n_figures = list(4, 5, 6),
+                       n_scripts = list(10, 20, 30))
+
+messy_data <- messy_data %>%
+    rownames_to_column() %>%
+    pivot_longer(-rowname, 'variable', 'value') %>%
+    pivot_wider(variable, rowname)
+```
+
+```{r tidyr-1}
+messy_data
+```
+
+That's right, this data is definitely messy. First, the columns and rows are switched, and
+second, the cells are all hidden.
+
+Here's the entire piece of code we need to tidy it:
+
+```{r tidyr-2}
+messy_data %>%
+  pivot_longer(cols = -variable, names_to = "name", values_to = "value") %>%
+  pivot_wider(names_from = "variable") %>%
+  unnest(everything())
+```
+
+But let's go through this step by step and check the output each time.
+
+To clean it, we'll use our functions pivot_longer(), pivot_wider(), and unnest() from tidyr. 
+
+**Tip**: By longer, think "more vertical", like l. And for wider, think "more horizontal", like w.
+
+```{r tidyr-3}
+# 1. Make it longer (i.e. "more vertical")
+long_messy_data <- messy_data %>%
+  pivot_longer(cols = -variable, names_to = 'name', values_to = 'value')
+long_messy_data
+```
+
+Our dataset is a lot "longer" now.
+
+```{r tidyr-4}
+# 2. Make it wider (i.e. "more horizontal")
+wide_messy_data <- long_messy_data %>%
+  pivot_wider(names_from = 'variable')
+wide_messy_data
+```
+
+Notice how step 2 brings the variable names to the top!
+
+```{r tidyr-4-again}
+# 3. Unnest (or "unfold") the cells
+tidy_data <- wide_messy_data %>%
+  unnest(everything())
+tidy_data
+```
+
+Voila! Now it's tidy data!
+
+And if you want to go a step beyond, you can do:
+
+```{r tidyr-5}
+tidy_data %>%
+  column_to_rownames('name')
+```
+
+To make it cleaner.
+
+**Question**: Do these pivot_longer()/pivot_wider() operations used in combination make
+you think of something? Think about the operation we use to ____ a matrix!
+
+### Exercises
+
+Let's start with loading the tidyverse.
+
+```{r tidyr-6, echo = FALSE}
+library(tidyverse)
+```
+
+We will be looking at a data set of Broadway shows with variables about the performances,
+attendance, and revenue for theaters that are part of The Broadway League. You can learn
+more about the data set provided by Alex Cookson in this [Git
+repository](https://github.com/tacookson/data) as well as this corresponding [blog
+post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/).
+
+```{r tidyr-7, include = FALSE}
+broadway <- read_csv(
+  "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv",
+  guess_max = 10000)
+
+winter_garden <- broadway %>%
+  filter(week_number <= 2, theatre == "Winter Garden Theatre") %>%
+  group_by(week_number) %>%
+  select(week_number, show)
+```
+
+Take a look at a subset of this data for the Winter Garden Theatre.
+
+```{r tidyr-8}
+winter_garden
+```
+
+**Tip**: Click Next to look through the observations.
+
+#### Exercise 1
+
+```{r tidyr-exercise-1, echo = FALSE}
+question("Without using the nest() function, how many rows and columns do we have after nesting?",
+         answer("2 rows and 2 columns", correct = TRUE),
+         answer("44 rows and 2 columns"),
+         answer("44 rows and 3 columns"),
+         answer("2 rows and 3 columns"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE)
+```
+
+#### Exercise 2
+
+Try the nest() function. Do you get the expected result?
+
+```{r tidyr-exercise-2, exercise = TRUE}
+
+```
+
+```{r tidyr-exercise-2-sol, echo = FALSE}
+ex2_sol <- winter_garden %>% nest(data = c(show))
+```
+```{r tidyr-exercise-2-check}
+grade_result(pass_if(~identical(.result, ex2_sol)))
+```
+
+#### Exercise 3
+
+```{r tidyr-exercise-3, echo = FALSE}
+question("Consider the code from Exercise 2. What would the sizes of each of the nested data frames be?",
+         answer("22 rows by 1 column", correct = TRUE),
+         answer("1 row by 22 columns"),
+         answer("44 rows by 1 column"),
+         answer("1 row by 44 columns"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE)
+```
+
+#### Exercise 4
+
+```{r tidyr-exercise-4, echo = FALSE}
+question("Consider the code from Exercise 2. Without using the unnest_longer() function, how many rows and columns are in this dataset after unnesting longer?",
+         answer("22 rows by 1 column"),
+         answer("1 row by 22 columns"),
+         answer("44 rows by 2 columns", correct = TRUE),
+         answer("1 row by 44 columns"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE)
+```
+
+#### Exercise 5
+
+Take a look at another subset of the data set, for Palace Theatre this time. 
+
+```{r tidyr-data-2, include = FALSE}
+palace <- broadway %>%
+  filter(week_number <= 2, theatre == "Palace Theatre") %>%
+  group_by(week_number) %>%
+  select(week_number, show)
+```
+
+```{r tidyr-data-2-1}
+palace
+```
+
+```{r tidyr-exercise-5, echo = FALSE}
+question("Which of these functions gives us 12 rows and 2 columns?",
+         answer("nest()", correct = TRUE),
+         answer("unnest()"),
+         answer("unnest_wider()"),
+         answer("unnest_longer()"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE)
+```
+
+**Additional Question**: unnest_auto() is a function that automatically figures out
+whether it is best to unnest (or "unfold") the data wider ("horizontally") or longer
+("vertically"). How do you think it does this? Why do you think that works?
+
+### Next Steps
+
+- Try looking at `vignette("rectangle")`! This is more advanced than what you've seen in
+this tutorial, but if you're really interested then this might be helpful for you to look
+at.
 
 
 
@@ -1734,6 +3337,11 @@ y <- 0.3*x + rnorm(1) # calculate value of y
 
 In this level, we touched on some useful data manipulation methods that you'll come across fairly often.
 
+You can start the next lesson by running:
+
+```{r, eval = FALSE}
+learnr::run_tutorial("to_ggplot_or_not_to_ggplot", package = "DoSStoolkit")
+```
 
 
 

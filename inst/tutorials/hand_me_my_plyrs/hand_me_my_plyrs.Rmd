@@ -60,6 +60,171 @@ The key package within the `tidyverse` is called `dplyr`, which is pronounced 'd
 
 
 
+## What is Tidyverse
+
+Written by Yena Joo.
+
+### Introduction
+
+**In this lesson, you will learn:**  
+
+- what `tidyverse` is, and what core packages there are.     
+- that with the tools provided by packages in tidyverse, you can save up your time, and focus more on your interpretations and analysis.   
+  
+  
+In order to analyze or visualize data, you will need a clean, tidy set of data to work with, and sometimes the downloaded data could be too unorganized or contain too much information that is unnecessary. In order to tidy up the data, you would need this tidyverse package. Once you have tidy data, you would want to visualize them, or create a table, or iterate through your data. Tidyverse is a collection of R packages designed for data science, that can do everything I just mentioned above.    
+
+**Prerequisite skills include:**    
+
+- how to install packages!    
+
+You will need to install a package called `tidyverse`.  
+```{r}
+library(tidyverse)
+```
+
+dplyr, ggplot, tidyr, readr, tibble, and many other packages are part of tidyverse which helps you visualize and manipulate the tidy data. In the following lectures, you will get to learn essential functions often used in the package `tidyverse`. 
+
+**Highlights:**  
+
+- Tidyverse!
+
+### Core Tidyverse packages  
+Various packages inside a `tidyverse` package do not need to be installed individually, you can install them at once by executing `install.packages("tidyverse")`.  
+However, when you run `library(tidyverse)`, only a several packages are going to be installed, which is called a **core tidyverse**.   
+Core tidyverse in `tidyverse` includes: `ggplot2`, `dplyr`, `tidyr`, `readr`, `purrr`, `tibble`, `stringr`, and `forcats`.   
+
+#### readr
+`readr` package is used to import data sets such as csv, tsv files. It is designed to parse different types of data you can find online, and turn it in to a clean format so you can use in R.  
+For example, you can use the `readr` package to import csv files as follows:   
+``` 
+df <- read_csv("any csv file.csv")
+```  
+  
+There are other functions such as:  
+
+- `read_tsv()`: for tab separated files  
+- `read_delim()`: for general delimited files  
+- `read_log()`: for web log files, and more.  
+
+Simply typing `vignette("readr")` into the console will provide you a detailed information of the package, such as how readr reads the column types, and tips on how to solve parsing problems.  
+
+Also, [here](https://readr.tidyverse.org) is an additional resource you may find helpful.   
+
+
+#### tibble
+tibble is a form of a data frame. The package `tibble` lets you know about the information of the data set you imported. You can confront problems using the package earlier, so you don't run into a problem while you visualize or manipulate your dataset.  
+
+For example, you can create a tibble from scratch using the function `tibble()` with individual vectors as follows:   
+
+```{r}
+tibble(
+  a = c(1, 2, 3), 
+  b = c(10, 11, 12)
+)
+```
+As you can see, `tibble()` does not change the input types or the name of the variables. You can also create tibbles with the function `data_frame()`(and this is different from `data.frame()`!).  
+
+To convert an existing data frame into a tibble, you can use the function `as_tibble()`.  If you want to convert a tibble back to an original data frame, you can use `as.data.frame()` function to do so.  
+In some cases, it may be more convenient to input in row units. In this case, you can use the function `tribble()`.   
+
+Also, note that tibbles will only show the first 10 rows, and only the columns that fit on screen. THis feature of the tibble makes easier to check the characteristics of the data on display than using the original data frame.   
+
+If you would like to learn more about `tibble`, [here](https://r4ds.had.co.nz/tibbles.html) is an additional resource you may find helpful.  
+
+
+#### tidyr
+`tidyr` package is used to create tidy data. Tidy data should satisfy the following:  
+
+1. Each variable must have its own column.
+2. Each observation must have its own row. 
+3. Each value must have its own cell.  
+  
+This is the standard way of structuring data. If a data set does not satisfy at least one rule, it is considered messy data. We will spend a lot of time cleaning and preparing data - into tidy data - for further analysis, so this package is critical.  
+  
+The main functions are:  
+
+- Pivotting: This converts between long and wide forms of a dataframe. In the module, functions `pivot_wider()` and  `pivot_longer()` are going to be introduced. Also, see `vignette("pivot")` for more information on pivotting.  
+
+- Dealing with missing values: You can drop `NA` values using the function `drop_na()`, or replace missing values with a previous or next value using the function `fill()`. You can also use `replace_na()` to replace with a certain value.  
+
+There are more functions in this package that will make data cleaning easier and more effective. To learn more about tidy data, you may find the paper ["Tidy data"](https://vita.had.co.nz/papers/tidy-data.html) helpful. 
+
+#### dplyr 
+`dplyr` package is used to manipulate a data set you created using readr and tidyr.  
+
+- `select()` allows you to choose variables based on their names.  
+- `filter()` allows you to choose cases based on their values.  
+- `summarise()` turns multiple values into a single summary.  
+- `arrange()` allows you to change the order of the rows.  
+- `group_by()` allows you to perform the mutation by group.  
+
+These are some good examples of functions you will learn in the module.  
+
+The most representative function supported by `tidyr` and `dplyr` is the pipe operator, `%>%`. By using this operator, it removes the redundancy and inefficiency of duplicated variable names in the code. Not only the pipe operator but there are a lot of other useful functions which makes these two packages essential to learn.  
+
+Here are [more information on dplyr package](https://dplyr.tidyverse.org).  
+
+#### ggplot2
+`ggplot2` package is used to create graphics and to visualize data. With the `ggplot()` function, you can create almost every graph you imagine of. using aesthetic mapping `aes()`, `geom_point`, `geom_line`, etc. you can set what kind of layers you would like to include in the graph, with what kind of scales, and many more.   
+
+For example, I can create a scatter plot using `ggplot()` with `geom_point` as follows:   
+```{r}
+ggplot(mtcars, mapping = aes(mpg, disp)) + geom_point()
+```
+You can fine-tune your graph using faceting specifications, labeling, coordinate systems, changing colours, and more. You can plot almost any type of graphs you could imagine using the package, much more efficiently.    
+
+
+You can always click [here](https://ggplot2.tidyverse.org) to learn more about ggplot2. 
+
+Note that most of the visualization work in R is performed using `ggplot2` package. So, I recommend you to spend some extra time learning ggplot in future lectures.  
+
+#### purrr  
+`purrr` package in tidyverse is all about iterations. By using `purrr`, you can perform loops and iteration tasks more intuitively and easier compared to other built-in functions used for iterations. Regardless of programming language, most of the programming tasks require a good understanding and use of loops, and R requires one too. However, this requirement could be easily improved by using `purrr`.  
+
+For more information on `purrr`, here is an [additional resource on purrr package](https://purrr.tidyverse.org) you may find helpful.   
+
+#### stringr  
+As you can guess from the package name, `stringr` is a package that provides a set of functions designed to make manipulating strings easier. A string is a one-dimensional array of a bunch of character variables inside single quotes or double-quotes. For example, 
+
+```
+"string"   
+"This is a string"
+"this_is_also_a_string" 
+'string123'
+```
+
+The following examples are all strings. The package `stringr` allows you to change the string, replace it, split it, count, and many more.   
+
+Here is an [additional resource on stringr package](https://www.rdocumentation.org/packages/stringr/versions/1.4.0) you may find helpful.   
+
+
+#### Forcats
+`forcats` package is used to solve problems with factors. Factors are used to handle categorical variables or to reorder character vectors to improve the display.  
+Categorical variables in a vector is not as useful as integers in a vector, since strings don't sort well(maybe just in alphabetical order). However, using `factors()` will avoid these problems happening with a simple vector of strings.  
+
+An [additional resource on factors](https://r4ds.had.co.nz/factors.html) may be helpful because a good understanding of `factors` is needed in order to use the package `forcats`. Also, see `vignette("forcats")` for more information on the package `forcats`.   
+
+This is not every package that `tidyverse` contains, but they are the most important core packages and the packages you will use often. For more information on tidyverse, you can always visit the [official tidyverse webpage](https://tidyverse.tidyverse.org).  
+
+### References
+
+- [official tidyverse webpage](https://tidyverse.tidyverse.org). 
+- [tidyverse](https://tidyverse.tidyverse.org)
+- [tidyverse cheatsheet](http://users.encs.concordia.ca/~gregb/home/PDF/R-Tidyverse-Cheat-Sheet.pdf)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## The pipe: %>%
 
@@ -102,6 +267,12 @@ knitr::include_graphics("images/32_penguins.png")
 
 Figure: The Palmer Penguins
 Credits: Allison Horst
+
+Let's start with loading the tidyverse.
+
+```{r load-tidyverse}
+library(tidyverse)
+```
 
 Here's a simple example using base R's `summary()` without the pipe.
 
@@ -160,7 +331,7 @@ Here is some code that filters the data by species and sex, and summarizes the d
 
 ```{r pipe-4}
 adelie <- filter(penguins, species == "Adelie")
-female_adelie <- filter(adelie, species == "female")
+female_adelie <- filter(adelie, sex == "female")
 summary(female_adelie)
 ```
 
@@ -180,7 +351,7 @@ Convert this into equivalent code using the pipe.
 ```{r pipe-5, echo = FALSE}
 ex1_sol <- penguins %>% 
   filter(species == "Adelie",
-         species == "female") %>%
+         sex == "female") %>%
   summary()
 ```
 ```{r pipe-exercise-1-check}
@@ -245,21 +416,6 @@ If you would like to read more about the pipe operator, here are some additional
 resources you may find helpful:
 
 - [R For Data Science: Chapter 18 - Pipes](https://r4ds.had.co.nz/pipes.html)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -463,6 +619,11 @@ select(temperature_data, 2:4)
 Modify this code so that we can only see the columns "winter" and "summer" respectively, using `|` operator. 
 
 ```{r q2_select, exercise.eval = TRUE, exercise=TRUE}
+temperature_data <- tibble(spring = c(3, 5, 10), 
+                  summer = c(23, 27, 25), 
+                  fall = c(19, 17, 14), 
+                  winter = c(2, -1, -8)) 
+
 select(temperature_data, spring)
 ```
 ```{r q2_select-solution}
@@ -504,6 +665,9 @@ head(child_book_data)
 Select the columns that only are type `<dbl>` or if the column has a name `isbn`.
 
 ```{r q4_select, exercise.eval = TRUE, exercise=TRUE}
+child_book_data <- read.delim("https://raw.githubusercontent.com/tacookson/data/master/childrens-book-ratings/childrens-books-normalized-ratings.txt")
+head(child_book_data)
+
 child_book_data %>% select(isbn)
 ```
 
@@ -550,21 +714,7 @@ In the tidyverse essentials, there are a ton of other functions you could mix & 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## filter()
+## `dplyr::filter()`
 
 Written by Shirley Deng.
 
@@ -608,11 +758,11 @@ How can we check if 2+2 is greater than or equal to 2*2? Try coding it below.
 
 ### Coding Examples
 
-#### The following is code similar to that from the video lesson in the previous section.
+The following is code similar to that from the video lesson in the previous section.
 
 First, we begin by installing the `dplyr` package:
 
-```{r video-installing, eval = FALSE}
+```{r video-installing}
 install.packages("dplyr", repos = "http://cran.us.r-project.org")
 ```
 
@@ -622,7 +772,7 @@ Next, we load the `dplyr` package:
 library(dplyr)
 ```
 
-#### Now, we want to prepare a dataframe for us to work with. We will make use of the `ToothGrowth` dataset built into R. 
+Now, we want to prepare a dataframe for us to work with. We will make use of the `ToothGrowth` dataset built into R. 
 
 We can take a look at what this dataset is about:
 
@@ -636,7 +786,7 @@ And take a look at the first few rows of observations:
 head(ToothGrowth)
 ```
 
-#### We want to add an additional variable for the colour of the guinea pigs.
+We want to add an additional variable for the colour of the guinea pigs.
 
 We need to set a seed to ensure we get the same results every time the code is run. We chose the number `123`:
 
@@ -662,7 +812,7 @@ head(guineas)
 
 We notice that it looks the same as the original `ToothGrowth` dataframe, but with our added `colour` variable.
 
-#### We can now move onto trying out the `dplyr::filter()` function!
+We can now move onto trying out the `dplyr::filter()` function!
 
 First, we try extracting a subset of rows using only one condition: that the guinea pigs are brown in colour.
 
@@ -678,7 +828,7 @@ white_1_guineas <- guineas %>% filter(colour == "white", dose == 1.0)
 white_1_guineas
 ```
 
-#### Now, we want to see what happens when our conditions evaluate as `NA`s.
+Now, we want to see what happens when our conditions evaluate as `NA`s.
 
 First, we try a condition that evaluates all of the rows as `NA`s with `dplyr::filter()`:
 
@@ -696,7 +846,7 @@ some_guineas
 
 We notice that using `dplyr::filter()` we extracted no rows, whereas using the square brackets we extracted all of the rows but no columns.
 
-#### Lastly, we want to see how `dplyr::filter()` works on grouped dataframes.
+Lastly, we want to see how `dplyr::filter()` works on grouped dataframes.
 
 We begin by greating a grouped version of our `guineas` dataframe, through grouping by colour:
 
@@ -706,6 +856,7 @@ grouped_guineas
 ```
 
 And then we try filtering by receiving orange juice as the supplement, while preserving the grouping:
+
 ```{r video-preserve}
 orange_grouped_guineas <- grouped_guineas %>% filter(supp == "OJ", preserve=TRUE)
 orange_grouped_guineas
@@ -752,18 +903,6 @@ guineas %>% filter(supp=="OJ", dose==0.5)
 ### Additional Resources
 
 * [`dplyr:filter()` reference page](https://dplyr.tidyverse.org/reference/filter.html)
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -916,7 +1055,7 @@ The second group of code shows us what `ungroup` does. The `ungroup` function wa
 
 **1.** Use the group_by function to count how many penguins were studied each year and also group them by their sex. Remember the data frame is called "penguins" and the year variable is called "year", sex is called "sex".
 ```{r worked-example1Groupby, exercise=TRUE}
-penguins %>% 
+
 ```
 
 ```{r worked-example1Groupby-solution}
@@ -932,9 +1071,9 @@ penguins %>%
   summarise(n = n())
 ```
 
-**2.** Using the penguins data frame, group by both island, sex and species and give the average bill length (bill_length_mm), average bill depth and the difference between average bill length and average bill depths.
+**2.** Using the penguins data frame, group by both `island`, `sex` and `species` and give the average bill length (`bill_length_mm`), average bill depth (`bill_depth_mm`) and the difference between average bill length and average bill depths.
 ```{r worked-example2Groupby, exercise=TRUE}
-penguins %>% 
+ 
 ```
 
 ```{r worked-example2Groupby-solution}
@@ -1005,11 +1144,9 @@ Some mistakes that you may run into when using `group_by` and `ungroup`:
 
 Now that you have got some experience with the `group_by` and `ungroup` functions, these links are useful resources to expand your understanding.
 
-R for Data Science contains the `group_by` function with other dplyr functions: https://r4ds.had.co.nz/transform.html
+  - R for Data Science contains the `group_by` function with other dplyr functions: https://r4ds.had.co.nz/transform.html
 
-Section 6.11 of OHI Data Science Training looks at the `group_by` function: https://ohi-science.org/data-science-training/dplyr.html#group_by-operates-on-groups)
-
-
+  - Section 6.11 of OHI Data Science Training looks at the `group_by` function: https://ohi-science.org/data-science-training/dplyr.html#group_by-operates-on-groups)
 
 
 
@@ -1023,20 +1160,7 @@ Section 6.11 of OHI Data Science Training looks at the `group_by` function: http
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-## summarise()
+## Summarizing variables with summarise()
 
 Written by Mariam Walaa.
 
@@ -1047,7 +1171,6 @@ In this lesson, you will learn how to:
 
 - Summarize a variable using `summarise()`
 - Summarize groups of observations within a variable using `group_by()`
-- Summarize groups of observations within multiple variables using `across()`
 
 Prerequisite skills include:
 
@@ -1083,9 +1206,14 @@ and groups within a variable in a data set.
 
 We will be looking at a data set of Broadway shows with variables about the performances,
 attendance, and revenue for theaters that are part of The Broadway League. You can learn
-more about the data set provided by Alex Cookson in this [Git
-repository](https://github.com/tacookson/data) as well as this corresponding [blog
-post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/).
+more about the data set provided by Alex Cookson in [the data repository](https://github.com/tacookson/data) provided on GitHub, as well as this 
+corresponding [blog post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/).
+
+Let's start with loading the tidyverse.
+
+```{r load-tidyverse-again}
+library(tidyverse)
+```
 
 ```{r summarise, include = FALSE}
 broadway <- read_csv(
@@ -1163,52 +1291,6 @@ Notice that we include the `.groups` argument within each `summarise()` function
 (highlighted in red). We mostly do this to keep the output clean, but you can learn more
 about this argument by running`?summarise` in your console.
 
-#### Bonus: Using `across()`
-
-What is the minimum and maximum number of performances _and_ previews per week?
-
-Strategy: Use `across()` to select specific columns to summarize them with multiple
-summary functions.
-
-```{r summarise-across-fcn, include = FALSE}
-broadway %>%
-  group_by(week_ending) %>%
-  summarise(across(.cols = c("performances", "previews"),
-                   .fns = list(min = min, max = max)),
-            .groups = 'drop')
-```
-```{r summarise-6, echo = FALSE}
-decorate("summarise-across-fcn") %>%
-  flair("across", color = "blue") %>%
-  flair(".cols", color = "deeppink") %>%
-  flair(".fns", color = "orange") %>%
-  knit_print.with_flair()
-```
-
-Here's what this chunk of code does:
-
-* Groups the data by week using `group_by()` 
-* Selects columns to summarize by passing a vector to `.cols` in `across()` (Highlighted in pink) 
-* Defines summary functions by passing a list to `.fns` in `across()` (Highlighted in orange)
-
-You can learn more about `across()` by running `?across` in your console.
-
-#### Bonus: Using `across()` with `where()`
-
-We can provide a numeric summary for every show happening in a particular week.
-
-```{r summarise-7}
-broadway %>%
-  group_by(week_ending, show) %>%
-  summarise(across(where(is.numeric), mean, na.rm = TRUE),
-            .groups = 'drop')
-```
-
-This chunk of code summarizes every show happening in some particular week by every
-numeric variable that is available in the data set. This helps us easily see things like
-the average ticket price and the number of performances each show had in a particular
-week.
-
 ### Exercises
 
 This section will ask you to complete exercises based on what you've learned from the
@@ -1226,7 +1308,7 @@ How many theaters do we have in this data set?
 n_distinct()
 ```
 ```{r summarise-exercise-1-hint-2}
-# Try naming it something useful, like n_theatres
+# Try naming it something simple and clear, like n_theatres
 ```
 
 ```{r summarise-8, echo = FALSE}
@@ -1358,7 +1440,7 @@ question("Which of these are true? Check all true statements.",
          answer("summarise() can only use the same statistics as summary().",
                 message = paste("summarise() does NOT use the same statistics as summary().",
                 "We can use many more summary functions, and we can even define our own!")),
-         answer("summarise() can be applied on a group-level using group_by().",
+         answer("summarise() can be applied on a group-level when used in combination with group_by().",
                 correct = TRUE),
          answer("summarise() and summarize() are two different functions.",
                 message = "summarise() and summarize() are the same function within dplyr."),
@@ -1385,22 +1467,6 @@ resources you may find helpful:
 - [R 4 Data Science: **Chapter 5.6** Grouped summaries with
 summarise](https://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarise).
 - [R 4 Data Science: 5.6.4 Useful summary functions](https://r4ds.had.co.nz/transform.html#summarise-funs)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1562,20 +1628,6 @@ The following video summarizes what we have gone over in this tutorial: ![](http
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## mutate()
 
 Written by Haoluan Chen.
@@ -1591,7 +1643,7 @@ mutate() is a function in the dplyr library. It is used to create new variables 
 
 I generated a dataset contains student test scores and their student id for a course. 
 
-```{r mutateexample1,  exercise=TRUE}
+```{r mutateexample1}
 scores <- tibble(student_ID = c("1", "2", "3", "4", "5", "6"),
                test_one_score = c(87, 76, 61, 80, 72, 69),
                test_two_score = c(79, 85, 52, 72, 65, 75),
@@ -1604,7 +1656,7 @@ Q1: What is the average test score for each student?
 
 we can use mutate to calculate the average test score for each student and store it as a new variable called avg_test_score,
 
-```{r mutateQ1, exercise=TRUE}
+```{r mutateQ1}
 avg <- scores %>% mutate(avg_test_score = (test_one_score + test_two_score + test_three_score)/3)
 avg
 ```
@@ -1623,7 +1675,7 @@ Now, Lets assume the following weights for this course:
 
 Q2: What is the final grade for each student?
 
-```{r mutateQ2, exercise=TRUE}
+```{r mutateQ2}
 final <- scores %>% mutate(final_grade = 0.1*test_one_score + 0.3*test_two_score + 0.6*test_three_score)
 final
 ```
@@ -1636,7 +1688,7 @@ Q3: Who received the highest final grade in this course?
 
 **desc() transform a vector into a format that will be sorted in descending order. **
 
-```{r mutateQ3, exercise=TRUE}
+```{r mutateQ3}
 final %>% mutate(rank = rank(desc(final_grade)))
 ```
 
@@ -1646,7 +1698,7 @@ Therefore, student 1 received the highest final grade in this course.
 
 Q4: Did all student pass the class?
 
-```{r mutateQ4, exercise=TRUE}
+```{r mutateQ4}
 final %>% mutate(pass = ifelse(final_grade>=50, TRUE, FALSE))
 ```
 
@@ -1766,13 +1818,6 @@ Vignettes(demonstration of how to use functions in dplyr including mutate()) for
 
 
 
-
-
-
-
-
-
-
 ## pivot_wider() and pivot_longer()
 
 Written by Annie Collins.
@@ -1801,12 +1846,10 @@ This dataset (called `games`) contains a list of NBA teams and their win/loss re
 
 ```{r games data, echo=FALSE}
 games <- data.frame()
-
 # Add team names as first column
 teams <- c("Toronto Raptors", "Los Angeles Lakers", "Boston Celtics", 
            "Golden State Warriors", "Miami Heat")
 games <- cbind(teams)
-
 # Randomly create a wins and losses for each team and each game
 set.seed(100)
 gm1 <- sample(c("w", "l"), size=5, replace=TRUE, prob=c(50,50))
@@ -1814,15 +1857,30 @@ gm2 <- sample(c("w", "l"), size=5, replace=TRUE, prob=c(50,50))
 gm3 <- sample(c("w", "l"), size=5, replace=TRUE, prob=c(50,50))
 gm4 <- sample(c("w", "l"), size=5, replace=TRUE, prob=c(50,50))
 gm5 <- sample(c("w", "l"), size=5, replace=TRUE, prob=c(50,50))
-
 games <- cbind(games, gm1, gm2, gm3, gm4, gm5)
-
 games <- as.data.frame(games)
 games
 ```
 
 Run the code below and observe the effect it has on the dataset. Take note of the difference in the number of rows and columns between the two tables. This will be visualized and explained in greater detail in the following step.
 
+```{r games-data-again, include=FALSE}
+games <- data.frame()
+# Add team names as first column
+teams <- c("Toronto Raptors", "Los Angeles Lakers", "Boston Celtics", 
+           "Golden State Warriors", "Miami Heat")
+games <- cbind(teams)
+# Randomly create a wins and losses for each team and each game
+set.seed(100)
+gm1 <- sample(c("w", "l"), size=5, replace=TRUE, prob=c(50,50))
+gm2 <- sample(c("w", "l"), size=5, replace=TRUE, prob=c(50,50))
+gm3 <- sample(c("w", "l"), size=5, replace=TRUE, prob=c(50,50))
+gm4 <- sample(c("w", "l"), size=5, replace=TRUE, prob=c(50,50))
+gm5 <- sample(c("w", "l"), size=5, replace=TRUE, prob=c(50,50))
+games <- cbind(games, gm1, gm2, gm3, gm4, gm5)
+games <- as.data.frame(games)
+games
+```
 ```{r first_example, echo=FALSE, exercise=TRUE}
 pivot_longer(games, cols = c(gm1, gm2, gm3, gm4, gm5), names_to = "game number", values_to = "status")
 ```
@@ -2049,24 +2107,7 @@ pivot_wider(data = games_long, names_from = "game number", values_from = "status
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## rename()
+## Renaming variables with rename()
 
 Written by Mariam Walaa.
 
@@ -2085,6 +2126,7 @@ Highlights:
 
 - We can rename multiple columns at once using `rename()`.
 - It's helpful to rename columns into something simpler.
+- We can name columns that don't already have a name using `rename()`.
 
 ### Arguments
 
@@ -2107,10 +2149,18 @@ In this tutorial, we'll be using a data set about fictional character personalit
 reference. This data set already consists of simple, clear, and well-named variables, but
 we are going to try to simplify them even further using `rename()`.
 
+Let's start with loading the tidyverse.
+
+```{r load-tidyverse-yet-again}
+library(tidyverse)
+```
+
 ```{r rename, echo = FALSE, message = FALSE}
 personalities <- read_tsv(
   "https://raw.githubusercontent.com/tacookson/data/master/fictional-character-personalities/personalities.txt")
 ```
+
+Here is the dataset.
 
 ```{r rename-1}
 glimpse(personalities)
@@ -2137,6 +2187,17 @@ glimpse(personalities)
 
 Now we have a data frame with renamed columns.
 
+**Question**: What if we have a column that does not have a name? 
+
+Idea: We can still name it by indexing the column using base R's `names()`.
+
+```{r rename-4}
+personalities %>%
+  rename(fictional_work = names(.)[2])
+```
+
+Here, we change the "work" column back to "fictional_work" simply by indexing the second column in the personalities data frame. This column already had a name, but if it didn't, this method would have still successfully named it to "fictional_work".
+
 ### Exercises
 
 #### Exercise 1
@@ -2151,7 +2212,7 @@ Rename the `personalities` data back to its original column names.
 # You don't have to assign it to an object
 ```
 
-```{r rename-4, echo = FALSE}
+```{r rename-exercise-1-sol, echo = FALSE}
 ex1_sol <- personalities %>%
   rename(character_code = id,
          fictional_work = work,
@@ -2180,6 +2241,10 @@ question("Which of these are true? Check all true statements.",
 Below are some common mistakes and errors you may come across:
 
 - You pass the old name first instead of the new name.
+- You are not correctly typing a name. For example, if you have spaces between words, you need to type it as `FirstWord SecondWord` with `` as opposed to '' or "".
+- You aren't typing the old column name correctly, because of a typo or because you didn't choose the correct type of quotation marks.
+
+If you have other issues, check that you have loaded tidyverse or dplyr into your session! Remember that a lot of issues can come from not loading the required packages.
 
 ### Next Steps
 
@@ -2200,33 +2265,17 @@ resources you may find helpful:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## count() and uncount()
+
+
+
+```{r setup-again, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(learnr)
+```
+
+
 
 
 Written by Annie Collins.
@@ -2260,11 +2309,17 @@ Using `count()` on a data set produces a new table including each unique value o
 
 The data set below (`starwars`) contains information on characters in the the *Star Wars* film franchise. There are 30 unique characters in the data with five characteristics/measurements recorded for each.
 
-```{r starwars}
-starwars <- starwars %>% select(name, hair_color, skin_color, eye_color, homeworld, species)
-starwars <- filter(starwars, homeworld %in% c("Naboo", "Tatooine", "Alderaan", "Coruscant", "Kamino"))
+```{r starwars, echo=FALSE}
+starwars <- 
+  starwars %>% 
+  select(name, hair_color, skin_color, eye_color, homeworld, species)
+
+starwars <- 
+  filter(starwars, homeworld %in% c("Naboo", "Tatooine", "Alderaan", "Coruscant", "Kamino"))
+
 starwars
 ```
+
 Although each character is unique and only appears once in the data, there are several variables where multiple characters have the same characteristic, and we may want to know how many characters share each characteristic.
 
 For example, we may want to examine how many characters came from each home world.
@@ -2318,7 +2373,7 @@ The outputted table shows that there are eight characters in the `starwars` data
 
 To help visualize the use of `uncount()`, we will use this small data set called `colours`.
 
-```{r colours}
+```{r colours, echo=FALSE}
 colours <- data.frame()
 colour <- c("red", "yellow", "blue")
 n <- c(1, 2, 3)
@@ -2351,7 +2406,7 @@ Now we can distinguish between different yellow and blue rows in the column (for
 Note that this does not change if there are multiple combinations of variables in `colours` we wish to uncount.
 
 Updated `colours`:
-```{r colours-meaning}
+```{r colours-meaning, echo=FALSE}
 temp <- c("warm","warm", "cool")
 colours <- cbind(colour, temp, n)
 colours <- as.data.frame(colours)
@@ -2367,13 +2422,13 @@ uncount(colours, n, .remove = FALSE, .id = "id")
 
 For the following two exercises, manipulate the `starwars` data set to match the output displayed. The original is included below for reference.
 
-```{r starwars2}
+```{r starwars2, echo=FALSE}
 starwars
 ```
 
 **Exercise 1**
 
-```{r countexercise1-reference}
+```{r countexercise1-reference, echo=FALSE}
 count(starwars, skin_color, eye_color, sort=TRUE)
 ```
 ```{r countexercise1, exercise=TRUE}
@@ -2385,7 +2440,7 @@ count(starwars, skin_color, eye_color, sort=TRUE)
 
 **Exercise 2**
 
-```{r countexercise2-reference}
+```{r countexercise2-reference, echo=FALSE}
 count(starwars, name, name="unique")
 ```
 ```{r countexercise2, exercise=TRUE}
@@ -2399,12 +2454,12 @@ count(starwars, name, name="unique")
 
 Below is the first five rows of output from **Exercise 1**, assigned the name `features`. Please use this data set as reference for the following questions.
 
-```{r features}
+```{r features, echo=FALSE}
 features <- count(starwars, skin_color, eye_color, sort=TRUE) %>% slice(1:5)
 features
 ```
 
-```{r uncount-question1}
+```{r uncount-question1, echo=FALSE}
 question("In the output of `uncount(features, n)`, how many times will the word \"brown\" appear?",
 answer("2"),
 answer("3"),
@@ -2413,7 +2468,7 @@ answer("12", correct=TRUE)
 )
 ```
 
-```{r uncount-question2}
+```{r uncount-question2, echo=FALSE}
 question("How many rows does the output of `uncount(features, 2)` have (not including the header)?",
 answer("5"),
 answer("10", correct=TRUE),
@@ -2422,7 +2477,7 @@ answer("42")
 )
 ```
 
-```{r uncount-question3}
+```{r uncount-question3, echo=FALSE}
 question("How many columns does the output of `uncount(features, 2)` have?",
 answer("1"),
 answer("2"),
@@ -2430,21 +2485,6 @@ answer("3", correct=TRUE),
 answer("4")
 )
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2492,7 +2532,7 @@ This will be further explained in the following sections.
 ### Selecting Rows
 
 We will be slicing the data frame below (named `pizza`) which includes data on different pizza types and their toppings. For the purposes of visualizing the `slice()` function, the row numbers have been indicated next to each pizza type.
-```{r pizza}
+```{r pizza, echo=FALSE}
 type <- c("(1) classic", "(2) hawaiian", "(3) veggie", "(4) meat lovers", "(5) greek")
 top1 <- c("cheese", "ham", "mushrooms", "sausage", "olives")
 top2 <- c("pepperoni", "pineapple", "peppers", "bacon", "feta cheese")
@@ -2531,16 +2571,22 @@ slice(pizza, 1:3)
 
 #### Omitting Rows
 Another way of slicing rows is choosing which rows to *omit* or *remove* from the data frame. You can use any of the above methods to remove individual or multiple rows from a data frame by placing "**-**" before the inputted row number(s). The `slice()` function will then return all the rows in the data frame *except* the rows indicated. Uncomment each line of code below to observe the output.
+
+```{r pizza2, include=FALSE}
+type <- c("(1) classic", "(2) hawaiian", "(3) veggie", "(4) meat lovers", "(5) greek")
+top1 <- c("cheese", "ham", "mushrooms", "sausage", "olives")
+top2 <- c("pepperoni", "pineapple", "peppers", "bacon", "feta cheese")
+pizza <- cbind(type, top1, top2)
+pizza <- as.data.frame(pizza)
+```
 ```{r slice-example5, exercise = TRUE}
 # Return everything except row 3
 slice(pizza, -3)
-
 # Return only rows 2 and 4
 # slice(pizza, -1, -3, -5)
 # OR
 # nums <- c(1, 3, 5)
 # slice(pizza, -nums)
-
 # Return only the last two rows (4:5)
 # slice(pizza, -1:-3)
 ```
@@ -2551,7 +2597,7 @@ It is also possible to combine selection methods, for instance by indicating a r
 ### Questions & Exercises
 
 Please use the dataset `olympics`, representing medal counts from the 2016 summer Olympics in Rio de Janeiro, for the following questions and exercises.
-```{r olympics}
+```{r olympics, echo=FALSE}
 country <- c("United States", "Great Britain", "China", "Russia", "Germany", "Japan", "France", "South Korea")
 gold <- c(46, 27, 26, 19, 17, 12, 10, 9)
 silver <- c(37, 23, 18, 17, 10, 8, 18, 3)
@@ -2563,7 +2609,7 @@ olympics
 
 #### Questions
 
-```{r slice-q1}
+```{r slice-q1, echo=FALSE}
 question("Which of the following is **not** equivalent to `slice(olympics, 1:2)?`",
 answer("slice(olympics, 1, 2)"),
 answer("slice(olympics, c(1, 2))"),
@@ -2571,7 +2617,7 @@ answer("slice(olympics, -3:-8)"),
 answer("slice(olympics, 3:8)", correct=TRUE)
 )
 ```
-```{r slice-q2}
+```{r slice-q2, echo=FALSE}
 question("Which of the following will return data for all countries in `olympics`?",
 answer("slice(olympics, 1:8)", correct=TRUE),
 answer("slice(olympics, 8)"),
@@ -2581,6 +2627,15 @@ answer("slice(olympics, c(1, 8))")
 ```
 
 #### Exercises
+```{r, include=FALSE}
+country <- c("United States", "Great Britain", "China", "Russia", "Germany", "Japan", "France", "South Korea")
+gold <- c(46, 27, 26, 19, 17, 12, 10, 9)
+silver <- c(37, 23, 18, 17, 10, 8, 18, 3)
+bronze <- c(38, 17, 26, 20, 15, 21, 14, 9)
+olympics <- cbind(country, gold, silver, bronze)
+olympics <- as.data.frame(olympics)
+```
+
 
 1. Using `slice()` and a numeric vector, extract information for Russia, Germany, and Japan from `olympics`. 
 ```{r sliceexercise1, exercise=TRUE}
@@ -2639,6 +2694,599 @@ There are several functions that act as variations of `slice()` with similar syn
 
 
 
+## Vectors, Matrices, Dataframes and Tibbles
+
+Written by Matthew Wankiewicz.
+
+
+### Introduction
+
+In this lesson, you will learn:
+
+- What a vector is and how to create one in R.
+- The difference between matrices, dataframes and tibbles.
+- How to create matrices, dataframes and tibbles in R.
+
+Prerequisite skills include:
+
+- R installed on your computer/RStudio cloud account
+
+Highlights:
+
+- Vectors are data structures in R which can contain numbers, words, or logical operators among others.
+  - The `c()` function is usually the main way of creating vectors.
+- Matrices are objects in R that contain rows and columns. These matrices can be added and subtracted along with other matrices.
+  - The `matrix()` function helps with creating matrices.
+- Dataframes are objects in R which are similar to matrices. Dataframes can be built out of multiple vectors.
+  - The `data.frame()` function allows us to create dataframes in R.
+- Tibbles are dataframes, but they are easier to use with functions in R. Since R has been in use for many years, tibbles allow us to do more with data, when compared to dataframes.
+  - The `tibble()` function creates tibbles in R.
+
+### The content
+
+- Vectors are a type of data structure in R which contains observations of the same type. Vectors can include sets of numbers, a group of names or a group of randomly selected logical operators (True or False). When creating a vector, R requires all elements of the vector to be the same type, this means that it is possible to create vectors with numbers and words, but the numbers will be stored as characters. 
+
+- Matrices are two dimensional and are similar to the structure of vectors. Matrices can contain words and numbers, but are mainly used with numbers. Matrices are usually created with numbers because there is the ability to conduct matrix operations like addition, subtraction, division and multiplication between different matrices. Matrices have a fixed number of rows and columns.
+
+- Dataframes are another way of storing data and are mainly used for storing tables. The benefit to using dataframes over matrices is when your data contains numbers and words. Dataframes are able to contain columns of numbers and columns of words while matrices can only contain numbers or words. Dataframes are also useful because it is possible to conduct operations between columns, which will be shown in the Questions section of this lesson.
+
+- As mentioned in the introduction, tibbles are very similar to dataframes but they are more compatible with current uses for R. This is because some older operations in R aren't as useful as they were when R was created, so tibbles had to be created to make some operations run better. Tibbles are created using the `tibble()` function which can be found in the `tidyverse` package, which is different than the other data types discussed above, because they can be created using the base R functions. 
+
+
+### Vectors
+
+- **`c()`:** The `c()` function takes one main argument and includes optional arguments. The main argument for `c()` are the values that you want to save as a vector. The arguments used can be any set of numbers or words, or both. For example we would use an entry could be: `test <- c("This", "is", "example", 1)`. If you do save numbers in words in the same vector, R will convert the number into a character instead of keeping it as an integer.
+  
+  - The optional arguments for `c()` are `recursive =` and `use.names =`. The recursive function is useful when the items you are vectoring includes a list. If you set `recursive = TRUE` it breaks down the list and converts it into a vector. If `recursive = FALSE` the vector is saved as a list (by default, `recursive = FALSE`, and it usually stays that way). The argument `use.names =` tells R whether or not to keep the names of the lists present when the vector is saved.
+  
+#### Examples
+
+You can easily create vectors using the `c()` function. Run the code chunk below to see.
+```{r ex1vectors, exercise = T}
+vector1 <- c(1, 2, 3, 4)
+vector1
+```
+
+As mentioned in previous sections of this lesson, you can create a vector of both numbers and words, but the numbers will be saved as characters.
+```{r ex2vectors, exercise = T}
+vector2 <- c("stats", "is", "number", 1)
+vector2
+
+## using class tells us the class of the objects in the vector 
+class(vector2)
+```
+
+You can also index vectors by using square brackets ([]). To index a value of an R vector, write the vector name and then in the square brackets, the position of that value in the vector.
+```{r ex3vectors, exercise = T}
+vector <- c("a", "b", "c", "d", "e") ## save our vector
+
+vector[3] ## if we want to select c, it is the third element so we write vector[3]
+
+vector[-3] ## if we want to return the vector without the letter c, type vector[-3]
+```
+
+We can also add, subtract, multiply and divide vectors.
+```{r add-vectors, exercise = TRUE}
+vec1 <- c(2, 4, 6)
+vec2 <- c(3, 6, 9)
+
+vec1 + vec2
+vec1*vec2
+```
+
+
+### Matrices
+
+- **`matrix()`:** The `matrix()` function takes 5 arguments, 3 of them are the most important. The first one is `data`, which is the data you plan to make a matrix with, this can contain multiple vectors. The next argument is `nrow` which is the number of rows you want to have and `ncol` which is the number of columns you want to include in your matrix.
+
+  - There are two optional arguments, `byrow` and `dimnames`. `byrow` can either be true or false, if false, the entries for the matrix are added by filling out the columns as opposed to filling out the data row by row. `dimnames` allows you to name the rows and the columns of your matrix.
+  
+#### Examples
+
+If we use the matrix function on a set of numbers without specifying the number of rows/columns, you get a matrix with one column.
+```{r ex1matrices, exercise = T}
+matrix1 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9))
+matrix1
+```
+
+Using the `nrow` and `ncol` arguments, we can tell R how we want our matrix to look. 
+```{r ex2matrices, exercise = T}
+matrix2 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3)
+matrix2
+```
+
+The next chunk will show the use the `byrow` argument to fill out our matrix. You will notice that when comparing the output of this chunk to the one above, other than the diagonals, the entries are all different.
+```{r ex3matrices, exercise = T}
+matrix3 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = T)
+matrix3
+```
+
+We can also add, subtract, multiply and divide matrices
+```{r add-matrices, exercise = TRUE}
+mat1 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = T)
+mat1
+mat2 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = F)
+mat2
+
+mat1 - mat2
+
+mat1/mat2
+```
+
+
+We can also multiply vectors and matrices
+```{r vector-times-matrix, exercise = TRUE}
+mat1 <- matrix(c(1:9), nrow = 3)
+mat1
+vec1 <- c(1:3)
+vec1
+
+mat1*vec1
+```
+
+Be sure to notice that multiplication with vectors and matrics is different from typical operations between vectors and matrices. In R these operation will be conducted by elements, which is why for the example above we don't get a 1x3 vector. 
+
+Matrices can be also indexed.
+```{r index-matrices, exercise = TRUE}
+mat2 <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3, byrow = F)
+mat2
+
+mat2[3,3] ## third row, third column
+```
+  
+
+  
+### Data Frames
+
+- **`data.frame()`:** The main argument that `data.frame()` takes is the data that you want to become a dataframe. To name the columns, you can write `"name" = c()` where c() is the vector of numbers/words. You can name each column by repeating the `"name" = c()` line. The other important argument is `row.names`. For this argument you can write a name for each row in a vector that has the same length as the number of rows as your dataframe. 
+
+  - `data.frame()` contains 4 optional arguments. `check.rows` checks if the rows are consistent in their length and names. `check.names` checks if your column names are unique and there aren't any repeats. `fix.empty.names` automatically names any columns with missing variable names (this is set to true by default). Lastly, `stringsAsFactors` converts character vectors into factors if set to true (set to true by default).
+  
+#### Examples
+
+As mentioned in the Arguments section, there are many ways to create a dataframe. For this one, we'll just insert two vectors into the function, without naming them.
+```{r ex1Dataframes, exercise = T}
+data.frame(c(1,2,3), c(2,4,6))
+```
+We can see that without naming the vectors, `data.frame()` names the rows "c.1..2..3" and "c.2..4..6".
+
+
+Now we can do the same as above, but save the vectors beforehand and then add them into the function.
+```{r ex2Dataframes, exercise = T}
+vector1 <- c(1:3) ## this is another way writing 1,2,3
+data.frame(vector1, vector2 = c(2,4,6))
+```
+
+We can also take a matrix and convert the matrix into a dataframe. We can also use the `row.names` argument.
+```{r ex3Dataframes, exercise = T}
+mat <- matrix(1:9, nrow = 3)
+mat
+
+df <- data.frame(mat, row.names = c("a", "b", "c"))
+df
+```
+
+
+For the last example of making dataframes, we will make use of the `check.names` and `stringsAsFactors` arguments
+```{r ex4Dataframes, exercise = T}
+vector1 <- c(1:3)
+df <- data.frame(vector1, vector1 = c("one", "two", "three"), check.names = TRUE, 
+                 stringsAsFactors = TRUE)
+df
+
+class(df$vector1.1)
+```
+We can see that the dataframe has two columns, vector1 and vector1.1 and if we don't do that, the columns will have the same name and will be a headache to work with. Also note that the class of the `vector1.1` column is now a factor. It was initially written as a vector with characters in it, but the `stringsAsFactors` has now changed it a factor.
+
+
+We can also index values in dataframes.
+```{r ex5Dataframes, exercise = T}
+df <- data.frame(c(1,2,3), c(2,4,6), c(3, 6, 9))
+
+df[2,2] #to select the number 4 in the center we write df[2,2]
+
+df[,2] ## to return the whole 2nd column, write df[,2]
+
+df[2,] ## to select only the 2nd row, write df[2,]
+
+df[-1,] ## you can also return dataframes without rows/columns by including "-"
+```
+  
+### Tibbles
+
+- **`tibble()`:** Similar to `data.frame()`, the main argument for `tibble()` is the data you want to turn into a tibble. The data can include vectors, matrices and even dataframes. You can name the columns in a similar way to `data.frame()` by writing the name and then the data you want to be stored in that column.
+
+  - There are two optional arguments for `tibble()`, they are `.rows` and `.name_repair`. `.rows` tells R how many rows you want your tibble to be, you do not have to fill this argument out but it can be useful if you want to confirm that your data has the same amount of rows as you wish. If the number of rows given into the main argument does not match the `.rows` argument, an error will occur. `.name_repair` helps fix issues with column names, it has 5 types of repair. "Minimal" does not change or check column names, "Unique" makes sure names are not empty, "check_unique" makes sure the names are unique, "universal" checks that the names are unique and follow proper syntax. The final option for `.name_repair` is a custom function you can create on your own so the names follow a certain style.
+
+#### Questions
+
+Like dataframes, tibbles can be created from vectors
+```{r ex1Tibbles, exercise = T}
+vector1 <- c(1:3)
+vector2 <- c(2,4,6)
+
+data <- tibble(vector1, vector2)
+data
+```
+
+Tibbles can also be created from matrices. This can be done using the `as_tibble()` function.
+```{r ex2Tibbles, exercise = T, warning=F}
+mat1 <- matrix(1:9, nrow = 3, ncol = 3) ## 3x3 matrix
+mat1
+
+tib <- as_tibble(mat1)
+tib
+```
+
+Similarly, dataframes can be converted into tibbles.
+```{r ex3Tibbles, exercise = T}
+df1 <- data.frame("id" = c(1,2,3), "sport" = c("soccer", "baseball", "basketball"),
+                  "name" = c("Messi", "Bichette", "James"))
+df1
+
+tibble(df1, .rows = 3) ## we can use .rows to confirm that there will be 3 rows.
+```
+
+Tibbles can also be indexed.
+```{r index-tibbles, exercise = T}
+tib1 <- tibble(data.frame("id" = c(1,2,3), "sport" = c("soccer", "baseball", "basketball"),
+                  "name" = c("Messi", "Bichette", "James")))
+tib1
+
+tib1[1,3] ## 1st row, 3rd column
+```
+
+If we create an identical dataframe and tibble and index the same location, we will get a tibble from the tibble and a specific value from the dataframe
+```{r index-tibble-dataframe, exercise = T}
+df_index <- data.frame(x = c(1:3), y = c(4:6), z = c(7:9))
+
+tib_index <- tibble(df_index)
+
+
+df_index[2,2]
+tib_index[2,2]
+```
+The dataframe gives us the integer 5 while the tibble gives us a 1x1 tibble with 5 as the only entry.
+
+
+Lastly, you can make tibbles where the columns are mathematical operations between columns.
+```{r ex4Tibbles, exercise = T}
+col1 <- c(1:10)
+tibble(col1, col2 = col1+10, col3 = (col1+col2)*100)
+```
+
+
+### Exercises
+
+```{r quiz1-vectors, echo=F}
+question_checkbox( "1. Which data types are part of base R? Select all that apply.",
+  answer("Tibbles"),
+  answer("Dataframes", correct = T),
+  answer("Vectors", correct = T),
+  answer("Matrices", correct = T),
+  incorrect = paste0("Incorrect."),
+  allow_retry = T,
+  random_answer_order = T
+)
+```
+
+
+**2.** This question will combine vectors and dataframes. Create two vectors, the first one (call it 'numbers') containing the numbers 10, 20, 30 and 40, and the second one (call it 'cities') containing the words: 'Toronto', 'New York', 'Boston' and 'Vancouver'. Now, take those two vectors and turn them into a dataframe. (Hint: The `c()` and `data.frame()` function will be very helpful.)
+```{r quiz2-vectors, exercise = TRUE}
+## Enter code below
+numbers <- 
+cities <- 
+```
+
+```{r quiz2-vectors-solution}
+
+numbers <- c(10, 20, 30, 40)
+cities <- c('Toronto', 'New York', 'Boston', 'Vancouver')
+data.frame(numbers, cities)
+```
+
+**3.** Make a tibble with the first column being the set of numbers from 1 to 10, the second column being the first column times 7 and the third column being the sum of columns 1 and 2.
+
+```{r quiz3-vectors, exercise = TRUE}
+## enter code below
+col1 <- 
+```
+
+```{r quiz3-vectors-solution}
+
+col1 <- c(1:10)
+tibble(col1, col2 = col1*7, col3 = col1 + col2) 
+
+## OR
+
+col1 <- c(1:10)
+col2 <- col1*7
+col3 <- col1 + col2
+
+tibble(col1, col2, col3)
+```
+
+
+**4.** The next question follows the code chunk below.
+
+```{r quiz4-tibble, results = "hide"}
+cities <- c("Toronto", "New York", "Vancouver", "Montreal", "Chicago", "Los Angeles")
+rank <- c(1, 2, 3, 4, 5, 6)
+
+tibble(cities, rank, pop = rank*1000, 
+       rank_plus_pop = rank + pop)
+```
+
+```{r quiz4-tibble1, echo=F}
+question("How many columns are present in the data?",
+         answer("4", correct = TRUE),
+         answer("3"),
+         answer("2"),
+         answer("5"))
+```
+
+```{r quiz4-tibble2, echo=F}
+question("What would be that class of the output of the `tibble` function?",
+         answer("Vector"),
+         answer("Matrix"),
+         answer("Tibble or (tbl)", correct = T),
+         answer("None of the options."))
+```
+
+```{r quiz4-tibble3, echo=F}
+question("How many rows will the data have?",
+         answer("7"),
+         answer("3"),
+         answer("6", correct = T),
+         answer("5"))
+```
+
+
+**5.** For this exercise, create a dataframe containing 3 vectors: one containing a set of 5 numbers, another containing a set of 5 animals and another containing a set of 5 cities. Name the columns of this dataframe 'id', 'animal', 'city'. Save this dataframe under the name 'df' and then convert it into a tibble.
+```{r vec-df-ex1, exercise = TRUE}
+## enter code below
+```
+
+```{r vec-df-ex1-solution}
+
+## Your answers may be different
+df <- data.frame(id = c(1:5), animal = c("Dog", "Cat", "Goat", "Bird", "Lion"),
+                 city = c("Toronto", "San Diego", "New York", "Boston", "Washington")
+                 )
+tibble(df)
+
+## OR
+
+id <- c(1:5)
+animal <- c("Dog", "Cat", "Goat", "Bird", "Lion")
+city <- c("Toronto", "San Diego", "New York", "Boston", "Washington")
+
+df <- data.frame(id, animal, city)
+tibble(df)
+```
+
+### Common Mistakes & Errors
+
+- **Vectors**
+  - If you try to index a vector and the vector returns 'NA', that likely means that you are trying to index an element that isn't in your vector. To fix this, you need to include a number that is **less than or equal to** the length of your vector.
+
+- **Matrices**
+  - Error in matrix[n,m] : subscript out of bounds
+    - This error means that you are trying to index a point in the matrix that doesn't exist. Similar to vectors, move the subscript to be inside the lengths of your matrix.
+  - In matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 4, byrow = F) :
+  data length [9] is not a sub-multiple or multiple of the number of rows [4]
+    - This error means that the number of rows you are trying to use does not fit the amount of numbers you want to use in the matrix. If you want **n** rows, make sure the length of your matrix is divisible by **n**.
+  - Error in mat1 + mat2 : non-conformable arrays
+    - This error occurs when you try to do mathematical operations on matrices that aren't compatible. This goes back to linear algebra where you need to have similar length between matrices to conduct operations between them.
+  
+- **Dataframes**
+  - Similar to matrices and vectors, you can encounter issues with indexing. Once again, make sure you keep you indexing within the limits of your dataframe.
+  - Error in data.frame(c(1, 2, 3), c("a", "b")) : 
+  arguments imply differing number of rows: 3, 2
+    - This error will occur when the vectors you are trying to make into a dataframe have different lengths. To fix this, make sure your vectors are the same length.
+
+- **Tibbles**
+  - Often times, you can use functions like `filter()` or `group_by()` on tibbles and usually when you encounter errors, the error will be with how the function is executed. 
+  - Error: Tibble columns must have compatible sizes.
+    - This means that when you used the tibble function, the vectors you included were not the same length. To fix this, make sure all vectors are of the same length.
+
+### Next Steps
+
+Now that you understand what vectors, matrices, dataframes and tibbles are. Some next steps include:
+
+- Using dplyr functions with tibbles: https://uomresearchit.github.io/r-tidyverse-intro/04-dplyr/
+- Looking at R for Data Science's chapter on tibbles: https://r4ds.had.co.nz/tibbles.html
+- The vector chapter in R4DS: https://r4ds.had.co.nz/vectors.html
+
+
+
+
+
+
+
+
+
+
+## length(), nrow() and ncol()
+
+Written by Isaac Ehrlich.
+
+### Introduction
+
+Understanding the size and dimensions of your variables can be important in a variety of contexts.
+
+In this lesson, you will learn how to
+
+- Use `length()` to find the length of vectors
+- Use `nrow()` and `ncol()` to find the dimensions of matrices and data frames
+
+Prerequisites:
+
+- Understanding how to create vectors and data frames and their basic principles
+
+### Arguments
+
+####length()
+`length()` returns the length (number of items) in a vector. The only argument that `length()` takes is the vector.
+
+```{r lengthExample}
+x <- c("a", "b", "c", "d")
+length(x)
+```
+
+
+#### nrow() and ncol()
+
+`nrow()` and `ncol()` return the number of rows and columns of matrices and data frames, respectively. The only argument that `nrow()` and `ncol()` take is the matrix or data frame.
+
+```{r nrowExample}
+df <- data.frame(col1 = c("a", "b", "c", "d"), col2 = c(1,2,3,4))
+df
+
+# Number of Rows:
+nrow(df)
+
+# Number of Columns:
+ncol(df)
+```
+
+
+### Questions and Exercises
+
+####  length()
+
+For questions about `length()` we will be using the built in vector `fruit`, a vector of fruit names.
+
+**1.**
+
+```{r length-q1, echo = FALSE}
+question("length() returns the following information:",
+answer("The number of characters in a string"),
+answer("The number of objects in a vector", correct = TRUE),
+answer("The length (in centimeters) printing a vector will occupy on your screen"),
+allow_retry = TRUE)
+```
+
+
+**2. Save the length of the vector `fruit` as the variable `fruit_len`**
+
+```{r length-q2, echo = FALSE, exercise = TRUE}
+# Enter your code below
+
+fruit_len <- 
+fruit_len
+```
+
+```{r length-q2-solution}
+fruit_len <- length(fruit)
+
+```
+
+**3. Using indexing and the `length()` function, return the final object in `fruit`**
+
+```{r length-q3, echo = FALSE, exercise = TRUE}
+# Enter your code below
+
+last_fruit <- 
+last_fruit
+```
+
+```{r length-q3-solution}
+last_fruit <- fruit[length(fruit)]
+```
+
+#### nrow() and ncol()
+
+For questions about `nrow()` and `ncol()` we will be using the data frame `starwars`, which contians Star Wars characters and information about them, and a secret matrix.
+
+**1. Save the number of rows and number of columns in `starwars`**
+
+```{r nrow-q1, echo = FALSE, exercise = TRUE}
+# Enter your code below
+
+starwars_rows <- 
+starwars_cols <- 
+
+starwars_rows
+starwars_cols
+```
+
+```{r nrow-q1-solution}
+starwars_rows <- nrow(starwars)
+starwars_cols <- ncol(starwars)
+```
+
+**2. I've created a matrix, `secret_matrix`, the dimensions of which are a secret. Without printing out the number of rows and columns, check to see if `secret_matrix` is a square matrix (i.e. it has the same number of rows and columns)**
+
+```{r, echo = FALSE}
+secret_matrix <- matrix(1:12, 3, 4)
+```
+
+
+```{r nrow-q2, echo = FALSE, exercise = TRUE}
+# Enter your code below
+
+```
+
+```{r nrow-q2-solution}
+nrow(secret_matrix) == ncol(secret_matrix)
+```
+
+**3. Using indexing, `nrow()`, and `ncol()`, in one line, save the value in the bottom right corner of the matrix `secret_matrix`.**
+
+```{r nrow-q3, echo = FALSE, exercise = TRUE}
+# Enter your code below
+bottom_right_value <- secret_matrix[]
+
+bottom_right_value
+```
+
+```{r nrow-q3-solution}
+bottom_right_value <- secret_matrix[nrow(secret_matrix), ncol(secret_matrix)]
+```
+
+### Special Cases & Common Mistakes
+
+#### length()
+
+* Remember that `length()` returns the number of objects in a vector, not the number of digits or characters in a string. See examples below.
+```{r length-special-ex1}
+length("This sentence has 31 characters")
+length(c("This sentence has 31 characters", "This sentence has 7 less"))
+```
+
+* Although a vector is the correct input into `length()`, if the input is a dataframe, the output will be equal to the number of columns.
+```{r length-special-ex2}
+length(starwars) == ncol(starwars)
+```
+
+* If the input is a matrix, the output will be equal to the number of entries in the matrix.
+```{r length-special-ex3}
+length(secret_matrix) == nrow(secret_matrix) * ncol(secret_matrix)
+```
+
+
+#### nrow() and ncol()
+
+* Using a vector as input to `nrow()` or `ncol()` will output `NULL`
+```{r nrow-special}
+nrow(fruit)
+ncol(fruit)
+```
+
+
+### Overview and Next Steps
+
+`length()`, `nrow()`, and `ncol()`, are useful functions for finding the dimensions of variables. In the next section, we will continue exploring data frames and how to manipulate them.
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2649,9 +3297,11 @@ There are several functions that act as variations of `slice()` with similar syn
 
 In this level, we covered many of the fundational verbs that will be a large part of your R life. You'll use these again and again. But don't worry if you can't remember everything initially. It'll all start to make sense eventually.
 
-Great work! In the next level we fill in some base R programming functions.
+Great work! In the next level we fill in some base R programming functions. You can start the next lesson by running:
 
-
+```{r, eval = FALSE}
+learnr::run_tutorial("totally_addicted_to_base", package = "DoSStoolkit")
+```
 
 
 

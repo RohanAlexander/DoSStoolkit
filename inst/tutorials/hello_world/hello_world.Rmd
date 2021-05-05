@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Hello World!"
-date: 16 February 2021
+date: 4 May 2021
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -28,36 +28,51 @@ Don't worry too much if the specifics of those examples leave you a little lost 
 
 Welcome aboard!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/PhljUEN996Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ccbvKaQeKRY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 
-## Getting and setting up R Studio
 
-Written by Rohan Alexander.
+
+
+## Getting and setting up RStudio
+
+Written by Rohan Alexander and Annie Collins.
 
 ### Introduction
 
 In this lesson, you will learn how to:
-- download R and R Studio; and 
-- become familiar with the major aspects of it.
+
+- download R and RStudio Desktop.
+
+### R vs. RStudio
+
+Before we get started, it is important to understand the different components that make coding with R possible. 
+
+R is different from RStudio and you need to download both. R refers to the programming language we're using, and RStudio is the desktop application (in technical language, the IDE or "integrated development environment") that makes it possible to read, write, and view the output of our R code. You can technically use R without RStudio, but you cannot use RStudio without R.
+
+University of Toronto Professor Liza Bolton has a wonderful analogy: if R is like a car engine, RStudio is like the car. While it's possible to use a car engine directly, most of us find it helpful to use a car. So we're going to use RStudio to interface with R.
 
 
 ### Getting R
 
-R can be downloaded for free from the R website: https://www.r-project.org. It's not the most user-friendly website ever built, so I've taken a series of screenshots to help explain things. For you need to click 'download R'. 
+Your first step is to download R. It can be downloaded for free from the R website: https://www.r-project.org. It's not the most user-friendly website ever built, so I've taken a series of screenshots to help explain things. First you need to click **download R**. 
 
 
 ```{r, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/01-getting_started_1.png")
 ```
 
-Then you need to pick a mirror. This is done for largely historical reasons - when the internet was slow it could be faster to get it from a source that was closer. These days it doesn't really matter. Just pick a version from a place that you're familiar with, or if you don't know what to pick then you can use the one that I always use - https://cran.csiro.au/. 
+Then you need to pick a mirror. This is done for largely historical reasons - when the internet was slow it could be faster to get it from a source that was closer. These days it doesn't really matter, and the web interface (shown below) generally looks the same across all mirrors. Just pick a version from a place that you're familiar with. 
+
+For anyone near the University of Toronto, the university hosts its own mirror: https://utstat.toronto.edu/cran/.
+
+If you don't know what to pick then you can use the one that I always use - https://cran.csiro.au/. 
 
 ```{r, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/01-getting_started_2.png")
 ```
-
 
 You then need to download the appropriate version for you depending on whether you've got Windows, Mac, or Linux. I'll pick Mac, but the next page looks very similar for all three. 
 
@@ -65,7 +80,7 @@ You then need to download the appropriate version for you depending on whether y
 knitr::include_graphics("images/01-getting_started_3.png")
 ```
 
-At this point, you can click to do the actual download. This will differ depending on exactly when you are following these instructions, but you're looking for something like, 'R-4.0.4.pkg'.
+At this point, you can click to do the actual download. This will differ depending on exactly when you are following these instructions, but you're looking for something like **R-4.0.4.pkg**.
 
 ```{r, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/01-getting_started_4.png")
@@ -74,42 +89,86 @@ knitr::include_graphics("images/01-getting_started_4.png")
 
 After that downloads you can install it on your computer like any other application.
 
-### Getting R Studio
+### Getting RStudio
 
-R is different to R Studio and you need to download both. My colleague, Liza Bolton, has a wonderful analogy, which if that R is like a car engine and R Studio is like the car. While it's possible to use a car engine directly, most of us find it helpful to use a car. So we're going to use R Studio to interface with R.
-
-To get started, go to R Studio: https://rstudio.com. Then click on download. 
-
-
+To get started, visit the RStudio website: https://rstudio.com. Then click on download. 
 
 ```{r, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/01-getting_started_6.png")
 ```
 
 
-You want R Studio Desktop, which is free. Click download and it should try to guess your operating system and provide the correction option for your set-up. In my case, this is Mac, so I can click 'Download', and then install it like any other application.
+You want RStudio Desktop, which is free. Click download and it should try to guess your operating system and provide the correction option for your set-up. In my case, this is Mac, so I can click **Download**, and then install it like any other application.
 
 ```{r, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/01-getting_started_7.png")
 ```
 
+### Next Steps
 
-
-### Opening R Studio
-
-When you open R Studio, there will be four main panes. On the top left is space for you to write R scripts or R Markdown documents. On the bottom left is a Console where you could write a few lines of R code. On the top right is a Environment panel which will show which datasets and variables you have loaded and some of their key features. Finally, on the bottom right is a file manager. 
-
-
-
-There are various options within each of these. Don't worry too much about everything that is going on. When a person steps into a plane cockpit for the first time it can be overwhelming and it's the same here - it's normal to not know where to look. Before too long you'll be navigating around R Studio comfortably.
+Congratulations! You are now ready to start running R code in RStudio Desktop. In the next lesson, you will learn how to navigate RStudio and some of its key features that will come in handy once you start programming in R.
 
 
 
 
+
+
+
+
+
+
+
+
+## Getting to know what is what
+
+Written by Rohan Alexander and Annie Collins.
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Navigate the RStudio interface; and
+- Run R code using RStudio
+
+
+Prerequisite skills include:
+
+- Downloading R and RStudio (see previous lesson).
+
+
+### Basic Layout
+
+```{r, echo = FALSE, out.width="90%"}
+knitr::include_graphics("images/02-rstudio-layout.png")
+```
+
+When you open RStudio on desktop, it should look fairly similar to RStudio Cloud (the internet-based version of RStudio that you likely used to load this module). There are four main panes:
+
+- **Scripts**: the upper left corner of RStudio Desktop is where any R Script or R Markdown files will appear when you open them. You can open more than one at once, in which case they will appear in separate tabs. You will also see relevant buttons for each document, such as search, save, and run.
+- **Environment**: this is where all your stored variables (vectors, data frames, models, plots, etc.) will be shown by name and type. In the "History" tab, you will also find a list of all code that you have run recently.
+- **Console**: the console is where code is run (either individual lines typed directly into the console, or blocks of code run from a script file) and its output is generally produced. While it is usually good practice to write your code in a script or markdown file, sometimes it is easier to run certain functions as single lines of code (actions that you won't need to reference later on, since the individual commands can be hard to find once more code is run). Most basic code output is also shown in the console, like data summaries, model summaries, data previews, etc.
+- **Files**: This pane displays all the files in your working directory, which is a folder stored on your computer that RStudio will use as its main directory for opening and saving files. It becomes very useful when you're working on a project that involves multiple scripts, files, external data sets, or graphics that contribute to your final project and all need to be easily accessible from the same place.
+
+See the video below for a more in-depth tour of the RStudio interface.
+
+![](https://youtu.be/TdWY6YURY6k)
+
+### More Advanced Features
+
+You'll notice that there are several tabs and buttons within each of these areas that I haven't mentioned yet. These all serve their own specific purpose which will become more clear as you start exploring the interface and running code yourself. Don't worry too much about everything that is going on. When a person steps into a plane cockpit for the first time it can be overwhelming and it's the same here - it's normal to not know where to look. Before too long you'll be navigating around RStudio comfortably.
 
 ### Next Steps
 
 The best way to learn R is to use R. In the next lesson we're going to walk you through a couple of exercises of things that you could accomplish with R once you're a little more familiar with it. We hope that you find it motivating and exciting. 
+
+
+
+
+
+
+
+
+
 
 
 
@@ -158,7 +217,10 @@ covid_data <-
 ```
 
 ```{r, eval = TRUE, include = FALSE}
+# Use beow code for package (had to change in order to work with draft repo)
 covid_data <- read_csv(system.file("extdata", "covid_data.csv", package = "DoSStoolkit", mustWork = TRUE))
+
+# covid_data <- read_csv("covid_data.csv")
 ```
 
 To get an initial idea of the variables (columns) we're working with, we can load the first 20 rows of data and examine its contents and parameters. In R, this takes a form similar to a spreadsheet.
@@ -228,7 +290,6 @@ covid_daily_stats <-
     pending = sum(`Source of Infection` == "Pending"),
     total = n()
     )
-
 head(covid_daily_stats, 30)
 ```
 
@@ -236,13 +297,11 @@ From this table, we can look at the daily summaries holistically or summarize fu
 
 ```{r summary-stats}
 summary(covid_daily_stats$total)
-
 sum(covid_daily_stats$total)
-
 sum(covid_daily_stats$unknown)/sum(covid_daily_stats$total)
 ```
 
-Now we know that the highest number of cases observed on a single day in the pandemic thus far is 1003, and that at least half of the recorded dates have seen over 135 cases. We can also see from the second and third calculations that there have been 64,725 in Toronto in total since the beginning of the pandemic, and that cases of unknown origin make up nearly 37 percent of all cases. If we wanted to, we could go on to create graphs from this summary, like total cases per day over time or number of cases per source of infection.
+Now we know that the highest number of cases observed on a single day in the pandemic thus far is 1605, and that at least half of the recorded dates have seen over 154 cases. We can also see from the second and third calculations that there have been 83,403 in Toronto in total since the beginning of the pandemic, and that cases of unknown origin make up just over 42 percent of all cases. If we wanted to, we could go on to create graphs from this summary, like total cases per day over time or number of cases per source of infection.
 
 ```{r plot}
 colors <- c("Outbreak associated" = "red", "Close contact" = "blue", "Community spread" = "purple")
@@ -337,7 +396,7 @@ We noted earlier that promo codes may infleunce our ordering habits. We can visu
 ```{r scatter}
 scatter <- 
   orders %>% 
-  ggplot(aes(x=order_total, y=promo_percent)) +
+  ggplot(aes(x=promo_percent, y=order_total)) +
   geom_point(color = "#1b9e77", fill = "#1b9e77") +
   ggtitle("Promo Code Discount vs. Order Total") +
   theme(axis.text.x = element_text(angle = 90)) +
@@ -368,7 +427,6 @@ We get a horizontal line, so it seems there isn't any relationship between promo
 
 Written by Annie Collins.
 
-
 ### Introduction
 
 Once you've gotten a basic handle on coding in R, there are plenty of ways to extend your learning and practice beyond the classroom. R has a global network of users of all levels and backgrounds, and these users have established a myriad of outlets for connecting with each other and sharing their R expertise, projects, and discoveries.
@@ -385,7 +443,7 @@ R Weekly is a (you guessed it) weekly summary of all things R related: education
 
 - Check out the current and past iterations of R Weekly on their [website](https://rweekly.org/).
 - Subscribe to the R Weekly [mailing list](https://feedburner.google.com/fb/a/mailverify?uri=rweekly&loc=en_US).
-- Follow R Weekly on their various social media accounts: [Facebook](https://facebook.com/rweekly), [Twitter](https://twitter.com/rweekly_org), [YouTube](https://www.youtube.com/channel/UCVRffxCKJd2qQ6gDcoMPxJQ).
+- Follow R Weekly on their various social media accounts: [Facebook](https://facebook.com/rweekly) and [Twitter](https://twitter.com/rweekly_org).
 
 ### R-Ladies
 
@@ -406,8 +464,6 @@ R-Ladies focuses on increasing the proportion of underrepresented genders in the
 Online or in-person meet ups are a great way to meet like-minded individuals, exchange knowledge and experience, and develop your R skills and network. As mentioned previously, there are R-Ladies-specific meet ups, as well as a worldwide network of R User Groups, both of which have been sponsored by the R Consortium.
 
 #### Get Involved
-
-- Find your local [R User Group meet up]()
 - Join the [Greater Toronto Area (GTA) R User Group](https://www.meetup.com/Greater-Toronto-Area-GTA-R-Users-Group/)
  or [find your local R User Group](https://www.meetup.com/pro/r-user-groups)
 
@@ -429,6 +485,12 @@ Written by Rohan Alexander.
 
 Congratulations on making it this far. Learning a new skill can be intimidating, but the best way to learn R is to use R. I hope that this has given you a taste of what you will soon be able to do. We were all in your position once.
 
-Great job so far, and I hope that you keep at it.
+You can start the next lesson by running:
+
+```{r, eval = FALSE}
+learnr::run_tutorial("operating_in_an_error_prone_world", package = "DoSStoolkit")
+```
+
+
 
 

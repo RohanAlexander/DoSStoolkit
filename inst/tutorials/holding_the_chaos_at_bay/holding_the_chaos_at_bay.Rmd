@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Holding the chaos at bay"
-date: "17 February 2021"
+date: "4 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -22,12 +22,13 @@ library(learnr)
 
 ## Introduction
 
+Written by Rohan Alexander.
+
 This is a somewhat bitty module. First we go through how to organize your folders and files. Although we've been fairly prescriptive here, think of it more as a default to get you started - you should vary from it as you think best. After that we go through using packages, which are collections of other people's code. And how to write code that is more helpful for other people (even if that person is just future-you) by writing meaningful comments. Finally, we cover how to import data. 
 
 We got the sharks out of the pool - feel free to jump in!
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/vSuPz7VYG1c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 
 
 
@@ -134,25 +135,27 @@ In the following section, we will discuss how to set up and organize your folder
 
 
 
-## Folder set-up
+
+
+## Folder Set-Up
 
 Written by Isaac Ehrlich.
+
 
 ### Introduction
 
 In this lesson, we will discuss how to set up folders for assignments and projects in R. As the folder structure revolves around your R Projects, make sure you have gone through the section on R Projects as well.
 
+#### Folder Set-Up Motivation
 Many assignments and analyses you complete will require multiple files, including data files, code, and written reports. To keep these organized, we recommend using a consistent folder structure system. This will make loading data into your R environment simpler, and will help keep your analyses organized.
 
-### Folder set-up
+### Folder Set-Up
 After creating a folder with an R Project, you will want to create additional sub-folders to keep your materials organized. Ideally, you will have very few files (if any) in the same folder as your R Project - they should instead be stored in sub-folders as in the image below.
 
-```{r, echo = FALSE, fig.height = 2}
-knitr::include_graphics("images/folder-setup.png", dpi = 400)
-```
-
+![Example Folder Set-Up](figures/folder-setup.png)
 
 We recommend using the following sub-folders:
+
 
 #### Data/Input Folder
 One of the folders you will want to create is the `data` folder. Here, you will want to keep the original and cleaned data files you use in your analysis.
@@ -167,38 +170,30 @@ If you create any new data sets or have output from your analysis, you will defi
 If you are completing an assignment in R, you will certainly have written code and scripts you want to save. Whether for cleaning data or running complex analysis, be sure to save these files to a folder containing all of your code.
 
 #### Other/Miscellaneous Folder (If Necessary)
-On occasion you may find that you use have files that don't fit into the other folders. Rather than have these files float around your R Project, you may want to create an additional `other` folder and put those files in there.
+On occasion you may find that you are using files that don't quite fit into any of the other folders. Rather than have these files float around your R Project, you may want to create an additional `other` folder and put those files in.
 
-### Key takeaways
+### Key Takeaways
 * Sub-folders help keep your files and analysis organized.
 * You will typically want to include folders for data, figures, results, and code.
 * Remember these are just recommendations! Experiment and figure out what works best for you.
 
 ### Exercises
-```{r q9, echo = FALSE}
+```{r q1, echo = FALSE}
 question("You should keep your root directory clean and instead save files to specific sub-folders",
 answer("True", correct = TRUE),
 answer("False", message = "Remember you'll want to keep your projects organized!"),
 allow_retry = TRUE)
 ```
 
-```{r q10, echo = FALSE}
+```{r q2, echo = FALSE}
 question("You must have the exact folders described in this section for all your projects",
 answer("True", message = "We definitely recommend using them, but make sure to figure out what works best for you!"),
 answer("False", correct = TRUE, message = "Remember to figure out what works for you!"),
 allow_retry = TRUE)
 ```
 
-### Next steps
+### Next Steps
 You're well on your way to keeping an organized project! Next we'll talk about how you can use comments to keep your code readable and organized!
-
-
-
-
-
-
-
-
 
 
 
@@ -346,23 +341,6 @@ allow_retry = TRUE)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Installing packages from CRAN
 
 Written by Haoluan Chen.
@@ -429,7 +407,7 @@ Note that for some package it may ask you to input something in the console to c
 
 #### Exercise 1
 
-```{r installCRANex1, echo = FALSE}
+```{r cranex1, echo = FALSE}
 question("Which code can install the tidyverse package?",
           answer("packages(tidyverse)"),
           answer("install.packages(tidyverse)"),
@@ -472,15 +450,6 @@ Here is a list of useful packages you may be using:
 You can also create your own packages! 
 
 CRAN website: https://cran.r-project.org/
-
-
-
-
-
-
-
-
-
 
 
 
@@ -562,7 +531,7 @@ Please install the following package on your RStudio and answer the question
 https://github.com/RohanAlexander/AustralianPoliticians
 
 
-```{r ex1, echo = FALSE}
+```{r githubex1, echo = FALSE}
 question("Which code can install above package?",
           answer("devtools::install_github('RohanAlexander/AustralianPoliticians')", correct = TRUE),
           answer("devtools::install('RohanAlexander/AustralianPoliticians')"),
@@ -601,22 +570,7 @@ R Packages is a book that gives a comprehensive treatment of all common parts of
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Loading packages
+## Loading packages with library()
 
 Written by Mariam Walaa.
 
@@ -642,6 +596,8 @@ Highlights:
 
 ### Arguments
 
+### library()
+
 The `library()` function takes the following as arguments:
 
 | Argument       | Parameter    | Details                                             |
@@ -654,8 +610,9 @@ The `library()` function takes the following as arguments:
 
 *This is a required argument.
 
-If you would like more information about the arguments, please visit the R documentation
-for this function
+Note that you if you want to load the help using `library()`, you may need to pass the
+'help' parameter alone without the others. If you would like more information about the
+arguments, please visit the R documentation for this function
 [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/library).
 
 ### Overview
@@ -663,9 +620,15 @@ for this function
 Loading packages properly is a necessary aspect of running code in R. Loading a package is
 needed in order to be able to use functions in that package.
 
-Some functions are already provided in base R and do not belong to specific packages. You
-will see in future tutorials that this is the case for functions such as `lm()` and
-`summary()`.
+Here is what loading a package looks like.
+
+```{r eval = FALSE}
+library(ggplot2)
+```
+
+Note that some functions are already provided in base R and do not belong to specific
+packages. You will see in future tutorials that this is the case for the functions `lm()`
+and `summary()`.
 
 Besides knowing how to load packages and which packages to load, it's important to 
 understand what R does when multiple packages use the same function name. This may be the 
@@ -687,15 +650,33 @@ calling the packages so that the package whose functions you need is last, or to
 know which package you want to use a function from. For example, if you want to use
 `select()` from dplyr and not some other package, you can specify `dplyr::select()`.
 
-Here is a visualization to help you understand how often to use the different 
-package-related functions. Please note that it is a lot more common to use `library()` 
-over `require()`. You can use `require()` if you want your code to continue running even
-if the package did not load correctly.
+Here is a visualization to help you understand when to use the different package-related
+functions. Please note that it is a lot more common to use `library()` over `require()`. 
+You can use `require()` if you want your code to continue running even if the package did 
+not load correctly. You can learn more about `require()` in its documentation 
+[here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/library).
 
-```{r loading-packages, echo = FALSE, fig.height = 4, fig.width = 6}
+```{r loading-packages, echo = FALSE, fig.height = 3, fig.width = 4}
 knitr::include_graphics("images/17_packages.png")
 ```
-Source: Mariam Walaa
+
+#### Citing R 
+
+When we use R in a formal setting (such as, when writing a paper), we will want to cite R.
+This can be done with some guidance from the `citation()` function.
+
+```{r}
+citation()
+```
+
+Please refer to the References and Bibtex section in the toolkit for more information on 
+why it is important to cite R and R packages.
+
+### Video
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/d_Ro31Ml5fM"
+frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Exercises
 
@@ -703,7 +684,7 @@ Source: Mariam Walaa
 
 Inspect the output provided when loading `tidyverse` below.
 
-```{r loading-packages-1}
+```{r loading-packages-1, include = TRUE}
 library(tidyverse)
 ```
 
@@ -760,6 +741,14 @@ Correct the code in order to successfully call the package: `library("tidyverse'
 
 ```
 
+```{r loading-packages-exercise-3-sol, echo = FALSE}
+ex3_sol <- library("tidyverse")
+```
+```{r loading-packages-exercise-3-check}
+grade_result(pass_if(~identical(.result, ex3_sol)))
+```
+
+
 #### Exercise 4
 
 Select all the true statements about the `library()` function and calling libraries.
@@ -796,10 +785,6 @@ question("Which of these are true? Check all true statements.",
        allow_retry = TRUE,
        random_answer_order = TRUE)
 ```
-
-### Video
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/d_Ro31Ml5fM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Common Mistakes & Errors
 
@@ -849,9 +834,7 @@ find helpful:
 
 
 
-
-
-## Updating libraries
+## Updating libraries with update.packages()
 
 Written by Mariam Walaa.
 
@@ -876,9 +859,13 @@ Highlights:
 
 The `update.packages()` function takes the following as arguments:
 
-| Argument | Parameter     | Details                                                |
-|----------|---------------|--------------------------------------------------------|
-| oldPkgs  | packages      | this updates all packages if no packages are specified |
+| Argument | Parameter     | Details                                                 |
+|----------|---------------|---------------------------------------------------------|
+| oldPkgs  | packages      | this updates all packages if no packages are specified* |
+
+*If you want to specify a certain set of packages, pass a vector `c("package1",
+"package2", "package3")` to let the function know that these are the packages you'd like
+to update.
 
 You can read more about `update.packages()` in the function documentation
 [here](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/update.packages).
@@ -901,15 +888,13 @@ When you run `update.packages()`, R will ask you if you want to update each of t
 packages currently installed one-by-one. Once it's done going through all of your
 packages, it will start updating the ones you asked to update. 
 
-Here is a visualization to help you understand how often to use the different 
-package-related functions. Please note that it is a lot more common to use `library()` 
-over `require()`. You can use `require()` if you want your code to continue running even
-if the package did not load correctly.
-
-```{r updating-packages, echo = FALSE, fig.height = 4, fig.width = 6}
-knitr::include_graphics("images/17_packages.png")
+```{r updating-packages-img-1, echo = FALSE, fig.height = 3, fig.width = 4}
+knitr::include_graphics("images/20_updating-libraries-1.PNG")
 ```
-Source: Mariam Walaa
+
+```{r updating-packages-img-2, echo = FALSE, fig.height = 3, fig.width = 4}
+knitr::include_graphics("images/20_updating-libraries-2.PNG")
+```
 
 ### Exercises
 
@@ -946,10 +931,6 @@ question("Which is the correct way to update `dplyr` and `ggplot2`?",
 )
 ```
 
-### Video
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/AjJjL8Ih5A0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 ### Common Mistakes & Errors
 
 Below are some common mistakes and errors that you may come across while updating packages:
@@ -981,14 +962,42 @@ functions you may find helpful:
 
 
 
+```{r setupCSV, include=FALSE}
+library(learnr)
+library(tidyverse)
+
+my_data <- c("studendID,test1,test2,grade 
+         student1,90,85,A
+         student2,30,46,F
+         student3,70,80,B
+         student4, NA,68,C
+         student5,NA,NA,F")
 
 
+my_data_modified <- c("Hello, this text is, irrelevant
+As is this line
+studendID,test1,test2,grade 
+student1,90,85,A
+student2,30,46,F
+student3,70,80,B
+student4, NA,68,C
+student5,NA,NA,F
+student6,LWD,LWD,LWD")
 
 
+my_new_data <- c("studendID,test1,test2,grade
+(textID),(points out of 100),(points out of 100),(letter grade)
+student1,90,85,A
+student2,30,46,F
+student3,70,80,B
+student4, NA,68,C
+student5,NA,NA,F")
 
 
+```
 
-## Delimited data files with read_csv()
+
+## Delimited data files with read_csv()"
 
 Written by Marija Pejcinovska.
 
@@ -1237,20 +1246,6 @@ read_csv("https://raw.githubusercontent.com/tacookson/data/master/us-government-
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Summary and next steps
 
 Written by Rohan Alexander.
@@ -1259,7 +1254,11 @@ In this module, we covered a bunch of things that will be useful as you get more
 
 Great work! In the next level we get stuck into the core functions of the tidyverse! Where are my pliers?
 
+You can start the next lesson by running:
 
+```{r, eval = FALSE}
+learnr::run_tutorial("hand_me_my_plyrs", package = "DoSStoolkit")
+```
 
 
 

@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Totally addicted to base"
-date: "18 February 2021"
+date: "4 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -29,9 +29,7 @@ gradethis::gradethis_setup()
 In this module, we are going to explore 'base R'. This means that we don't need to load any packages - we're working with functions that come 'out of the box' as it were. Base is a very stable collection of functions that have been refined over decades. This is in contrast to the 'tidyverse', which we introduced in other modules, which is much newer. Some folks are passionate about the differences between them, but they're just tools that we use as appropriate. In this module we are going to cover some base functions that you'll use again and again in your R journey, especially in statistics.
 
 
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ccbvKaQeKRY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PhljUEN996Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 
@@ -40,10 +38,6 @@ In this module, we are going to explore 'base R'. This means that we don't need 
 
 
 
-
-## What is base?
-
-*Coming soon!*
 
 
 
@@ -58,8 +52,16 @@ In this module, we are going to explore 'base R'. This means that we don't need 
 
 ## mean(), median(), sd(), lm(), summary()
 
-Written by Mariam Walaa.
+Writte by Mariam Walaa.
 
+```{r setupSummaryStats, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(flair)
+
+knitr::opts_chunk$set(echo = TRUE)
+gradethis::gradethis_setup()
+```
 
 ### Introduction
 
@@ -147,12 +149,13 @@ You can read more about the arguments in the `lm()` function's documentation
 
 This section will demonstrate how to use the `lm()` function to build simple and multiple
 linear regression models. We will be looking at a subset of the Broadway Grosses data set
-provided by Alex Cookson in this [Git
-repository](https://github.com/tacookson/data/tree/master/broadway-grosses). The Broadway
-Grosses data set comprises data on revenue and attendance figures for theaters that are
-part of The Broadway League.
+provided by Alex Cookson in [the dataset
+repository](https://github.com/tacookson/data/tree/master/broadway-grosses)provided on 
+GitHub. The Broadway Grosses data set comprises data on revenue and attendance figures 
+for theaters that are part of The Broadway League.
 
 ```{r summary-statistics, include = FALSE}
+library(tidyverse)
 broadway <- read_csv(
   "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv")
 
@@ -272,6 +275,7 @@ predict(simple_regression,
         data.frame(pct_capacity = mean(broadway$pct_capacity),
                    na.rm = TRUE))
 ```
+
 ```{r mean-lm-1, echo = FALSE}
 decorate("mean-lm") %>%
   flair("mean") %>%
@@ -365,7 +369,7 @@ performances.
 
 Use the code from above in addition to the `subset` parameter to do this.
 
-```{r summary-statistics-exercise-2, exercise = TRUE, exercise.eval = TRUE}
+```{r summary-statistics-exercise-2, exercise = TRUE}
 
 ```
 
@@ -378,6 +382,7 @@ lm(formula = seats_sold ~ performances,
 ```{r summary-statistics-exercise-2-code-check}
 grade_code()
 ```
+
 
 #### Exercise 3
 
@@ -405,6 +410,7 @@ Here are some common mistakes and errors you may come across:
 - You try to create a formula within the `lm()` function without using the appropriate
 operators (i.e., `~` to separate the dependent variable from the independent variable(s),
 or `+` to separate the independent variables)
+- You might be specifying the dependent variable in place of the independent variables, and vice versa. Be sure to follow the `Y ~ X1 + X2 + ... + Xn` formatting.
 
 ### Next Steps
 
@@ -428,28 +434,268 @@ building](https://r4ds.had.co.nz/model-building.html).
 
 
 
+## functions()
+
+Written by Haoluan Chen.
+
+
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Write your own functions in R
+
+
+Prerequisite skills include:
+
+- setup RStudio
+- run R code in the console
+
+Highlights:
+
+- Write your own function
+
+
+### The content
+
+
+Function in R is a set of statements organized together to perform a specific task. 
+
+The function consist of four parts: 
+
+- Function Name: This is the name of the function. It is stored in the R environment as an object.
+
+- Arguments/Parameters: Just like in math, a function has an input and an output. Arguments/Parameters are the inputs of the function. However, parameters can be required or have default values. Parameters are specified inside a () and split by comma. 
+
+- Function Body: The function body contains a set of statements that defines what the function does. The function body is inside a {}.
+
+- Return Value: The return value of a function is the last expression in the function body to be evaluated. This is the output of the function.
+
+#### Why and when should you use it?
+
+Instead of copy and pasting your code multiple times, functions allow you to perform repetitive tasks automatically. It has three advantages over using copy and paste:
+
+- You can give a function an informative name that makes your code easier to understand.
+
+- As requirements change, you only need to update code in one place instead of many.
+
+- You eliminate the chance of making incidental mistakes 
+
+You should consider writing a function whenever you have copied and pasted a block of code more than twice.
+
+
+#### Built-in functions 
+
+There are many built-in functions in R. For example, the mean() function in R can calculate the mean of a vector. Whenever we want to calculate a mean of some numbers, we do not have to calculate the sum of all the numbers and divide by the number of numbers. Instead, we can store the numbers in a vector then call the mean() function to calculate the mean. Utilize the built-in functions can make your life easier for your projects. 
+
+
+#### User defined functions
+
+We can also write our own function for some specific task.
+
+Here is a very simple function call the sum_of_two_numbers. 
+
+```{r userdefinedfunction}
+sum_of_two_numbers <- function(a, b){
+  y = a + b
+  y
+}
+```
+
+
+In this function, it consists of four parts: 
+
+- sum_of_two_numbers is the name of the function 
+- a and b is the input of this function 
+- y = a + b and y inside the {} is the body of the function
+- y is the output of this function because it is the last expression in the function body to be evaluated.
+
+We can use this function by calling the function name and specifying the input value in the bracket. We can use the following code to calculate the sum of 2 and 3. 
+
+```{r function}
+sum_of_two_numbers(2,3)
+```
+
+#### default parameters
+The parameters can have a default value. 
+For example, we can set the parameter b to 3 in our sum_of_two_numbers function. 
+
+```{r function2}
+sum_of_two_numbers <- function(a, b = 3){
+  y = a + b
+  y
+}
+```
+
+Now, if we do not specify parameter b in our function call, then b is set to 3 in default. 
+
+```{r function3}
+sum_of_two_numbers(2)
+```
+
+Here, we tell R to run the body of sum_of_two_numbers with a = 2, and b is set to the default number 3. 
+
+However, we can still specify parameter b in our function call to calculate the sum of two numbers.
+
+```{r function4}
+sum_of_two_numbers(2, 5)
+```
+
+Here, we tell R to run the body of sum_of_two_numbers with a = 2 and b = 5. 
+
+### Exercises
+
+##### Exercise 1
+
+Change the name of the sum_of_two_numbers to mean_of_two_number and modify the function body to calculate the mean of two numbers.
+
+```{r functionex1, exercise=TRUE, exercise.lines = 5}
+sum_of_two_numbers <- function(a, b){
+  y = a + b
+  y
+}
+```
+
+
+```{r functionex1-solution}
+mean_of_two_numbers <- function(a, b){
+  y = (a + b)/2
+  y
+}
+```
+
+##### Exercise 2
+Write a function called product that takes two numbers as input and calculate the product of two numbers.
+
+```{r functionex2, exercise=TRUE, exercise.lines = 5}
+
+```
+
+
+```{r functionex2-solution}
+product <- function(a, b){
+  y = a * b
+  y
+}
+```
+
+##### Exercise 3
+Here is the mean_of_two_numbers function in Exercise 1. Set the parameter a to a default value of 6. 
+
+```{r functionex3, exercise=TRUE, exercise.lines = 5}
+mean_of_two_numbers <- function(a, b){
+  y = (a + b)/2
+  y
+}
+```
+
+
+```{r functionex3-solution}
+mean_of_two_numbers <- function(a = 6, b){
+  y = (a + b)/2
+  y
+}
+```
+
+##### Exercise 4
+Predict the output of the following code.
+
+```{r functionex4, exercise=TRUE, exercise.lines = 5}
+mean_of_two_numbers <- function(a = 6, b){
+  y = (a + b)/2
+  y
+}
+mean_of_two_numbers(3, 5)
+
+```
+
+
+```{r functionex4-solution}
+4
+```
+
+##### Exercise 5
+Predict the output of the following code.
+
+```{r functionex5, exercise=TRUE, exercise.lines = 5}
+mean_of_two_numbers <- function(a = 6, b){
+  y = (a + b)/2
+  y
+}
+mean_of_two_numbers(4)
+
+```
+
+```{r functionex5-solution}
+5
+```
+
+
+##### Exercise 6
+There are several problems with following code. Modify following code for it to run!
+```{r functionex6, exercise=TRUE, exercise.lines = 5}
+tax_calculator <- tax_calculator(tax_ratio = 0.13){
+  tax = price * tax_ratio
+  tax
+}
+
+```
+
+```{r functionex6-solution}
+tax_calculator <- function(price, tax_ratio = 0.13){
+  tax = price * tax_ratio
+  tax
+}
+
+```
+
+
+
+### Common Mistakes & Errors
+
+- Make sure you have correct input for your function
+- Remember that the function returns the last expression in the function body.
+- Make sure you define your argument in () and your function body in {}.
+- Make sure you define your function before calling it. 
+
+
+
+### Next Steps
+Most of the time, you will be using the function from various packages and the functions in R. However, for some specific tasks, you will have to write your own functions. The ability to use user-defined functions and functions from different packages makes R a powerful tool in Data Science.   
+
+If you want to see more completed function, you can read through this Function chapter in R for Data Science
+https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function
+
+
+
+
+
+
+
+
+
 
 
 
 ## for() and while()
- 
+
 Written by Yena Joo.
+
 
 ### Introduction
 
 In this lesson, you will learn about "loops", and how to use the function `for` and `while`. It is one of the key concepts that is widely used and fundamental for any kind of programming languages.  
 
 #### What are Loops?
-
-**insert pics**
 Loops, or iterations are a step that the program automatically goes through a certain logical conditions or a range of a list, array, vector, dataset, and many more. Loop allows code to be executed repeatedly, which is used often in programming to repeat a specific block of code. You can make hundreds and thousands of redundant codes into a few lines of simple code using loops. 
 
 **You can iterate through:**  
-- vectors: `fruits <- c('apple', 'banana', 'mango')`  
-- lists: `list <- list(1, 2, "melon")`
-- datasets/tibble
-- range of numbers
-- sequence: `seq(from=0,to=8,by=2)`  
+- vectors: `fruits <- c('apple', 'banana', 'mango')`   
+- lists: `list <- list(1, 2, "melon")`   
+- datasets/tibble  
+- range of numbers  
+- sequence: `seq(from=0,to=8,by=2)`   
 
 
 **Prerequisite skills include:**  
@@ -464,12 +710,9 @@ Loops, or iterations are a step that the program automatically goes through a ce
 - `break` in loops  
 
 #### Packages
-```{r, eval = FALSE}
+```{r}
 library(tidyverse)
 ```
-
-### Video
-![upload video here!!!!]()
 
 ### For Loop
 
@@ -497,45 +740,42 @@ Here is sequences from 1 to 10, by 2.
 If you iterate through the sequence using for loop and print each variable, each value is taken from the sequence and print, which is the statement in the curly braces `{}`.   
 
 
-#### Mutating a Dataset using `for()` loop
-
+#### Mutating a Dataset using `For` loop
 Now, let's use a different dataset to add some new variables using for loop, and get some useful information. 
-Let's first create a simple dataset of grades of each student in `math`, `cs`, `sta` courses.
-
+Let's first create a simple dataset of grades of each student in `math`, `cs`, `sta` courses. 
 ```{r}
 set.seed(6055)
 student_id <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 math <- sample(c(60:100), size=10, replace=TRUE)
 cs <- sample(c(60:100), size=10, replace=TRUE)
 sta <- sample(c(60:100), size=10, replace=TRUE) 
-# tibble()
+## tibble()
 student_data <- tibble(student_id, math, cs, sta)
 student_data
 
-# data.frame()
+## data.frame()
 student <- data.frame(student_id, math, cs, sta)
 student
 ```
 
 Then, let's say we want to see each student's total mark as well as their average mark. First, we have to assign numeric variable names for `avg` and `tot`, and n is going to be the number of students, which is number of rows of the data. 
 ```{r}
-# empty vector
+## empty vector
 avg <- numeric()
 tot <- numeric()
-n <- nrow(student)  # number of students
+n <- nrow(student)  ## number of students
 ```
 
 
 We will now use `for` loop iterating from range 1 to the number of students, and for each iteration, we will assign `tot` be the total mark of `math`, `cs`, and `sta`. Average grade would be total grade divided by 3 courses. 
-
 ```{r}
-# tot and avg
+## tot and avg
 for(i in 1:nrow(student)){
   tot[i] <- student$math[i] + student$cs[i] + student$sta[i]
   avg[i] <- round(tot[i]/3, 2)
 }
 
-# new col
+## new col
 student$tot <- tot
 student$avg <- avg
 
@@ -543,7 +783,6 @@ student
 ```
 
 Let's say we want to know how many students got their average grade higher than 80 which is A. We can use `for` in this case, to go through each student's average grade, and determine if the average grade is over 80, we can increase the arbitrary variable assigned- `a`-  by 1 in each iteration. 
-
 ```{r}
 a <- 0
 for (i in 1:nrow(student)) {
@@ -555,8 +794,7 @@ a
 ```
 
 
-#### Nested `for()` Loop 
-
+#### Nested `For` Loop 
 A nested `for` loop is a loop within a loop. They are useful for when you want to repeat a statement several times for several things.
 
 Nested `for` loops are often used to manipulate a bi-dimensional array by setting its elements to specific values.  
@@ -564,7 +802,6 @@ Nested `for` loops are often used to manipulate a bi-dimensional array by settin
 The placing of one loop inside the body of another loop is called nesting.  When you “nest” two loops, the outer loop takes control of the number of complete repetitions of the inner loop. Thus inner loop iterates n times where the length of the array of inner for loop is n, for every execution of Outer loop.
 
 Let's take a look at a simple example. 
-
 ```{r}
 for(i in 1:2) {
   for(j in 1:3) {
@@ -572,32 +809,25 @@ for(i in 1:2) {
     }
 }
 ```
-
 The outer for loop iterates through c(1, 2), and the inner loop is c(1, 2, 3)
-First, i = 1. We have to iterate through 1, 2, 3 now for j. `1*1`, `1*2`, `1*3` is executed respectively. Same for i = 2.  
-One thing you might have noticed, the number of 
+First, i = 1. We have to iterate through 1, 2, 3 now for j. `1*1`, `1*2`, `1*3` is executed respectively. Same for i = 2. Therefore, you can see that the number of the returned outputs is equal to the number of outer loops multiplied by the number of inner loops: 2 x 3. 
 
 
-### while() loop
-
-- while loops are used to loop until a specific condition is met.
-- can be used when the exact number of iterations is not known a priori,
+### While Loop
+There is another way to create loops, using `while` statement. `while` loops are used to loop until a specific condition is met/satisfied. In for loops, we already know how many times the loop will run. However, `while` can be used when the exact number of iterations is not known.  
 
 #### Structure
-
 ```{r, eval=F}
 while (condition) {
   statement
 }
 ```
-
+  
 The structure of while loop is similar to the for loop. `condition` is evaluated whether it is `TRUE` or `False`. It enters the body of the loop, which is the `statement` when the result of the condition is `TRUE`. Then, after executing the statement, the same process is repeated until `condition` has a `FALSE` result, and the loop exits.
 
 
 #### Example
-
 Let's start with a simple example without using a dataset. 
-
 ```{r}
 i <- 0 
 while (i < 5){
@@ -605,17 +835,16 @@ while (i < 5){
   i = i+1
 }
 i 
+  
 ```
-
 Here, the condition is `i < 5`, which evaluates `TRUE` in the first loop, since 1 < 5.  
 So, the loop enters the body, prints 1 , and i is incremented by 1 since the body is `i = i + 1`. In the next iteration, 2 < 5 so the loop repeats the same step, until i becomes 5. 5 is not smaller (`<`) than 5, which evaluates `FALSE` in the condition `i < 5`. Here, the loop terminates. 
 
 
-### Differences between for() vs while()
-
-- `For` is used when you know how many iterations the code should go through. 
-- `While` is used when the number of iteration depends on the condition, and evaluates whether the condition is `TRUE` or `FALSE`. If it is evaluated False, the loop terminates.
-- which means, In while loops, most of the time you will need to code the incrementation yourself such as `i = i + 1` so the loop would terminate at some point. 
+### Differences between For vs While 
+- `For` is used when you know how many iterations the code should go through.   
+- `While` is used when the number of iteration depends on the condition, and evaluates whether the condition is `TRUE` or `FALSE`. If it is evaluated False, the loop terminates.  
+- which means, In while loops, most of the time you will need to code the incrementation yourself such as `i = i + 1` so the loop would terminate at some point.   
 
 
 
@@ -623,20 +852,19 @@ So, the loop enters the body, prints 1 , and i is incremented by 1 since the bod
 
 #### Question 1 
 Here is a simple `for` loop code: 
-
 ```{r eval = F}
-example <- c(1, 2, 3)
+example <- c(a, b, c)
 for (i in example){
   print(example[i])
 }
 ```
-```{r forq1, echo = F, exercise.eval = TRUE}
+```{r q1, echo = F, exercise.eval = TRUE}
 question_checkbox(
   "What is the correct output of the code above? ",
-  answer("1 2 3 ", correct = T),
-  answer("(1, 2, 3) (1, 2, 3) (1, 2, 3) ", message = "Check the statement again"),
-  answer("3 2 1 ", correct = F),
-  answer("1", correct = F),
+  answer("a b c ", correct = T),
+  answer("(a, b, c) (a, b, c) (a, b, c) ", message = "Check the statement again"),
+  answer("c b a ", correct = F),
+  answer("a", correct = F),
   allow_retry = T,
   random_answer_order = T,
   incorrect = "Try again. You got this!"
@@ -652,12 +880,14 @@ head(members)
 ```
 
 
-```{r forq2, exercise.eval = TRUE, exercise=TRUE}
+```{r q2, exercise.eval = TRUE, exercise=TRUE}
+members <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/members.csv')
+head(members)
 x <- 0 
 
 ```
 
-```{r forq2-solution}
+```{r q2-solution}
 x <- 0 
 
 for (i in 1:nrow(members)){
@@ -670,7 +900,6 @@ x
 
 #### Question 3
 The following is a simple `while` loop code. 
-
 ```{r, eval = F}
 i = 15
 while (i > 10){
@@ -678,7 +907,7 @@ while (i > 10){
 }
 i 
 ```
-```{r forq3, echo = F, exercise.eval = TRUE}
+```{r q3, echo = F, exercise.eval = TRUE}
 question_checkbox(
   "How many iterations does the while loop go through until it terminates?",
   answer("3", correct = F),
@@ -692,36 +921,272 @@ question_checkbox(
 
 ```
 
-#### Question 4
-difference between while and for loop 
-Using `while`, write a code that will execute the same result as the given code. 
 
-```{r}
+### Common Mistakes & Errors
+- if you only have one statement to execute, you don't need to put the curly braces `{}`. However, if you have multiple statements, `{}` is necessary. 
+- Be aware on your use of the iterable object. For example, `for (i in student)` would not execute the result you want in the previous example. 
+- Think carefully of what statement you're trying to iterate. 
 
+### Next Steps
+- Practice how to manipulate data using `for` loops
+
+### References  
+
+- [R for loop](https://www.datamentor.io/r-programming/for-loop/)
+- [R while loop](https://www.datamentor.io/r-programming/while-loop/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+## if, if_else() and case_when()
+
+Written by Haoluan Chen.
+
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- use if statement 
+
+- use if_else statement
+
+- use case_when() function 
+
+Prerequisite skills include:
+
+- setup RStudio
+- run R code in the console
+- Install and load dplyr package 
+
+Highlights:
+
+- Learn how to use if_else statement
+- Using case_when() to create new variables in your dataset
+
+### The content
+
+### if statement
+
+The if statement is a tool for returning an output based on a logical condition. The syntax of the if statement is:
+
+```{if eval=F}
+if (condition) {
+  statement
+}
+```
+
+If the condition is true, the {statement} will be executed. However, if the condition is false, then nothing will happen. 
+
+### Example
+
+```{if2}
+x <- 5 
+if (x > 0){
+  print("A positive number")
+}
+```
+
+Since x is set to 5, so our condition x > 0 is evaluated to true. Therefore, the statement *print("A positive number")* is executed.  
+
+```{if3}
+x <- -3 
+if (x > 0){
+  print("A positive number")
+}
+```
+
+However, if x is set to -3, our condition x > 0 is evaluated as false. Therefore, the statement *print("A positive number")* will not be executed, and nothing happens.  
+
+### if_else statement
+
+if_else statement has two parts. The first part is exactly the same as the if statement, and the second part is the else statement. The else statement will be evaluated if the condition is FALSE. 
+
+The syntax of if_else statement is:
+```{ifelse eval=F}
+if (condition) {
+  statement1 
+} else {
+  statement2
+}
+```
+
+If the condition is true, the {statement1} will be executed. However, if the condition is false, then {statement2} will be executed.
+
+### Examples 
+```{ifelse1 eval=F}
+if (x > 0){
+  print("A positive number")
+} else {
+  print("A negative number")
+}
+```
+
+The above if_else statement will return "A positive number" if x is greater than 0 and "A negative number" if x is less than 0.
+
+### case_when() function 
+What if you have multiple condition? case_when() function is here to help. 
+
+The syntax of case_when() function with a single case is a follows:
+```{case}
+case_when(condition ~ output_value)
+```
+
+If the condition is evaluated to true, then the case_when() function will return the output_value. With only a single case, this is exactly the same as an if statement. 
+
+
+The syntax of case_when() function with two cases is a follows:
+```{case1}
+case_when(condition ~ output_value_true, 
+          TRUE ~ output_value_false)
+```
+
+If the condition is evaluates to true, then the case_when() function will return the output_value_true. However, if the condition is false, then the function will return the output_value_false.
+
+The syntax of case_when() function with multiple cases is a follows:
+```{case2}
+case_when(condition_1 ~ output_1, 
+          condition_2 ~ output_2,
+          condition_3 ~ output_3, 
+          ...)
+```
+
+Here, when condition_1 is evaluated to true, then the function returns output_1. When condition_2 is evaluated to true, then the function returns output_2 and so on. 
+
+
+### Examples 
+Here is an example of using case_when function with multiple cases. 
+
+We have seven students and their numeric grades for a course, and we want to assign the letter grade for each student. A grade between 80 and 100 is A grade, 70 to 79 is B grade, 60 to 69 is C grade, 50 to 59 is D grade, and below 50 is F grade.  
+
+
+```{r data}
+test_score_df <- tribble(~student_id, ~grade
+                  ,'1',  94
+                  ,'2',  90
+                  ,'3',  88
+                  ,'4',  75
+                  ,'5',  66
+                  ,'6',  65
+                  ,'7',  45 
+                  )
+test_score_df
+```
+
+To assign the letter grade, we can use mutate and case_when() to create a new variable in our table. 
+
+```{r example}
+mutate(test_score_df, letter_grade = 
+                           case_when(grade <= 100 & grade >= 80 ~ 'A', 
+                                     grade < 80 & grade >= 70 ~ 'B', 
+                                     grade < 70 & grade >= 60 ~ 'C', 
+                                     grade < 60 & grade >+ 50 ~ 'D',
+                                     grade < 50 ~ 'F')) 
+```
+
+
+
+### Exercises
+
+### Exercises 1 
+Using if_else statement to see if x can be divided by 3 with remainder equal to zero.  
+**Hint: %% is an operation to calculate the remainder **
+
+```{r ifex, exercise=TRUE, exercise.lines = 5}
+x <- 123456
+```
+
+```{r ifex-solution}
+x <- 123456
+if (x %% 3 == 0){
+  print(TRUE)
+} else{
+  print(FALSE)
+}
+```
+
+### Exercises 2
+
+```{r ifelseex2, echo = FALSE}
+question("Predict what is the output of this if_else statement",
+          answer("0"),
+          answer("1", correct = TRUE),
+          answer("5.5"),
+          answer("5"),
+          allow_retry = TRUE)
+
+``` 
+
+```{r eval = FALSE}
+x <- c(1,2,3,4,5,6,7,8,9,10)
+if (mean(x) > 5){
+  print(1)
+}else{
+  print(0)
+}
+```
+
+### Exercises 3
+
+```{r dataset}
+test <- tribble(~student_id, ~pass
+                  ,'1',  TRUE
+                  ,'2',  TRUE
+                  ,'3',  FALSE
+                  ,'4',  TRUE
+                  ,'5',  TRUE
+                  ,'6',  TRUE
+                  ,'7',  FALSE 
+                  )
+test
+```
+
+Here is a table called test. Replace the TRUE values in pass variable to 1 and FALSE values to 0 by using case_when()
+
+```{r casewhen, exercise=TRUE, exercise.lines = 5}
+
+```
+
+```{r casewhen-solution}
+test %>% mutate(pass = case_when(pass == TRUE ~ 1, TRUE ~ 0))
 ```
 
 
 
 ### Common Mistakes & Errors
 
-- If you only have one statement to execute, you don't need to put the curly braces `{}`. However, if you have multiple statements, `{}` is necessary. 
-- Be aware on your use of the iterable object. For example, `for (i in student)` would not execute the result you want in the previous example. 
-- Think carefully of what statement you're trying to iterate. 
+- Make sure you put the condition inside the ()
+- Make sure you put the statements in the {}
+- If you receive an unexpected output, you may test your if_else logic by testing some cases
+- Make sure you have the correct syntax for the case_when() function
 
 ### Next Steps
 
-- Practice how to manipulate data using `for` loops
+You can write a nested if_else for more complex situations. An example can be found on this website https://www.tutorialgateway.org/nested-if-else-in-r/
 
+You can also combine for and while loop with if_else for other complex situations! For example 
 
+```{r nextstep}
 
+for (i in 1:6){
+  if (i == 5){
+    print(TRUE)
+  }
+  else{
+    print(FALSE)
+  }
+}
 
-
-
-
-
-
-
-
+```
 
 
 
@@ -737,8 +1202,9 @@ Using `while`, write a code that will execute the same result as the given code.
 
 
 ## c(), seq(), seq_along() & rep()
- 
+
 Written by Matthew Wankiewicz.
+
 
 ### Introduction
 
@@ -756,7 +1222,7 @@ Highlights:
 
 - `c()` is useful for making vectors quickly.
 - `seq()` can help create sequences of numbers.
-- `seq_along()` can give you the position of... fill out
+- `seq_along()` can give you the position of a value in a vector.
 - `rep()` can create a vector with a repeated value.
 
 ### The content
@@ -807,7 +1273,7 @@ question_checkbox(
 **2. Using the `c()` function, save a vector with the numbers 21, 31, and 42 in it. (Add the c() function beside the arrow.)**
 
 ```{r q2cFunction, exercise = TRUE}
-# Enter code below
+## Enter code below
 
 vector <- 
 vector
@@ -823,7 +1289,7 @@ The `c()` function can save numbers but can also save words with numbers, try it
 **3. Save a vector with the numbers 21 and 31 along with the words "Statistics" and "Data"**
 
 ```{r q3cFunction, exercise = TRUE}
-# Enter code below
+## Enter code below
 
 vector <- 
 vector
@@ -839,7 +1305,7 @@ vector <- c(21, 31, "Statistics", "Data")
 **1. Using the seq() function, return the sequence of numbers starting at 2 and ending at 20, increasing by 2's**
 
 ```{r q1seqFunc, exercise = TRUE}
-# Enter code below
+## Enter code below
 
 
 ```
@@ -865,7 +1331,7 @@ question_checkbox(
 **3. Using the `length.out` argument in the `seq()` function, return the sequence of FOUR numbers starting at 25 and ending at 100.**
 
 ```{r q3seqFunc, exercise = TRUE}
-# Enter code below
+## Enter code below
 
 ```
 
@@ -889,7 +1355,7 @@ seq_along(vector)
 **1. Now, create a vector containing the words "stats", "science", "math", "R" and use the `seq_along()` function to find the index positions of each word.**
 
 ```{r seq-alongExercise1, exercise = TRUE}
-# Enter code below
+## Enter code below
 vector <- 
 
 ```
@@ -904,7 +1370,7 @@ seq_along(vector)
 
 **1. Using the `rep()` function, repeat the word "dog" 7 times.**
 ```{r q1repFunc, exercise = TRUE}
-# Enter code below
+## Enter code below
 
 
 ```
@@ -913,7 +1379,7 @@ seq_along(vector)
 
 rep(x = "dog", times = 7) 
 
-# OR
+## OR
 
 rep("dog", 7)
 ```
@@ -921,7 +1387,7 @@ rep("dog", 7)
 **2. Save a vector with the words: "University", "of", and "Toronto". Once that vector is saved, use the `each` argument in the `rep()` function and repeat each word 3 times.**
 
 ```{r q2repFunc, exercise = TRUE}
-# Enter code below
+## Enter code below
 vector <- 
 
 ```
@@ -938,17 +1404,21 @@ Here are some common errors that can occur for each of the functions discussed i
 
 
 **`c()`:**
+
 - Error: object 'string' not found
 This means that R thinks you're trying to save an existing vector under the name 'string' (will likely be different). To fix this, add quotations marks around the word that R is having an issue with. If that doesn't work, there may be a typo.
 
 **`seq()`:**
+
 - Some functions in R can work without specifically defining arguments (`ggplot(aes(x, y))` is the same as `ggplot(aes(x = x, y = y))`). The `seq()` function needs each argument to be written out if you plan to use more arguments than `from` and `to`.
 
 **`seq_along()`**
+
 - Error: object 'string' not found
 In this case, it means that the vector that R is trying to find does not exist. This likely means that there was a typo.
 
 **`rep()`**
+
 - Error: object 'string' not found
 As mentioned above, R does not recognize an object entered into the function. You likely have a typo or you should put quotation marks around the string you want to repeat.
 
@@ -959,6 +1429,239 @@ Some next steps include:
 - Looking at more examples of `rep()` and `seq()` in action: https://bookdown.org/ndphillips/YaRrr/vectors.html
 
 - R4DS's explanation of using iteration (include the `seq_along()` function): https://r4ds.had.co.nz/iteration.html
+
+
+
+
+
+
+
+
+
+
+
+
+## hist() and other base graphing options
+
+Written by Yena Joo.
+
+### Introduction
+
+R has various functions to produce a wide range of graphics to visualize data. With the basic functions that R provides, we can easily and quickly make different types of graphs within seconds.  
+
+
+In this lesson, you will learn how to: 
+
+- create a histogram using `hist()` using various arguments.
+- other base graphing options such as scatterplots and boxplots.
+- export the created base graphs.
+
+Prerequisite skills include:
+
+- Import dataset
+- materials from the previous modules
+- choosing the right variables to plot
+
+Highlights:
+
+- `hist()`
+- `plot()`
+- `boxplot()`
+- `export_type(file = filename)`
+
+### Histogram: `hist()`
+
+A histogram is a graph using bars of different heights, which shows the number of elements in each bin/category. It can also be called a frequency graph, where the y-axis is the frequency of the variable, and x is the range of the variable.  
+
+You can create a histogram using the `hist()` function. The function has many arguments to control things such as bin size, title, labels, colours, etc.  
+
+The function is composed of: 
+```
+hist(x,breaks,freq,labels,density,angle,col,border,main,xlab,ylab...)
+```
+
+
+Let's work with an example with the built-in dataset called `mtcars`. Here are the first 6 observations of the dataset. 
+```{r}
+head(mtcars)
+```
+Now let's create the histogram using `hist()` function above. 
+```{r}
+hist(mtcars$mpg)
+```
+
+#### Number of Bins
+
+You can change the number of bins to create a more accurate histogram since a large number of bins could hide important details about distribution which could make an error in the interpretation of the graph. To make a smaller number of bins, change the value of the argument `breaks = ` into how many bins you want to set in the histogram.  
+
+```{r}
+hist(mtcars$mpg, 
+     breaks = 20)
+```
+
+Another way is to put the exact break points in the argument.
+
+```{r}
+hist(mtcars$mpg, 
+     breaks = c(10, 20, 30, 40))
+```
+
+#### Colour of the histogram
+
+To change the colour of the histogram, use `col = ` argument, such as `col = "pink"`. The colour of the border of the bars could also be changed with the argument `border =`. 
+```{r}
+hist(mtcars$mpg, 
+     breaks = 20,
+     col = "pink", 
+     border = "blue")
+```
+
+#### Title and Axis
+
+Once you are done fine-tuning the histogram, you can add your own title and axis labels using `main`, `xlab`, and `ylab` arguments. 
+```{r}
+hist(mtcars$mpg, 
+     breaks = 20,
+     main = "This is a title", 
+     xlab = "This is x-axis",
+     ylab = "This is y-axis")
+```
+   
+For more specific arguments, you can always run `help("hist")` in the console to find more about the function.  
+
+
+### other base graphing options
+
+#### Scatterplot
+
+
+A Scatter plot is another good way to visualize the data. There are many ways to create a scatterplot in R, but this is the most basic and the easiest way to create a scatterplot, using the function `plot(x, y)`. `x` and `y` arguments should be numerical values denoting (x,y) points. Using the same dataset, we can plot the scatterplot of `mpg` and `disp` as follows:  
+
+```{r}
+plot(mtcars$mpg, mtcars$disp)
+```
+  
+To define the colour of the plot, you can use the argument `col = `. 
+The arguments are basically the same as when we create a histogram. 
+
+```{r}
+plot(mtcars$mpg, mtcars$disp,
+     col = "pink", 
+     main = "This is a title", 
+     xlab = "This is x-axis",
+     ylab = "This is y-axis")
+```
+
+#### Boxplot
+
+
+Boxplot is good for depicting groups of numerical data through their quartiles. The boxplot presents information such as median, minimum and maximum score, lower and upper quartile, and IQR. Boxplots also allow you to visualize the outliers and compare multiple distributions.  
+
+To create a boxplot, simply use the function `boxplot()`. 
+```{r}
+boxplot(mpg~cyl, data = mtcars,
+        col = "pink", 
+        main = "This is a title", 
+        xlab = "This is x-axis",
+        ylab = "This is y-axis")
+```
+  
+Changing the colour, labeling a title and axes is easy, the same as how we did for histograms and scatterplots. 
+use `horizontal=TRUE` to reverse the axis orientation.  
+
+Detailed descriptions of the arguments could be found in `help("boxplot")` or at:   
+https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/boxplot
+
+### exporting base graphs 
+
+
+Once you created a nice graph, you might want to save or export the graph. Set the file name for the plot you are going to save using the function `jpeg(file = filename.jpeg)`, if you want to save it as a jpeg image.  
+For pdf files, use `pdf(file = filename.pdf)`.  
+For png files , use `png(file = filename.png)`.   
+We need to call the function `dev.off()` after plotting, which will return control to the screen.  
+
+We can set the resolution we want using the `width` and `height` arguments or set the full local path of the file we want to save if we don’t want to save it in the current directory. 
+
+```{r}
+png(file = "scatterplot.png", width = 500, height = 300)
+plot(mtcars$mpg, mtcars$disp)
+dev.off()
+```
+
+### Exercises
+
+
+#### Question 1
+
+Using the given dataset "USArrests", create a histogram that depicts the distribution of assaults, set the bar colour to "blue" and set it to 15 bins. The title of the plot should be "Histogram of Assaults", with the x-axis "Assaults".
+```{r q1_hist, exercise.eval = TRUE, exercise=TRUE}
+head(USArrests)
+```
+
+```{r q1_hist-solution}
+hist(USArrests$Assault, 
+     col = "blue", 
+     main = "Histogram of Assaults", 
+     xlab = "Assaults", 
+     breaks = 15)
+```
+#### Question 2
+
+
+Save the plot you created in Question 1 as png file. The file name should be `answer2`. 
+```{r q2_hist, exercise.eval = TRUE, exercise=TRUE}
+
+```
+
+```{r q2_hist-solution}
+png(file = "answer2.png")
+hist(USArrests$Assault, 
+     col = "blue", 
+     main = "Histogram of Assaults", 
+     xlab = "Assaults", 
+     breaks = 15)
+dev.off()
+```
+
+
+#### Question 3
+
+Create a scatter plot that depicts how the number of murders affects the number of rapes. Set the colour to pink, and the title of the plot should be "Scatterplot". X and y axes should be labeled as the variable name. 
+```{r q3_hist, exercise.eval = TRUE, exercise=TRUE}
+
+```
+
+```{r q3_hist-solution}
+plot(USArrests$Murder, USArrests$Rape,
+     col = "pink", 
+     main = "Scatterplot", 
+     xlab = "Murder",
+     ylab = "Rape")
+```
+
+### Common Mistakes & Errors
+
+
+Here are some common mistakes and errors you may come across:  
+
+- Do not confound histogram with a barplot. They are different plots, where histograms visualize the frequency of numerical data, and bar charts visualize categorical data.   
+- Bin size is important. Make sure you are using the right bin size.   
+
+#### Overview and Next Steps
+
+This is the last lecture of the module "Totally addicted to base".
+With the functions we have learned today as well as in the previous lectures, you can create well-made base graphs and export them to present in your projects or papers. 
+ 
+### References  
+
+
+- [hist() function](https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/hist)
+- [scatterplots](https://www.statmethods.net/graphs/scatterplot.html)
+- [boxplot() function](https://www.statmethods.net/graphs/boxplot.html)
+
+
+
+
 
 
 
@@ -983,9 +1686,13 @@ Some next steps include:
 ## Summary, and next steps
 
 
-In this level, we covered a lot of different funcations from base R that you'll use all the time in statistics courses. 
+In this level, we covered a lot of different functions from base R that you'll use all the time in statistics courses. 
 
+You can start the next lesson by running:
 
+```{r, eval = FALSE}
+learnr::run_tutorial("he_was_a_d8er_boi", package = "DoSStoolkit")
+```
 
 
 

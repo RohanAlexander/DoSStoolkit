@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "To ggplot or not to ggplot"
-date: "17 February 2021"
+date: "5 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -18,6 +18,9 @@ library(flair)
 library(gradethis)
 gradethis::gradethis_setup()
 # library(palmerpenguins)
+
+library(ggmap)
+library(knitr)
 ```
 
 
@@ -47,16 +50,26 @@ It's a powerful and versatile tool and I think that you're going to love learnin
 
 
 
-
-## What is ggplot()?
+## `ggplot2::ggplot()`
 
 Written by Shirley Deng.
 
-### Introduction to `ggplot()`
+
+### Introduction to `ggplot()` through the scatterplot
 
 Have you ever made a plot in base R? It's not very pretty. 
 
-Let's make one right now using the builtin `mtcars` dataset to take a look - below is a scatterplot made with base R.
+Consider the **scatterplot**. 
+
+#### What is a scatterplot?
+
+In a scatterplot, each observation is graphed as a point on a grid with axes x and y. 
+
+We determine the position of each point based on the values of two numerical variables: the horizontal x-axis, and the vertical y-axis. 
+
+#### Let's look at an example of a scatterplot
+
+We can make one right now using the builtin `mtcars` dataset to take a look - below is a scatterplot made with base R.
 
 ``` {r, ggplot-base-ex}
 plot(x = mtcars$wt, 
@@ -117,11 +130,11 @@ Looks cleaner, right? Or at least more fun.
 library(tidyverse)
 ```
 
-The `ggplot2::ggplot()` function is used to initialize plots in R. We use it to indicate the base of our plot - what data we're working with, and any plot aesthetics we'll be using.
+The `ggplot2::ggplot()` function is used to initialize plots in R. We use it to indicate the base of our plot - what **data** we're working with, and any plot **aesthetics** we'll be using.
 
-From there, we can add on layers to specify what the actual plots will be. This includes information on the type of graph we want, what we want its axes to look like, what we want its labels to look like, etc. 
+From there, we can add on layers to specify what the actual plots will be. This includes information on the **type of graph** we want, what we want its **axes** to look like, what we want its **labels** to look like, etc. 
 
-It may seem farfetched now, in the middle of a *pandemic*, but imagine going to a restaurant to eat. 
+It may seem farfetched now, in the middle of a *panoramic*, but imagine going to a restaurant to eat. 
 
 You'd get seated in the restaurant you're going to eat in before you start to order food. We can think of `ggplot()` as getting seated in the restaurant, and adding additional layers as ordering food. You can add as many layers as you want at any time, just like how you can also order as many menu items as you want at any time.
 
@@ -135,7 +148,7 @@ You'd get seated in the restaurant you're going to eat in before you start to or
 
 That's a separate course in philosophy. 
 
-But, for our purposes, this argument is used to specify which variables of the dataframe we want to use for our plot's axes, among other options.
+But, for our purposes, this argument is used to specify **which variables** of the dataframe we want to use for our plot's axes, among other options.
 
 For example, with our `mtcars` example from earlier, we wanted the `wt` variable on the x-axis and the `mpg` variable on the y-axis, so we used `mapping = aes(x = wt, y = mpg)`.
 
@@ -144,8 +157,7 @@ For example, with our `mtcars` example from earlier, we wanted the `wt` variable
 What if we wanted to switch the axes, with `mpg` on the x-axis and `wt` on the x-axis? Try completing the code below to generate the plot.
 
 ```{r ggplot-exercise1, exercise=TRUE}
-mtcars %>% 
-  ggplot(aes( , )) +
+mtcars %>% ggplot(aes( , )) +
   geom_point() +
   labs(title = "Weight vs. Miles", 
        x = "Miles per US Gallon",
@@ -156,9 +168,11 @@ mtcars %>%
 aes(x = mpg, y = wt)
 ```
 
-#### What else do we need to use `ggplot()` ? Layers
+#### What else do we need to use `ggplot()` ? **Layers**
 
-Once we've set our `ggplot()` aesthetics, we need to specify what exactly we want to plot by using layers. This includes the type of plot - we use geom layers to do so.
+Once we've set our `ggplot()` aesthetics, we need to specify what exactly we want to plot by using **layers**. This includes the **type of plot** - we use geom layers to do so.
+
+##### Geoms
 
 Some common geoms include:
 
@@ -169,7 +183,7 @@ Some common geoms include:
 
 In Exercise 1 and our previous examples, we used `geom_point()` to specify that we wanted to plot a scatterplot.
 
-##### Example 1
+##### Example 1 - the `+`
 
 Let's take a look at the following example:
 
@@ -181,11 +195,13 @@ mtcars %>% ggplot(aes(x = wt, y = mpg)) +
        y = "Miles per US Gallon")
 ```
 
-After we called `ggplot()`, we used a `+` to connect it with our `geom_point()`.
+After we called `ggplot()`, we used a `+` to **connect** it with our `geom_point()`.
 
-Similarly, we added another layer - labels. We used another `+` to connect the labels `labs()` with the rest of the figure.
+Similarly, we added another layer - **labels**. We used another `+` to connect the labels `labs()` with the rest of the figure.
 
-There are also layers for changing the appearance of our plots. For example, `theme_void()` removes the axes and axes' labels:
+##### Themes 
+
+There are also layers for changing the **appearance** of our plots. For example, we can use the **theme** `theme_void()` to remove the axes and axes' labels:
 
 ```{r ggplot-example1-void}
 mtcars %>% ggplot(aes(x = wt, y = mpg)) +
@@ -196,37 +212,17 @@ mtcars %>% ggplot(aes(x = wt, y = mpg)) +
   theme_void()
 ```
 
+Not the ideal theme for this plot, since removing the axes and their labels leaves us with little information on what's being plotted. But, we know we have the option to change the theme!
 
-##### Exercise 2
-
-Notice that in Example 1, we specified the labels layer `labs()` first, and then used the `theme_void()` layer. 
-
-What if we used `theme_void()` first, and then `labs()`? Complete the code below.
-
-
-```{r ggplot-exercise2, exercise=TRUE}
-mtcars %>% ggplot(aes(x = wt, y = mpg)) +
-  geom_point() +
-  
-```
-
-```{r ggplot-exercise2-hint}
-mtcars %>% ggplot(aes(x = wt, y = mpg)) +
-  geom_point() +
-  theme_void() +
-  labs(title = "Miles vs. Weight", 
-       x = "Car Weight (1000 lbs)", 
-       y = "Miles per US Gallon")
-```
-
-Notice that we have no axes, but we do have axes labels, so the order we use our layers matters!
-
+A list of themes can be found in the `ggplot2` documentation [here](https://ggplot2.tidyverse.org/reference/ggtheme.html).
 
 ### Handy Layers
 
-There are a number of other layers you might find handy for making plots and figures with `ggplot()`:
+We were introduced to geoms, labels and themes in the previous section. 
 
-#### Labels
+But there are a number of other layers you might find handy for making plots and figures with `ggplot()`:
+
+##### Labels
 
 We saw earlier that we could specify labels using `labs()`, like in Example 1: 
 
@@ -238,7 +234,7 @@ mtcars %>% ggplot(aes(x = wt, y = mpg)) +
        y = "Miles per US Gallon")
 ```
 
-We can also make the exact same plot specifying labels separately in their own layers with `ggtitle()`, `xlab()`, and `ylab()`:
+But we can also make the *exact* same plot by **specifying labels separately**, in their own layers, with `ggtitle()`, `xlab()`, and `ylab()`:
 
 ```{r ggplot-labels2}
 mtcars %>% ggplot(aes(x = wt, y = mpg)) +
@@ -248,11 +244,11 @@ mtcars %>% ggplot(aes(x = wt, y = mpg)) +
   ylab("Miles per US Gallon")
 ```
 
-#### Adjusting title positions
+##### Adjusting title positions using the **theme** layer
 
-Notice from our Labels section examples that by default, `ggplot()` will position our titles to the right.
+Notice from our Labels section examples that by default, `ggplot()` will position our titles to the left.
 
-We can position the title to the centre using `theme(plot.title = element_text(hjust=0.5))`:
+We can position the title to the centre using the theme layer: `theme(plot.title = element_text(hjust=0.5))`:
 
 ```{r ggplot-titlecentre}
 mtcars %>% ggplot(aes(x = wt, y = mpg)) +
@@ -263,10 +259,70 @@ mtcars %>% ggplot(aes(x = wt, y = mpg)) +
   theme(plot.title = element_text(hjust=0.5))
 ```
 
-#### Legends
+Similarly, we can adjust the title to the left with `hjust=0` (the default), or to the right with `hjust=1`:
 
-#### Faceting
+###### To the left, to the left...
 
+```{r ggplot-titleleft}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(title = "Miles vs. Weight", 
+       x = "Car Weight (1000 lbs)", 
+       y = "Miles per US Gallon") +
+  theme(plot.title = element_text(hjust=0))
+```
+
+###### Writing to the right-ing
+
+```{r ggplot-titleright}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(title = "Miles vs. Weight", 
+       x = "Car Weight (1000 lbs)", 
+       y = "Miles per US Gallon") +
+  theme(plot.title = element_text(hjust=1))
+```
+
+##### Axis scale limits
+
+Notice how in our previous plots, the y-axis started at 10. 
+
+But this doesn't give us an accurately scaled representation of the relationship between the x-axis and y-axis variables, so we may prefer to start the y-axis at 0 instead.
+
+We can change the axis scale limits using the `xlim()` and `ylim()` layers.
+
+Here, we set the x-axis scale to range from 0 to 6, and the y-axis scale to range from 0 to 35:
+
+```{r ggplot-scalelim}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(title = "Miles vs. Weight", 
+       x = "Car Weight (1000 lbs)", 
+       y = "Miles per US Gallon") +
+  xlim(0, 6) + 
+  ylim(0, 35)
+```
+
+##### Axis text angle
+
+Suppose we wanted to change the **orientation** of our axis labels' scales. 
+
+We can do so with the `theme()` layer.
+
+For example, we can rotate the y-axis scale labels by 90 degrees as so:
+
+```{r ggplot-textangle}
+mtcars %>% ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(title = "Miles vs. Weight", 
+       x = "Car Weight (1000 lbs)", 
+       y = "Miles per US Gallon") +
+  theme(axis.text.y = element_text(angle = 90))
+```
+
+Notice that this only changes the angle of the axis *scale* labels, and not the labels themselves!
+
+We can similarly change the x-axis scale label using `axis.text.x` in place of `axis.text.y`.
 
 ### Additional Resources and References
 
@@ -279,17 +335,6 @@ mtcars %>% ggplot(aes(x = wt, y = mpg)) +
 * [`ggplot2` title positioning](https://rpubs.com/tuyenhavan/282317)
 
 * [`ggpubr` package reference, which can be helpful for arranging plots in a grid](https://cran.r-project.org/web/packages/ggpubr/ggpubr.pdf)
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -450,7 +495,7 @@ animals %>%
 
 Create a bar chart of the type of birth for the lemurs in the `animals` dataset. (Hint: the variable for type of birth is `birth_type`)
 ```{r bar-chart-q1, exercise = TRUE}
-# Enter code below
+## Enter code below
 animals
 ```
 
@@ -465,7 +510,7 @@ animals %>%
 
 For this exercise, pick any colour to fill the bars of the bar chart and another colour for the outline. This time, plot the different types of species present in the dataset (don't worry about the labels overlapping, we'll address that later.)
 ```{r bar-chart-q2, exercise = TRUE}
-# Enter code below, choose any colour you want
+## Enter code below, choose any colour you want
 
 ```
 
@@ -479,7 +524,7 @@ animals %>%
 Since there were so many unique names in the species variable, it causes the x-axis labels to overlap. We can fix this using `coord_flip`, try it out for yourself! Plot the same graph as above, but use the `coord_flip` function
 
 ```{r bar-chart-q2-2, exercise = TRUE}
-# Enter solution below
+## Enter solution below
 
 ```
 
@@ -525,7 +570,8 @@ question("Select the functions that it looks like were used to make this bar cha
          answer("ggplot", correct = T),
          answer("coord_flip", correct = T),
          answer("geom_bar", correct = T),
-         answer("geom_point", correct = F))
+         answer("geom_point", correct = F),
+         allow_retry = T)
 ```
 
 ```{r bar-chart-quiz-2, echo=FALSE}
@@ -533,7 +579,8 @@ question("If I wanted to change the colour of the **inside** of the bars, which 
          answer("fill = colour", correct = T),
          answer("colour = colour", correct = F),
          answer("inside = colour", correct = F),
-         answer("bar_colour = colour", correct = F))
+         answer("bar_colour = colour", correct = F),
+         allow_retry = T)
 ```
 
 ```{r bar-chart-quiz-3, echo=FALSE}
@@ -555,7 +602,8 @@ question("What code chunk would make a plot identical to the plot above. (Feel f
   answer("animals %>% 
   ggplot(aes(taxonomic_code)) +
   geom_bar() + 
-  coord_flip()", correct = FALSE))
+  coord_flip()", correct = FALSE),
+         allow_retry = T)
 ```
 
 
@@ -586,11 +634,6 @@ Another great resource for the different type of bar charts you can make in R is
 
 
 
-
-
-
-
-
 ## Histograms
 
 Written by Haoluan Chen.
@@ -598,12 +641,7 @@ Written by Haoluan Chen.
 
 ### Introduction
 
-
-```{r, echo = FALSE, out.width="90%"}
-knitr::include_graphics("https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/ggplot2_exploratory.png?raw=true")
-```
-
-[Image by Allison Horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/ggplot2_exploratory.png)
+![Image Source:https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/ggplot2_exploratory.png, Allison Horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/ggplot2_exploratory.png?raw=true){width=400 height=300}
 
 In this lesson, you will learn how to:
 
@@ -632,16 +670,8 @@ A histogram is a visual representation of the distribution of numerical data. It
 
 Here, we have a book dataset from Alex Cookson. This dataset contains 9,000 children's books that have been rated from 1-5 stars. 
 
-```{r, eval = TRUE, include = FALSE}
-books <- readr::read_tsv(system.file("extdata", "childrens-books.txt", package = "DoSStoolkit", mustWork = TRUE))
-```
-
-
-```{r histogramdata, eval = FALSE, result = 'hide'}
-
-
-books <- readr::read_tsv("childrens-books.txt")
-
+```{r data, echo = T, result = 'hide'}
+books <- read_tsv("https://raw.githubusercontent.com/tacookson/data/master/childrens-book-ratings/childrens-books.txt")
 
 ```
 
@@ -649,7 +679,7 @@ We can see that `rating` is a numerical variable, so we can create a histogram t
 
 Using the following code, we can create our first and simplest histogram in R!
 
-```{r histogramsimple}
+```{r simple}
 books %>% 
   ggplot(aes(rating)) + 
   geom_histogram()
@@ -668,7 +698,7 @@ In the geom_histogram function, we can adjust our bins' size, titles of the hist
 
 We can adjust the bin size of our histogram by setting the optional parameter binwidth. 
 
-```{r histogrambins}
+```{r bins}
 books %>% 
   ggplot(aes(rating)) + 
   geom_histogram(binwidth = 1)
@@ -681,7 +711,7 @@ Without specifying the binwidth, geom_histogram will automatically find an optim
 
 ##### Color and fill
 
-```{r histogramcolor}
+```{r color}
 books %>% 
   ggplot(aes(rating)) + 
   geom_histogram(color ="red", fill = "light blue")
@@ -692,7 +722,7 @@ The color parameter specify the color of the boundary of each bin and the fill p
 ##### Title, and name of the axises
 
 Using the `labs()` function in ggplot2 we can change the title and the name of the axes. 
-```{r histogramlables}
+```{r lables}
 books %>% 
   ggplot(aes(rating)) + 
   geom_histogram(color ="red", fill = "light blue") +
@@ -710,14 +740,14 @@ In the `labs()` function, `title` specifies the title of your plot, `x` specifie
 Please create a histogram for the ratings of the books that are published in 2010
 **Hint: filter in dplyr package maybe helpful**
 
-```{r histogramex1, exercise=TRUE, exercise.lines = 3}
+```{r ex1, exercise=TRUE, exercise.lines = 3}
 
 ```
 
 #### Exercise 2
 
 Please change the bin width of your histogram in Exercise 1 to 0.2
-```{r histogramex2, exercise=TRUE, exercise.lines = 4}
+```{r ex2, exercise=TRUE, exercise.lines = 4}
 
 ```
 
@@ -727,7 +757,7 @@ Please change the colour and the fill of your histogram in Exercise 1
 You can choose any colour you like from this website: https://www.rapidtables.com/web/color/RGB_Color.html
 You may use the colour name or the Hex code provided in the website.
 
-```{r histogramex3, exercise=TRUE, exercise.lines = 4}
+```{r ex3, exercise=TRUE, exercise.lines = 4}
 
 ```
 
@@ -743,7 +773,7 @@ books %>%
 
 
 
-```{r histogramex4, echo = FALSE}
+```{r ex4, echo = FALSE}
 question("Which of the following code can produce above histogram? (Try to run the code on your computer!)",
           answer("geom_histogram(binwidth = 0.1, color = 'light blue')"),
           answer("books %>% ggplot(aes(rating)) + geom_histogram(binwidth = 0.5, color = 'light blue')"),
@@ -784,6 +814,184 @@ In this website https://www.r-graph-gallery.com/histogram.html, you can find dif
 
 
 
+## Scatter plots
+
+Written by Haoluan Chen.
+
+
+### Introduction
+
+In this lesson, you will learn how to:
+
+- Create a scatter plot in R using ggplot2 package
+- Customize your scatter plot
+
+Prerequisite skills include:
+
+- Install and load ggplot2 packages
+
+- Basics of using ggplot2: e.g. `ggplot()`, `aes()`.
+
+Highlights:
+
+- Create and customize a scatter-plot
+
+
+### The content
+
+### What is a Scatter plot?
+
+A scatter plot is a visual representation of two numerical variables. It allows you to see the correlation between the variables. 
+
+Here, we have a dataset `mtcars` extracted from the 1974 Motor Trend US magazine.
+
+```{r scatter1}
+head(mtcars)
+```
+
+`wt` is the weight (1000lbs), `mpg` is the miles per gallon for the car. Now we are interested in the relationship between these variables among 32 different cars.
+
+Using the following code, we can create our basic scatter plot in R!
+
+```{r scatter2}
+# Basic scatter plot
+ggplot(data = mtcars, mapping = aes(x=wt, y=mpg)) +
+  geom_point()
+```
+
+In this plot, each dot shows one car's miles per gallon versus its weight. We can see a decreasing trend among the weight and the miles per gallon for the car.
+
+
+### Arguments
+
+### Basic scatter plot
+- The size and the shape of points can be changed using the function geom_point() as follow :
+
+geom_point(size, shape)
+
+```{r scatter3}
+# Change the point size
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+  geom_point(size=2)
+# Change the point shape
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+  geom_point(shape=23)
+```
+
+From the above figures, we know that we can change different sizes and shapes by changing parameters in `geom_point()`.
+
+- The size of the points can be controlled by the values of a continuous variable as in the example below.
+
+
+`cyl` is the number of cylinders of the car.
+
+```{r scatter4}
+# Change the point size by the values of cyl
+ggplot(mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(aes(size=cyl))
+```
+
+### Change the appearance of the point
+We can also change the color of the border of the point and filling of the point using the function geom_point() as follow :
+
+geom_point(color, fill)
+
+```{r scatter5}
+# change shape, color, size
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+  geom_point(shape=23, color="darkred",size=3)
+
+# change shape, color, fill, size
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+  geom_point(shape=23, fill="blue", size=3)
+
+```
+
+
+### Scatter plots with multiple groups
+
+We can also change the points, colors, and shapes based on a variable.
+In the R code below, point shapes, colors, and sizes are controlled by the levels of the factor variable cyl :
+
+**We are using as.factor here because cyl is a double data type in the dataset. Using as.factor() can transform cyl into factor data type**
+
+```{r scatter6}
+# Change point shapes by the levels of cyl
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+  geom_point(aes(shape=as.factor(cyl)))
+# Change point shapes and colors
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+  geom_point(aes(shape=as.factor(cyl), color=cyl))
+# change point shapes,  colors and sizes
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+  geom_point(aes(shape=as.factor(cyl), color=cyl, size=cyl))
+```
+
+
+
+
+### Exercises
+
+### Exercise 1 
+
+Create a scatter plot to see the correlation between the hp and wt in mtcars
+
+```{r scatter7}
+mtcars
+```
+
+```{r scatterplotex1, exercise=TRUE, exercise.lines = 5}
+
+```
+
+```{r scatterplotex1-solution}
+mtcars %>% ggplot(aes(hp, wt)) + geom_point()
+```
+
+### Exercise 2
+Set the size of the scatter plot in previous question to 5 
+
+```{r scatterplotex2, exercise=TRUE, exercise.lines = 5}
+
+```
+
+```{r scatterplotex2-solution}
+mtcars %>% ggplot(aes(hp, wt)) + geom_point(size = 5)
+```
+### Exercise 3
+Set the color of the scatter plot in previous question to blue
+
+```{r scatterplotex3, exercise=TRUE, exercise.lines = 5}
+
+```
+
+```{r scatterplotex3-solution}
+mtcars %>% ggplot(aes(hp, wt)) + geom_point(size = 5, col = "blue")
+```
+
+### Common Mistakes & Errors
+
+- If you want to change the colors and shapes based on a variable in your dataset, make sure it is a factor type dataset
+- connect ggplot() and geom_point() by using `+` not `%>%`
+
+
+### Next Steps
+
+You may use geom_smooth() function to add a regression line on your scatter plot to get a clear pattern of your data. 
+
+```{r scatternext}
+ggplot(data = mtcars, mapping = aes(x=wt, y=mpg)) +
+  geom_point() + 
+  geom_smooth(method='lm') 
+```
+
+
+Here is a guide for creating interesting scatter plots! http://www.sthda.com/english/wiki/ggplot2-scatter-plots-quick-start-guide-r-software-and-data-visualization
+
+
+You may also change the title, axis, theme of your scatter plot! 
+
+http://www.sthda.com/english/wiki/ggplot2-title-main-axis-and-legend-titles
 
 
 
@@ -793,15 +1001,217 @@ In this website https://www.r-graph-gallery.com/histogram.html, you can find dif
 
 
 
-## Scatterplots
-
-*Coming soon!*
 
 
+## Static maps using ggmap
+
+Written by Annie Collins.
+
+### Introduction
+
+> ggmap is an R package that makes it easy to retrieve raster map tiles from popular online mapping services like Google Maps and Stamen Maps and plot them using the ggplot2 framework
+
+Now that you're familiar with `ggplot2` and its plotting capabilities, we can start looking at some more advanced data visualization options. Next up: maps.
+
+In this lesson, you will learn how to:  
+
+- Use `ggmap` to plot geospatial data over maps; and
+- Access Google Maps APIs to extend `ggmap`'s functions to Google Maps as well.
+
+Prerequisite skills include:
+
+- Familiarity with `ggplot2` and its plotting functions, specifically `geom_point()` and `stat_density2d()`.
+
+### Package
+
+Unless you have worked with `ggmap` before, you will likely have to install the package from GitHub (it is also available from CRAN, but GitHub contains the most up-to-date version which is important in this case given that the package works with external APIs).
+
+```{r, eval=FALSE}
+
+devtools::install_github("dkahle/ggmap")
+library(ggmap)
+
+```
+
+### Backgrounds
+
+Much like the way you build a plot in `ggplot2`, `ggmap` plots are constructed by adding to your plot feature by feature, starting with a map background. `ggmap` allows you to use map backgrounds from two different sources: Google Maps and Stamen. Both offer several options for aesthetics and customization and are fairly similar in their use. Google Maps requires access to Google APIs (see *Google Maps API* below) while Stamen Maps authentication is built into the package, so we will focus on Stamen backgrounds for the purpose of this lesson.
+
+For a Stamen Map background, we use the function `get_stamenmap()`. This function takes several arguments that allow you to customize the appearance and format of your map, but most importantly you must state the boundaries, scale, and type of your map. The object produced by `get_stamenmap()` then gets passed to the `ggmap()` function which allows you to view the map in the "Plots" tab as well as display data on top of it.
+
+| Argument | Parameter | Details |
+| -------- | --------- | ---------------------|
+| bbox | vector | A vector stating the locations of the corners of your desired map in the format c(lower left longitude, lower left latitude, upper right longitude, upper right latitude) |
+| zoom | numeric | Level of zoom into focus area |
+| maptype | string | Aesthetic of map produced. Options are: "terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", and "watercolor". |
+
+See `?get_stamenmap` for additional arguments and details.
+
+```{r stamen-map-1, message=FALSE, warning= FALSE, exercise = TRUE}
+# Houston, Texas
+# Also try the additional maptypes listed above
+map <- get_stamenmap(c(-95.39681, 29.73631, -95.34188, 29.78400), zoom = 15, maptype = "toner")
+
+ggmap(map)
+```
+
+**Tip**: If you don't know the exact coordinates of the map you wish to use as a background, clicking anywhere on [Google Maps](https://www.google.com/) will give you the longitude and latitude of the selected location.
+
+One thing that is important to know is that when loading map backgrounds we are working with longitude and latitude coordinates in **decimal degree** format. It is important to take note of the relative values of coordinates when defining map boundaries, and these will change depending on which hemisphere you're in. In North America (the northern and western hemispheres), the lower left hand corner of the map will always be the smaller longitude value (farthest west) and the smaller latitude value (farthest south). The image below might help you to visualize the relationship between coordinate values.
+
+```{r, out.width="75%", echo=FALSE, fig.cap="Source: Esri"}
+knitr::include_graphics("images/64-coordinates-map.png")
+```
+
+### Plotting Data
+
+Now we can start to visualize some data on top using our familiar `ggplot2` functions. We will be using the data set `crime` that is built into the `ggmap` package. Any data used with `ggmap` must have variables for longitude and latitude coordinates in decimal degree format for each observation, as these serve as the x and y coordinates when graphing on top of a map background.
+
+A useful way to visualize data in this context is a scatterplot using `geom_point()`.
+
+```{r 64-crime-scatter, message = FALSE}
+# Filter out data points that fall outside of our mapped area, and thefts (which we will look at separately later)
+local_crime <- ggmap::crime %>% filter(-95.39681 <= lon & lon <= -95.34188, 29.73631 <= lat & lat <=  29.78400, offense != "theft")
+
+map <- get_stamenmap(c(-95.39681, 29.73631, -95.34188, 29.78400), zoom = 15, maptype = "toner")
+
+ggmap(map) + geom_point(data = local_crime, aes(x=lon, y=lat, colour = offense)) + 
+  ggtitle("Crimes Reported in Houston, Texas, 2010") +
+  xlab("Longitude") +
+  ylab("Latitude")
+```
+
+For crimes that appear very frequently in the data set, it might be more useful to use a heat map to track density instead of individual reports. We can see what this looks like using the thefts from the `crime` data set.
+
+```{r 64-crime-density}
+# Filter out data points that fall outside of our mapped area, and all offenses except theft
+local_theft <- crime %>% filter(-95.39681 <= lon & lon <= -95.34188, 29.73631 <= lat & lat <=  29.78400, offense == "theft")
+
+ggmap(map) + stat_density2d(data = local_theft, aes(x=lon, y=lat, fill = ..level.., alpha = 0.5), geom = "polygon") + 
+  scale_fill_gradient2(name = "Thefts") +
+  ggtitle("Density of Thefts Reported in Houston, Texas, 2010") +
+  xlab("Longitude") +
+  ylab("Latitude")
+
+```
+
+Like `ggplot2`, `ggmap` also works with `facet_wrap()`. Suppose we want to compare aggravated assaults and auto theft in Houston.
+
+```{r 64-crime-density-facet}
+assault_auto <- crime %>% filter(-95.39681 <= lon & lon <= -95.34188, 29.73631 <= lat & lat <=  29.78400, offense == "aggravated assault" | offense == "auto theft")
+
+ggmap(map) + stat_density2d(data = assault_auto, aes(x=lon, y=lat, fill = ..level.., alpha = 0.4), geom = "polygon") + 
+  scale_fill_gradient2(name = "Reports") +
+  ggtitle("Density of Crimes Reported in Houston, Texas, 2010") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  facet_wrap(~ offense)
+
+```
+
+### Exercises
+
+To get you comfortable working with `ggmap`'s syntax and plotting capabilities, you're now going to build a map of COVID-19 testing locations in Toronto from the data set `covid_testing_locations` which has columns *long* and *lat*.
+
+```{r, include=FALSE}
+covid_testing_locations <- read_csv("64-covid-testing-locations.csv")
+```
+```{r}
+head(covid_testing_locations)
+```
+
+#### Exercise 1
+
+Your first task is to load the background of the map. The key to doing so correctly is to establish the correct boundaries for the map in terms of longitude and latitude coordinates, then load a map from Stamen Maps and save it under the name `toronto_map`. Complete the code below to create a background map of Toronto that will appropriately display the data (use zoom 10 and maptype "terrain").
+
+```{r ggmap-exercise-1, exercise=TRUE, message=FALSE}
+toronto_map <- ...
+
+ggmap(toronto_map)
+```
+```{r ggmap-exercise-1-hint-1}
+# Use the max() and min() functions to determine the farthest north, south, east, and west of the coordinates in the data
+max(covid_testing_locations$long) # Farthest east
+min(covid_testing_locations$long) # Farthest west
+max(covid_testing_locations$lat)  # Farthest north
+min(covid_testing_locations$lat)  # Farthest south
+```
+```{r ggmap-exercise-1-hint-2}
+# Solution
+toronto_map <- get_stamenmap(c(-79.82364, 43.52281, -78.85145, 44.09669), zoom=10, maptype="terrain")
+```
+```{r, include=FALSE}
+toronto_map <- get_stamenmap(c(-79.82364, 43.52281, -78.85145, 44.09669), zoom=10, maptype="terrain")
+```
 
 
+#### Exercise 2
+
+Using `toronto_map` as defined above and your knowledge of `ggplot2`, complete the code below to construct a map that shows each COVID-19 testing location as a dot, with the dots coloured according to the type of assessment center they are.
+
+```{r ggmap-exercise-2, exercise=TRUE, message=FALSE, warning=FALSE}
+ggmap(toronto_map) + ...
+```
+```{r ggmap-exercise-2-hint-1}
+ggmap(toronto_map) + geom_point(data=covid_testing_locations, aes(...))
+```
+```{r ggmap-exercise-2-hint-2}
+# Solution
+ggmap(toronto_map) + geom_point(data=covid_testing_locations, aes(x=long, y=lat, color=locationType))
+```
+
+#### Exercise 3
+
+Finally, display several maps comparing the *density* of different types of testing locations. Title your plot "COVID-19 Testing Centers in Toronto, Ontario".
+
+```{r ggmap-exercise-3, exercise=TRUE, message=FALSE, warning=FALSE}
+ggmap(toronto_map) + ...
+```
+```{r ggmap-exercise-3-hint-1}
+ggmap(toronto_map) + stat_density2d(...) + ...
+```
+```{r ggmap-exercise-3-hint-2}
+ggmap(toronto_map) + stat_density2d(...) + facet_wrap(...)
+```
+```{r ggmap-exercise-3-solution}
+# Solution
+ggmap(toronto_map) +stat_density2d(data=covid_testing_locations, aes(x=long, y=lat, fill=..level.., alpha=0.5), geom="polygon") + 
+  facet_wrap(~locationType) +
+  ggtitle("COVID-19 Testing Centers in Toronto, Ontario")
+```
 
 
+### Google Maps APIs
+
+In addition to Stamen Maps, `ggmap` can draw on Google Maps APIs for its Google Maps backgrounds, and in order to do this you must first register with Google. This involves creating an account if you do not already have a Google account, as well as registering a valid credit card (it will not be charged unless you select an account upgrade that requires payment).
+
+To begin, go to the Google Maps Platform [website](https://cloud.google.com/maps-platform/). Follow the instructions to register an account and a payment method (credit card), and you will receive an **API key**. This is important! You need to register this within R and RStudio using the following code:
+
+```{r, echo=FALSE, out.width="50%"}
+knitr::include_graphics("images/64-google-1.png")
+```
+
+```{r-enter-API-code}
+register_google(key = "[your key]", write = TRUE)    # Copy and paste your API key in quotations
+```
+
+You also want to make sure that you don't share this key with anyone since it is private and personal to each user, so keep this in mind if you're sharing your code anywhere.
+
+Once you've gained access to the Google Maps Platform you will need to enable the relevant APIs: Geocoding and Maps Static. These are the APIs that work with the functions in `ggmap`, specifically `get_googlemap()` (analogous to `get_stamenmap()`), `geocode()`, and `revgeocode()`. These functions cannot be demonstrated within this module until you have access to the appropriate APIs, but the [ggmap repository README](https://github.com/dkahle/ggmap) contains some examples and resources for using Google Maps with `ggmap`.
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/64-google-2.png")
+```
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/64-google-3.png")
+```
+
+
+### Next Steps
+
+- Once you have the Google Maps APIs working on your system, repeat the above exercises using `get_googlemap()` in place of `get_stamenmap()`;
+- Use `ggimage` to create more complex icon maps (check out this [tutorial](https://www.littlemissdata.com/blog/iconmap) from R user and data scientist Laura Ellis);
+- Check out the `usmaps` package for more mapping functions specific to the United States.
 
 
 
@@ -821,23 +1231,23 @@ Written by Yena Joo.
 ### Introduction
 We learned how to create plots so far, now we are going to learn how to apply some additional functions to the graph to give them some changes. 
 
-In this lesson, you will learn how to:  
+**In this lesson, you will learn how to:**    
 - facet plots  
 - label plots  
 - change colors of the plots  
 - function `breaks_pretty()`  
 
-**Prerequisite skills include:**
-
-- You should be familiar with ggplot now. 
-- You also should be able to read and manipulate datasets. 
+**Prerequisite skills include:**  
+- You should be familiar with ggplot now.  
+- You also should be able to read and manipulate datasets.  
 
 **Highlights:**  
 Everything about how to make plots prettier!!
 
 #### Packages  
-```{r}
+```{r, message = F}
 library(ggplot2)
+library(scales)
 ```
 
 
@@ -853,7 +1263,7 @@ facet_grid(x ~ y) will display x*y plots even if some plots are empty.
 
 **Facet with one variable**  
 
-Here, I am using a dataset that contains the information of members who climbed the mountain Himalaya. Let's say, I would like to see the distribution of the sex of the members. 
+Here, I am using a dataset that contains the information of members who climbed the mountain Himalaya. Let's say, I would like to see the distribution of the sex of the members.   
 ```{r  message = F, warning = F}
 members <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/members.csv')
 hist_p <- members %>% ggplot(aes(age)) + geom_histogram(fill = "light blue", bins = 10)
@@ -863,6 +1273,7 @@ hist_p + facet_grid(sex ~ .)
 # Split in horizontal direction
 hist_p + facet_grid(. ~ sex)
 ```
+  
 Splitting in vertical direction can be done with putting whichever variable you want to facet on the left, `facet_grid(variable ~ .)`. Putting the variable on the right side would split horizontally.  
 
 
@@ -887,22 +1298,8 @@ THe function displays plots for every combination of the selected two variables.
 ### Labelling ggplot
 
 ggplots can be labeled using `labs()`as follow:
-
-
-
-```{r, eval = TRUE, include = FALSE}
-japanese_blooming <- readr::read_csv(system.file("extdata", "temperatures-modern.csv", package = "DoSStoolkit", mustWork = TRUE))
-```
-
-
-
-
-```{r, eval = FALSE}
-japanese_blooming <- readr::read_csv("temperatures-modern.csv")
-```
-
-
 ```{r}
+japanese_blooming <- read.csv("https://raw.githubusercontent.com/tacookson/data/master/sakura-flowering/temperatures-modern.csv")
 japanese_blooming %>% 
   ggplot(aes(mean_temp_c)) + geom_histogram(fill = "pink", bins = 20) + 
   labs(title = "This is a title",
@@ -977,7 +1374,7 @@ base_size : base font size (to change the size of all plot text elements)
 base_family : base font family
 
 *Note that, the function theme_set() changes the theme for the entire session.*   
-(The detailed information of the basic theme changing can be found at: http://www.sthda.com/english/wiki/ggplot2-themes-and-background-colors-the-3-elements)
+(The detailed information of the basic theme changing can be found [here](http://www.sthda.com/english/wiki/ggplot2-themes-and-background-colors-the-3-elements)
 
 ### `pretty_breaks()` or `breaks_pretty()` 
 `breaks_pretty()` uses default R break algorithm as implemented in pretty(). This is used often for splitting date/times. For example, when you want to divide 24 hours into 10 blocks, you would use the function `breaks_pretty` to split the time. 
@@ -987,36 +1384,30 @@ pretty_breaks(n = 5, ...)
 breaks_pretty()
 ```
 
-arguments:  
-n: desired number of breaks  
-...: other arguments passed on `pretty`  
+Important argument:  
 
-```{r}
-library(scales)
-one_month <- as.POSIXct(c("2020-05-01", "2020-06-01"))
-demo_datetime(one_month, breaks = breaks_pretty(4))
+- n: desired number of breaks   
+- [other arguments](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/pretty) passed on `pretty`   
 
-# Tightly spaced date breaks often need custom labels too
-demo_datetime(one_month, breaks = pretty_breaks(12))
-demo_datetime(one_month,
-  breaks = breaks_pretty(12),
-  labels = label_date_short()
-)
-```
-in the parameter, you put the desired number of breaks. However, you may get slightly more or less breaks than what you put. 
+Here is an example of using the function:  
+  
+Inside the parameter, you put the desired number of breaks. However, you may get slightly more or less breaks than what you put. 
 For example, I can request to break number from 1 to 10 into 5 parts. 
 ```{r}
 a <- breaks_pretty(5)(1:10)
 a
 ```
-Then it returns 6 parts, which is slightly more than what I requested.  
+Then it returns 6 parts, which is slightly more than what I requested in the argument.  
 
-Another example is to break dates into multiple parts.
+Another example is to break dates into multiple parts using `as.Date()`.
 ```{r}
 b <- pretty_breaks(n = 12)(as.Date(c("2020-01-01", "2021-01-01")))
 b
-```
+```  
 
+This would automatically return the broken down scale of the date for you.  
+
+These are the basics of the function `breaks_pretty()` or `pretty_breaks()` (they are interchangeable). If you would like to learn more about how to use these scales in a graph and visualize them, the information could be found [here](https://bookdown.org/Maxine/ggplot2-maps/posts/2019-11-27-using-scales-package-to-modify-ggplot2-scale/)
 
 
 ### Exercises
@@ -1039,7 +1430,7 @@ Label the following graph. Title should be 'scatter plot of mtcars', x-axis shou
 ggplot(mtcars, aes(x=wt, y=mpg, color= mpg)) + geom_point()
 ```
 
-```{r q2_usefuloptions-solution, exercise=TRUE, exercise.eval = TRUE}
+```{r q2_usefuloptions-solution}
 ggplot(mtcars, aes(x=wt, y=mpg, color= mpg)) + geom_point()
 ```
 
@@ -1049,7 +1440,7 @@ Change the color of the scatter plot to 'pink'.
 ggplot(mtcars, aes(x=wt, y=mpg)) + 
   geom_point()
 ```
-```{r, q3_usefuloptions-solution, exercise=TRUE, exercise.eval = TRUE}
+```{r, q3_usefuloptions-solution}
 ggplot(mtcars, aes(x=wt, y=mpg)) + 
   geom_point(color = 'pink')
 ```
@@ -1060,22 +1451,12 @@ ggplot(mtcars, aes(x=wt, y=mpg)) +
 Good visualizations can help the audience/readers remember the information or the message the plot contains. Try to make plots using useful options to make the graph readable & attractive.
 
 
+### References  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- [ggplot facet](http://www.sthda.com/english/wiki/ggplot2-facet-split-a-plot-into-a-matrix-of-panels)  
+- [labs()](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.3/topics/labs)  
+- [ggplot colours](http://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually)  
+- [pretty_breaks()](https://www.rdocumentation.org/packages/scales/versions/0.4.1/topics/pretty_breaks)  
 
 
 
@@ -1094,13 +1475,13 @@ Written by Yena Joo.
 ### Introduction
 There are some situations where you may need pictures of the plots when writing on blogs or sending emails about the data you're analyzing. In that case, you would wonder  how to save and upload the plots created in r.  
 
-In this lesson, you will learn how to:
-- save graphs
-- change graph sizes
+**In this lesson, you will learn how to:**  
+- save graphs  
+- change graph sizes  
 
 **Prerequisite skills include:**  
-- You should know how to create graphs using `plot()` or `ggplot()`
-- You should know the formats of the image (such as png, jpeg, pdf)
+- You should know how to create graphs using `plot()` or `ggplot()`  
+- You should know the formats of the image (such as png, jpeg, pdf)  
 
 **Highlights:**  
 - jpeg, png, pdf  
@@ -1149,7 +1530,20 @@ unlink("plot3.pdf")
 
 #### `ggsave()`
 
-Instead of using dev.off(), there is another function we can use to save the created plots. We use `ggsave()` to the ggplots. Make sure put the correct format of the file after the file name as follows: 
+Instead of using dev.off(), there is another function we can use to save the created plots. We use `ggsave()` to the ggplots.  
+
+`ggsave()` includes the following arguments:  
+```
+ggsave(filename, plot = last_plot(), device = NULL, path = NULL, scale = 1, width = NA, height = NA, units = c("in", "cm", "mm"), dpi = 300, limitsize = TRUE, ...)
+```   
+And these are some core arguments:  
+
+- `filename`: file name of the graph you are going to save.  
+- `plot`: By default, the plot to save is the last plot displayed on your R file.  
+- path: path of the directory to save the plot. By default, it is directed to the working directory.  
+- `width`, `height`, `units`: You can set the width and height, as well as the units of those measurements.  
+
+Here are some examples. Make sure put the correct format of the file after the file name as follows: 
 ```{r}
 ggplot(mtcars, aes(mpg, wt)) + geom_point()
 ggsave("plot4.pdf")
@@ -1158,6 +1552,7 @@ ggsave("plot4.jpeg")
 ggsave("mtcars.pdf", width = 20, height = 20, units = "cm")
 ```
 
+If you would like to delete the file, you can use the same `unlink()` function.  
 
 ### Exercises
 
@@ -1205,13 +1600,10 @@ dev.off()
 #### Next Steps
 - You can use the saved graph in your documents such as word, pptx, or even post the pictures online.  
 
+### References  
 
-
-
-
-
-
-
+- [How to save a ggplot](https://ggplot2.tidyverse.org/reference/ggsave.html)
+- [more information on ggsave()](https://ggplot2.tidyverse.org/reference/ggsave.html)
 
 
 
@@ -1239,14 +1631,10 @@ dev.off()
 In this level, we touched on some useful data manipulation methods that you'll come across fairly often.
 
 
+You can start the next lesson by running:
 
-
-
-
-
-
-
-
-
+```{r, eval = FALSE}
+learnr::run_tutorial("r_marky_markdown", package = "DoSStoolkit")
+```
 
 

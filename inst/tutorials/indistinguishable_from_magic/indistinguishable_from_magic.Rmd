@@ -1,0 +1,453 @@
+---
+title: "DoSS Toolkit"
+subtitle: "Indistinguishable from magic"
+date: "5 May 2021"
+output: 
+  learnr::tutorial:
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(learnr)
+library(flair)
+library(gradethis)
+library(sortable)
+gradethis::gradethis_setup()
+# library(palmerpenguins)
+```
+
+
+
+
+
+## Introduction
+
+In this module, we are going to go through various aspects that are, and there's not other word for this other than, magical.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Writing R Packages
+
+Written by Matthew Wankiewicz.
+
+### Introduction
+
+While working on projects, you may get to the point where you want to create your own package in R. This package could be as simple as containing a temperature converter between Fahrenheit to Celsius or could contain a web-scraper which helps you get data you would like to analyze. This lesson will help go over the basics of creating a package in R.
+
+Before we begin, be sure to have the `devtools` and `roxygen2` packages installed as they are very useful when creating packages. 
+
+While there are a few different ways to create package in R, the method we will look at in this lesson is great for getting started.
+
+### Steps for Making a Package in R
+
+1. After you have installed `devtools` and `roxygen2`, create a new R project, then click new directory and then R package. Here you will name your R package and include any files to the creation of the package. Once you have selected any files, click "Create Package" to make the package. 
+
+2. Now that the package has been created, there will be files located in the lower right hand corner. The files include: "DESCRIPTION", "man" and "R". "DESCRIPTION" is where you can tell users about your package, including the name, description, and author. Next, the "man" folder is where you describe the functions in your package. These files are saved as ".Rd" files which stands for R documentation. The descriptions include the name, usage, description and a few examples of the functions. Lastly, the "R" folder will contain R scripts where you will write your functions. 
+    - You can create as many functions as you want, just make sure that there is a ".Rd" file for each of the functions you have created.
+    - You don't need to edit the .Rd files on your own. The `roxygen` package can create this documentation based off of your functions. This is shown in the video later on. 
+  
+3. Once you have written your functions, you can install your package to your R by using Cmd + Shift + B for Mac or Ctrl + Shift + B for Windows. Once the package has been installed, you can test out your functions to make sure they are working properly. If your functions work fine, you have successfully created a package in R! Now you can either upload the code to GitHub for others to look at or you can continue building onto your package.
+    - If you plan to add functions from other packages into your package, make a new heading in "DESCRIPTION" called "Imports" and list the functions you are adding in. 
+
+4. There are other ways to create packages which are more advanced than the steps I have detailed, more information about these steps will be included in the "Further Reading" Section.
+
+### Each Section of Packages in depth
+
+**Description**: The description file will look similar to the one below:
+![Image from Analytics Vidhya](https://cdn.analyticsvidhya.com/wp-content/uploads/2017/03/20070011/R7.png)
+
+Filling it out is fairly simple and when you first enter this file, it will tell you what you should enter for each heading. For the license you can pick whichever one you want (located [here](https://choosealicense.com/licenses/)), the most common ones are MIT and Apache.
+
+**Man folder:** The "man" folder will look similar to the one below:
+![Photo from Piping Hot Data](https://www.pipinghotdata.com/posts/2020-10-25-your-first-r-package-in-1-hour/img/document2.PNG){width=70%}
+
+For each `\topic{}` you should fill out the corresponding topic of your package in the {}. In `\usage` you should enter in how to use the function you're describing. In `\arguments` enter in the arguments and a brief description of the argument, each argument should be separated by `\itemn` where n is the number of the argument. `\examples` includes examples of your function in action. While you can fill this out on your own, `roxygen` can do this automatically. 
+
+**R folder:** The R folder is where you place your functions. Each function will be contained in separate R files. You can keep all of your functions in one R file, it just helps to keep things organized if you have a file for each function. 
+
+The inside of the files will look like the image below:
+
+![Photo from Analytics Vidhya](https://cdn.analyticsvidhya.com/wp-content/uploads/2017/03/20070032/R9.png)
+
+For `@title` you should write the title of the function, `@description` is where the description goes, `@param` is where your parameters go, `@return` is what your function returns and `@examples` are examples of how to use the function. Below that part is where you write out your entire function. This should be repeated for every function you plan to include in your package. 
+
+**NAMESPACE:** The NAMESPACE file is a more advanced file for making R packages. From the R Packages book from Hadley Wickham, it says that this file is "not that important if you’re only developing packages for yourself. However, understanding namespaces is vital if you plan to submit your package to CRAN". NAMESPACE files can also be created automatically from `roxygen`. 
+
+
+#### After you have filled out each file
+
+Once you have filled out each file with your functions you are now ready to build your package. To do this, go to your menu bar and select "Build" and then "Configure Build tools...". Once you have selected this there will be a new window that opens which includes options for the package. Check off the box that says "Create documentation with Roxygen" then select all checkboxes and click "OK" if another window appears. You can also type in "-–as-cran" into "Check Package", this will let R conduct tests to simulate your package being checked/tested in CRAN. 
+
+  - Creating documentation with Roxygen takes information from your functions and creates documentation from it. It is also able to create a NAMESPACE file. In order to do this, make sure you have your NAMESPACE file deleted so Roxygen can make a new one and don't make any R documentation for your functions, Roxygen can do it for you. 
+
+Now you can go back to "Build" and then click "Clean and Rebuild". This will restart your R session and load in your package to R. Now you can test out your functions to make sure they are working properly. If your functions work without error, you have successfully created your package!
+
+#### Sharing Your Package
+
+If you would like other people to use your function and want to share it, there are two main options. The first option (and easiest) would be to upload your package to GitHub. To do this, create a GitHub repository and upload your files to the repository. Once the files are on GitHub, it can be installed using `remotes::install_github`.
+
+You can also select Git when creating your package. After you have created and edited your functions & files, you can use the `usethis::use_github` to create a repository for your package. If you haven't done this before, the function will give you steps in creating a key to connect to your GitHub and will also tell you how to store it. Once you have done this, you can re-run the function and it should upload your files to GitHub. 
+
+As you get more advanced with creating packages in R, you can send it to CRAN to try to get it verified there. Having your package verified by CRAN means that the package can be installed using `install.packages`. To get the package CRAN verified, you would need to submit your source package to https://cran.r-project.org/submit.html. To create a source package, go to "Build" then "Build Source Package". R will then create a ".tar.gz" file which can be uploaded to the CRAN website. 
+
+### Live Coding
+
+Video displaying live coding of an R package:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wLGRLCXIAYA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+To get your access token from GitHub use `usethis::browse_github_token`, it will open up a new page and you can access a token from GitHub there. It will also tell you how to store your token after running the function. (This is also covered in the GitHub lessons.)
+
+### Exercises
+
+```{r making-packages-q1, echo=F}
+question("Which packages are very important to the creation of R packages? (Select all that apply)",
+         answer("`devtools`", correct = T),
+         answer("`roxygen2`", correct = T),
+         answer("`dplyr`"),
+         answer("`rvest`"),
+         random_answer_order = T,
+         allow_retry = T)
+```
+
+```{r making-packages-q2, echo=F}
+question("What is the importance of the 'man' folder when making a package?",
+         answer("This folder contains the R scripts for the functions in the package"),
+         answer("This folder contains documentation for the functions in the package",
+                correct = T),
+         answer("This folder contains code for GitHub"),
+         answer("This folder is not important"),
+         allow_retry = T)
+```
+
+```{r making-packages-q3, echo=F}
+question("Where do the R scripts for your functions go?",
+         answer("The R folder", correct = T),
+         answer("The 'man' folder"),
+         answer("The NAMESPACE file"),
+         answer("The DESCRIPTION file"),
+         random_answer_order = T,
+         allow_retry = T)
+```
+
+```{r making-packages-q4, echo=F}
+question("What is in the DESCRIPTION file?",
+         answer("Information about the package, including your contact information.", 
+                correct = T),
+         answer("Descriptions of each function."),
+         answer("The code behind each of the functions"),
+         answer("The combination of all code and text in your package"),
+         random_answer_order = T,
+         allow_retry = T)
+```
+
+```{r making-packages-q5, echo=F}
+question("What are the best ways to let anyone access your package? (Select all that apply)",
+         answer("Upload your package files to GitHub", correct = T),
+         answer("Submission and approval by CRAN for your package", correct = T),
+         answer("Packages you create cannot be shared"),
+         answer("Once you make a package anyone can use it, even if it's not on CRAN or GitHub"),
+         random_answer_order = T,
+         allow_retry = T)
+```
+
+```{r package-questions-6, echo=F}
+question("True or False: You can only have one function in an entire package?",
+         answer("True"),
+         answer("False", correct = T),
+         allow_retry = T)
+```
+
+```{r package-questions-7, echo=F}
+question("What does the 'Install and Restart' button do?",
+         answer("Installs your package into R and lets you use it", correct = T),
+         answer("Refreshes your package to the last save"),
+         answer("Installs your package into R but does **not** let you use it"),
+         answer("Restarts your R session to let you work on a new package"),
+         random_answer_order = T,
+         allow_retry = T)
+```
+
+```{r creating-packages-steps, echo=F}
+order <- c("Select 'New Project' in RStudio", "Select 'New Directory'",
+           "Select 'R Package' and Name your package", "Edit the files",
+           "Configure Build Tools... create documentation with `roxygen`",
+           "Clean and Rebuild", "Share the Package with others!")
+
+question_rank("What is the correct order in making a new R package in RStudio?",
+              answer(order, correct = T),
+              answer(rev(order), message = "Wrong direction"),
+         allow_retry = T)
+```
+
+
+### Next Steps
+
+Some next steps for making packages include:
+
+- The R packages book by Hadley Wickham and Jenny Bryan: https://r-pkgs.org/
+- The CRAN documents on writing packages: https://cran.r-project.org/doc/manuals/r-release/R-exts.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Getting Started with Shiny
+
+Written by Matthew Wankiewicz.
+
+### About
+
+Shiny apps are a great way to show the characteristics of a dataset interactively. Shiny apps are easy to create and can exist as a standalone website, or can be included in R Markdown documents as well. Shiny apps can also be used to demonstrate how statistical processes work and can be used for teaching.
+
+Some amazing examples of Shiny apps include:
+
+- https://danielrivera1.shinyapps.io/Regression2/?_ga=2.5896307.1991017896.1618937285-2097610576.1597102858
+    - This app looks at the steps at running linear regression on data collected from Colombia. The app goes step-by-step and then includes a quiz at the end.
+  
+- https://cjteeter.shinyapps.io/MastersGolf/?_ga=2.1308913.1991017896.1618937285-2097610576.1597102858
+  - This app collected data from the Masters golf tournament and shows the different scores players received over the years, along with a tab that looks at a player's individual performance.
+  
+- More examples of Shiny apps can be found at: https://shiny.rstudio.com/gallery/
+
+### The Parts
+
+The process for creating Shiny apps is fairly simple. First, you will want to install the `shiny` package in R, this package allows you to create your apps.
+
+Next, you can go to the top left in your RStudio window (same applies for RStudio cloud) and click on the blank page with a plus on it. After doing this, go down to "Shiny Web App..." and click on it. This will create a new folder where your Shiny App will be stored. This new file will already contain a default Shiny App which is a simple example of an app. 
+
+- The same can also be done by creating a new R project for a Shiny app.
+
+### Making the App
+
+Shiny apps have three main sections for code. We will briefly look at them now and then go more in depth in the next section.
+
+1. **`ui`**:
+   - The `ui` section will control what the person using your Shiny app will see. This includes things like what the title is, how many tabs will be included on the page and what type of inputs your app will include (sliders, dropdown menus, etc.)
+
+2. **`server`**:
+    - The `server` section will control what the viewer cannot see. The server section can be used to create predictions, plots or other calculations. You can also use the server section to include a text write-up below a plot. 
+  
+3. **Other things**:
+    - You can also write code before the `ui` and `server` sections. This can be used to create models, do data cleaning or call in other datasets after you have cleaned them in other R scripts. 
+  
+After you have completed the three sections, you can run your app by either clicking the "Run App" in the top right corner or running the `shinyApp` function at the bottom of your R script.  
+
+### Arguments
+
+**`ui`:**
+
+Your `ui` section will be usually be contained in the `fluidPage` function. This is where you will include things like your title, the headers for different tabs on the page and any filters or sliders you want to include on your page.
+
+- To create a title, you can use the `titlePanel` function, you can simply write the function and then your title on the inside, for example: `titlePanel("My Shiny App")`.
+
+- Next, you will want to work on the main parts of the page, you can either use the `tabPanel` function if you plan on having multiple tabs, or the `sidebarPanel` function if you plan on having one tab/page. 
+
+  - If you plan on having multiple tabs, the `tabPanel` function can be used with `sidebarPanel` to make your pages. The function's arguments include a title and then you can move on to customizing the sidebar.
+  - To customize the sidebar, first call the `sidebarLayout` function, this will allow you to include side and main panels.
+- Next, call `sidebarPanel` and include anything you want to filter your data by or anything you want to calculate. This can include picking teams to make a prediction of which team will win or picking a range of values to see what will fit into the option.
+    - The different options for filtering include slider inputs so the user can pick a range of values to include, numeric inputs so the user can pick an exact value, dropdown menus to select a specific option, checkboxes and many more!
+  - After you have edited the sidebar to your liking, you can add in the placeholder for the main panel, this will include things like tables, plots, text or maps that will change depending on what happens in the sidebar. 
+    - If you want to create a changing text box in your main panel, use the `textOutput` function to do so. Inside the function, write in a keyword that will be used in the server section to change the plot.
+    - If you want to create a table, use the `tableOutput` function and for plots use the `plotOutput` function. 
+
+**`server`:** 
+
+As we saw in the earlier section, the server part of a Shiny app will be used to write code that will change the app, but the viewer will not see it. When making the server, it will be written as `server <- function(input, output) {}`. With your code being written inside the {}. The code written in this function will depend on what you want to show the viewer and what you have defined in `ui`.
+
+- If you decided to include a text box in your Shiny app, you will need to use the `renderText` function. This is where you can write sentences and change them depending on what is selected in the sidebar. For example, if you wanted to say which animal was selected out of a list, your function will look like: `output$sentence <- renderText({paste("you have selected", input$animal)})`
+  - A few things to note, you must save each textbox, table or plot under output$keyword, where the keyword is the one you defined in the ui phase. Also, the use of `animal` after input was to represent what was selected in the sidebar.
+  
+- The same idea goes for plots and tables, this time you will use the `renderPlot` and `renderTable` functions to create the outputs. 
+
+### Live Coding
+
+- Example 1:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KlSG5y1zF04" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+- Example 2:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/D5jAkxl8d5o" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+To get your access token from GitHub use `usethis::browse_github_token`, it will open up a new page and you can access a token from GitHub there. It will also tell you how to store your token after running the function. (This is also covered in the GitHub lessons.)
+
+
+### After you code your app
+
+Once your code is completed and everything works properly, you can publish your app. Publishing the app requires an account but is free to do. To publish your app, click on the blue circle beside the "Run App" button on the header of app's code. You will want to create your app using shinyapps.io, this is the free version of publishing your app. Once you do this you will likely have to create your shinyapp account and enter in your secret key for your account. After you've done this, your account should be connected and you can publish your app. The url for the app will likely be `username.shinyapps.io/file_name`. After your app is published you can share it with others.
+
+A video explaining how to publish your Shiny app can be found [here.](https://www.youtube.com/watch?v=g-BxlLF3XwU)
+
+### Testing Your Understanding
+
+```{r shiny-test-understanding-1, echo=FALSE}
+question("What are the two fundamental parts of a Shiny app?",
+         answer("ui", correct = T),
+         answer("ggplot"),
+         answer("server", correct = T),
+         answer("GitHub"),
+         allow_retry = T)
+```
+
+```{r shiny-test-understanding-2, echo=FALSE}
+question("What function should be used to output a table?",
+         answer("`renderText`"),
+         answer("`renderPlot`"),
+         answer("`renderTab`"),
+         answer("`renderTable`", correct = T),
+         allow_retry = T)
+```
+
+
+```{r shiny-test-understanding-3, echo=FALSE}
+question("Which function allows you to use multiple tabs on a Shiny app?",
+         answer("`tabPanel`", correct = T),
+         answer("`sidebarPanel`"),
+         answer("`createTabs`"),
+         answer("`insertTab`"),
+         allow_retry = T)
+```
+
+
+The next two questions will use the Shiny app located at: https://yhejazi.shinyapps.io/tutorial/
+
+![Image of one page of the Shiny App, from Yasmine Hejazi ](https://miro.medium.com/max/3620/1*84g8LO1Oi3kvqjyNI1RonQ.png){width=70%}
+
+```{r shiny-test-understanding-4, echo=FALSE}
+question("Which code chunk would reproduce the Sidebar panel? (ui section)",
+         answer("sidebar_content <- sidebarPanel(
+         selectInput('y_var',
+         label = 'Y Variable',
+         choices = select_values,
+         ))", correct = TRUE),
+         answer("sidebar_content <- sidebarPanel(
+         checkboxInput('y_var',
+         label = 'Y Variable',
+         choices = select_values,
+         ))"),
+         answer("sidebar_content <- tabPanel(
+         checkboxInput('y_var',
+         label = 'Y Variable',
+         choices = select_values,
+         ))"),
+         answer("sidebar_content <- tabPanel(
+         radioInput('y_var',
+         label = 'Speed Variable',
+         choices = select_values,
+         ))"),
+         allow_retry = T)
+```
+
+```{r shiny-test-understanding-5, echo=FALSE}
+question("What code was used to create the plot? (server section)",
+         answer("function(input, output) {output$plot <- renderPlot({
+         ggplot(data=characters, 
+         aes_string(x='Character', y=y_var, fill='Class'))
+         + geom_bar()})"), 
+         answer("function(input, output) {output$plot <- renderPlot({
+         ggplot(data=characters, 
+         aes_string(x='Character', y=input$y_var, fill='Class'))
+         + geom_point()})"),
+         answer("ggplot(data=characters, 
+         aes_string(x='Character', y=input$y_var, fill='Class'))
+         + geom_point()"),
+         answer("function(input, output) {output$plot <- renderPlot({
+         ggplot(data=characters, 
+         aes_string(x='Character', y=input$y_var, fill='Class'))
+         + geom_bar()})", correct = TRUE),
+         allow_retry = T
+         )
+```
+
+### Common Mistakes & Errors
+
+One of the tough parts about Shiny apps is that after you compile the code into the app, there can still be errors which appear, but only after you test different combinations in your app. For example, if your app has a dropdown menu to filter options, there may be errors that occur for certain choices that you won't see until the app has been made. The best way to test for errors in Shiny apps is to test out different combinations in your app once it has been made. 
+
+Here are some common issues that occur when making Shiny apps.
+
+**Plots or Tables not Showing up**
+
+- If you have a plot/table not showing up, one of the first things you should do is make sure that your `output$keyword` in the server section matches your `keyword` defined in the ui section. If you place a keyword which does not exist in the server section, R will not create any plots for that keyword. To fix this, check to make sure your keyword exists and matches the one defined in the ui section.
+
+- This error can also occur if you try to reference an input which does not exist. Again, the fix for this is to make sure the keyword you are using exists and matches the one defined in `ui`.
+
+**Problem with `filter()` input `..1`**
+
+- Errors like this will usually occur in the spot where your table or plot will be located. These errors are not exclusive to the `filter` function but can appear for any function. When these errors occur, it is usually because the function is being used incorrectly. For example, trying to filter data from a variable that doesn't exist or using a `ggplot` argument which does not make sense. 
+
+Some other common issues which can occur include:
+
+  - Missing/extra commas or brackets when defining different inputs on the `ui` section. 
+    - Usually shown by "argument is missing, with no default".
+  - Not using the proper `render` function to display your data. For example, using `renderPlot` when trying to display a table. 
+    - If you try to `ggplot` with `renderTable` you will get a "cannot coerce class ‘c("gg", "ggplot")’ to a data.frame" error.
+    - If you try to display a table with `renderPlot` you will an error saying "invalid quartz() device size".
+    
+A helpful link for debugging any issues that occur when making Shiny apps is https://shiny.rstudio.com/articles/debugging.html. This website goes through things like debugging and finding where your errors are happening. 
+
+  
+### Next Steps
+
+Some helpful links for creating Shiny apps include:
+
+- The Shiny website. This includes both written and video tutorials on creating Shiny apps. https://shiny.rstudio.com/tutorial/
+
+- Mastering Shiny by Hadley Wickham. Similar to the Shiny website this online book teaches readers how to create Shiny apps and also shows the code used to create these apps. https://mastering-shiny.org/index.html
+
+- The Shiny cheat sheet created by R. https://shiny.rstudio.com/images/shiny-cheatsheet.pdf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Summary, and next steps
+
+

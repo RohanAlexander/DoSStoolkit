@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Operating in an error prone world"
-date: "16 February 2021"
+date: "4 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -22,6 +22,8 @@ library(palmerpenguins)
 
 
 ## Introduction
+
+Written by Rohan Alexander.
 
 Welcome to a module about getting help. While it may seem odd to start with this, one of the key skills when using R is being able to work yourself out of problems.
 
@@ -54,7 +56,7 @@ Learning a programming language really is like learning a new language! Here are
 
 1. **Learn by using.** We've tried to make this resource rich with examples, but combining all this knowledge of functions and libraries to achieve your intended task will be a unique challenge! It's also easier to learn concepts in the context of your specific goal, rather than learning them in the abstract.
 
-2. **Frequent and regular practice really helps!** If you've ever tried to speak a new language, you'll know that it's an uphill climb if you're not using it frequently. T
+2. **Frequent and regular practice really helps!** If you've ever tried to speak a new language, you'll know that it's an uphill climb if you're not using it frequently. 
 
 3. **Everyone's learning experience is different.** Some people are really quick at picking up languages, but most of us aren't. Take it at your own pace. 
 
@@ -65,15 +67,20 @@ Learning a programming language really is like learning a new language! Here are
 6. **Learning alone is miserable!** Just as you need to talk with others to *really* learn a language, learning R is also a social experience! Asking for help and looking for resources will be part of learning and using R.
 
 ```{r, echo = FALSE, out.width="90%"}
-knitr::include_graphics("images/06_arrival-1.png")
-knitr::include_graphics("images/06_arrival-2.png")
+knitr::include_graphics("images/06_arrival-1.png", dpi = 400)
+knitr::include_graphics("images/06_arrival-2.png", dpi = 400)
 ```
 
 Amy Adams in *Arrival* (2016).
 
 ### Next Steps
 
-In this part of the toolkit, you'll learn troubleshooting strategies that take you from trying to solve the problem on your own, looking for further resources, and effectively asking for help from others.
+Make use of the advice above, and go forth in your R journey! 
+
+In the part of the toolkit, you'll learn troubleshooting strategies that take you from trying to solve the problem on your own, looking for further resources, and effectively asking for help from others.
+
+
+
 
 
 
@@ -84,7 +91,6 @@ In this part of the toolkit, you'll learn troubleshooting strategies that take y
 ## Using Google and Stack Overflow
 
 Written by Michael Chong.
-
 
 ### Introduction
 
@@ -106,7 +112,7 @@ Highlights:
 
 Did you try other, more reliable resources first? Answers you find "in the wild" might be out of date, or not be the best way to accomplish your task. 
 
-See [the section on troubleshooting] on where to look before you look on the Internet. In short, you might want to try:
+Look to the **When your code doesn't work** lesson on the left on where to look before you look on the Internet. In short, you might want to try:
 
 1. the function's help document (`?function_name`)
 2. looking in this toolkit
@@ -168,14 +174,14 @@ Personally, I would be a bit suspicious of results before approximately 2014(ish
 To narrow the date range on a Google search, use the "Tools" button:
 
 ```{r, echo = FALSE, out.width="90%"}
-# screenshot of tools button
+## screenshot of tools button
 knitr::include_graphics("images/07_google-tools.png")
 ```
 
 then choose your date range:
 
-```{r, echo = FALSE, out.width="30%"}
-# screenshot of date range selection
+```{r, echo = FALSE, out.width="90%"}
+## screenshot of date range selection
 knitr::include_graphics("images/07_google-dates.png")
 ```
 
@@ -187,7 +193,7 @@ These are online Q&A communities focused around programming or other domain-spec
 Some things to pay attention to in the answer:
 
 ```{r, echo = FALSE, out.width="90%"}
-# sample screenshot of answer
+## sample screenshot of answer
 knitr::include_graphics("images/07_stack-screenshot.png")
 ```
 
@@ -210,7 +216,8 @@ question(
   answer("anyone who makes an account.", correct = TRUE),
   answer("only certified programming experts and instructors"),
   answer("primarily Internet trolls and inexperienced users"),
-  correct = "Correct! These are used by a wide range of people -- it can be a great resource, but be careful!"
+  correct = "Correct! These are used by a wide range of people -- it can be a great resource, but be careful!",
+  allow_retry = TRUE
 )
 ```
 
@@ -221,13 +228,15 @@ question(
   answer("Old solutions are usually just as good as new solutions. Newer packages are usually unreliable."),
   answer("It's usually preferable to look for new(ish) solutions, since R packages are improved on frequently.", correct = TRUE),
   answer("Newer solutions are better if I'm doing something advanced, but for simple tasks it doesn't matter."),
-  correct = "Since R is evolving so quickly, it's safer to go with newer resources if everything else is comparable. If you're trying something you haven't seen before, try to pick the package(s) that are better documented."
+  correct = "Since R is evolving so quickly, it's safer to go with newer resources if everything else is comparable. If you're trying something you haven't seen before, try to pick the package(s) that are better documented.",
+  allow_retry = TRUE
 )
 ```
 
 ### Next Steps
 
-Learn how to make a reproducible example (to perhaps ask on Stack Overflow)!
+* If you're troubleshooting, consider where would be most appropriate to look for help for your problem. A quick Google search rarely hurts, as long as you stay critical about what the information that's out there.
+* Continue with the lessons in this section to learn how to ask for help effectively!
 
 
 
@@ -236,13 +245,17 @@ Learn how to make a reproducible example (to perhaps ask on Stack Overflow)!
 
 
 
-## Even more on Stack Overflow (trust us you'll spend a lot of time here)
+
+
+
+
+## Stack Overflow
 
 Written by Annie Collins.
 
 ### Introduction
 
-```{r so-logo, out.width = "30%", fig.align='left', echo = FALSE}
+```{r so-logo, out.width = "30%", fig.align='left'}
 knitr::include_graphics("images/69_logo_stackoverflow.png")
 ```
 
@@ -251,6 +264,8 @@ knitr::include_graphics("images/69_logo_stackoverflow.png")
 Are you having an issue (or many issues) with your R code? Need some help, but nothing in your learning materials seems to be working? Stack Overflow may be your new best friend.
 
 Stack Overflow serves a few purposes, but your main interactions with the site will likely be in searching for help when you come across problems in your coding process.
+
+
 
 ### Use Cases
 
@@ -264,6 +279,8 @@ Below are some ways you might use Stack Overflow to help overcome issues while y
 
 Feel free to refer back to the lesson on *Using Google and Stack Overflow* for details on the specific features of a Stack Overflow question.
 
+
+
 ### Tips for Asking & Searching
 
 - **Descriptive titles**: "ggplot problem" doesn't tell users anything about what your issue might be. "How can I change the colour of my geom_point() plot?" immediately lets a reader know the function you are using and what your desired outcome is.
@@ -272,19 +289,23 @@ Feel free to refer back to the lesson on *Using Google and Stack Overflow* for d
 - **Make sure you're looking at R code**: This will get easier as you gain experience in R and/or other coding languages, but there are some names, concepts, and functions that R shares with other languages and it can sometimes be hard to determine what exactly you're looking at if you're new to coding. If you find search results relating to your question, **make sure the responses apply to R and RStudio.** If you're unsure, you can check the tags at the bottom of the question for `r` or `rstudio`, or include [r] or [rstudio] in your search.
 - **Refine your search**: Try the following criteria when searching within Stack Overflow:
 
-```{r so-search, out.width = "75%", fig.align='center', echo = FALSE}
+```{r so-search, out.width = "75%", fig.align='center'}
 knitr::include_graphics("images/69_stackoverflow_search.png")
 ```
 
 As a member of the Stack Overflow community, you have the opportunity to build a [reputation](https://stackoverflow.com/help/whats-reputation) through asking good questions and engaging with others on the site, so these tips are not just important for getting your own questions answered.
 
-### Reproducible Examples
+
+
+#### Reproducible Examples
 
 A reproducible example is a snippet of code that is self contained — it includes all necessary libraries, data, functions, and outputs that will allow another individual to look at your code, run it themselves, and understand any questions you have. R has a package called **reprex** that will help make this task easy (reprex also part of the tidyverse, so if you already have the tidyverse installed you're good to go!). The reprex package allows you to copy some code, run the command `reprex()` , and then paste a formatted, reproducible example into a site like Stack Overflow. For more details on creating a reproducible resource in R, see the [reprex documentation](https://reprex.tidyverse.org/) or view [Jenny Bryan's webinar](https://reprex.tidyverse.org/articles/articles/learn-reprex.html) on the topic.
 
-```{r reprex-image, out.width = "85%", fig.align='center', echo = FALSE}
+```{r reprex-image, out.width = "85%", fig.align='center'}
 knitr::include_graphics("images/69_reprex_example.png")
 ```
+
+
 
 ### Next Steps
 
@@ -303,12 +324,9 @@ knitr::include_graphics("images/69_reprex_example.png")
 
 
 
-
-
 ## When your code doesn't work
 
 Written by Michael Chong.
-
 
 ### Introduction
 
@@ -323,7 +341,7 @@ Prerequisite skills include:
 
 Highlights:
 
-```{r fig1, echo = FALSE, out.width="90%"}
+```{r fig1, echo = FALSE}
 knitr::include_graphics("images/08_troubleshooting-image.png")
 ```
 
@@ -467,8 +485,8 @@ question(
 
 ### Next Steps
 
-* Asking for help? Learn how to make a minimal example in [another lesson].
-* Having trouble finding what you want on the web? See [another lesson] for tips on how to Google more precisely
+* Asking for help? Learn how to make a minimal example in the **Making reproducible examples** lesson.
+* Having trouble finding what you want on the web? See the lesson **Using Google and Stack Overflow** and **Even more on Stack Overflow** for tips on using these tools more effectively!
 
 
 
@@ -480,7 +498,12 @@ question(
 
 
 
-## Making reproducible examples
+
+
+
+
+
+## Making Reproducible Examples
 
 Written by Marija Pejcinovska.
 
@@ -504,16 +527,20 @@ Highlights:
 
 ### Seeking help the helpful way
 
-At this point in the toolkit you have probably picked up a troubleshooting trick or two. \n 
+At this point in the toolkit you have probably picked up a troubleshooting trick or two. 
+
 In fact, you may have already googled how to code up something in R or have come across useful discussions on Stack Exchange or Stack Overflow. 
-\n
+
+
 
 Most of the time, you are likely to face issues many R users have grappled with before. In a way, this is nice. It means it should be much easier to find a solution to your problem online, usually with only a few google searches. Other times though, you might come across a more challenging problem and the solution might not be as readily available online. 
 In such a situation, assuming you've exhausted all other debugging and troubleshooting options, it's possible that you would need to ask for some help online! Fortunately, as you've been making your way through this toolkit, you have probably already learned where to turn for help when needed.
-\n
+
+
 
 At this stage, knowing how to create a **repr**oducible **ex**ample (or **reprex** for short) would come in handy. The idea of a reprex is exactly what you might expect: it is a minimal illustrative example that will reproduce the issue you are facing, so that others could help you solve it more easily.
-\n
+
+
 
 Not all reprexes are created equal, however. In order for you to engage productively with the R community and get the help you need,  you should help the reader understand your problem with as little effort on their part as possible. This means that a reprex needs to be minimal and self-contained, so that those helping you can simply copy and paste your R code, reproduce the error and understand your issue... and hopefully help you solve it, of course.
 
@@ -523,9 +550,7 @@ So, what does a reprex look like?
 All reproducible examples have these few elements in common:  
 
  - a **minimal data set** on which the code can be run and the error reproduced. 
- 
  - a **minimal, runnable** piece of **code** that is **well formatted** and produces the same error when run on the supplied minimal data set.  
- 
  - call to any necessary **R packages** + any relevant pieces of **information about your R environment** when the issue was encountered. 
 
 ### Creating a data set for a reprex
@@ -658,8 +683,8 @@ Suppose you are interested in seeking help from the online RStudio community for
 
 tibble(
   group = c("trtmnt", "control", "control", "control", "trtmnt", "control", "trtmnt", "trtmnt", "trtmnt", "control"),
-  msrmnt = rnorm(10,5, 0.5), # rnorm(10,5,1.5) generates 10 random normal variables centered at 5 with sd of 1.5
-                             # use ?rnorm to check out the function's arguments
+  msrmnt = rnorm(10,5, 0.5), ## rnorm(10,5,1.5) generates 10 random normal variables centered at 5 with sd of 1.5
+                             ## use ?rnorm to check out the function's arguments
   improvement = c("yes", "no", "no", "no", "no", "no", "yes", "no", "no", "yes")
 ) %>% 
   mutate(new_var = msrmnt + improvement)
@@ -686,8 +711,8 @@ How might you fix it? Add any missing pieces and turn the code chunk below into 
 #
 tibble(
   group = c("trtmnt", "control", "control", "control", "trtmnt", "control", "trtmnt", "trtmnt", "trtmnt", "control"),
-  msrmnt = rnorm(10,5, 0.5), # rnorm(10,5,1.5) generates 10 random normal variables centered at 5 with sd of 1.5
-                             # use ?rnorm to check out the function's arguments
+  msrmnt = rnorm(10,5, 0.5), ## rnorm(10,5,1.5) generates 10 random normal variables centered at 5 with sd of 1.5
+                             ## use ?rnorm to check out the function's arguments
   improvement = c("yes", "no", "no", "no", "no", "no", "yes", "no", "no", "yes")
 ) %>% 
   mutate(new_var1 = msrmnt + improvement, new_var2=2*msrmnt)
@@ -723,8 +748,8 @@ reprex::reprex({
   library(tidyverse)
   tibble(
   group = c("trtmnt", "control", "control", "control", "trtmnt", "control", "trtmnt", "trtmnt", "trtmnt", "control"),
-  msrmnt = rnorm(10,5, 0.5), # rnorm(10,5,1.5) generates 10 random normal variables centered at 5 with sd of 1.5
-                             # use ?rnorm to check out the function's arguments
+  msrmnt = rnorm(10,5, 0.5), ## rnorm(10,5,1.5) generates 10 random normal variables centered at 5 with sd of 1.5
+                             ## use ?rnorm to check out the function's arguments
   improvement = c("yes", "no", "no", "no", "no", "no", "yes", "no", "no", "yes")
 ) %>% 
   mutate(new_var1 = msrmnt + improvement, new_var2=2*msrmnt)}
@@ -737,6 +762,359 @@ reprex::reprex({
 Consider the following list of do's and don'ts from the folks that made the `reprex` package https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html  
 
 For more information on `reprex`, check out Jenny Bryan webinar on creating reproducible examples with reprex (https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## How to make the most of R's cryptic error messages
+
+Written by Shirley Deng.
+
+### Decrypting the cryptic
+
+More often than not, R will spit out errors that give us very little information on *what* they actually are.
+
+We have two options here:
+
+1. Try to ***get rid of*** the error
+2. Try to ***fix*** the error
+
+While getting rid of error messages can bring us momentary relief, we're likely to encounter more issues along the way using hastily developed "solutions".
+
+#### Shootin' the troubles
+
+#####  Package inputenc Error
+
+While TAing an introductory data science course, one of the most common errors students encountered while working with R Markdown looked like this:
+
+###### Example 1
+
+```
+! Package inputenc Error: Unicode character μ (U+03BC)
+(inputenc)                not set up for use with LaTeX.
+
+Try other LaTeX engines instead (e.g., xelatex) if you are using pdflatex. See https://bookdown.org/yihui/rmarkdown-cookbook/latex-unicode.html
+
+Error: LaTeX failed to compile ProblemSet.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See ProblemSet.log for more info.
+Execution halted
+```
+
+One way to get around this error would be to follow the suggestion and use `xelatex` as our LaTeX engine. For a PDF document, this would mean using the following in the header chunk:
+
+```
+output:
+  pdf_document:
+    latex_engine: xelatex
+```
+
+But what if we need to use a different LaTeX engine? What if using `xelatex` doesn't get rid of the `Package inputenc Error`? Are there other ways to deal with this error? 
+
+One student suggested that we make an exemption for the `μ` character by adding the following to the header chunk:
+
+```
+header-includes:
+  - \DeclareUnicodeCharacter{03BC}{μ}
+```
+
+Now, another common error was this here:
+
+###### Example 2
+
+```
+! Package inputenc Error: Unicode character ， (U+FF0C)
+(inputenc)                not set up for use with LaTeX.
+
+Try other LaTeX engines instead (e.g., xelatex) if you are using pdflatex. See https://bookdown.org/yihui/rmarkdown-cookbook/latex-unicode.html
+```
+
+This is the the same *type* of error as Example 1, but with a different character specified - the Chinese full-width comma.
+
+If we simply made an exemption for the `μ` character as the student suggested, then we'd still encounter the same error for other characters, like the `，`.
+
+Recall that LaTeX is *designed* to use commands to generate symbols.
+
+We notice that this error specifically tells us that there may be an issue with a given unicode character. In the Example 1, ` μ`. 
+
+So we can try searching the document to see where `μ` may appear. If we find any `μ`'s, great! Then we just need to avoid using `μ` in order to get our document to knit. 
+
+Then one fix for this error would be to replace all occurences of `μ` with `\mu`, the laTeX command for the character.
+
+In Example 2, we could try replacing all occurences of `，` with `,`, a regular degular comma generated by an English language keyboard, to allow us to knit our document.
+
+But is there a way for us to ***prevent*** errors like these from popping up again?
+
+After all of our trials and tribulations, we find that LaTeX probably doesn't like when we generate the symbols ourselves. After all, there are only a handful of symbols that don't need an escape or any sort of special handling to ensure that they show up properly in our knitted document.
+
+Moving forward, it may be a good idea to try to **use LaTeX commands for special characters or symbols whenever possible**.
+
+Ultimately, this was the solution that allowed most students to knit their R Markdown documents!
+
+##### It's one thing to get our code to *work*, but another thing to make sure we don't have to work our code.
+
+For the rest of this section on R's *cryptic* error messages, we'll be going over some common errors and how we can get around them.
+
+### Knitting makes a great pastime
+
+The best way to minimize dealing with R Markdown errors in the first place is to knit often.
+
+If we knit periodically as we work, then if or when we encounter an error, we'll know which bit of code it came from. 
+
+Often times, one "mistake" can cause multiple error messages. In the case of Example 1, the `μ` character not only caused R to spit out `! Package inputenc Error`, but `Error: LaTeX failed to compile` as well.
+
+It's much easier to deal with errors one by one than to deal with them all at once in a tangled mess. 
+
+#### Parm for your copypasta?
+
+This also applies when we need to copy and paste bits into our documents.
+
+As we saw in Example 2, it's not easy to spot the difference between `，` and `,`. This is especially the case when we have a whole wall of text written up (i.e., the entire R Markdown document) to look through.
+
+When copying and pasting, it's best to **copy small sections at a time, knitting in between each**. This will allow us to isolate any issues like the *Package inputenc Error*.
+
+#### Code
+
+When it comes to code, we can run code *without* knitting the entire file, be it R or R Markdown.
+
+This is especially handy when our R code uses a lot of memory and takes a long time to compile or knit. Rather than having to run the entire document, including all the bits we already know work, we can just test run an isolated part.
+
+Simply select the desired code, and use the appropriate keyboard shortcut to run:
+
+* `Cmd+Return` on Mac
+* `Ctrl+Enter` on Windows and Linux
+
+##### Note: A list of RStudio keyboard shortcuts can be found [here](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts)
+
+#### Knitting's not for me
+
+A fair amount of students have encountered the following error:
+
+```
+Error in contrib.url(repos, type) : 
+  trying to use CRAN without setting a mirror
+```
+
+If we do a little search...
+
+```{r errors-contrib, exercise=TRUE}
+?contrib.url
+```
+
+We get the impression that we had some issues installing a package.
+
+Keep in mind that we install packages for our R sessions, but only need to load them when we knit our R Markdown documents.
+
+In other words, don't use `install.packages()` in any of your R Markdown document code chunks!
+
+Instead, you can either:
+
+- click on the "Install" button in the yellow bar near the RStudio toolbar,
+- or run `install.packages()` in the console instead.
+
+### Have you tried turning it off and on again?
+
+This may sound like we're trying to **get rid of** the error instead of **fixing** it, but rest assured, we'll see how it can be quite insightful at times.
+
+#### Time waits for no man
+
+To make debugging easier, some instructors may choose to have their students use RStudio on [JupyterHub](https://jupyter.org/hub) or [RStudio Cloud](https://rstudio.cloud/), instead of a local installation.
+
+JupyterHub and RStudio Cloud will automtically use the latest versions of R and RStudio available, so we don't have to manually update our local installations.
+
+*This is great for when we need to use packages that aren't configured for our OS. Hem hem, I'm speaking to you, `rstan` and `brms` on macOS.*
+
+However, using RStudio on the cloud often brings about a new problem: `Status code 403 returned`.
+
+This often happens due to long (or sometimes even short) periods of inactivity. [The RStudio team has not found a best solution for it yet](https://community.rstudio.com/t/status-code-403/16110), but the old *turn it off and back on* trick seems to fix it.
+
+Some people suggest [logging out and logging back in](https://community.rstudio.com/t/status-code-403-tonight-08-05/75540/4), while others suggest [refreshing the page](https://community.rstudio.com/t/status-code-403/16110/4).
+
+
+##### Note: Keep in mind that you have to install packages again *each time you start a new RStudio session on JupyterHub*.
+
+#### Getting back on track when we run
+
+Remember that note up there about installing packages for every new RStudio session on JupyterHub? Yes, the one three lines above this.
+
+A number of students posted on their course discussion board about getting a `Could not find function "glimpse"` error.
+
+Why would R not be able to find `glimpse()`?
+
+Recall that `glimpse()`, like the pipe `%>%` and like `tibble()`, aren't base R. Rather, we can access them by installing and loading the `dlpyr` or `tidyverse` packages.
+
+If we don't load the package, we can't use the function.
+
+Sometimes we might forget whether a line's been run or not, or that we restarted a new R session, and mistakenly forget to install or load a package before attempting to run our code.
+
+##### Example 4
+
+Suppose we mistakenly run the same line of code it twice.
+
+Try running the following code and see what happens:
+
+```{r errors-select, exercise=TRUE}
+mtcars <- mtcars %>% select(-mpg)
+mtcars <- mtcars %>% select(-mpg)
+```
+
+We get an error! `Error: Must subset columns with a valid subscript vector.`
+
+Now, this error message doesn't give us much information about what's wrong with our code.
+
+But, when we restart our R session it works fine again:
+
+```{r errors-selectagain, exercise=TRUE}
+.rs.restartR()
+mtcars <- mtcars %>% select(-mpg)
+```
+
+Let's take a closer look at what the line `mtcars <- mtcars %>% select(-mpg)` is doing, and why running it twice causes us issues.
+
+```{r errors-glimpse, exercise=TRUE}
+.rs.restartR()
+glimpse(mtcars)
+mtcars <- mtcars %>% select(-mpg)
+glimpse(mtcars)
+```
+
+We see that the line `.mtcars <- mtcars %>% select(-mpg)` removes the variable `mpg` from `mtcars`. Hence, if we run it once, there is no `mpg` left to be removed the second time.
+
+Sometimes we just have code that won't work if we run it more than once, and this is a situation where  the old *turn it off and back on* trick helps us **solve** our problems, rather than just get rid of them.
+
+Similarly, sometimes we run code in the console but *don't* have it written in any chunks of our R Markdown document - maybe it was accidentally removed. If you were able to run the code before knitting, these are plausible situations. As a result, we may run into errors when R tries to knit our document. 
+
+All in all, when in doubt, you can start fresh by [quitting and restarting your R session](https://stackoverflow.com/questions/6313079/quit-and-restart-a-clean-r-session-from-within-r).
+
+##### Note: This can especially be an issue if we've used `set.seed()`. Forgetting to set a seed when creating simulations of random objects can drastically change our results!
+
+##### Note: If there are any helper files left behind from a R Markdown document that couldn't knit, like `.aux`, delete them before trying to knit again.
+
+### Clopening
+
+Encounter something like `! Package amsmath Error: \hat allowed only in math mode.`?
+
+This can be a little cryptic if we only have `\hat{\beta}` in our R Markdown document, and it appears fine as \(\hat{\beta}\) before knitting. It shows up, so we must be in math mode. What's the problem?
+
+It's likely that there are open brackets, braces, parantheses, etc. - i.e. an extra one was either added or removed.
+
+So whenever you use one of these... | make sure it comes with one of these
+----------------------------------|-----------------------------------------
+`\(`                              | `\)`
+`\[`                              | `\]`
+`$$`                              | `$$`
+`\begin{aligned}`                 | `\end{aligned}`
+`{`                               | `}`
+
+### Warnings, not errors
+
+Sometimes we see some scary red text after knitting or compiling, and we worry that we have some cumbersome errors to deal with. However, red text is not always indicative of errors.
+
+R also colours their **warnings** in red, too.
+
+#### Example 5
+
+Run the following code, and see what R tells us in response.
+
+```{r errors-summarise, exercise=TRUE}
+mtcars %>%
+   group_by(gear) %>%
+   summarise(qs = quantile(disp, c(0.25, 0.75)), prob = c(0.25, 0.75))
+```
+
+We see that we get the following:
+
+```
+`summarise()` has grouped output by 'gear'. You can override using the `.groups` argument.
+```
+
+This is not an error, but a warning.
+
+If we want to get rid of warnings for just one code chunk, we can put `warning=FALSE` or `warning=F` in the little knitr chunk options, like this:
+
+
+\`\`\`\{r, warning=FALSE\}  
+\## your code here  
+\`\`\`
+
+
+Alternatively, if we want to "turn off" warnings for our *entire* document, we can put this at the beginning of our R Markdown document, right after the YAML header chunk:
+
+\`\`\`\{r, include=FALSE\}  
+knitr::opts_chunk$set(warning = FALSE)  
+\`\`\`
+
+###### Note: More information on chunk options can be found [here](https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+
+With that said, this specific warning can be resolved exactly as it suggests: using the `.groups` argument, as below.
+
+```{r errors-summariseFixed, exercise=TRUE}
+mtcars %>%
+   group_by(gear) %>%
+   summarise(qs = quantile(disp, c(0.25, 0.75)), prob = c(0.25, 0.75), 
+             .groups = "drop")
+```
+
+### Resources and references
+
+- [JupyterHub](https://jupyter.org/hub)
+- [RStudio Cloud](https://rstudio.cloud/)
+- `Status code 403 returned`
+  - [Refreshing the page](https://community.rstudio.com/t/status-code-403/16110)
+  - [Logging out and in](https://community.rstudio.com/t/status-code-403-tonight-08-05/75540/4)
+- [RStudio keyboard shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts)
+- [Quit and restart a clean R session from within R](https://stackoverflow.com/questions/6313079/quit-and-restart-a-clean-r-session-from-within-r)
+- [knitr code chunk options](https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Summary and next steps
+
+Written by Rohan Alexander.
+
+
+Well done on picking up these essential skills. 
+
+You can start the next lesson by running:
+
+```{r, eval = FALSE}
+learnr::run_tutorial("holding_the_chaos_at_bay", package = "DoSStoolkit")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
