@@ -8,11 +8,12 @@ use R.
 
 We all know that R is a critical part of applied statistics and data
 science these days, but it can have a steep learning curve and be
-intimidating to get started with. The [Department of Statistical
-Sciences](http://www.utstat.utoronto.ca/) (DoSS) toolkit is a free
-series of open source online modules written by undergraduates, that
-their fellow students and the public can use to learn the essentials of
-R.
+intimidating to get started with.
+
+The [Department of Statistical Sciences](http://www.utstat.utoronto.ca/)
+(DoSS) toolkit is a free series of open source online modules written by
+undergraduates, that their fellow students and the public can use to
+learn the essentials of R.
 
 ## How to use this resource
 

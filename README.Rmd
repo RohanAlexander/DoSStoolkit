@@ -17,7 +17,9 @@ knitr::opts_chunk$set(
 
 The DoSS Toolkit is a bunch of self-paced modules to help you learn and use R.
 
-We all know that R is a critical part of applied statistics and data science these days, but it can have a steep learning curve and be intimidating to get started with. The [Department of Statistical Sciences](http://www.utstat.utoronto.ca/) (DoSS) toolkit is a free series of open source online modules written by undergraduates, that their fellow students and the public can use to learn the essentials of R. 
+We all know that R is a critical part of applied statistics and data science these days, but it can have a steep learning curve and be intimidating to get started with. 
+
+The [Department of Statistical Sciences](http://www.utstat.utoronto.ca/) (DoSS) toolkit is a free series of open source online modules written by undergraduates, that their fellow students and the public can use to learn the essentials of R. 
 
 
 ## How to use this resource
@@ -314,7 +316,7 @@ Module content:
 - Paul Hodgetts is a Master of Information candidate concentrating in Human-Centred Data Science in the Faculty of Information, University of Toronto. He sincerely believes that Calvin and Hobbes is the greatest comic ever produced.
 - Rohan Alexander is an assistant professor in the Faculty of Information and the Department of Statistical Sciences. Some people convert to catholicism upon marriage, Rohan converted to R. His greatest professional achievement is probably getting a pull request accepted into R for Data Science (it was just fixing a minor typo but still).
 - Samantha-Jo Caetano is an assistant professor (teaching stream) in the Department of Statistical Sciences. She loves statistics, socializing, her family, and her dogs, not necessarily in that order.
-- Shirley Deng - Shirley is an undergraduate student specializing in Statistics and majoring in Mathematics. Meticulous and soft-hearted, she often finds herself engrossed in new pastimes by the second at the influence of her peers. One of which that has remained a longtime constant - spending an excessive amount of time helping people debug their R code.
+- Shirley Deng is an undergraduate student specializing in Statistics and majoring in Mathematics. Meticulous and soft-hearted, she often finds herself engrossed in new pastimes by the second at the influence of her peers. One of which that has remained a longtime constant - spending an excessive amount of time helping people debug their R code.
 - Yena Joo is an undergraduate student majoring in Economics and double minoring in Statistics and Computer Science.
 
 
