@@ -33,7 +33,7 @@ We got the sharks out of the pool - feel free to jump in!
 
 
 
-## R Projects and setwd()
+## R Projects and `setwd()`
 
 Written by Isaac Ehrlich.
 
@@ -46,7 +46,7 @@ In this section, you will learn how to set a working directory using the functio
 
 Some key concepts and functions to keep in mind throughout the section: **working directory**, **R Projects**, `getwd()`, `setwd()`
 
-### The Working Directory
+### The working directory
 
 The working directory is the folder path from which you can load or save files.
 If say you are working on a project in R/RStudio, your working directory could be the folder containing all files and any  additional subfolders related to your project. Once you've let R know what this directory is, you could refer to (or call) various files contained in your working directory by simply providing the file name in your R script. This is true since the reference to each file is interpreted relative to the working directory. This, on the other hand, implies that files "living" outside this directory would need to be referenced using their full file path, otherwise you get an error. 
@@ -137,7 +137,7 @@ In the following section, we will discuss how to set up and organize your folder
 
 
 
-## Folder Set-Up
+## Folder set-up
 
 Written by Isaac Ehrlich.
 
@@ -243,7 +243,7 @@ Comments are typically used to improve the readability of code, either by partit
 
 1. Defining Code Sections
 
-You can use comments to divide sections of you analysis. Often, you can split a single script into multiple sections, such as setting up the environment, writing functions, and sections of your analysis.
+You can use comments to divide sections of your analysis. Often, you can split a single script into multiple sections, such as setting up the environment, writing functions, and sections of your analysis.
 
 ```{r}
 # Load Packages
@@ -341,7 +341,7 @@ allow_retry = TRUE)
 
 
 
-## Installing packages from CRAN
+## `install.packages()`
 
 Written by Haoluan Chen.
 
@@ -399,7 +399,7 @@ Note that for some package it may ask you to input something in the console to c
 <iframe width="560" height="315" src="https://www.youtube.com/embed/c-8qOcLyxN4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-#### In Rstudio 
+#### In RStudio 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/D8A3Em5WFwU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -465,7 +465,7 @@ CRAN website: https://cran.r-project.org/
 
 
 
-## Installing packages from GitHub
+## `install_github()`
 
 Written by Haoluan Chen.
 
@@ -490,24 +490,24 @@ Highlights:
 
 #### What is GitHub?
 
-GitHub is a popular repository for open source projects. Many developers can share and collaborate their work with the world. Sometimes, you may need to use the package from GitHub for a specific task.
+GitHub is a popular repository for open-source projects. Many developers can share and collaborate their work with the world. Sometimes, you may need to use the package from GitHub for a specific task.
 
 Note: Unlike the packages from CRAN, there is no review process for Github packages, so you may encounter bugs or errors when using them.  
 
 
 #### Install packages from GitHub
 
-To install the package from GitHub, you will need the function install_github() in the **devtools** package. devtools contains tools for package developers to build and test their packages. 
+To install the package from GitHub, you will need the function `install_github()` in the `devtools` package. devtools contains tools for package developers to build and test their packages. 
 
-So, you need to first install devtools package and load the package in order to use the install_github package. However, a faster way to do that is to run the following code in the r chunk or the console: devtools::install_github("developer name/package name"). The developer name and package name can be found on the top left side of the github repository
+So, you need to first install `devtools` package and load the package in order to use the install_github package. However, a faster way to do that is to run the following code in the r chunk or the console: `devtools::install_github("developer name/package name")`. The developer name and package name can be found on the top left side of the github repository
 
-This code means that you want to call the devtools package and use the function install_github(). This way, you do not have to install and load the devtools package.
+This code means that you want to call the `devtools` package and use the function `install_github()`. This way, you do not have to install and load the `devtools` package.
 
 #### Example
 
 https://github.com/sharlagelfand/dmc
 
-The goal of dmc pacakge is to allow you to find the closest DMC embroidery floss colour(s) for a given colour, as well as access colour (hex, RGB) information about DMC colours.
+The goal of `dmc` pacakge is to allow you to find the closest DMC embroidery floss colour(s) for a given colour, as well as access colour (hex, RGB) information about DMC colours.
 
 You can run the following code on your console to install this package: 
 
@@ -518,7 +518,7 @@ devtools::install_github("sharlagelfand/dmc")
 
 After running this code, you will receive some message on the console and it will start installing the package (this may take a few minutes depending on your system). Then it will tell you if you successfully installed the package.
 
-Note: for some packages, it may ask you to input something in the console to complete the installation. For dmc package, you will see "These packages have more recent versions available. Which would you like to update?" and "Enter one or more numbers, or an empty line to skip updates:" 
+Note: for some packages, it may ask you to input something in the console to complete the installation. For `dmc` package, you will see "These packages have more recent versions available. Which would you like to update?" and "Enter one or more numbers, or an empty line to skip updates:" 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/hDQKBBWu98k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -570,7 +570,7 @@ R Packages is a book that gives a comprehensive treatment of all common parts of
 
 
 
-## Loading packages with library()
+## `library()`
 
 Written by Mariam Walaa.
 
@@ -834,7 +834,7 @@ find helpful:
 
 
 
-## Updating libraries with update.packages()
+## `update.packages()`
 
 Written by Mariam Walaa.
 
@@ -997,7 +997,7 @@ student5,NA,NA,F")
 ```
 
 
-## Delimited data files with read_csv()"
+## `read_csv()`
 
 Written by Marija Pejcinovska.
 

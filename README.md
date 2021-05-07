@@ -122,7 +122,7 @@ Module content:
 How to run this module:
 
 ``` r
-learnr::run_tutorial("holding_the_chaos_at_bay", package = "DoSStoolkit")
+learnr::run_tutorial("operating_in_an_error_prone_world", package = "DoSStoolkit")
 ```
 
 Module content:
@@ -132,7 +132,6 @@ Module content:
 -   Using Google and Stack Overflow, by Michael Chong.
 -   Stack overflow, by Annie Collins.
 -   How to problem solve when your code doesn’t work, by Michael Chong.
--   How to ask for help, by Michael Chong.
 -   Making reproducible examples, by Marija Pejcinovska.
 -   How to make the most of R’s cryptic error messages, by Shirley Deng.
 
@@ -141,24 +140,21 @@ Module content:
 How to run this module:
 
 ``` r
-learnr::run_tutorial("operating_in_an_error_prone_world", package = "DoSStoolkit")
+learnr::run_tutorial("holding_the_chaos_at_bay", package = "DoSStoolkit")
 ```
 
 Module content:
 
 -   Why I love R, by Samantha-Jo Caetano.
--   R projects (and setwd() and why you should not use it), by Isaac
-    Ehrlich.
--   Folder set up, by Isaac Ehrlich.
+-   R projects and `setwd()`, by Isaac Ehrlich.
+-   Folder set-up, by Isaac Ehrlich.
 -   Writing comments, by Isaac Ehrlich.
--   Installing packages from CRAN, by Haoluan Chen.
--   Installing packages from GitHub, by Haoluan Chen.
--   Calling libraries, by Mariam Walaa.
--   Updating libraries, by Mariam Walaa.
--   read\_csv(), by Marija Pejcinovska.
--   Other file types: read.table(), read\_excel(), haven and
-    read\_dta(), read\_rds(), load() with .Rda files, anything else
-    useful in readr?, by Isaac Ehrlich.
+-   `install.packages()`, by Haoluan Chen.
+-   `install_github()`, by Haoluan Chen.
+-   `library()`, by Mariam Walaa.
+-   `update.packages()`, by Mariam Walaa.
+-   `read_csv()`, by Marija Pejcinovska.
+    <!-- - Other file types: read.table(), read_excel(), haven and read_dta(), read_rds(), load() with .Rda files, anything else useful in readr?, by Isaac Ehrlich. -->
 
 ### Hand me my plyrs
 
@@ -173,20 +169,19 @@ Module content:
 -   Why I love R, by Sabrina Sixta.
 -   What is the tidyverse?, by Yena Joo.
 -   The pipe, by Mariam Walaa.
--   select(), by Yena Joo.
--   filter(), by Shirley Deng.
--   group\_by() / ungroup(), by Matthew Wankiewicz.
--   summarise(), by Mariam Walaa.
--   arrange(), by Isaac Ehrlich.
--   mutate(), by Haoluan Chen.
--   pivot\_wider() / pivot\_longer(), by Annie Collins.
--   rename(), by Mariam Walaa.
--   count() and uncount(), by Annie Collins.
--   slice(), by Annie Collins.
--   class() and basics of data types - character, numeric, dates,
-    logical, by Michael Chong.
--   vectors, matrices, dataframes, and tibbles, by Matthew Wankiewicz.
--   length(), nrow(), and ncol(), by Isaac Ehrlich.
+-   `select()`, by Yena Joo.
+-   `filter()`, by Shirley Deng.
+-   `group_by()` and `ungroup()`, by Matthew Wankiewicz.
+-   `summarise()`, by Mariam Walaa.
+-   `arrange()`, by Isaac Ehrlich.
+-   `mutate()`, by Haoluan Chen.
+-   `pivot_wider()` and `pivot_longer()`, by Annie Collins.
+-   `rename()`, by Mariam Walaa.
+-   `count()` and `uncount()`, by Annie Collins.
+-   `slice()`, by Annie Collins.
+-   `c()`, `matrix()`, `data.frame()`, and `tibble()`, by Matthew
+    Wankiewicz.
+-   `length()`, `nrow()`, and `ncol()`, by Isaac Ehrlich.
 
 ### Totally addicted to base
 
@@ -199,13 +194,13 @@ learnr::run_tutorial("totally_addicted_to_base", package = "DoSStoolkit")
 Module content:
 
 -   Why I love R, by Rohan Alexander.
--   mean(), median(), sd(), lm(), and summary(), by Mariam Walaa.
--   functions, by Haoluan Chen.
--   for and while, by Yena Joo.
--   if, if\_else() and case\_when(), by Haoluan Chen.
--   c(), seq(), seq\_along() and rep(), by Matthew Wankiewicz.
--   hist() and the other base graphing options including exporting base
-    graphs, by Yena Joo.
+-   `mean()`, `median()`, `sd()`, `lm()`, and `summary()`, by Mariam
+    Walaa.
+-   `function()`, by Haoluan Chen.
+-   `for()` and `while()`, by Yena Joo.
+-   `if()`, `if_else()` and `case_when()`, by Haoluan Chen.
+-   `c()`, `seq()`, `seq_along()`, and `rep()`, by Matthew Wankiewicz.
+-   `hist()`, `plot()`, and `boxplot()`, by Yena Joo.
 
 ### He was a d8er boi
 
@@ -372,12 +367,12 @@ Module content:
     the Department of Statistical Sciences. She loves statistics,
     socializing, her family, and her dogs, not necessarily in that
     order.
--   Shirley Deng - Shirley is an undergraduate student specializing in
-    Statistics and majoring in Mathematics. Meticulous and soft-hearted,
-    she often finds herself engrossed in new pastimes by the second at
-    the influence of her peers. One of which that has remained a
-    longtime constant - spending an excessive amount of time helping
-    people debug their R code.
+-   Shirley Deng is an undergraduate student specializing in Statistics
+    and majoring in Mathematics. Meticulous and soft-hearted, she often
+    finds herself engrossed in new pastimes by the second at the
+    influence of her peers. One of which that has remained a longtime
+    constant - spending an excessive amount of time helping people debug
+    their R code.
 -   Yena Joo is an undergraduate student majoring in Economics and
     double minoring in Statistics and Computer Science.
 
@@ -469,7 +464,7 @@ variety of packages. We are grateful for the work that we build on.
     -   Teaching
 -   French language version
 
-# Citation
+## Citation
 
 We have a pre-print coming soon.
 

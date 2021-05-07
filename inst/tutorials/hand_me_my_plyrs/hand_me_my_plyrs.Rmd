@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Hand me my plyrs"
-date: "18 February 2021"
+date: "7 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -46,57 +46,41 @@ The key package within the `tidyverse` is called `dplyr`, which is pronounced 'd
 
 ## What is the tidyverse?
 
-*Coming soon*
-
-
-
-
-
-
-
-
-
-
-
-
-
-## What is Tidyverse
-
 Written by Yena Joo.
 
 ### Introduction
 
-**In this lesson, you will learn:**  
+In this lesson, you will learn:
 
-- what `tidyverse` is, and what core packages there are.     
-- that with the tools provided by packages in tidyverse, you can save up your time, and focus more on your interpretations and analysis.   
-  
+- What the `tidyverse` is, and what core packages there are.     
+- That with the tools provided by packages in the `tidyverse`, you can save up your time, and focus more on your interpretations and analysis.   
   
 In order to analyze or visualize data, you will need a clean, tidy set of data to work with, and sometimes the downloaded data could be too unorganized or contain too much information that is unnecessary. In order to tidy up the data, you would need this tidyverse package. Once you have tidy data, you would want to visualize them, or create a table, or iterate through your data. Tidyverse is a collection of R packages designed for data science, that can do everything I just mentioned above.    
 
-**Prerequisite skills include:**    
+Prerequisite skills include:
 
-- how to install packages!    
+- How to install packages!    
 
 You will need to install a package called `tidyverse`.  
+
 ```{r}
 library(tidyverse)
 ```
 
-dplyr, ggplot, tidyr, readr, tibble, and many other packages are part of tidyverse which helps you visualize and manipulate the tidy data. In the following lectures, you will get to learn essential functions often used in the package `tidyverse`. 
+`dplyr`, `ggplot`, `tidyr`, `readr`, `tibble`, and many other packages are part of tidyverse which helps you visualize and manipulate the tidy data. In the following lectures, you will get to learn essential functions often used in the package `tidyverse`. 
 
-**Highlights:**  
+Highlights:
 
 - Tidyverse!
 
-### Core Tidyverse packages  
-Various packages inside a `tidyverse` package do not need to be installed individually, you can install them at once by executing `install.packages("tidyverse")`.  
-However, when you run `library(tidyverse)`, only a several packages are going to be installed, which is called a **core tidyverse**.   
-Core tidyverse in `tidyverse` includes: `ggplot2`, `dplyr`, `tidyr`, `readr`, `purrr`, `tibble`, `stringr`, and `forcats`.   
+### Core `tidyverse` packages
 
-#### readr
-`readr` package is used to import data sets such as csv, tsv files. It is designed to parse different types of data you can find online, and turn it in to a clean format so you can use in R.  
-For example, you can use the `readr` package to import csv files as follows:   
+Various packages inside a `tidyverse` package do not need to be installed individually, you can install them at once by executing `install.packages("tidyverse")`. However, when you run `library(tidyverse)`, only a several packages are going to be installed, which is called a 'core tidyverse'. Core tidyverse in `tidyverse` includes: `ggplot2`, `dplyr`, `tidyr`, `readr`, `purrr`, `tibble`, `stringr`, and `forcats`.   
+
+#### `readr`
+
+The `readr` package is used to import data sets such as csv, tsv files. It is designed to parse different types of data you can find online, and turn it in to a clean format so you can use in R. For example, you can use the `readr` package to import csv files as follows:   
+
 ``` 
 df <- read_csv("any csv file.csv")
 ```  
@@ -107,13 +91,14 @@ There are other functions such as:
 - `read_delim()`: for general delimited files  
 - `read_log()`: for web log files, and more.  
 
-Simply typing `vignette("readr")` into the console will provide you a detailed information of the package, such as how readr reads the column types, and tips on how to solve parsing problems.  
+Typing `vignette("readr")` into the console will provide you a detailed information of the package, such as how readr reads the column types, and tips on how to solve parsing problems.
 
 Also, [here](https://readr.tidyverse.org) is an additional resource you may find helpful.   
 
 
-#### tibble
-tibble is a form of a data frame. The package `tibble` lets you know about the information of the data set you imported. You can confront problems using the package earlier, so you don't run into a problem while you visualize or manipulate your dataset.  
+#### `tibble`
+
+A tibble is a form of a data frame. The package `tibble` lets you know about the information of the data set you imported. You can confront problems using the package earlier, so you don't run into a problem while you visualize or manipulate your dataset.  
 
 For example, you can create a tibble from scratch using the function `tibble()` with individual vectors as follows:   
 
@@ -125,16 +110,16 @@ tibble(
 ```
 As you can see, `tibble()` does not change the input types or the name of the variables. You can also create tibbles with the function `data_frame()`(and this is different from `data.frame()`!).  
 
-To convert an existing data frame into a tibble, you can use the function `as_tibble()`.  If you want to convert a tibble back to an original data frame, you can use `as.data.frame()` function to do so.  
-In some cases, it may be more convenient to input in row units. In this case, you can use the function `tribble()`.   
+To convert an existing data frame into a tibble, you can use the function `as_tibble()`.  If you want to convert a tibble back to an original data frame, you can use `as.data.frame()` function to do so. In some cases, it may be more convenient to input in row units. In this case, you can use the function `tribble()`.   
 
-Also, note that tibbles will only show the first 10 rows, and only the columns that fit on screen. THis feature of the tibble makes easier to check the characteristics of the data on display than using the original data frame.   
+Also, note that tibbles will only show the first 10 rows, and only the columns that fit on screen. This feature of the tibble makes easier to check the characteristics of the data on display than using the original data frame.   
 
 If you would like to learn more about `tibble`, [here](https://r4ds.had.co.nz/tibbles.html) is an additional resource you may find helpful.  
 
 
-#### tidyr
-`tidyr` package is used to create tidy data. Tidy data should satisfy the following:  
+#### `tidyr`
+
+The `tidyr` package is used to create tidy data. Tidy data should satisfy the following:  
 
 1. Each variable must have its own column.
 2. Each observation must have its own row. 
@@ -144,14 +129,14 @@ This is the standard way of structuring data. If a data set does not satisfy at 
   
 The main functions are:  
 
-- Pivotting: This converts between long and wide forms of a dataframe. In the module, functions `pivot_wider()` and  `pivot_longer()` are going to be introduced. Also, see `vignette("pivot")` for more information on pivotting.  
-
+- Pivoting: This converts between long and wide forms of a dataframe. In the module, functions `pivot_wider()` and  `pivot_longer()` are going to be introduced. Also, see `vignette("pivot")` for more information on pivoting.
 - Dealing with missing values: You can drop `NA` values using the function `drop_na()`, or replace missing values with a previous or next value using the function `fill()`. You can also use `replace_na()` to replace with a certain value.  
 
 There are more functions in this package that will make data cleaning easier and more effective. To learn more about tidy data, you may find the paper ["Tidy data"](https://vita.had.co.nz/papers/tidy-data.html) helpful. 
 
 #### dplyr 
-`dplyr` package is used to manipulate a data set you created using readr and tidyr.  
+
+The `dplyr` package is used to manipulate a data set you created using readr and tidyr.  
 
 - `select()` allows you to choose variables based on their names.  
 - `filter()` allows you to choose cases based on their values.  
@@ -165,8 +150,9 @@ The most representative function supported by `tidyr` and `dplyr` is the pipe op
 
 Here are [more information on dplyr package](https://dplyr.tidyverse.org).  
 
-#### ggplot2
-`ggplot2` package is used to create graphics and to visualize data. With the `ggplot()` function, you can create almost every graph you imagine of. using aesthetic mapping `aes()`, `geom_point`, `geom_line`, etc. you can set what kind of layers you would like to include in the graph, with what kind of scales, and many more.   
+#### `ggplot2`
+
+The `ggplot2` package is used to create graphics and to visualize data. With the `ggplot()` function, you can create almost every graph you imagine of. using aesthetic mapping `aes()`, `geom_point`, `geom_line`, etc. you can set what kind of layers you would like to include in the graph, with what kind of scales, and many more.   
 
 For example, I can create a scatter plot using `ggplot()` with `geom_point` as follows:   
 ```{r}
@@ -179,12 +165,14 @@ You can always click [here](https://ggplot2.tidyverse.org) to learn more about g
 
 Note that most of the visualization work in R is performed using `ggplot2` package. So, I recommend you to spend some extra time learning ggplot in future lectures.  
 
-#### purrr  
-`purrr` package in tidyverse is all about iterations. By using `purrr`, you can perform loops and iteration tasks more intuitively and easier compared to other built-in functions used for iterations. Regardless of programming language, most of the programming tasks require a good understanding and use of loops, and R requires one too. However, this requirement could be easily improved by using `purrr`.  
+#### `purrr`  
+
+The `purrr` package in tidyverse is all about iterations. By using `purrr`, you can perform loops and iteration tasks more intuitively and easier compared to other built-in functions used for iterations. Regardless of programming language, most of the programming tasks require a good understanding and use of loops, and R requires one too. However, this requirement could be easily improved by using `purrr`.  
 
 For more information on `purrr`, here is an [additional resource on purrr package](https://purrr.tidyverse.org) you may find helpful.   
 
-#### stringr  
+#### `stringr`  
+
 As you can guess from the package name, `stringr` is a package that provides a set of functions designed to make manipulating strings easier. A string is a one-dimensional array of a bunch of character variables inside single quotes or double-quotes. For example, 
 
 ```
@@ -199,9 +187,10 @@ The following examples are all strings. The package `stringr` allows you to chan
 Here is an [additional resource on stringr package](https://www.rdocumentation.org/packages/stringr/versions/1.4.0) you may find helpful.   
 
 
-#### Forcats
-`forcats` package is used to solve problems with factors. Factors are used to handle categorical variables or to reorder character vectors to improve the display.  
-Categorical variables in a vector is not as useful as integers in a vector, since strings don't sort well(maybe just in alphabetical order). However, using `factors()` will avoid these problems happening with a simple vector of strings.  
+#### `forcats`
+
+The `forcats` package is used to solve problems with factors. Factors are used to handle categorical variables or to reorder character vectors to improve the display.  
+Categorical variables in a vector is not as useful as integers in a vector, since strings don't sort well (maybe just in alphabetical order). However, using `factors()` will avoid these problems happening with a simple vector of strings.  
 
 An [additional resource on factors](https://r4ds.had.co.nz/factors.html) may be helpful because a good understanding of `factors` is needed in order to use the package `forcats`. Also, see `vignette("forcats")` for more information on the package `forcats`.   
 
@@ -429,7 +418,7 @@ resources you may find helpful:
 
 
 
-## select()
+## `select()`
 
 Written by Yena Joo.
 
@@ -714,7 +703,7 @@ In the tidyverse essentials, there are a ton of other functions you could mix & 
 
 
 
-## `dplyr::filter()`
+## `filter()`
 
 Written by Shirley Deng.
 
@@ -915,7 +904,7 @@ guineas %>% filter(supp=="OJ", dose==0.5)
 
 
 
-## group_by() and ungroup()
+## `group_by()` and `ungroup()`
 
 Written by Matthew Wankiewicz.
 
@@ -1160,7 +1149,7 @@ Now that you have got some experience with the `group_by` and `ungroup` function
 
 
 
-## Summarizing variables with summarise()
+## `summarise()`
 
 Written by Mariam Walaa.
 
@@ -1480,7 +1469,7 @@ summarise](https://r4ds.had.co.nz/transform.html#grouped-summaries-with-summaris
 
 
 
-## arrange()
+## `arrange()`
 
 Written by Isaac Ehrlich.
 
@@ -1628,7 +1617,7 @@ The following video summarizes what we have gone over in this tutorial: ![](http
 
 
 
-## mutate()
+## `mutate()`
 
 Written by Haoluan Chen.
 
@@ -1818,7 +1807,7 @@ Vignettes(demonstration of how to use functions in dplyr including mutate()) for
 
 
 
-## pivot_wider() and pivot_longer()
+## `pivot_wider()` and `pivot_longer()`
 
 Written by Annie Collins.
 
@@ -2107,7 +2096,7 @@ pivot_wider(data = games_long, names_from = "game number", values_from = "status
 
 
 
-## Renaming variables with rename()
+## `rename()`
 
 Written by Mariam Walaa.
 
@@ -2265,7 +2254,7 @@ resources you may find helpful:
 
 
 
-## count() and uncount()
+## `count()` and `uncount()`
 
 
 
@@ -2496,7 +2485,7 @@ answer("4")
 
 
 
-## slice()
+## `slice()`
 
 Written by Annie Collins.
 
@@ -2694,7 +2683,7 @@ There are several functions that act as variations of `slice()` with similar syn
 
 
 
-## Vectors, Matrices, Dataframes and Tibbles
+## c(), matrix(), data.frame() and tibble()
 
 Written by Matthew Wankiewicz.
 
@@ -3107,7 +3096,7 @@ Now that you understand what vectors, matrices, dataframes and tibbles are. Some
 
 
 
-## length(), nrow() and ncol()
+## `length()`, `nrow()`, and `ncol()`
 
 Written by Isaac Ehrlich.
 

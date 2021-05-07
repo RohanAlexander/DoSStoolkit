@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Operating in an error prone world"
-date: "4 May 2021"
+date: "7 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -627,7 +627,8 @@ If you are reporting on an unusual error or believe to have come across a bug in
 
 
 ### A closer look at the reprex package
-Making reproducible examples is not always easy. Fortunately there is an R package which makes some of that work a little bit easier.  
+
+Making reproducible examples is not always easy. Fortunately, there is an R package which makes some of that work a little bit easier.  
 
 Below is a quick overview of how you can create a reproducible example with `reprex`.
 

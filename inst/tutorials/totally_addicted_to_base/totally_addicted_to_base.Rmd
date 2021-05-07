@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Totally addicted to base"
-date: "4 May 2021"
+date: "7 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -50,9 +50,9 @@ In this module, we are going to explore 'base R'. This means that we don't need 
 
 
 
-## mean(), median(), sd(), lm(), summary()
+## `mean()`, `median()`, `sd()`, `lm()`, `summary()`
 
-Writte by Mariam Walaa.
+Written by Mariam Walaa.
 
 ```{r setupSummaryStats, include=FALSE}
 library(learnr)
@@ -434,7 +434,7 @@ building](https://r4ds.had.co.nz/model-building.html).
 
 
 
-## functions()
+## `function()`
 
 Written by Haoluan Chen.
 
@@ -462,7 +462,7 @@ Highlights:
 
 Function in R is a set of statements organized together to perform a specific task. 
 
-The function consist of four parts: 
+The function consists of four parts: 
 
 - Function Name: This is the name of the function. It is stored in the R environment as an object.
 
@@ -678,7 +678,7 @@ https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function
 
 
 
-## for() and while()
+## `for()` and `while()`
 
 Written by Yena Joo.
 
@@ -688,7 +688,7 @@ Written by Yena Joo.
 In this lesson, you will learn about "loops", and how to use the function `for` and `while`. It is one of the key concepts that is widely used and fundamental for any kind of programming languages.  
 
 #### What are Loops?
-Loops, or iterations are a step that the program automatically goes through a certain logical conditions or a range of a list, array, vector, dataset, and many more. Loop allows code to be executed repeatedly, which is used often in programming to repeat a specific block of code. You can make hundreds and thousands of redundant codes into a few lines of simple code using loops. 
+Loops, or iterations are a step that the program automatically goes through certain logical conditions or a range of a list, array, vector, dataset, and many more. Loop allows code to be executed repeatedly, which is used often in programming to repeat a specific block of code. You can make hundreds and thousands of redundant codes into a few lines of simple code using loops. 
 
 **You can iterate through:**  
 - vectors: `fruits <- c('apple', 'banana', 'mango')`   
@@ -725,11 +725,9 @@ for(var in iterable) {
 #another statement
 ```
 
-The structure of the for loop is simple. You start with `for()` to indicate that you are going to use the for loop. 
-The argument to the `for()` consists of a variable, which takes items from iterable one by one. Iterable is a collection of objects(like a list, vector, sequence, etc.)
-For each iteration in the `for` loop, a value is taken from the list and assigned to the variable, and the following statement in the curly braces, `{}` is evaluated. 
+The structure of the for loop is simple. You start with `for()` to indicate that you are going to use the for loop. The argument to the `for()` consists of a variable, which takes items from iterable one by one. Iterable is a collection of objects (like a list, vector, sequence, etc.) For each iteration in the `for` loop, a value is taken from the list and assigned to the variable, and the following statement in the curly braces, `{}` is evaluated. 
 
-Let's take a look at a simple example.
+Let's take a look at a example.
 ```{r}
 index<-seq(1,10,by=2) 
 for(i in index){ 
@@ -947,7 +945,7 @@ question_checkbox(
 
 
 
-## if, if_else() and case_when()
+## `if()`, `if_else()` and `case_when()`
 
 Written by Haoluan Chen.
 
@@ -1201,7 +1199,7 @@ for (i in 1:6){
 
 
 
-## c(), seq(), seq_along() & rep()
+## `c()`, `seq()`, `seq_along()` & `rep()`
 
 Written by Matthew Wankiewicz.
 
@@ -1441,7 +1439,7 @@ Some next steps include:
 
 
 
-## hist() and other base graphing options
+## `hist()`, `plot()`, and `boxplot()`
 
 Written by Yena Joo.
 
@@ -1530,7 +1528,7 @@ hist(mtcars$mpg,
 For more specific arguments, you can always run `help("hist")` in the console to find more about the function.  
 
 
-### other base graphing options
+### Other base graphing options
 
 #### Scatterplot
 
