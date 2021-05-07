@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "He was a d8er boi"
-date: "4 May 2021"
+date: "7 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -16,8 +16,7 @@ library(tidyverse)
 library(learnr)
 library(flair)
 library(gradethis)
-gradethis::gradethis_setup()
-# library(palmerpenguins)
+# gradethis::gradethis_setup()
 library(glue)
 library(stringr)
 library(palmerpenguins)
@@ -46,7 +45,7 @@ In this module, we are going to explore data in R. In its heart of hearts, R is 
 
 
 
-## Overview of R and data
+## `head()`, `tail()`, `glimpse()`, and `summary()`
 
 Written by Haoluan Chen.
 
@@ -54,7 +53,7 @@ Written by Haoluan Chen.
 
 In this lesson, you will learn how to:
 
-- Get an overview of your dataset using head(), tail(), glimpse() and summary()
+- Get an overview of your dataset using `head()`, `tail()`, `glimpse()`, and summary()
 
 Prerequisite skills include:
 
@@ -64,40 +63,39 @@ Prerequisite skills include:
 
 Highlights:
 
-- Using head(), tail(), glance() and summary() to understand your dataset
-
-
-### The content
+- Using `head()`, `tail()`, `glance()`, and `summary()` to understand your dataset
 
 After you load your dataset into R, you should start looking into the data to see what kinds of data you are working with.
 
 Here are some useful functions that can help you to understand your dataset. 
 
 
-### head()
-The head() function takes in two parameters. The first parameter is the data frame, and the second parameter is the first number of rows you want to look at. (The "head" of your dataset)
+### `head()`
+
+The `head()` function takes in two parameters. The first parameter is the data frame, and the second parameter is the first number of rows you want to look at. (The "head" of your dataset.)
 
 ```{r headex}
-head(mtcars,3)
+head(mtcars, n = 3)
 ```
 
-Here I have set the n equal to 3, so we are looking at the first three row of the mtcars dataset. 
+Here I have set 'n' to 3, so we are looking at the first three rows of the mtcars dataset. 
 
 
 
-### tail()
-The tail() function also takes in two parameters. The first parameter is the data frame, and the second parameter is the last number of rows you want to look at. (The "tail" of your dataset) 
+### `tail()`
+
+The `tail()` function also takes in two parameters. The first parameter is the data frame, and the second parameter is the last number of rows you want to look at. (The "tail" of your dataset.)
 
 
 ```{r tailex}
-tail(mtcars, 3)
+tail(mtcars, n = 3)
 ```
 
-Here I have set the n equal to 3, so we are looking at the last three row of the mtcars dataset. 
+Here I have set 'n' to 3, so we are looking at the last three row of the mtcars dataset. 
 
-### glimpse()
+### `glimpse()`
 
-The glimpse() function takes in one parameter, which is the data frame. This function can tell you the number of rows and columns for your dataset. Additionally, you can get the name, data type, and first few observations of each variable.  
+The `glimpse()` function takes in one parameter, which is the data frame. This function can tell you the number of rows and columns for your dataset. Additionally, you can get the name, data type, and first few observations of each variable.  
 
 ```{r glimpseex}
 glimpse(mtcars)
@@ -105,7 +103,7 @@ glimpse(mtcars)
 
 Here, we see that the table mtcars contains 32 rows and 11 columns of data. All of the variables in this table are double-precision floating-point number, because <dbl> represents the double data type.
 
-### summary()
+### `summary()`
 
 Next, you may want to look at the summary statistics of your data set. The function summary can produce the following summary statistics for each of the variables. 
 
@@ -138,7 +136,6 @@ glimpse(scores)
 
 Using the glimpse function, we know that student_ID is a character data type, gender is a factor data type, and test_score is a double data type.
 
-
 ```{r sumex4}
 summary(scores)
 ```
@@ -151,7 +148,7 @@ For double data type(test_score), we have the summary statistics as we have seen
 
 ### Exercises
 
-### Exercise 1
+#### Exercise 1
 
 ```{r headex2, echo = FALSE}
 question("If you want to look at the first 5 rows of the mtcars dataset, which code should you use?",
@@ -163,7 +160,7 @@ question("If you want to look at the first 5 rows of the mtcars dataset, which c
 
 ``` 
 
-### Exercise 2
+#### Exercise 2
 
 ```{r summaryex, echo = FALSE}
 question("What is the output of summary() function for factor data type?",
@@ -175,17 +172,19 @@ question("What is the output of summary() function for factor data type?",
 
 ``` 
 
-### Exercise 3
+#### Exercise 3
 
 Here, we have a book dataset from Alex Cookson. This dataset contains 9,000 children's books that have been rated from 1-5 stars. Run the following code to your R and use the functions you learned in this tutorial to explore this dataset!
 
-**books <- read_tsv("https://raw.githubusercontent.com/tacookson/data/master/childrens-book-ratings/childrens-books.txt")**
-
+```{r, eval = FALSE}
+books <- 
+  read_tsv("https://raw.githubusercontent.com/tacookson/data/master/childrens-book-ratings/childrens-books.txt")
+```
 
 
 ### Next Steps
-Once you have fully understood the dataset you are working with. You may start using plots to get a graphical representation of your dataset. 
-You may read this chapter for more information! https://r4ds.had.co.nz/data-visualisation.html 
+
+Once you have fully understood the dataset you are working with you may start using plots to get a graphical representation of your dataset. You may like to read this chapter for more information: https://r4ds.had.co.nz/data-visualisation.html.
 
 
 
@@ -200,7 +199,7 @@ You may read this chapter for more information! https://r4ds.had.co.nz/data-visu
 
 
 
-## Strings with paste and glue and stringr
+## `paste()`, `paste0()`, `glue::glue()` and `stringr`
 
 Written by Marija Pejcinovska
 
@@ -290,7 +289,7 @@ student <- c("Rohan", "Monica")
 badges <- c(2,4)
 term <- c("Fall", "Spring")
 
-paste(student, "collected", badges, "DoSS tool-kit badges in the", term )
+paste(student, "collected", badges, "DoSS toolkit badges in the", term )
 
 ```
 
@@ -313,7 +312,7 @@ student <- c("Rohan", "Monica")
 badges <- c(2,4)
 term <- c("Fall", "Spring")
 
-glue("{student} collected {badges} DoSS tool-kit badges in {term}")
+glue("{student} collected {badges} DoSS toolkit badges in {term}")
 
 ```
 
@@ -326,13 +325,14 @@ student <- c("Owen", "Monica")
 badges <- c(2,4)
 term <- c("Fall", "Spring")
 
-glue("<student] collected <badges] DoSS tool-kit badges in <term]", .open = "<", .close = "]")
+glue("<student] collected <badges] DoSS toolkit badges in <term]", .open = "<", .close = "]")
 
 ```
 
 The function **`glue_data()`** works much like `glue()` but it is easier to use in piped chains (recall the pipe operator, ` %>% `). It was designed to look up R objects (those objects that are to be evaluated inside the string) in the first argument passed (usually this would be your data), rather than the calling environment.
 
 As an example run the following code. See what happens if you change `glue_data()` below with `glue()`.
+
 ```{r penguin-example-glue-data, exercise = TRUE, exercise.lines=12}
 
 library(palmerpenguins)
@@ -419,7 +419,7 @@ small_penguins <- penguins %>%
 small_penguins
 ```
 
-**Exercise 1**
+#### Exercise 1
 
 Use an appropriate function from the `glue` package to produce the following string "This penguin is of the species XXX from island XXX and has body mass of XXX g" describing the 6th penguin in `small_penguins`, where the three XXX should be species, island name, and body mass respectively.
 
@@ -442,7 +442,7 @@ small_penguins %>%
 
 
 
-**Exercise 2**
+#### Exercise 2
 
 Using `glue()` and `glue_collapse()` manipulate the vectors `quant` and `food` below to get the following single string "1 sushi roll, 2 tacos, and 3 cakes"
 
@@ -464,7 +464,7 @@ glue_collapse((glue("{quant} {food}")),sep=", ", last=", and ")
 ```
 
 
-**Exercise 3**  
+#### Exercise 3 
 
 Back to our `small_penguins` data from Exercise 1.
 
@@ -489,10 +489,10 @@ small_penguins %>%
 
 
 
-**Exercise 4**  
-
+#### Exercise 4
 
 Use  `mutate()` to create a new variable `island_short` where with the help of `str_replace` you remove the pattern "ersen"  from the island name.
+
 ```{r ex4_str-remove, exercise=TRUE, exercise.lines=8, exercise.eval=FALSE, exercise.setup = "small_penguins"}
 
 small_penguins %>% 
@@ -514,7 +514,7 @@ small_penguins %>%
 ### Next Steps
 
 
-- This tutorial only briefly introduced you to the capabilities of the `stringr` package. Future tutorials will revisit this package and dive deeper into some of its functions. In the meantime you can learn more about this package in Hadley Wichkam's book *"R for Data Science"*. The link here takes you to the chapter on strings which also introduces you to regular expressions (regular expressions are a bit tedious, but you might learn to like them if you end up working with text data a lot). https://r4ds.had.co.nz/strings.html 
+- This tutorial only briefly introduced you to the capabilities of the `stringr` package. Future tutorials will revisit this package and dive deeper into some of its functions. In the meantime, you can learn more about this package in Hadley Wickham's book *"R for Data Science"*. The link here takes you to the chapter on strings which also introduces you to regular expressions (regular expressions are a bit tedious, but you might learn to like them if you end up working with text data a lot). https://r4ds.had.co.nz/strings.html 
 
 
 
@@ -526,7 +526,7 @@ small_penguins %>%
 
 
 
-## names(), rbind() and cbind()
+## `names()`, `rbind()` and `cbind()`
 
 Written by Isaac Ehrlich.
 
@@ -546,21 +546,25 @@ Prerequisites:
 
 ### Arguments
 
-#### names()
+#### `names()`
+
 The primary purpose of `names()` is to return the column names of a data frame. The only argument that `names()` takes is the data frame.
+
 ```{r names-ex}
 head(starwars)
 names(starwars)
 ```
 
 Using indexing, `names()` can also be used to change the column names of a data frame.
+
 ```{r}
 # Change the tenth column name to home-planet
 names(starwars)[10] <- "home-planet"
 names(starwars)
 ```
 
-#### rbind()
+#### `rbind()`
+
 The purpose of `rbind()` is to combine two (or more) data frames by row. The arguments to `rbind()` are two (or more) data frames. These data frames must have the same number of columns, and must have the same column names as well.
 ```{r}
 letter_df <- data.frame(numbers = 1:26, strings = letters)
@@ -572,7 +576,8 @@ dim(character_df) # shows the number of rows and columns
 
 ```
 
-#### cbind()
+#### `cbind()`
+
 The purpose of `cbind()` is to combine two (or more) data frames by column. The arguments to `cbind()` are two (or more) data frames. These data frames must have the same number of rows, or the number of rows must be multiples of one another. Note, in the case that the number of rows are multiples, the rows in the smaller data frame are repeated so they match the longer data frame.
 ```{r}
 index_df <- data.frame(numbers = 1:5, letters = c("a", "b", "c", "d", "e"))
@@ -589,9 +594,9 @@ dim(combined_df) # shows the number of rows and columns
 
 ### Questions and Exercises
 
-#### names
+#### Question 1
 
-**1. Using the `presidential` data frame, save the column names, and then change the name of the second column to `inauguration-date**
+Using the `presidential` data frame, save the column names, and then change the name of the second column to `inauguration-date`.
 
 ```{r names-q1, echo = FALSE, exercise = TRUE}
 # Enter your code below
@@ -615,9 +620,8 @@ names(presidential)[2] <- "inauguration-date"
 ```
 
 
-#### rbind()
+#### Question 2
 
-**2.**
 ```{r rbind-q2, echo = FALSE}
 question("If you were to rbind() a data frame to itself, ",
 answer("the number of columns would double"),
@@ -626,8 +630,7 @@ answer("both the number of rows and the number of columns would double"),
 allow_retry = TRUE)
 ```
 
-
-**3.**
+#### Question 3
 
 ```{r rbind-q3, echo = FALSE}
 question("Select the following true statements about rbind() arguments",
@@ -638,7 +641,10 @@ answer("The data frames must have the same name"),
 allow_retry = TRUE)
 ```
 
-**4. Bind the `presidential` data set to itself using `rbind()`.** 
+#### Question 4
+
+Bind the `presidential` data set to itself using `rbind()`.
+
 ```{r rbind-q4, echo = FALSE, exercise = TRUE}
 # Enter your code below
 
@@ -653,9 +659,8 @@ double_presidential <- rbind(presidential, presidential)
 ```
 
 
-#### cbind()
+#### Question 5
 
-**5.**
 ```{r cbind-q5, echo = FALSE}
 question("If you were to cbind() a data frame to itself, ",
 answer("the number of columns would double", correct = TRUE),
@@ -664,7 +669,10 @@ answer("both the number of rows and the number of columns would double"),
 allow_retry = TRUE)
 ```
 
-**6. Bind the `presidential` data set to itself using `cbind()`.** 
+#### Question 6
+
+Bind the `presidential` data set to itself using `cbind()`.
+
 ```{r cbind-q6, echo = FALSE, exercise = TRUE}
 # Enter your code below
 
@@ -702,7 +710,7 @@ In the next section, we will continue learning how to manipulate data frames.
 
 
 
-## left_join(), anti_join(), full_join(), etc
+## `left_join()`, `anti_join()`, `full_join()`, etc
 
 Written by Haoluan Chen.
 
@@ -710,8 +718,7 @@ Written by Haoluan Chen.
 
 In this lesson, you will learn how to:
 
-- Join two tables by using left_join(), right_join(), full_join() 
-  , inner_join and anti_join()
+- Join two tables by using left_join(), right_join(), full_join(), inner_join and anti_join()
 
 Prerequisite skills include:
 
@@ -721,10 +728,7 @@ Highlights:
 
 - Learn how two join two tables  
 
-### The content
-
-Sometimes you may want to combine two data frames into a single table.
-Here we have one table which contains data such as the student id and their grade. And we have another table that includes demographic information about the student.
+Sometimes you may want to combine two data frames into a single table. Here we have one table which contains data such as the student id and their grade. And we have another table that includes demographic information about the student.
 
 ```{r joindata}
 test_score <- tribble(~student_id, ~grade
@@ -745,27 +749,29 @@ test_score
 student_info
 ```
 
-Using dplyr within R, we can easily import our data and join these tables, using the following join types.
+Using `dplyr` within R, we can easily import our data and join these tables, using the following join types.
 
-- Left Join (left_join)
-- Right Join (right_join)
-- Full Join (full_join)
-- Inner Join (inner_join)
-- Anti Join (anti_join)
+- Left Join (`left_join()`)
+- Right Join (`right_join()`)
+- Full Join (`full_join()`)
+- Inner Join (`inner_join()`)
+- Anti Join (`anti_join()`)
 
 The general syntax of these joins is as follows:
 
 join_type(firstTable, secondTable, by=columnTojoinOn)
 
-We’ll now run through an example of using each of these join types on our two tables.
+We'll now run through an example of using each of these join types on our two tables.
 
 
-### left_join()
+### `left_join()`
 
-left_join will take all of the values from the table we specify as left (e.g., the first one) and match them to records from the table on the right (e.g., the second one) by the variable we specified. If there is no match in the second table, it will show NULL for the values in the second table. For example, if we left joined test_score to student_info, our data would look as follows:
+`left_join()` will take all of the values from the table we specify as left (e.g., the first one) and match them to records from the table on the right (e.g., the second one) by the variable we specified. If there is no match in the second table, it will show NULL for the values in the second table. For example, if we left joined 'test_score' to 'student_info', our data would look as follows:
 
 ```{r leftjoin}
-leftJoinDf <- left_join(test_score,student_info,by='student_id')
+leftJoinDf <- 
+  left_join(test_score,student_info, by='student_id')
+
 leftJoinDf
 ```
 
@@ -886,8 +892,8 @@ question("Which set of student id is in the output of full_join(test_score, stud
 
 ### Common Mistakes & Errors
 
-- Make sure there is at least one common variable in the tables you joining
-- Think about how you want to join the table and use the appropriate join function
+- Make sure there is at least one common variable in the tables you are joining.
+- Think about how you want to join the table and use the appropriate join function.
 
 ### Next Steps
 
@@ -939,7 +945,7 @@ represents well. A simpler question that we may ask, however, is: does our data 
 contain all possible combinations of some collection of variables?
 
 While that may be a more directly answerable questionable, it is still difficult to try to
-understand what exactly this may mean. Let’s try to break this down using some concrete,
+understand what exactly this may mean. Let's try to break this down using some concrete,
 hypothetical data.
 
 Suppose we have a data set representing student grades for a collection of required first
@@ -1137,11 +1143,11 @@ The `runif()` function generate random numbers from a uniform distribution.
 
 ##### Arguments
 
-It takes in three parameters: `n`, `min` and `max`. The parameter `n` specifies the number of random value you want to generate. The parameter `min` and `max` specify the range of the uniform distribution. The default of min and max are 0 and 1.
+It takes in three parameters: `n`, `min` and `max`. The parameter `n` specifies the number of random values you want to generate. The parameter `min` and `max` specify the range of the uniform distribution. The default of min and max are 0 and 1.
 
 Arguments | What does it mean
 ------------- | -------------
-n (required) | number of random value you want to generate (numeric)
+n (required) | number of random values you want to generate (numeric)
 min (optional) | the minimum value of the uniform distribution you are sampling from (numeric)
 max (optional)| the maximum value of the uniform distribution you are sampling from (numeric)
 
@@ -1173,7 +1179,7 @@ It takes in three parameters: `n`, `mean`, and `sd`. The parameter `n` specifies
 
 Arguments | What does it mean
 ------------- | -------------
-n (required) | number of random value you want to generate (numeric)
+n (required) | number of random values you want to generate (numeric)
 mean (optional) | the mean value of the normal distribution you are sampling from (numeric)
 sd (optional)| the standard deviation of the normal distribution you are sampling from (numeric)
 
@@ -1207,7 +1213,7 @@ When replace is set to true, you will be sampling from the same set of numbers f
 Arguments | What does it mean
 ------------- | -------------
 x (required) | vector of one or more elements that you are sampling from
-size (required) | number of random value you want to generate (numeric)
+size (required) | number of random values you want to generate (numeric)
 replace (optional)| true if you want to sample with replacement (logical)
 prob (optional) | a vector of probability weights for obtaining the elements of the vector being sampled.
 
@@ -1263,7 +1269,7 @@ Let's run our dice simulation twice and see what happens (run the following code
 sample(x, 6, replace = TRUE)
 ```
 
-We get different results every time we run the simulation simulation, because we randomly sampled from 1-6 with replacement. What if you want to reuse the result from one simulation? Sometimes you do not want your result to change every time you run the function. This is what `set.seed()` does. 
+We get different results every time we run the simulation, because we randomly sampled from 1-6 with replacement. What if you want to reuse the result from one simulation? Sometimes you do not want your result to change every time you run the function. This is what `set.seed()` does. 
 
 When you use `set.seed()` function before your simulation, the simulation output will be the same every time. 
 
@@ -1702,9 +1708,9 @@ In this lesson, you will learn how to:
 
 Prerequisite skills include:
 
-- Familiarity with summarize()
-- Familiarity with mutate()
-- Familarity with conditional statements (_coming soon!_)
+- Familiarity with summarize().
+- Familiarity with mutate().
+- Familiarity with conditional statements (_coming soon!_).
 
 Highlights:
 
@@ -2500,7 +2506,7 @@ We can split up the information contained in the `food` column in a different wa
 | Argument | Parameter | Details
 | -------- | --------- | ----------------------------------------- |
 | data     | data frame | A data frame |
-| ... | string | The name(s) of the column(s) containing the data to be separated. Multiple columns can be inputted if their lengths are compatible (ie. the same number of new rows will be created once they are separated). Otherwise, an error will be raised. |
+| ... | string | The name(s) of the column(s) containing the data to be separated. Multiple columns can be inputted if their lengths are compatible (i.e. the same number of new rows will be created once they are separated). Otherwise, an error will be raised. |
 | sep | number OR string | Character between values to be separated. Defaults to any non-alpha-numeric characters. |
 
 Notice that we don't need to worry about the name or number of new columns since none will be created. Once the data in the indicated column(s) has separated into additional rows, the data from accompanying columns will be duplicated to fill in the new row's remaining cells.
@@ -2825,7 +2831,7 @@ or 'dttm'. Be sure to convert to the proper data type first!
 
 ### Next Steps
 
-If yo would like to learn more about handling dates and times in R, as well as the
+If you would like to learn more about handling dates and times in R, as well as the
 tidyverse lubridate package, please read the following:
 
 - [R For Data Science:  16 Dates and times](https://r4ds.had.co.nz/dates-and-times.html)
