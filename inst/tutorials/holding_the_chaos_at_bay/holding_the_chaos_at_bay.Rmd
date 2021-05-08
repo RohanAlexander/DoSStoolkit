@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Holding the chaos at bay"
-date: "4 May 2021"
+date: "8 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -15,40 +15,38 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(learnr)
 
+## Pre-specify data at setup for learnr
+my_data <- 
+  c("studendID,test1,test2,grade 
+  student1,90,85,A
+  student2,30,46,F
+  student3,70,80,B
+  student4, NA,68,C
+  student5,NA,NA,F"
+  )
 
-## Prespecifying data at setup for learnr (MP)
+my_data_modified <- 
+  c("Hello, this text is, irrelevant
+  As is this line
+  studendID,test1,test2,grade 
+  student1,90,85,A
+  student2,30,46,F
+  student3,70,80,B
+  student4, NA,68,C
+  student5,NA,NA,F
+  student6,LWD,LWD,LWD"
+  )
 
-my_data <- c("studendID,test1,test2,grade 
-         student1,90,85,A
-         student2,30,46,F
-         student3,70,80,B
-         student4, NA,68,C
-         student5,NA,NA,F")
-
-
-my_data_modified <- c("Hello, this text is, irrelevant
-As is this line
-studendID,test1,test2,grade 
-student1,90,85,A
-student2,30,46,F
-student3,70,80,B
-student4, NA,68,C
-student5,NA,NA,F
-student6,LWD,LWD,LWD")
-
-
-my_new_data <- c("studendID,test1,test2,grade
-(textID),(points out of 100),(points out of 100),(letter grade)
-student1,90,85,A
-student2,30,46,F
-student3,70,80,B
-student4, NA,68,C
-student5,NA,NA,F")
-
-
-
+my_new_data <- 
+  c("studendID,test1,test2,grade
+  (textID),(points out of 100),(points out of 100),(letter grade)
+  student1,90,85,A
+  student2,30,46,F
+  student3,70,80,B
+  student4, NA,68,C
+  student5,NA,NA,F"
+  )
 ```
-
 
 
 
@@ -57,7 +55,11 @@ student5,NA,NA,F")
 
 Written by Rohan Alexander.
 
-This is a somewhat bitty module. First we go through how to organize your folders and files. Although we've been fairly prescriptive here, think of it more as a default to get you started - you should vary from it as you think best. After that we go through using packages, which are collections of other people's code. And how to write code that is more helpful for other people (even if that person is just future-you) by writing meaningful comments. Finally, we cover how to import data. 
+When you first learn how to code in R, it can feel like you're in a battle to just get something working, without regard for what it looks like. That fine initially, but as you start to use R in more involved settings that approach will become a bit chaotic. This will result in you having to do more work in the long run. 
+
+In this module we cover how to hold back that chaos. While they will add a few minutes initially, the techniques that we cover here will save you time in the long run. Your analysis will be better and more professional, and it will be easier for you to build on the code base that you establish every time you code.
+
+This is a somewhat bitty module. We've been fairly prescriptive here, but you should think of it more as a default to get you started, and you can move from this default as you think best. First we discuss R Projects, and then how to structure your folders. We then discuss writing comments, which makes your code more useful for other people (even if that person is just future-you). Then we cover installing and loading packages, which are collections of other people's code. Finally, we discuss loading data. 
 
 We got the sharks out of the pool - feel free to jump in!
 
@@ -73,20 +75,21 @@ Written by Isaac Ehrlich.
 
 ### Introduction
 
-Whether you want to save a script, load data, or output graphs, RStudio needs to know which folder to look for on your computer. The folder path you use for any given analysis or project is called the **working directory**.   
+Whether you want to save a script, load data, or output graphs, R needs to know which folder to look for on your computer. The folder path you use for any given analysis or project is called the **working directory**.   
 
-In this section, you will learn how to set a working directory using the function `setwd()` as well as using **R Projects**, and why Projects may be better for organization and reproducibility.
+In this section, you will learn how to set a working directory using the function `setwd()` as well as how to use **RStudio projects**, and why RStudio projects are better for organization and reproducibility.
 
-Some key concepts and functions to keep in mind throughout the section: **working directory**, **R Projects**, `getwd()`, `setwd()`
+Some key concepts and functions to keep in mind throughout the section: **working directory**, **R Projects**, `getwd()`, `setwd()`.
+
 
 ### The working directory
 
 The working directory is the folder path from which you can load or save files.
-If say you are working on a project in R/RStudio, your working directory could be the folder containing all files and any  additional subfolders related to your project. Once you've let R know what this directory is, you could refer to (or call) various files contained in your working directory by simply providing the file name in your R script. This is true since the reference to each file is interpreted relative to the working directory. This, on the other hand, implies that files "living" outside this directory would need to be referenced using their full file path, otherwise you get an error. 
+If you are working on a project in R/RStudio, then your working directory could be the folder containing all files and any additional sub-folders related to your project. Once you've let R know what this directory is, you could refer to (or call) various files contained in your working directory by providing the file name in your R script. This is true since the reference to each file is interpreted relative to the working directory. This, on the other hand, implies that files "living" outside this directory would need to be referenced using their full file path, otherwise you get an error. 
 
 You can use the function `getwd()` to find your current working directory.
 
-To change your working directory, you can use the function `setwd()` with the folder path of your new directory as the argument. For example, if I wanted to change my working directory to the folder `C:/Users/Documents/Scripts` I would use the command `setwd("C:/Users/Documents/Scripts")`. Alternatively, you can set the working directory through R's Toolbar and browsing on your computer as shown in the image below (If you choose to do this, note what happens on the R console once you select your folder from the folder menu; you should see the setwd() function executed with your chosen folder path).
+To change your working directory, you can use the function `setwd()` with the folder path of your new directory as the argument. For example, if I wanted to change my working directory to the folder `C:/Users/Documents/Scripts` I would use the command `setwd("C:/Users/Documents/Scripts")`. Alternatively, you can set the working directory through R's Toolbar, and then browse on your computer as shown in the image below (If you choose to do this, note what happens on the R console once you select your folder from the folder menu; you should see the `setwd()` function executed with your chosen folder path).
 
 ```{r, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/setwd.png")
@@ -94,11 +97,11 @@ knitr::include_graphics("images/setwd.png")
 
 #### Drawbacks of `setwd()`
 
-If you set your working directory manually in an R session (using either`setwd()` or through the toolbar), it is very likely that the folder path will be unique to your computer. In this case, if you or someone else was attempting to run your code on another device, they would first need to edit the folder path to which the working directory is set. While this is not necessarily critical, it does decreases the usability of your code and the reproducibility of your analysis. To avoid this issue, RStudio has a feature called R Projects, discussed next.
+If you set your working directory manually in an R session (using either `setwd()` or through the toolbar), it is  likely that the folder path will be unique to your computer. In this case, if you or someone else was attempting to run your code on another device, they would first need to edit the folder path to which the working directory is set. While this is not necessarily critical, it decreases the usability of your code and the reproducibility of your analysis. To avoid this issue, RStudio has a feature called R Projects, discussed next.
 
 ### R Projects
 
-R Projects are a type of file, labelled `.Rproj`, which designate a working directory. When an R Project is open, the working directory is automatically set to the folder path of the Project. Now, the paths that you use to save and load files are all relative to the location of your R Project, rather than specific folder names on your computer. Therefore, instead of using `setwd()`, we encourage you to create an R Project at the beginning of any new project or assignment. This will improve your organization and reproducibility. The image below shows an example R Project setup. We will dicuss recommended folder setup in the following section.
+R Projects are a type of file, labelled `.Rproj`, which designate a working directory. When an RStudio project is open, the working directory is automatically set to the folder path of the RStudio project. Now, the paths that you use to save and load files are all relative to the location of your RStudio project, rather than specific folder names on your computer. Therefore, instead of using `setwd()`, we encourage you to create an RStudio project at the beginning of any new project or assignment. This will improve your organization and reproducibility. The image below shows an example RStudio project setup. We will discuss recommended folder setups in the following section.
 
 ```{r, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/r-project-example.png")
@@ -107,9 +110,9 @@ knitr::include_graphics("images/r-project-example.png")
 
 #### Creating and Opening R Projects
 
-To create an R Project, go to File, and then select New Project. RStudio will then ask if you wish to create the project in a new or existing directory. If you have already created a folder on your computer, select existing directory. Otherwise, select New Directory/New Project, and then name the project and choose the location to store it on your computer.
+To create an R Project, go to 'File', and then select 'New Project'. RStudio will then ask if you wish to create the project in a new or existing directory. If you have already created a folder on your computer, select existing directory. Otherwise, select 'New Directory/New Project', and then name the project, and choose the location to store it on your computer.
 
-To open an R project, you can go to File and select Open Project in RStudio. Alternatively, you can simply double click on the `.Rproj` file in your file explorer. Note, RStudio is capable of running multiple projects at the same time, but not within the same session. If you want to run multiple R Projects, you will need to open a new session.
+To open an R project, you can go to 'File' and select 'Open Project' in RStudio. Alternatively, you can double click on the `.Rproj` file in your file explorer. Note, RStudio is capable of running multiple projects at the same time, but not within the same session. If you want to run multiple R Projects, you will need to open a new session.
 
 ### Common Mistakes & Errors
 
@@ -177,7 +180,7 @@ Written by Isaac Ehrlich.
 
 ### Introduction
 
-In this lesson, we will discuss how to set up folders for assignments and projects in R. As the folder structure revolves around your R Projects, make sure you have gone through the section on R Projects as well.
+In this lesson, we will discuss how to set up folders for assignments and projects in R. As the folder structure revolves around an RStudio project, make sure you have gone through the RStudio project lesson as well.
 
 #### Folder Set-Up Motivation
 Many assignments and analyses you complete will require multiple files, including data files, code, and written reports. To keep these organized, we recommend using a consistent folder structure system. This will make loading data into your R environment simpler, and will help keep your analyses organized.
@@ -425,7 +428,7 @@ install.packages("ggplot2")
 ```
 
 
-After running this code, you will receive some message on the console and it will start installing the package (this may take a few minutes depending on your system). Then it will tell you that you have successfully installed the package.
+After running this code, you will receive some message on the console, and it will start installing the package (this may take a few minutes depending on your system). Then it will tell you that you have successfully installed the package.
 
 Note that for some package it may ask you to input something in the console to complete the installation. You will see this in the installing package from GitHub tutorial.
 
@@ -472,13 +475,13 @@ For the next step, you can install the package from CRAN and start using them fo
 
 Here is a list of useful packages you may be using:
 
-- ggplot2 (create graphics)
-- dplyr (data manipulation)
-- readr (read data files)
-- tidyverse (include packages you are likely to use everyday data analyses. Including all three packages above and more!)
-- tidytext (text mining package)
-- glmnet (Regularized generalized linear models)
-- leanr (create interactive tutorial for R just like this one)
+- `ggplot2` (create graphics)
+- `dplyr` (data manipulation)
+- `readr` (read data files)
+- `tidyverse` (include packages you are likely to use everyday data analyses. Including all three packages above and more!)
+- `tidytext` (text mining package)
+- `glmnet` (Regularized generalized linear models)
+- `learnr` (create interactive tutorial for R just like this one)
 
 You can also create your own packages! 
 
@@ -525,14 +528,14 @@ Highlights:
 
 GitHub is a popular repository for open-source projects. Many developers can share and collaborate their work with the world. Sometimes, you may need to use the package from GitHub for a specific task.
 
-Note: Unlike the packages from CRAN, there is no review process for Github packages, so you may encounter bugs or errors when using them.  
+Note: Unlike the packages from CRAN, there is no review process for GitHub packages, so you may encounter bugs or errors when using them.  
 
 
 #### Install packages from GitHub
 
-To install the package from GitHub, you will need the function `install_github()` in the `devtools` package. devtools contains tools for package developers to build and test their packages. 
+To install the package from GitHub, you will need the function `install_github()` in the `devtools` package. `devtools` contains tools for package developers to build and test their packages. 
 
-So, you need to first install `devtools` package and load the package in order to use the install_github package. However, a faster way to do that is to run the following code in the r chunk or the console: `devtools::install_github("developer name/package name")`. The developer name and package name can be found on the top left side of the github repository
+So, you need to first install `devtools` package and load the package in order to use the `install_github` function. However, a faster way to do that is to run the following code in the r chunk or the console: `devtools::install_github("developer name/package name")`. The developer name and package name can be found on the top left side of the GitHub repository
 
 This code means that you want to call the `devtools` package and use the function `install_github()`. This way, you do not have to install and load the `devtools` package.
 
@@ -540,7 +543,7 @@ This code means that you want to call the `devtools` package and use the functio
 
 https://github.com/sharlagelfand/dmc
 
-The goal of `dmc` pacakge is to allow you to find the closest DMC embroidery floss colour(s) for a given colour, as well as access colour (hex, RGB) information about DMC colours.
+The goal of `dmc` package is to allow you to find the closest DMC embroidery floss colour(s) for a given colour, as well as access colour (hex, RGB) information about DMC colours.
 
 You can run the following code on your console to install this package: 
 
@@ -590,7 +593,7 @@ For next step, you can install the package from GitHub and start using them for 
 
 In the future, you may want to build your own R package!
 
-R Packages is a book that gives a comprehensive treatment of all common parts of package development and uses devtools throughout. The first edition is available at http://r-pkgs.had.co.nz, but note that it has grown somewhat out of sync with the current version of devtools.
+R Packages is a book that gives a comprehensive treatment of all common parts of package development and uses `devtools` throughout. The first edition is available at 'http://r-pkgs.had.co.nz', but note that it has grown somewhat out of sync with the current version of `devtools`.
 
 
 
@@ -1015,13 +1018,11 @@ Prerequisite skills include:
 Text and .csv files are common file formats for saving various types of data. R allows you to read in such delimited text files in a number of ways.    
 
 In this tutorial we will focus specifically on the `read_csv()` function. 
-The function is part of the `readr` package, which itself if part of the `tidyverse` ecosystem of packages. \n
+The function is part of the `readr` package, which itself if part of the `tidyverse` ecosystem of packages.
 
-Note: you can get the `readr` package by installing the whole `tidyverse` (install.packages("tidyverse")
-) or by installing `readr` directly. To load the package you'll need to use `library(readr)`; alternatively it will be loaded automatically when you load the `tidyverse`. 
+Note: you can get the `readr` package by installing the whole `tidyverse` (install.packages("tidyverse")) or by installing `readr` directly. To load the package you'll need to use `library(readr)`; alternatively it will be loaded automatically when you load the `tidyverse`. 
 
-As the name suggest the `read_csv()` function is best suited for reading in `.csv` type files. \n 
-"**csv**" stands for **c**omma-**s**eparated **v**alues, which means that data entries are separated (or delimited) by commas (in the case where values are separated by semicolons instead, use the function`read_csv2()`). Each row in a csv file is initiated by a newline (or rather a newline character `\n`).   
+As the name suggest the `read_csv()` function is best suited for reading in `.csv` type files. "**csv**" stands for **c**omma-**s**eparated **v**alues, which means that data entries are separated (or delimited) by commas (in the case where values are separated by semicolons instead, use the function`read_csv2()`). Each row in a csv file is initiated by a newline (or rather a newline character `\n`).   
 
 To begin, let's create our own small (csv looking) text data that we'll read in with the `read_csv()` function. We'll call this object `my_data`
 
@@ -1035,13 +1036,9 @@ my_data <- c("studendID,test1,test2,grade
          student3,70,80,B
          student4, NA,68,C
          student5,NA,NA,F") 
-
-
-
 ```
 
-We'll read the data by putting `my_data`as an argument inside our function as shown below. 
-If instead `my_data` was a `.csv` file somewhere on your computer you would need to provide the location (path) of your file which should look something like `read_csv("my_folder/my_subfolder/my_data_file.csv")`. Run the code below to get a quick sense of what the data looks like once we've called the `read_csv()` function.
+We'll read the data by putting `my_data` as an argument inside our function as shown below. If instead `my_data` was a `.csv` file somewhere on your computer you would need to provide the location (path) of your file which should look something like `read_csv("my_folder/my_subfolder/my_data_file.csv")`. Run the code below to get a quick sense of what the data looks like once we've called the `read_csv()` function.
 
 ```{r first_csv,  exercise=TRUE, exercise.lines=7}
 
@@ -1107,7 +1104,7 @@ R also assumed that our actual column names (i.e. the very first row of our data
 By now you are probably seeing that you should use `col_names` as a logical value only to indicate to R that the data you are reading in does not have a line of column names.  
 If you data file does not contain variable names you could specify those using `col_names`, but instead of providing a logical value, you should provide a vector with the variable names; for example, `col_names = c("First Var Name, "Second Var Name")`. This, however, becomes cumbersome for data with too many variables and there might be better solution to manipulate the names. 
 
-The argument `skip` can be used to indicate how many lines should be skipped before reading in data entries. For instance setting `skip = 4` will skip the first 4 lines of the file.  
+The argument `skip` can be used to indicate how many lines should be skipped before reading in data entries. For instance, setting `skip = 4` will skip the first 4 lines of the file.  
 
 The argument `n_max`, on the other hand, allows you to control the maximum number of lines read. For instance, setting `n_max=1` would indicate to R to only read a single line of the data file. Note, however, that if `col_names = TRUE` the header of the data file (i.e. the column names) are not counted towards the `n_max` total. For example, setting `n_max=0` will initiate a tibble(data frame) with no entries read, but with the names of the columns preserved. 
 
@@ -1189,7 +1186,7 @@ read_csv(my_new_data, skip=2, col_names = my_columns)
 #### Exercise 2
 
 Let's look at a another data file, this time one that lives online.  
-Consider the following data about gifts given between 1999 and 2018 to U.S. federal employees from foreign government sources. The raw data can be found at https://raw.githubusercontent.com/tacookson/data/master/us-government-gifts/gifts.csv . We'll use the url to read it in. 
+Consider the following data about gifts given between 1999 and 2018 to U.S. federal employees from foreign government sources. The raw data can be found at https://raw.githubusercontent.com/tacookson/data/master/us-government-gifts/gifts.csv . We'll use the URL to read it in. 
 
 
 ```{r real_data_read, exercise=TRUE, message = FALSE, warning=FALSE, exercise.timelimit=240}
