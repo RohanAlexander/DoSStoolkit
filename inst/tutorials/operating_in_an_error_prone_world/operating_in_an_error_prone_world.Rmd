@@ -688,7 +688,7 @@ tibble(
                              ## use ?rnorm to check out the function's arguments
   improvement = c("yes", "no", "no", "no", "no", "no", "yes", "no", "no", "yes")
 ) %>% 
-  mutate(new_var = msrmnt + improvement)
+  mutate(new_var1 = msrmnt + improvement)
 
 ```
 
@@ -758,11 +758,11 @@ reprex::reprex({
 
 ```
 
-### Additional Resources
+### Next Steps
 
-Consider the following list of do's and don'ts from the folks that made the `reprex` package https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html  
+In this lesson you learned the basics of making a reproducible example. If you are interested in some additional resources, consider the following list of do's and don'ts from the folks that made the `reprex` package: https://reprex.tidyverse.org/articles/reprex-dos-and-donts.html  
 
-For more information on `reprex`, check out Jenny Bryan webinar on creating reproducible examples with reprex (https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
+For even more information on `reprex`, check out Jenny Bryan webinar on creating reproducible examples with reprex:  https://reprex.tidyverse.org/articles/articles/learn-reprex.html
 
 
 
