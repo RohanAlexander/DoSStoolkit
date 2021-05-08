@@ -14,6 +14,39 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(learnr)
+
+
+## Prespecifying data at setup for learnr (MP)
+
+my_data <- c("studendID,test1,test2,grade 
+         student1,90,85,A
+         student2,30,46,F
+         student3,70,80,B
+         student4, NA,68,C
+         student5,NA,NA,F")
+
+
+my_data_modified <- c("Hello, this text is, irrelevant
+As is this line
+studendID,test1,test2,grade 
+student1,90,85,A
+student2,30,46,F
+student3,70,80,B
+student4, NA,68,C
+student5,NA,NA,F
+student6,LWD,LWD,LWD")
+
+
+my_new_data <- c("studendID,test1,test2,grade
+(textID),(points out of 100),(points out of 100),(letter grade)
+student1,90,85,A
+student2,30,46,F
+student3,70,80,B
+student4, NA,68,C
+student5,NA,NA,F")
+
+
+
 ```
 
 
@@ -960,43 +993,6 @@ functions you may find helpful:
 
 
 
-
-
-```{r setupCSV, include=FALSE}
-library(learnr)
-library(tidyverse)
-
-my_data <- c("studendID,test1,test2,grade 
-         student1,90,85,A
-         student2,30,46,F
-         student3,70,80,B
-         student4, NA,68,C
-         student5,NA,NA,F")
-
-
-my_data_modified <- c("Hello, this text is, irrelevant
-As is this line
-studendID,test1,test2,grade 
-student1,90,85,A
-student2,30,46,F
-student3,70,80,B
-student4, NA,68,C
-student5,NA,NA,F
-student6,LWD,LWD,LWD")
-
-
-my_new_data <- c("studendID,test1,test2,grade
-(textID),(points out of 100),(points out of 100),(letter grade)
-student1,90,85,A
-student2,30,46,F
-student3,70,80,B
-student4, NA,68,C
-student5,NA,NA,F")
-
-
-```
-
-
 ## `read_csv()`
 
 Written by Marija Pejcinovska.
@@ -1233,7 +1229,9 @@ read_csv("https://raw.githubusercontent.com/tacookson/data/master/us-government-
 - Make sure that the data file is really missing column names before you proceed to change the `col_names` argument. 
 
 
+### Next Steps
 
+So far you've learned how to import a basic delimited data file in R using `read_csv()`. In the next tutorial you will see how to load other types of data and import more complicated data formats.
 
 
 

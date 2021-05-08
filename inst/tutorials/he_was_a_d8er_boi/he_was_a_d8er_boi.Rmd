@@ -329,7 +329,7 @@ glue("<student] collected <badges] DoSS toolkit badges in <term]", .open = "<", 
 
 ```
 
-The function **`glue_data()`** works much like `glue()` but it is easier to use in piped chains (recall the pipe operator, ` %>% `). It was designed to look up R objects (those objects that are to be evaluated inside the string) in the first argument passed (usually this would be your data), rather than the calling environment.
+The function **`glue_data()`** works much like `glue()` but it is designed to be used in piped chains (recall the pipe operator, ` %>% `). What's important to note here is that inside the curly braces we pass the column names of the columns in our data we wish to glue in some way (and not the name of the variables or R objects as we did with `glue()`). 
 
 As an example run the following code. See what happens if you change `glue_data()` below with `glue()`.
 
@@ -377,25 +377,35 @@ Let's check this out.
 my_vec <- c("r", "R", "I love R", "why?", "what is this?")
 
 my_vec %>% 
-  str_detect(.,"r")
+  str_detect("r")
 
 my_vec %>% 
-  str_detect(.,"wh")
+  str_detect("wh")
 ```
 
 Note that the pattern detection is case sensitive. 
 
 `str_replace()`, on the other hand, allows you to replace a matched pattern with an entirely new string (or an empty string, if what you  wish to do is remove the pattern; see also `str_remove()`). 
-
 ```{r str-remove-1}
 my_vec 
 
 my_vec %>% 
-  str_replace(., "\\?", " code")
+  str_replace("\\?", " code")
 
 ```
 
-The first argument tells you what object we are evaluating (in the pipe chain `.` indicates the object `my_vec`), the second argument is the pattern we are trying to find a match for (note that since ? is a special character we need to escape it by placing `\\` before `?`). The final argument here is the string we wish to replace our matched pattern with (in our case that's the string "code"). 
+The first argument is the pattern we are trying to find a match for (note that since ? is a special character we need to escape it by placing `\\` before `?`). The second argument here is the string we wish to replace our matched pattern with (in our case that's the string "code"). 
+
+Let's see the `str_replace()` function applied to our penguins data. We'll use the function to slightly modify the name of an island
+
+```{r}
+
+penguins %>% 
+  slice(1:4) %>% 
+  mutate(new_island = str_replace(island, "Tor", "Mor"))
+  
+```
+
 
 This is just a small slice of what the `stringr` package has to offer. Be on the lookout for future tutorials with more on strings and regular expressions. 
 
@@ -459,7 +469,11 @@ food <- c("sushi roll", "tacos", "cakes")
 quant <- 1:3
 food <- c("sushi roll", "tacos", "cakes")
 
-glue_collapse((glue("{quant} {food}")),sep=", ", last=", and ")
+glue_collapse((glue("{quant} {food}")), sep = ", ", last = ", and ")
+
+# Or alternatively with the piping syntax
+glue("{quant} {food}") %>% 
+  glue_collapse(.,sep = ", ", last = ", and")
   
 ```
 
