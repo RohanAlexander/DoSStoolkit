@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Totally addicted to base"
-date: "7 May 2021"
+date: "8 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -26,8 +26,9 @@ gradethis::gradethis_setup()
 
 ## Introduction
 
-In this module, we are going to explore 'base R'. This means that we don't need to load any packages - we're working with functions that come 'out of the box' as it were. Base is a very stable collection of functions that have been refined over decades. This is in contrast to the 'tidyverse', which we introduced in other modules, which is much newer. Some folks are passionate about the differences between them, but they're just tools that we use as appropriate. In this module we are going to cover some base functions that you'll use again and again in your R journey, especially in statistics.
+In this module, we are going to explore 'base R'. This means that we don't need to load any packages - we're working with functions that come 'out of the box', as it were. Base is a very stable collection of functions that have been refined over decades. This is in contrast to the `tidyverse`, which we introduced in earlier modules, which is much newer. Some folks are passionate about the differences between them, but they're just tools that we use as appropriate. In this module we are going to cover some base functions that you'll use again and again in your R journey, especially in statistics.
 
+The statistical programming language R was original designed for statistics and so there is a whole lot of functionality built into base R that helps with statistics. For instance, there are great functions to calculate summary statistics, and to quickly plot data. Also in base are the types of foundational programming functions that most languages need, such as `for()`, `while()`, and, of course, the ability to define your own `function()`.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/PhljUEN996Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -50,7 +51,7 @@ In this module, we are going to explore 'base R'. This means that we don't need 
 
 
 
-## `mean()`, `median()`, `sd()`, `lm()`, `summary()`
+## `mean()`, `median()`, `sd()`, `lm()`, & `summary()`
 
 Written by Mariam Walaa.
 
@@ -85,7 +86,7 @@ Highlights:
 
 ### Arguments
 
-#### mean()
+#### `mean()`
 
 The `mean()` function takes the following as arguments:
 
@@ -97,7 +98,7 @@ The `mean()` function takes the following as arguments:
 You can read more about the arguments in the `mean()` function's documentation
 [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/mean).
 
-#### median()
+#### `median()`
 
 The `median()` function takes the following as arguments:
 
@@ -109,7 +110,7 @@ The `median()` function takes the following as arguments:
 You can read more about the arguments in the `median()` function's documentation
 [here](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/median).
 
-#### sd()
+#### `sd()`
 
 The `sd()` function takes the following as arguments:
 
@@ -121,7 +122,7 @@ The `sd()` function takes the following as arguments:
 You can read more about the arguments in the `sd()` function's documentation
 [here](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/sd).
 
-#### summary()
+#### `summary()`
 
 The `summary()` function takes the following as arguments:
 
@@ -132,7 +133,7 @@ The `summary()` function takes the following as arguments:
 You can read more about the arguments in the `summary()` function's documentation
 [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/summary).
 
-#### lm()
+#### `lm()`
 
 The `lm()` function takes the following as arguments:
 
@@ -147,12 +148,7 @@ You can read more about the arguments in the `lm()` function's documentation
 
 ### Overview
 
-This section will demonstrate how to use the `lm()` function to build simple and multiple
-linear regression models. We will be looking at a subset of the Broadway Grosses data set
-provided by Alex Cookson in [the dataset
-repository](https://github.com/tacookson/data/tree/master/broadway-grosses)provided on 
-GitHub. The Broadway Grosses data set comprises data on revenue and attendance figures 
-for theaters that are part of The Broadway League.
+This section will demonstrate how to use the `lm()` function to build simple and multiple linear regression models. We will be looking at a subset of the Broadway Grosses data set provided by Alex Cookson in [the dataset repository](https://github.com/tacookson/data/tree/master/broadway-grosses)provided on GitHub. The Broadway Grosses data set comprises data on revenue and attendance figures for theaters that are part of The Broadway League.
 
 ```{r summary-statistics, include = FALSE}
 library(tidyverse)
@@ -403,7 +399,7 @@ question("Which of these are true? Check all true statements.",
          random_answer_order = TRUE)
 ```
 
-### Common Mistakes & Errors
+### Common mistakes & errors
 
 Here are some common mistakes and errors you may come across:
 
@@ -412,7 +408,7 @@ operators (i.e., `~` to separate the dependent variable from the independent var
 or `+` to separate the independent variables)
 - You might be specifying the dependent variable in place of the independent variables, and vice versa. Be sure to follow the `Y ~ X1 + X2 + ... + Xn` formatting.
 
-### Next Steps
+### Next steps
 
 If you would like to read more about these functions, here are some additional resources
 you may find helpful:
@@ -487,7 +483,7 @@ You should consider writing a function whenever you have copied and pasted a blo
 
 #### Built-in functions 
 
-There are many built-in functions in R. For example, the mean() function in R can calculate the mean of a vector. Whenever we want to calculate a mean of some numbers, we do not have to calculate the sum of all the numbers and divide by the number of numbers. Instead, we can store the numbers in a vector then call the mean() function to calculate the mean. Utilize the built-in functions can make your life easier for your projects. 
+There are many built-in functions in R. For example, the `mean()` function in R can calculate the mean of a vector. Whenever we want to calculate a mean of some numbers, we do not have to calculate the sum of all the numbers and divide by the number of numbers. Instead, we can store the numbers in a vector then call the `mean()` function to calculate the mean. Utilize the built-in functions can make your life easier for your projects. 
 
 
 #### User defined functions
@@ -652,7 +648,7 @@ tax_calculator <- function(price, tax_ratio = 0.13){
 
 
 
-### Common Mistakes & Errors
+### Common mistakes & errors
 
 - Make sure you have correct input for your function
 - Remember that the function returns the last expression in the function body.
@@ -661,7 +657,7 @@ tax_calculator <- function(price, tax_ratio = 0.13){
 
 
 
-### Next Steps
+### Next steps
 Most of the time, you will be using the function from various packages and the functions in R. However, for some specific tasks, you will have to write your own functions. The ability to use user-defined functions and functions from different packages makes R a powerful tool in Data Science.   
 
 If you want to see more completed function, you can read through this Function chapter in R for Data Science
@@ -714,9 +710,10 @@ Loops, or iterations are a step that the program automatically goes through cert
 library(tidyverse)
 ```
 
-### For Loop
+### `for()`
 
 #### Structure 
+
 ```{r, eval=F}
 for(var in iterable) { 
   #statement
@@ -728,19 +725,21 @@ for(var in iterable) {
 The structure of the for loop is simple. You start with `for()` to indicate that you are going to use the for loop. The argument to the `for()` consists of a variable, which takes items from iterable one by one. Iterable is a collection of objects (like a list, vector, sequence, etc.) For each iteration in the `for` loop, a value is taken from the list and assigned to the variable, and the following statement in the curly braces, `{}` is evaluated. 
 
 Let's take a look at a example.
+
 ```{r}
 index<-seq(1,10,by=2) 
 for(i in index){ 
   print(i) 
 }
 ```
-Here is sequences from 1 to 10, by 2. 
-If you iterate through the sequence using for loop and print each variable, each value is taken from the sequence and print, which is the statement in the curly braces `{}`.   
+
+Here is sequences from 1 to 10, by 2. If you iterate through the sequence using for loop and print each variable, each value is taken from the sequence and print, which is the statement in the curly braces `{}`.   
 
 
-#### Mutating a Dataset using `For` loop
-Now, let's use a different dataset to add some new variables using for loop, and get some useful information. 
-Let's first create a simple dataset of grades of each student in `math`, `cs`, `sta` courses. 
+#### Mutating a Dataset using `for()`
+
+Now, let's use a different dataset to add some new variables using for loop, and get some useful information. Let's first create a simple dataset of grades of each student in `math`, `cs`, `sta` courses. 
+
 ```{r}
 set.seed(6055)
 student_id <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
@@ -757,6 +756,7 @@ student
 ```
 
 Then, let's say we want to see each student's total mark as well as their average mark. First, we have to assign numeric variable names for `avg` and `tot`, and n is going to be the number of students, which is number of rows of the data. 
+
 ```{r}
 ## empty vector
 avg <- numeric()
@@ -781,6 +781,7 @@ student
 ```
 
 Let's say we want to know how many students got their average grade higher than 80 which is A. We can use `for` in this case, to go through each student's average grade, and determine if the average grade is over 80, we can increase the arbitrary variable assigned- `a`-  by 1 in each iteration. 
+
 ```{r}
 a <- 0
 for (i in 1:nrow(student)) {
@@ -792,7 +793,7 @@ a
 ```
 
 
-#### Nested `For` Loop 
+#### Nested `for()` loops 
 A nested `for` loop is a loop within a loop. They are useful for when you want to repeat a statement several times for several things.
 
 Nested `for` loops are often used to manipulate a bi-dimensional array by setting its elements to specific values.  
@@ -811,7 +812,7 @@ The outer for loop iterates through c(1, 2), and the inner loop is c(1, 2, 3)
 First, i = 1. We have to iterate through 1, 2, 3 now for j. `1*1`, `1*2`, `1*3` is executed respectively. Same for i = 2. Therefore, you can see that the number of the returned outputs is equal to the number of outer loops multiplied by the number of inner loops: 2 x 3. 
 
 
-### While Loop
+### `while()`
 There is another way to create loops, using `while` statement. `while` loops are used to loop until a specific condition is met/satisfied. In for loops, we already know how many times the loop will run. However, `while` can be used when the exact number of iterations is not known.  
 
 #### Structure
@@ -839,10 +840,11 @@ Here, the condition is `i < 5`, which evaluates `TRUE` in the first loop, since 
 So, the loop enters the body, prints 1 , and i is incremented by 1 since the body is `i = i + 1`. In the next iteration, 2 < 5 so the loop repeats the same step, until i becomes 5. 5 is not smaller (`<`) than 5, which evaluates `FALSE` in the condition `i < 5`. Here, the loop terminates. 
 
 
-### Differences between For vs While 
-- `For` is used when you know how many iterations the code should go through.   
-- `While` is used when the number of iteration depends on the condition, and evaluates whether the condition is `TRUE` or `FALSE`. If it is evaluated False, the loop terminates.  
-- which means, In while loops, most of the time you will need to code the incrementation yourself such as `i = i + 1` so the loop would terminate at some point.   
+### Differences between `for()` and `while()`
+
+- `for()` is used when you know how many iterations the code should go through.   
+- `while()` is used when the number of iteration depends on the condition, and evaluates whether the condition is 'TRUE' or 'FALSE'. If it is evaluated 'FALSE', the loop terminates.  
+- This means that in `while()` loops, most of the time you will need to code the incrementation yourself, such as `i = i + 1` so the loop would terminate at some point.   
 
 
 
@@ -920,12 +922,12 @@ question_checkbox(
 ```
 
 
-### Common Mistakes & Errors
+### Common mistakes & errors
 - if you only have one statement to execute, you don't need to put the curly braces `{}`. However, if you have multiple statements, `{}` is necessary. 
 - Be aware on your use of the iterable object. For example, `for (i in student)` would not execute the result you want in the previous example. 
 - Think carefully of what statement you're trying to iterate. 
 
-### Next Steps
+### Next steps
 - Practice how to manipulate data using `for` loops
 
 ### References  
@@ -954,28 +956,24 @@ Written by Haoluan Chen.
 
 In this lesson, you will learn how to:
 
-- use if statement 
-
-- use if_else statement
-
-- use case_when() function 
+- use the `if()` function. 
+- use the `if_else()` function.
+- use the `case_when()` function.
 
 Prerequisite skills include:
 
-- setup RStudio
-- run R code in the console
-- Install and load dplyr package 
+- Setup RStudio.
+- Run R code in the console.
+- Install and load `dplyr` package.
 
 Highlights:
 
 - Learn how to use if_else statement
-- Using case_when() to create new variables in your dataset
+- Using `case_when()` to create new variables in your dataset
 
-### The content
+### `if()`
 
-### if statement
-
-The if statement is a tool for returning an output based on a logical condition. The syntax of the if statement is:
+The `if()` function is a tool for returning an output based on a logical condition. The syntax of the `if()` function is:
 
 ```{if eval=F}
 if (condition) {
@@ -1005,11 +1003,12 @@ if (x > 0){
 
 However, if x is set to -3, our condition x > 0 is evaluated as false. Therefore, the statement *print("A positive number")* will not be executed, and nothing happens.  
 
-### if_else statement
+### `if_else()`
 
-if_else statement has two parts. The first part is exactly the same as the if statement, and the second part is the else statement. The else statement will be evaluated if the condition is FALSE. 
+The `if_else()` function has two parts. The first part is exactly the same as the if statement, and the second part is the else statement. The else statement will be evaluated if the condition is FALSE. 
 
-The syntax of if_else statement is:
+The syntax of the `if_else()` function is:
+
 ```{ifelse eval=F}
 if (condition) {
   statement1 
@@ -1020,7 +1019,8 @@ if (condition) {
 
 If the condition is true, the {statement1} will be executed. However, if the condition is false, then {statement2} will be executed.
 
-### Examples 
+#### Examples 
+
 ```{ifelse1 eval=F}
 if (x > 0){
   print("A positive number")
@@ -1031,7 +1031,7 @@ if (x > 0){
 
 The above if_else statement will return "A positive number" if x is greater than 0 and "A negative number" if x is less than 0.
 
-### case_when() function 
+### `case_when()` function 
 What if you have multiple condition? case_when() function is here to help. 
 
 The syntax of case_when() function with a single case is a follows:
@@ -1061,7 +1061,7 @@ case_when(condition_1 ~ output_1,
 Here, when condition_1 is evaluated to true, then the function returns output_1. When condition_2 is evaluated to true, then the function returns output_2 and so on. 
 
 
-### Examples 
+#### Examples 
 Here is an example of using case_when function with multiple cases. 
 
 We have seven students and their numeric grades for a course, and we want to assign the letter grade for each student. A grade between 80 and 100 is A grade, 70 to 79 is B grade, 60 to 69 is C grade, 50 to 59 is D grade, and below 50 is F grade.  
@@ -1095,7 +1095,7 @@ mutate(test_score_df, letter_grade =
 
 ### Exercises
 
-### Exercises 1 
+#### Exercises 1 
 Using if_else statement to see if x can be divided by 3 with remainder equal to zero.  
 **Hint: %% is an operation to calculate the remainder **
 
@@ -1112,7 +1112,7 @@ if (x %% 3 == 0){
 }
 ```
 
-### Exercises 2
+#### Exercises 2
 
 ```{r ifelseex2, echo = FALSE}
 question("Predict what is the output of this if_else statement",
@@ -1133,7 +1133,7 @@ if (mean(x) > 5){
 }
 ```
 
-### Exercises 3
+#### Exercises 3
 
 ```{r dataset}
 test <- tribble(~student_id, ~pass
@@ -1160,14 +1160,14 @@ test %>% mutate(pass = case_when(pass == TRUE ~ 1, TRUE ~ 0))
 
 
 
-### Common Mistakes & Errors
+### Common mistakes & errors
 
 - Make sure you put the condition inside the ()
 - Make sure you put the statements in the {}
 - If you receive an unexpected output, you may test your if_else logic by testing some cases
 - Make sure you have the correct syntax for the case_when() function
 
-### Next Steps
+### Next steps
 
 You can write a nested if_else for more complex situations. An example can be found on this website https://www.tutorialgateway.org/nested-if-else-in-r/
 
@@ -1396,7 +1396,7 @@ vector <- c("University", "of", "Toronto")
 rep(x = vector, each = 3)
 ```
 
-### Common Mistakes & Errors
+### Common mistakes & errors
 
 Here are some common errors that can occur for each of the functions discussed in this section:
 
@@ -1420,7 +1420,7 @@ In this case, it means that the vector that R is trying to find does not exist. 
 - Error: object 'string' not found
 As mentioned above, R does not recognize an object entered into the function. You likely have a typo or you should put quotation marks around the string you want to repeat.
 
-### Next Steps
+### Next steps
 
 Some next steps include:
 
@@ -1439,7 +1439,7 @@ Some next steps include:
 
 
 
-## `hist()`, `plot()`, and `boxplot()`
+## `hist()`, `plot()` & `boxplot()`
 
 Written by Yena Joo.
 
@@ -1637,7 +1637,7 @@ plot(USArrests$Murder, USArrests$Rape,
      ylab = "Rape")
 ```
 
-### Common Mistakes & Errors
+### Common mistakes & errors
 
 
 Here are some common mistakes and errors you may come across:  
@@ -1645,7 +1645,8 @@ Here are some common mistakes and errors you may come across:
 - Do not confound histogram with a barplot. They are different plots, where histograms visualize the frequency of numerical data, and bar charts visualize categorical data.   
 - Bin size is important. Make sure you are using the right bin size.   
 
-#### Overview and Next Steps
+
+#### Overview and Next steps
 
 This is the last lecture of the module "Totally addicted to base".
 With the functions we have learned today as well as in the previous lectures, you can create well-made base graphs and export them to present in your projects or papers. 
