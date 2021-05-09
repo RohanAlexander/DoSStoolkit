@@ -134,7 +134,7 @@ The main functions are:
 
 There are more functions in this package that will make data cleaning easier and more effective. To learn more about tidy data, you may find the paper ["Tidy data"](https://vita.had.co.nz/papers/tidy-data.html) helpful. 
 
-#### dplyr 
+#### `dplyr` 
 
 The `dplyr` package is used to manipulate a data set you created using readr and tidyr.  
 
@@ -154,10 +154,11 @@ Here are [more information on dplyr package](https://dplyr.tidyverse.org).
 
 The `ggplot2` package is used to create graphics and to visualize data. With the `ggplot()` function, you can create almost every graph you imagine of. using aesthetic mapping `aes()`, `geom_point`, `geom_line`, etc. you can set what kind of layers you would like to include in the graph, with what kind of scales, and many more.   
 
-For example, I can create a scatter plot using `ggplot()` with `geom_point` as follows:   
+For example, I can create a scatter plot using `ggplot()` with `geom_point` as follows:    
 ```{r}
 ggplot(mtcars, mapping = aes(mpg, disp)) + geom_point()
 ```
+  
 You can fine-tune your graph using faceting specifications, labeling, coordinate systems, changing colours, and more. You can plot almost any type of graphs you could imagine using the package, much more efficiently.    
 
 
@@ -199,7 +200,6 @@ This is not every package that `tidyverse` contains, but they are the most impor
 ### References
 
 - [official tidyverse webpage](https://tidyverse.tidyverse.org). 
-- [tidyverse](https://tidyverse.tidyverse.org)
 - [tidyverse cheatsheet](http://users.encs.concordia.ca/~gregb/home/PDF/R-Tidyverse-Cheat-Sheet.pdf)
 
 

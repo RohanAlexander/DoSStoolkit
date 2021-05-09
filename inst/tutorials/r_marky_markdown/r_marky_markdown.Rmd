@@ -633,11 +633,15 @@ Written by Yena Joo.
 
 When writing a formal paper or an essay using R, you are going to be writing in RMarkdown, and the first page of the paper should include a good title, date, author, and a neat abstract. Using latex in Markdown, it would be simple and easy to create a good first page of your essay. 
 
-**Prerequisite skills include:**   
+Prerequisite skills include:   
+
 - nothing much, just the topic of your own choice and functions we have learned so far which could be a good asset to your essay!
 
-**Highlights:**   
-- Format of a paper
+Highlights:   
+
+- Format of a paper  
+- YAML metadata  
+- Abstract  
 
 ### Title, Date, Author
 
@@ -668,17 +672,46 @@ The abstract of a research paper is a part that implies/summarizes only the most
 2. Design of the study and how it was conducted/analyzed
 3. Major findings and results of the study/analysis that you conclude with
 
-You should write the abstract after you have finished writing the entire paper. The abstract is usually in one paragraph that readers could know the broad content of the paper just by reading it. 
+You should write the abstract after you have finished writing the entire paper. The abstract is usually in one paragraph that readers could know the broad content of the paper just by reading it.  
+
+Also, try not to use every detail of your paper, or numeric references to the bibliography or sections of your paper, since readers would not have access to the full paper, and they would not have enough time to go over the entire paper to look for the references. Make sure to focus on the core contents.  
 
 To create an abstract, you would first need a header:  
 
 ```
-### Abstract 
+## Abstract 
 ```
 Then, get started on the abstract once you finished writing your entire paper.  
 
 ### Exercises
 
+#### Question 1  
+```{r q1_topmatter, echo=F}
+question_checkbox(
+  "To create a pdf document from your R Markdown document, what do you have to put in the YAML metadata of your document?",
+  answer("output: html_document", correct = F),
+  answer("output_style: pdf_document", correct = F),
+  answer("output: pdf_document", correct = T),
+  answer("pdf_document", correct = F),
+  allow_retry = T,
+  random_answer_order = T,
+  incorrect = "Try again. You got this!"
+)
+```
+
+```{r q2_topmatter, echo=F}
+question_checkbox(
+  "What do you have to include in your abstract? Select all that apply.",
+  answer("The purpose/goal of the study", correct = T),
+  answer("Major findings and results", correct = T),
+  answer("Design of the study and how it was conducted", correct = T),
+  answer("numeric references to bibliography or sections", correct = F),
+  answer("complex mathematical notations", correct = F),
+  allow_retry = T,
+  random_answer_order = T,
+  incorrect = "Try again. You got this!"
+)
+```
 
 ### Common Mistakes & Errors
 There is not much space to make a mistake here, but take your time to write your abstract. Do not include too much information in your abstract. Think of your abstract as an appetizer of the meal, it is to show the readers a big picture of your paper.  
@@ -707,17 +740,20 @@ Written by Yena Joo.
 In the research papers, tables are used all the time. However, the dataframe itself looks unorganized and latex-y when the R file is converted into PDF or HTML. To make nice and beautiful tables, we are going to learn how to use `kable` and `kableextra`.  
 
 
-**In this lesson, you will learn how to:**  
+In this lesson, you will learn how to:  
+
 - Create Tables In LaTeX, HTML, Markdown   
 - build common complex tables and manipulate table styles using `kableExtra`  
 
 
-**Prerequisite skills include:**  
+Prerequisite skills include:  
+
 - manipulate dataset  
 - You don't need much prerequisite for this chapter :)  
  
  
-**Highlights:**  
+Highlights:  
+
 - How to create tables for HTML and PDF.  
 - `kable`, `kableExtra`, `gt`  
 
@@ -885,29 +921,41 @@ mt_table
 ### Exercises
 
 #### Question 1
-create a table that has a title "This is a table", bootstrap options being `stripe`, and having full width, with a right position, using `data`
+Create a table that has a title "This is a table", bootstrap options being `stripe`, and having full width, with a `right` position, using the dataset `data`. 
 ```{r q1_kable, exercise.eval = TRUE, exercise=TRUE}
 data <- head(mtcars)
 ```
 
 ```{r q1_kable-solution}
 data <- head(mtcars)
-kable(data, caption = "This is a table", bootstrap_options = 'striped', position = "right", full_width = T)
+kable(data, caption = "This is a table", position = "right", full_width = T)
 ```
 
 #### Question 2
+Now, use `kable_styling()` to create the same table, but with `striped` bootstrap option.  
 
-Put the following dataframes side by side, with the title "Tbales are side by side". 
 ```{r q2_kable, exercise.eval = TRUE, exercise=TRUE}
+data <- head(mtcars)
+```
+
+```{r q2_kable-solution}
+data <- head(mtcars)
+kable(data, caption = "This is a table", position = "right", full_width = T) %>% kable_styling(bootstrap_options = 'striped')
+```
+
+#### Question 3
+
+Put the following data frames side by side, with the title "Tables are side by side". Drop the decimal places using the argument `digits`. 
+```{r q3_kable, exercise.eval = TRUE, exercise=TRUE}
 data_1 <- head(mtcars[1:2, 1:2])
 data_2 <- head(mtcars[, 5:7])
 
 ```
 
-```{r q2_kable-solution}
+```{r q3_kable-solution}
 kable(
   list(data_1, data_2),
-  caption = 'Tables are side by side.'
+  caption = 'Tables are side by side.', digits = 0
 )
 ```
 
@@ -963,12 +1011,12 @@ Written by Yena Joo.
 
 Citation is very important to include in your paper to provide a proper credit to the authors, and to avoid plagiarisms when it is publicly published. Of course we can manually cite and reference using citation maker online and copy and paste them, but we can also use some functions in R Markdown and use BibTeX to cite!    
 
-**In this lesson, you will learn how to:**   
+In this lesson, you will learn how to:   
 
 - cite the references!
 
 
-**Highlights:**  
+Highlights:  
 
 - BibTeX  
 - `citation()`  
@@ -1085,16 +1133,18 @@ So far, we learned almost everything to write a proper paper, and the content sh
 *Note that PDF output requires an installation of LaTeX.*
 
 
-**Prerequisite skills include:**  
+Prerequisite skills include:  
+
 - You should know how to use RMarkdown. 
 
-**Highlights:**  
+Highlights:  
+
 - Use of YAML metadata
 
 ### PDF outputs
 You have to use R Notebook or R Markdown to produce a PDF. When you open the Notebook, you specify the pdf_document output format in the YAML metadata. To have a PDF format, the Rmd file should look something like this:  
 
-This is the original format of the notebook metadata, when you first create a new notebook. 
+This is the original format of the R Markdown metadata, when you first create a new markdown document. 
 ```
 ---
 title: "Title"
