@@ -1229,20 +1229,23 @@ knitr::include_graphics("images/64-google-3.png")
 Written by Yena Joo.
 
 ### Introduction
-We learned how to create plots so far, now we are going to learn how to apply some additional functions to the graph to give them some changes. 
+We learned how to create plots so far, now we are going to learn how to apply some additional functions to the graph to give them some changes. Visualization plays a very important role when using data analysis results. 
 
-**In this lesson, you will learn how to:**    
+In this lesson, you will learn how to:  
+
 - facet plots  
 - label plots  
 - change colors of the plots  
 - function `breaks_pretty()`  
 
-**Prerequisite skills include:**  
+Prerequisite skills include:  
+
 - You should be familiar with ggplot now.  
 - You also should be able to read and manipulate datasets.  
 
-**Highlights:**  
-Everything about how to make plots prettier!!
+Highlights:  
+
+- Everything about how to make plots prettier!!
 
 #### Packages  
 ```{r, message = F}
@@ -1252,14 +1255,27 @@ library(scales)
 
 
 ### Faceting
-With faceting, you can make multi-panel plots and control how the scales of one panel relate to the scales of another. Which means, it partitions a plot into multiple panels. Each panel shows a different subset of the data.
+Faceting allows you to construct multi-panel plots and monitor how the scales of one panel compare to the scales of another. Which means, it partitions a plot into multiple panels. Each panel shows a different subset of the data.  
+
+In other words, it is sometimes necessary to create a graph for each group in data by splitting one plot into multiple plots. In this case, you can use the `facet_wrap()` and `facet_grid()` functions. These functions have the advantage of noticing the distribution of data by group easily.  
 
 There are two main functions for faceting :  
+
 - `facet_grid()`: produces a 2d grid of panels defined by variables which form the rows and columns.  
 - `facet_wrap()`:  "wraps" a 1d ribbon of panels into 2d.  
 
 #### `facet_grid()`
-facet_grid(x ~ y) will display x*y plots even if some plots are empty.  
+facet_grid(x ~ y) will display x*y plots even if some plots are empty. This function defines the shape feature of the panel. When used with ggplot, the x-axis and y-axis are kept as they are, and displayed divided by the variables you specify inside the argument. For example, `facet_grid(. ~ Variable)` changes the plot vertically.  
+
+##### Arguments 
+```
+facet_grid( rows = NULL, cols = NULL, scales = "fixed", space = "fixed", shrink = TRUE, labeller = "label_value", as.table = TRUE, switch = NULL, drop = TRUE, margins = FALSE, facets = NULL)
+```  
+
+- rows, cols: A set of variables quoted by `vars()`. It can also be displayed `(variable ~ variable)`.
+- scales: scales shared across all facets. (`"fixed"`, `"free_x"`, `"free_y"`, `"free"`).  
+
+For more information, click [here](https://ggplot2.tidyverse.org/reference/facet_grid.html).   
 
 **Facet with one variable**  
 
@@ -1286,14 +1302,41 @@ hist_p + facet_grid(success ~ injured, labeller=label_both)
  
 
 #### `facet_wrap()`
+`facet_wrap()` wraps a 1d sequence of panels into 2d. It is easy to understand by comparing the distribution of data by group(category).  
+
+This function partitions the plot based on a categorical variable, and according to the factor of this column, the plot for each group is divided into subplots.  
+
+##### Arguments
+```
+facet_wrap(facets, nrow = NULL, ncol = NULL, scales = "fixed", shrink = TRUE, labeller = "label_value", as.table = TRUE, switch = NULL, drop = TRUE, dir = "h", strip.position = "top") 
+```   
+
+- facets: set of variables. defines faceting groups on the rows or columns dimension.  
+- nrow, ncol: Number of rows and columns.  
+- scales: Specifies whether the x-axis and y-axis of each subplot are fixed.  
+Note that the column, which is passed to this function, must be a factor, discrete variable.  
+
+Here is an [additional information on the arguments and examples](https://ggplot2.tidyverse.org/reference/facet_wrap.html) you may find helpful.   
+
 Facets can be placed side by side using the function facet_wrap() as follow :
 ```{r message = F, warning = F}
-hist_p + facet_wrap(~ sex, , ncol=3)
+hist_p + facet_wrap(~ sex, nrow = 3, ncol=3)
 ```
-`facet_wrap(x ~ y)`displays only the plots having actual values.
-THe function displays plots for every combination of the selected two variables.
+`facet_wrap(x ~ y)`displays only the plots having actual values. The function displays plots for every combination of the selected variables.  
 
+However, so far we don't see much of a difference between `facet_grid()` and `facet_wrap()`, since the selected data is simple. Let's try to use a rather complex plot to see the difference between the two functions.  
 
+#### `facet_grid()` vs `facet_wrap()`
+
+We will use a built-in dataset `mpg`. First, create a scatter plot with variables `hwy` and `displ`. Then, I will use the variable `manufacturer` to facet the plot, using both `facet_grid()` and `facet_wrap()`.  
+
+```{r}
+p <- ggplot(mpg, aes(hwy, displ)) + geom_point()
+p + facet_wrap(vars(manufacturer))
+p + facet_grid(vars(manufacturer))
+```
+  
+Now you can clearly see the difference between the two functions with the default arguments.   
 
 ### Labelling ggplot
 
@@ -1361,17 +1404,10 @@ ggplot(mtcars, aes(x=wt, y=mpg, color= mpg)) + geom_point()
 
 
 #### basic theme changing
-theme_gray : gray background color and white grid lines   
-theme_bw : white background and gray grid lines   
-theme_linedraw : black lines around the plot  
-theme_light : light gray lines and axis (more attention towards the data)  
-theme_void: Empty theme, useful for plots with non-standard coordinates or for drawings
-theme_dark(): Dark background designed to make colours pop out  
-
-The functions theme_xx() can take the two arguments below :
-
-base_size : base font size (to change the size of all plot text elements)
-base_family : base font family
+`theme_gray` : gray background color and white grid lines   
+`theme_bw` : white background and gray grid lines   
+`theme_linedraw` : black lines around the plot  
+`theme_dark()`: Dark background designed to make colours pop out  
 
 *Note that, the function theme_set() changes the theme for the entire session.*   
 (The detailed information of the basic theme changing can be found [here](http://www.sthda.com/english/wiki/ggplot2-themes-and-background-colors-the-3-elements)
@@ -1394,7 +1430,7 @@ Here is an example of using the function:
 Inside the parameter, you put the desired number of breaks. However, you may get slightly more or less breaks than what you put. 
 For example, I can request to break number from 1 to 10 into 5 parts. 
 ```{r}
-a <- breaks_pretty(5)(1:10)
+a <- breaks_pretty(n = 5)(1:10)
 a
 ```
 Then it returns 6 parts, which is slightly more than what I requested in the argument.  
@@ -1475,15 +1511,18 @@ Written by Yena Joo.
 ### Introduction
 There are some situations where you may need pictures of the plots when writing on blogs or sending emails about the data you're analyzing. In that case, you would wonder  how to save and upload the plots created in r.  
 
-**In this lesson, you will learn how to:**  
+In this lesson, you will learn how to:  
+
 - save graphs  
 - change graph sizes  
 
-**Prerequisite skills include:**  
+Prerequisite skills include:  
+
 - You should know how to create graphs using `plot()` or `ggplot()`  
 - You should know the formats of the image (such as png, jpeg, pdf)  
 
-**Highlights:**  
+Highlights:  
+
 - jpeg, png, pdf  
 - `ggsave()`  
 - `unlink()`  
