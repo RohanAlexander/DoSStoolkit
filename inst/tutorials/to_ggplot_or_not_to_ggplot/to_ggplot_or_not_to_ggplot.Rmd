@@ -1318,10 +1318,11 @@ Note that the column, which is passed to this function, must be a factor, discre
 
 Here is an [additional information on the arguments and examples](https://ggplot2.tidyverse.org/reference/facet_wrap.html) you may find helpful.   
 
-Facets can be placed side by side using the function facet_wrap() as follow :
+Facets can be placed side by side using the function facet_wrap() as follows:  
 ```{r message = F, warning = F}
 hist_p + facet_wrap(~ sex, nrow = 3, ncol=3)
 ```
+  
 `facet_wrap(x ~ y)`displays only the plots having actual values. The function displays plots for every combination of the selected variables.  
 
 However, so far we don't see much of a difference between `facet_grid()` and `facet_wrap()`, since the selected data is simple. Let's try to use a rather complex plot to see the difference between the two functions.  
