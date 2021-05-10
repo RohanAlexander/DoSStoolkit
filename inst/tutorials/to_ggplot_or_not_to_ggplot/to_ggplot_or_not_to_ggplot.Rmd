@@ -1331,7 +1331,7 @@ However, so far we don't see much of a difference between `facet_grid()` and `fa
 We will use a built-in dataset `mpg`. First, create a scatter plot with variables `hwy` and `displ`. Then, I will use the variable `manufacturer` to facet the plot, using both `facet_grid()` and `facet_wrap()`.  
 
 ```{r}
-p <- ggplot(mpg, aes(hwy, displ)) + geom_point()
+p <- ggplot(data = mpg, aes(hwy, displ)) + geom_point()
 p + facet_wrap(vars(manufacturer))
 p + facet_grid(vars(manufacturer))
 ```
@@ -1395,11 +1395,11 @@ ggplot(mtcars, aes(x=wt, y=mpg)) +
 Also, you can set the color by groups of variable. It automatically sets up a legend of changing colors depending on the variable value, using `fill` or `color` `= VARIABLE NAME`. 
 ```{r}
 # Box plot
-ggplot(mtcars, aes(group=vs, y=wt, fill = vs)) +
+ggplot(mtcars, aes(group = vs, y = wt, fill = vs)) +
   geom_boxplot()
 
 # Scatter plot
-ggplot(mtcars, aes(x=wt, y=mpg, color= mpg)) + geom_point()
+ggplot(mtcars, aes(x = wt, y = mpg, color = mpg)) + geom_point()
 ```
 
 
@@ -1463,21 +1463,21 @@ plot + facet_grid(vs ~ .)
 #### Question 2
 Label the following graph. Title should be 'scatter plot of mtcars', x-axis should be 'wt' and y-axis should be 'mpg'. 
 ```{r q2_usefuloptions, exercise=TRUE, exercise.eval = TRUE}
-ggplot(mtcars, aes(x=wt, y=mpg, color= mpg)) + geom_point()
-```
+ggplot(mtcars, aes(x = wt, y = mpg, color = mpg)) + geom_point()
+``` 
 
 ```{r q2_usefuloptions-solution}
-ggplot(mtcars, aes(x=wt, y=mpg, color= mpg)) + geom_point()
+ggplot(mtcars, aes(x = wt, y = mpg, color = mpg)) + geom_point()
 ```
 
 #### Question 3
 Change the color of the scatter plot to 'pink'. 
 ```{r, q3_usefuloptions, exercise=TRUE, exercise.eval = TRUE}
-ggplot(mtcars, aes(x=wt, y=mpg)) + 
+ggplot(data = mtcars, aes(x = wt, y = mpg)) + 
   geom_point()
 ```
 ```{r, q3_usefuloptions-solution}
-ggplot(mtcars, aes(x=wt, y=mpg)) + 
+ggplot(data = mtcars, aes(x = wt, y = mpg)) + 
   geom_point(color = 'pink')
 ```
 
@@ -1535,7 +1535,7 @@ Set the file name for the plot you are going to save using the function `jpeg(fi
 We need to call the function `dev.off()` after plotting, which will return control to the screen.  
 ```{r}
 jpeg(file="plot1.jpeg")
-ggplot(mtcars, aes(x=wt, y=mpg, color= wt)) + geom_point()
+ggplot(data = mtcars, aes(x=wt, y=mpg, color= wt)) + geom_point()
 dev.off()
 ```
 
@@ -1547,7 +1547,7 @@ We can also set the full local path of the file we want to save if we don’t wa
 You can save the file as png image by using the function `png(file = "filepath/filename.png")`. 
 ```{r}
 png(file = "plot2.png", width = 500, height = 300)
-ggplot(mtcars, aes(mpg, wt)) + geom_point()
+ggplot(data = mtcars, aes(mpg, wt)) + geom_point()
 dev.off()
 ```
 
@@ -1556,7 +1556,7 @@ dev.off()
 To save a plot as pdf format, we do the following using `pdf(file = 'filename.pdf')`. 
 ```{r}
 pdf(file = "plot3.pdf")
-ggplot(mtcars, aes(mpg, wt)) + geom_point()
+ggplot(data = mtcars, aes(mpg, wt)) + geom_point()
 dev.off()
 ```
 
@@ -1584,7 +1584,7 @@ And these are some core arguments:
 
 Here are some examples. Make sure put the correct format of the file after the file name as follows: 
 ```{r}
-ggplot(mtcars, aes(mpg, wt)) + geom_point()
+ggplot(data = mtcars, aes(mpg, wt)) + geom_point()
 ggsave("plot4.pdf")
 ggsave("plot4.png")
 ggsave("plot4.jpeg")
@@ -1598,11 +1598,11 @@ If you would like to delete the file, you can use the same `unlink()` function.
 #### Question 1
 Modify this code so you can save the following scatter plot into 10 x 10 cm graph in jpeg format, using `ggsave`. The file name should be `answer1`. 
 ```{r q1_save, exercise.eval = TRUE, exercise=TRUE}
-ggplot(mtcars, aes(mpg, wt)) + geom_point()
+ggplot(data = mtcars, aes(mpg, wt)) + geom_point()
 ```
 
 ```{r q1_save-solution}
-ggplot(mtcars, aes(mpg, wt)) + geom_point()
+ggplot(data = mtcars, aes(mpg, wt)) + geom_point()
 ggsave("answer1.jpeg", width = 10, height = 10, units = "cm")
 ```
 
@@ -1620,12 +1620,12 @@ unlink("answer1.jpeg")
 #### Question 3
 Now, using `dev.off()`, save the following plot as pdf. The name of the file should be ```iloveplot.pdf```. 
 ```{r q3_save, exercise.eval = TRUE, exercise=TRUE}
-ggplot(mtcars, aes(x=wt, y=mpg, color= wt)) + geom_point()
+ggplot(data = mtcars, aes(x=wt, y=mpg, color= wt)) + geom_point()
 ```
 
 ```{r q3_save-solution}
 jpeg(file="iloveplot.pdf")
-ggplot(mtcars, aes(x=wt, y=mpg, color= wt)) + geom_point()
+ggplot(data = mtcars, aes(x=wt, y=mpg, color= wt)) + geom_point()
 dev.off()
 ```
 
