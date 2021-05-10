@@ -2126,7 +2126,7 @@ The `factor` function allows you to take a vector and turn it into a factor. The
 
 ```{r factor-ex1}
 factor_vector <- c(1,2,3)
-factor(factor_vector)
+factor(x = factor_vector)
 ```
 
 In addition to the main argument, `factor` also has some optional arguments. These include `levels`, `labels` and `exclude`. `levels` tells R what the order of the levels are of your factor (which is highest/lowest), if you leave it empty it will make the levels in alphabetical order or increasing order for integers. `labels` will create labels for your factor and will set the order of your factor. `exclude` will take out a level that appears in your factor and replace those values with `<NA>`. 
@@ -2134,38 +2134,38 @@ In addition to the main argument, `factor` also has some optional arguments. The
 We can change the levels of our `factor_vector` from earlier using the `levels` argument.
 ```{r factor-levels}
 factor_vector <- c(1,2,3)
-factor(factor_vector, levels = c(2,1,3)) ## set levels to 2,1,3
+factor(x = factor_vector, levels = c(2,1,3)) ## set levels to 2,1,3
 ```
 
 
 Using the `labels` argument, we can rename the levels of `factor_vector`. This will rename 1 to 'one', 2 to 'two' and 3 to 'three'.
 ```{r factor-labels}
 factor_vector <- c(1,2,3)
-factor(factor_vector, labels = c('one', 'two', 'three')) ## set labels to 'one', 'two', 'three'
+factor(x = factor_vector, labels = c('one', 'two', 'three')) ## set labels to 'one', 'two', 'three'
 ```
 
 Using `exclude` we can exclude the number two from our factor.
 ```{r factor-exclude}
 factor_vector <- c(1,2,3)
-factor(factor_vector, exclude = 2)
+factor(x = factor_vector, exclude = 2)
 ```
 
 If you want to test if a column or set of data is a factor, you can use `is.factor`.
 
 ```{r is-factor}
 factor_vector <- c(1,2,3)
-new_factor <- factor(factor_vector, exclude = 2)
+new_factor <- factor(x = factor_vector, exclude = 2)
 
-is.factor(new_factor)
+is.factor(x = new_factor)
 ```
 
 You can also check the levels of a factor using `levels`
 
 ```{r factor-levels-func}
 factor_vector <- c(1,2,3)
-new_factor <- factor(factor_vector)
+new_factor <- factor(x = factor_vector)
 
-levels(new_factor)
+levels(x = new_factor)
 ```
 
 
@@ -2178,7 +2178,7 @@ There are many useful functions in the `forcats` library but this lesson will ma
 This function can be used to count the number of values in each level of your factor. It takes one main argument, the factor you want to count. The other optional arguments (`sort`, `prop`) sort the most common levels to the top and can compute the proportion of the levels represented.
 
 ```{r fct-count}
-random_factor <- factor(c(1,1,1,2,3,4,2,3,2,1,4,3,3,3,2,1))
+random_factor <- factor(x = c(1,1,1,2,3,4,2,3,2,1,4,3,3,3,2,1))
 fct_count(random_factor)
 
 fct_count(random_factor, sort = TRUE)
@@ -2191,8 +2191,8 @@ fct_count(random_factor, sort = TRUE, prop = TRUE)
 This function takes factors with different levels and can combine them into one factor with the levels from the other factors. The only argument it takes are the factors you want to combine. We see that when using it on factors with levels 'a' and 'b' it will combine them into one factor with levels 'a' and 'b'. 
 
 ```{r fct-c}
-factor_a <- factor("a")
-factor_b <- factor("b")
+factor_a <- factor(x = "a")
+factor_b <- factor(x = "b")
 
 fct_c(factor_a, factor_b)
 ```
@@ -2206,11 +2206,11 @@ This group of functions takes levels and brings them together to form a level ca
   - `fct_lump_n:` This function lumps all of the levels except the n most frequent ones.
   
 ```{r fct-lump}
-random_factor <- factor(c(1,1,1,2,3,4,2,3,2,1,4,3,3,3,2,1,1))
+random_factor <- factor(x = c(1,1,1,2,3,4,2,3,2,1,4,3,3,3,2,1,1))
 
-fct_lump_n(random_factor, 2) ## keep the 2 most frequent levels
-fct_lump_prop(random_factor, .25) ## lump levels which appear less than 25 % of time
-fct_lump_min(random_factor, 3) ## lump levels which appear less than 3 times
+fct_lump_n(random_factor, n = 2) ## keep the 2 most frequent levels
+fct_lump_prop(random_factor, prop = .25) ## lump levels which appear less than 25 % of time
+fct_lump_min(random_factor, min = 3) ## lump levels which appear less than 3 times
 ```
 
 
@@ -2224,13 +2224,13 @@ data_ex <- expeditions %>%
   summarise(mean_height = mean(highpoint_metres, na.rm = T))
 
 data_ex %>% 
-  ggplot(aes(season, mean_height)) +
+  ggplot(aes(x = season, y = mean_height)) +
   geom_col() +
   labs(title = "Plot without fct_reorder")
 
 data_ex %>% 
   mutate(season = fct_reorder(season, mean_height)) %>% 
-  ggplot(aes(season, mean_height)) +
+  ggplot(aes(x = season, y = mean_height)) +
   geom_col() +
   labs(title = "Plot with fct_reorder")
 
@@ -2250,13 +2250,13 @@ crew_group <-expeditions %>%
   summarise(mean_staff = mean(hired_staff, na.rm = T))
 
 crew_group %>% 
-  ggplot(aes(season, mean_staff)) +
+  ggplot(aes(x = season, y = mean_staff)) +
   geom_col() +
   labs(title = "Plot without fct_reorder")
 
 crew_group %>% 
   mutate(season = fct_reorder(season, desc(mean_staff))) %>% 
-  ggplot(aes(season, mean_staff)) +
+  ggplot(aes(x = season, y = mean_staff)) +
   geom_col() +
   labs(title = "Plot with fct_reorder")
 
@@ -2279,8 +2279,8 @@ This function is used to change the levels of a factor. When R deals with levels
 If you have a factor with levels "hot", "cold" and "medium", R will sort the levels alphabetically, meaning the order will be "cold", "hot" and then "medium". `fct_relevel` is one way to put the levels in the correct order. There are many ways to change the order, you can either write the order yourself or just move hot to the end using `after = Inf`.
 
 ```{r fct-relevel}
-temperatures <- factor(c("hot", "cold", "medium"))
-levels(temperatures)
+temperatures <- factor(x = c("hot", "cold", "medium"))
+levels(x = temperatures)
 
 ## use fct_relevel
 
@@ -2293,7 +2293,7 @@ termination_levels <- levels(as.factor(expeditions$termination_reason))
 reordered_levels <- fct_relevel(termination_levels, "Success (claimed)", "Success (main peak)",
             "Success (subpeak)")
 
-levels(reordered_levels)
+levels(x = reordered_levels)
 ```
 Now we have successes at the top.
 
