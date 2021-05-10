@@ -751,7 +751,7 @@ The following is code similar to that from the video lesson in the previous sect
 
 First, we begin by installing the `dplyr` package:
 
-```{r video-installing}
+```{r video-installing, eval = FALSE}
 install.packages("dplyr", repos = "http://cran.us.r-project.org")
 ```
 
