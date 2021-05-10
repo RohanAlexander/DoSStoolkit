@@ -459,7 +459,8 @@ question(
   answer("Type `mutate?`"),
   answer("Type `?mutate`", correct = TRUE),
   answer("Type `what_is(mutate)`", correct = TRUE),
-  answer("Type `help(mutate)`")
+  answer("Type `help(mutate)`"),
+  allow_retry = TRUE
 )
 ```
 
@@ -468,7 +469,8 @@ question(
   "When writing code, it's best to:",
   answer("write all the code first, and check for errors when finished"),
   answer("check for errors frequently (every couple of lines)", correct = TRUE),
-  correct = "Yes! Checking often makes it easier to find where problems are."
+  correct = "Yes! Checking often makes it easier to find where problems are.",
+  allow_retry = TRUE
 )
 ```
 
@@ -479,7 +481,8 @@ question(
   answer("Instructions from the package authors on how to cite the package."),
   answer("Technical stuff behind the package that's not worth worrying about."),
   answer("Online forums discussing the package."),
-  correct = "Correct! These are a good place to go for help!"
+  correct = "Correct! These are a good place to go for help!",
+  allow_retry = TRUE
 )
 ```
 
