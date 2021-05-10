@@ -1626,7 +1626,7 @@ Written by Haoluan Chen.
 
 ![Image Source:https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/dplyr_mutate.png, Allison Horst](https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/dplyr_mutate.png?raw=true){width=400 height=300}
 
-mutate() is a function in the dplyr library. It is used to create new variables in your dataset while keeping the existing variables. 
+`mutate()` is a function in the dplyr library. It is used to create new variables in your dataset while keeping the existing variables. 
 
 ### Examples 
 
@@ -1681,7 +1681,7 @@ Q3: Who received the highest final grade in this course?
 final %>% mutate(rank = rank(desc(final_grade)))
 ```
 
-Here, we created a new variable called rank and specify its value using rank() and desc(). The rank() function produces the rank of the student final grade, but it assigns rank from lowest to largest(lowest final grade will assign to 1). So, we have to use desc() to get the rank from largest to lowest(largest final grade will assign to 1)
+Here, we created a new variable called rank and specify its value using `rank()` and `desc()`. The `rank()` function produces the rank of the student final grade, but it assigns rank from lowest to largest(lowest final grade will assign to 1). So, we have to use `desc()` to get the rank from largest to lowest(largest final grade will assign to 1)
 
 Therefore, student 1 received the highest final grade in this course. 
 
@@ -1693,7 +1693,7 @@ final %>% mutate(pass = ifelse(final_grade>=50, TRUE, FALSE))
 
 Here, we created a new variable called pass, which is a logical variable that is TRUE when student received final grade higher or equal to 50(FALSE otherwise). 
 
-We used another function ifelse(), it is equivalent to if...else statement in R. It takes in 3 parameters(test_expression, x, y). If the test_expression is true, it will return x, if the test_expression is not true, it will return y. 
+We used another function `ifelse()`, it is equivalent to if...else statement in R. It takes in 3 parameters(test_expression, x, y). If the test_expression is true, it will return x, if the test_expression is not true, it will return y. 
 
 In this case, When the final_grade is greater or equal to 50, the pass variable will assign to TRUE. And when the final_grade is less than 50, the pass variable will assign to FALSE.
 
