@@ -53,7 +53,7 @@ Written by Haoluan Chen.
 
 In this lesson, you will learn how to:
 
-- Get an overview of your dataset using `head()`, `tail()`, `glimpse()`, and summary()
+- Get an overview of your dataset using `head()`, `tail()`, `glimpse()`, and `summary()`
 
 Prerequisite skills include:
 
@@ -732,7 +732,7 @@ Written by Haoluan Chen.
 
 In this lesson, you will learn how to:
 
-- Join two tables by using left_join(), right_join(), full_join(), inner_join and anti_join()
+- Join two tables by using `left_join()`, `right_join()`, `full_join()`, `inner_join` and `anti_join()`
 
 Prerequisite skills include:
 
@@ -790,7 +790,7 @@ leftJoinDf
 ```
 
 
-### right_join()
+### `right_join()`
 
 One of the easiest ways to consider a right join is the opposite of a left join! In this instance, the table specified second within the join statement will be the one that the new table takes all of its values from. If there is no match in the first table (the table specified first in the argument), it will return NULL for the values in the first table that did not find a match. In this instance, if we right joined student_info to test_score, our data would look as follows:
 
@@ -799,7 +799,7 @@ rightJoinDf <- right_join(test_score,student_info,by='student_id')
 rightJoinDf
 ```
 
-### full_join()
+### `full_join()`
 
 The full join returns all of the data in a new table, whether it matches on either the left or right tables. If the specified variable match on two tables, then a join will be executed. Otherwise, it will return NULL in places where a matching row does not exist.
 
@@ -808,7 +808,7 @@ FullJoinDf <- full_join(test_score,student_info,by='student_id')
 FullJoinDf
 ```
 
-### inner_join()
+### `inner_join()`
 
 inner_join creates a new table that only contains matched rows in both tables. 
 For example, if we decided to join by student_id, the new table would contain rows 1 and 2:
@@ -818,7 +818,7 @@ InnerJoinDf <- inner_join(test_score,student_info,by='student_id')
 InnerJoinDf
 ```
 
-### anti_join()
+### `anti_join()`
 
 An anti join will return all of the rows from the first table where there are no matching values from the second.
 
@@ -1148,7 +1148,7 @@ Highlights:
 ### The content
 
 
-Simulation is an important topic in statistics because it helps you understand how random data might be generated. For some experiments, you may want to simulate values from probability distributions. In R, we can use `runif()` and `rnorm()` function to generate random number from uniform distribution or normal distributionr. Also, we can randomly sample from a set of numbers by using the sample() function. 
+Simulation is an important topic in statistics because it helps you understand how random data might be generated. For some experiments, you may want to simulate values from probability distributions. In R, we can use `runif()` and `rnorm()` function to generate random number from uniform distribution or normal distributionr. Also, we can randomly sample from a set of numbers by using the `sample()` function. 
 
 #### runif()
 
@@ -1170,7 +1170,7 @@ max (optional)| the maximum value of the uniform distribution you are sampling f
 
 
 ```{r ex1}
-runif(3)
+runif(n = 3)
 ```
 The above code means to generate three random numbers from unif(0,1) where unif is a uniform distribution with a minimum value of 0 and maximum value of 1.
 
@@ -1179,7 +1179,7 @@ What if you want to generate number from `unif(2,8)` uniformly?
 In `runif()` function, we can specify the min and max to be 2 and 8 to generate three numbers from unif(2,8):
 
 ```{r ex2}
-runif(3, 2, 8)
+runif(n = 3, min = 2, max = 8)
 ```
 
 #### rnorm()
@@ -1202,7 +1202,7 @@ sd (optional)| the standard deviation of the normal distribution you are samplin
 Let's say we want to generate 5 random number from a normal distribution with `mean = 0` and `sd = 2`.
 
 ```{r ex3}
-rnorm(5, sd = 2)
+rnorm(n = 5, sd = 2)
 ```
 
 Here, we set the `n` to be 5 and `sd` to be 2, because we want to generate five random numbers from a normal distribution with a standard deviation of 2. We do not have to specify the mean value here because the default of the mean parameter is 0, which is exactly what we want. 
@@ -1210,13 +1210,13 @@ Here, we set the `n` to be 5 and `sd` to be 2, because we want to generate five 
 What if we want to generate 5 number from normal(10,2)?
 
 ```{r ex4}
-rnorm(5, 10, 2)
+rnorm(n = 5, mean = 10, sd = 2)
 ```
 Here, we generated 5 numbers from normal(10,2) distribution.
 
 #### sample()
 
-In R, we can using sample() to randomly sample numbers from a collection of numbers. 
+In R, we can using `sample()` to randomly sample numbers from a collection of numbers. 
 
 ##### Arguments
 
@@ -1244,7 +1244,7 @@ Here, we have a vector containing 6 numbers to simulate rolling dice. Let's roll
 ```{r ex6}
 x <- c(1, 2, 3, 4, 5, 6)
 set.seed(2)
-sample(x, 6, replace = TRUE)
+sample(x = x, size = 6, replace = TRUE)
 ```
 
 **Don't worry about set.seed(1), you will learn in this tutorial!**
@@ -1253,7 +1253,7 @@ What if we set the replace to `FALSE`?
 
 ```{r ex7}
 set.seed(1)
-sample(x, 6, replace = FALSE)
+sample(x = x, size = 6, replace = FALSE)
 ```
 
 As we see that when `replace = TRUE`, we obtain repeated sample of 6 and 1. However, when `replace = FALSE`, there is no repeated sample in the output. 
@@ -1265,7 +1265,7 @@ For example, for a unfair dice, The probability of getting a 6 is 40% and the pr
 
 ```{r}
 set.seed(2)
-sample(x, 6, replace = TRUE, prob = c(0.12, 0.12, 0.12, 0.12, 0.12, 0.4))
+sample(x = x, size = 6, replace = TRUE, prob = c(0.12, 0.12, 0.12, 0.12, 0.12, 0.4))
 ```
 
 
@@ -1280,7 +1280,7 @@ set.seed(Sys.time())
 Let's run our dice simulation twice and see what happens (run the following code twice)
 
 ```{r ex8, exercise=TRUE, exercise.lines = 3}
-sample(x, 6, replace = TRUE)
+sample(x = x, size = 6, replace = TRUE)
 ```
 
 We get different results every time we run the simulation, because we randomly sampled from 1-6 with replacement. What if you want to reuse the result from one simulation? Sometimes you do not want your result to change every time you run the function. This is what `set.seed()` does. 
@@ -1301,7 +1301,7 @@ Please run the following code twice.
 
 ```{r ex9, exercise=TRUE, exercise.lines = 2}
 set.seed(2)
-sample(x, 6, replace = TRUE)
+sample(x = x, size = 6, replace = TRUE)
 ```
 
 This also works for `runif()`, `rnorm()` and other simulation functions. Once you use `set.seed()` your simulation will always produce the same result. 
