@@ -1280,6 +1280,7 @@ set.seed(Sys.time())
 Let's run our dice simulation twice and see what happens (run the following code twice)
 
 ```{r ex8, exercise=TRUE, exercise.lines = 3}
+x <- c(1, 2, 3, 4, 5, 6)
 sample(x = x, size = 6, replace = TRUE)
 ```
 
@@ -1299,8 +1300,9 @@ Let's use `set.seed()` before we do the dice simulation
 
 Please run the following code twice. 
 
-```{r ex9, exercise=TRUE, exercise.lines = 2}
+```{r ex9, exercise=TRUE, exercise.lines = 3}
 set.seed(2)
+x <- c(1, 2, 3, 4, 5, 6)
 sample(x = x, size = 6, replace = TRUE)
 ```
 
