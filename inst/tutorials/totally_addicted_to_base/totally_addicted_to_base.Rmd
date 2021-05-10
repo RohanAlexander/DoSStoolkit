@@ -684,9 +684,10 @@ Written by Yena Joo.
 In this lesson, you will learn about "loops", and how to use the function `for` and `while`. It is one of the key concepts that is widely used and fundamental for any kind of programming languages.  
 
 #### What are Loops?
-Loops, or iterations are a step that the program automatically goes through certain logical conditions or a range of a list, array, vector, dataset, and many more. Loop allows code to be executed repeatedly, which is used often in programming to repeat a specific block of code. You can make hundreds and thousands of redundant codes into a few lines of simple code using loops. 
+Loops, or iterations are a step that the program automatically goes through certain logical conditions or a range of a list, array, vector, dataset, and many more. Loops allow code to be executed repeatedly, which is used often in programming to repeat a specific block of code. You can make hundreds and thousands of redundant codes into a few lines of simple code using loops. 
 
-**You can iterate through:**  
+You can iterate through:  
+
 - vectors: `fruits <- c('apple', 'banana', 'mango')`   
 - lists: `list <- list(1, 2, "melon")`   
 - datasets/tibble  
@@ -694,12 +695,14 @@ Loops, or iterations are a step that the program automatically goes through cert
 - sequence: `seq(from=0,to=8,by=2)`   
 
 
-**Prerequisite skills include:**  
+Prerequisite skills include:  
+
 - You should be familiar with the basic data manipulation.  
 - You should understand how vectors, lists, tibble, etc. works  
 
 
-**Highlights:**  
+Highlights:  
+
 - How `for` and `while` loops work and some examples  
 - Differences between the two  
 - Nested Loops  
@@ -724,7 +727,7 @@ for(var in iterable) {
 
 The structure of the for loop is simple. You start with `for()` to indicate that you are going to use the for loop. The argument to the `for()` consists of a variable, which takes items from iterable one by one. Iterable is a collection of objects (like a list, vector, sequence, etc.) For each iteration in the `for` loop, a value is taken from the list and assigned to the variable, and the following statement in the curly braces, `{}` is evaluated. 
 
-Let's take a look at a example.
+Let's take a look at an example.
 
 ```{r}
 index<-seq(1,10,by=2) 
@@ -798,7 +801,7 @@ A nested `for` loop is a loop within a loop. They are useful for when you want t
 
 Nested `for` loops are often used to manipulate a bi-dimensional array by setting its elements to specific values.  
 
-The placing of one loop inside the body of another loop is called nesting.  When you “nest” two loops, the outer loop takes control of the number of complete repetitions of the inner loop. Thus inner loop iterates n times where the length of the array of inner for loop is n, for every execution of Outer loop.
+The placing of one loop inside the body of another loop is called nesting.  When you “nest” two loops, the outer loop takes control of the number of complete repetitions of the inner loop. Thus inner loop iterates n times where the length of the array of inner for loop is n, for every execution of the outer loop.
 
 Let's take a look at a simple example. 
 ```{r}
@@ -813,7 +816,7 @@ First, i = 1. We have to iterate through 1, 2, 3 now for j. `1*1`, `1*2`, `1*3` 
 
 
 ### `while()`
-There is another way to create loops, using `while` statement. `while` loops are used to loop until a specific condition is met/satisfied. In for loops, we already know how many times the loop will run. However, `while` can be used when the exact number of iterations is not known.  
+There is another way to create loops, using `while` statement. The `while` loops are used to loop until a specific condition is met/satisfied. In for loops, we already know how many times the loop will run. However, `while` can be used when the exact number of iterations is not known.  
 
 #### Structure
 ```{r, eval=F}
@@ -822,7 +825,7 @@ while (condition) {
 }
 ```
   
-The structure of while loop is similar to the for loop. `condition` is evaluated whether it is `TRUE` or `False`. It enters the body of the loop, which is the `statement` when the result of the condition is `TRUE`. Then, after executing the statement, the same process is repeated until `condition` has a `FALSE` result, and the loop exits.
+The structure of the while loop is similar to the for loop. `condition` is evaluated whether it is `TRUE` or `False`. It enters the body of the loop, which is the `statement` when the result of the condition is `TRUE`. Then, after executing the statement, the same process is repeated until `condition` has a `FALSE` result, and the loop exits.
 
 
 #### Example
@@ -837,7 +840,7 @@ i
   
 ```
 Here, the condition is `i < 5`, which evaluates `TRUE` in the first loop, since 1 < 5.  
-So, the loop enters the body, prints 1 , and i is incremented by 1 since the body is `i = i + 1`. In the next iteration, 2 < 5 so the loop repeats the same step, until i becomes 5. 5 is not smaller (`<`) than 5, which evaluates `FALSE` in the condition `i < 5`. Here, the loop terminates. 
+So, the loop enters the body, prints 1, and i is incremented by 1 since the body is `i = i + 1`. In the next iteration, 2 < 5 so the loop repeats the same step, until i becomes 5. 5 is not smaller (`<`) than 5, which evaluates `FALSE` in the condition `i < 5`. Here, the loop terminates. 
 
 
 ### Differences between `for()` and `while()`
@@ -873,7 +876,7 @@ question_checkbox(
 ```
 
 #### Question 2
-Here is a dataset of people who climbed Mount Himalayan. How many members were injured? Use `for` loop to get the answer.(Hint: look for the variable `injured` to set the `if` condition inside the loop)
+Here is a dataset of people who climbed Mount Himalayan. How many members were injured? Use the `for` loop to get the answer. (Hint: look for the variable `injured` to set the `if` condition inside the loop)
 ```{r, echo = F, message = F}
 members <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/members.csv')
 head(members)
@@ -881,9 +884,7 @@ head(members)
 
 
 ```{r q2, exercise.eval = TRUE, exercise=TRUE}
-members <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/members.csv')
-head(members)
-x <- 0 
+members <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-22/members.csv')  
 
 ```
 
@@ -923,12 +924,14 @@ question_checkbox(
 
 
 ### Common mistakes & errors
-- if you only have one statement to execute, you don't need to put the curly braces `{}`. However, if you have multiple statements, `{}` is necessary. 
-- Be aware on your use of the iterable object. For example, `for (i in student)` would not execute the result you want in the previous example. 
-- Think carefully of what statement you're trying to iterate. 
+
+- if you only have one statement to execute, you don't need to put the curly braces `{}`. However, if you have multiple statements, `{}` is necessary.  
+- Be aware of your use of the iterable object. For example, `for (i in student)` would not execute the result you want in the previous example.  
+- Think carefully of what statement you're trying to iterate.  
 
 ### Next steps
-- Practice how to manipulate data using `for` loops
+
+- Practice how to manipulate data using `for` loops.
 
 ### References  
 
@@ -1445,7 +1448,7 @@ Written by Yena Joo.
 
 ### Introduction
 
-R has various functions to produce a wide range of graphics to visualize data. With the basic functions that R provides, we can easily and quickly make different types of graphs within seconds.  
+R has various functions to produce a wide range of graphics to visualize data. Visualizing data is the first step of any analysis, since it provides you the broad idea and distribution of data that helps you build your hypothesis, so it is important to know how to plot base graphs using R. With the basic functions that R provides, we can easily and quickly make different types of graphs within seconds.  
 
 
 In this lesson, you will learn how to: 
@@ -1475,9 +1478,14 @@ You can create a histogram using the `hist()` function. The function has many ar
 
 The function is composed of: 
 ```
-hist(x,breaks,freq,labels,density,angle,col,border,main,xlab,ylab...)
+hist(x, breaks = "Sturges", freq = NULL, probability = !freq, include.lowest = TRUE, right = TRUE, density = NULL, angle = 45, col = NULL, border = NULL, main = paste("Histogram of" , xname), xlim = range(breaks), ylim = NULL, xlab = xname, ylab, axes = TRUE, plot = TRUE, labels = FALSE, nclass = NULL, warn.unused = TRUE, …)
 ```
 
+- x: a vector of values (ig. a column in a dataset).  
+- breaks: number, vector, function of breakpoints between histogram cells.  
+- main, xlab, ylab: title and axis labels.  
+
+Here is an [additional information about the arguments](https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/hist) you may find helpful.   
 
 Let's work with an example with the built-in dataset called `mtcars`. Here are the first 6 observations of the dataset. 
 ```{r}
@@ -1550,25 +1558,32 @@ plot(mtcars$mpg, mtcars$disp,
      ylab = "This is y-axis")
 ```
 
+
+Detailed descriptions of the arguments could be found [here](https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/plot) or type `help("plot")` in your console. 
+
+
 #### Boxplot
 
 
 Boxplot is good for depicting groups of numerical data through their quartiles. The boxplot presents information such as median, minimum and maximum score, lower and upper quartile, and IQR. Boxplots also allow you to visualize the outliers and compare multiple distributions.  
 
-To create a boxplot, simply use the function `boxplot()`. 
+To create a boxplot, simply use the function `boxplot()`.  
+```{r}
+boxplot(mpg~cyl, data = mtcars)
+```
+
+Changing the colour, or labeling a title and axes is easy, the same as how we did for histograms and scatter plots. Also, you can use `horizontal=TRUE` to reverse the axis orientation.  
+
 ```{r}
 boxplot(mpg~cyl, data = mtcars,
         col = "pink", 
         main = "This is a title", 
         xlab = "This is x-axis",
-        ylab = "This is y-axis")
+        ylab = "This is y-axis", 
+        horizontal = TRUE)
 ```
-  
-Changing the colour, labeling a title and axes is easy, the same as how we did for histograms and scatterplots. 
-use `horizontal=TRUE` to reverse the axis orientation.  
 
-Detailed descriptions of the arguments could be found in `help("boxplot")` or at:   
-https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/boxplot
+Detailed descriptions of the arguments could be found [here](https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/boxplot) or type `help("boxplot")` in your console.   
 
 ### exporting base graphs 
 
@@ -1591,7 +1606,7 @@ dev.off()
 
 #### Question 1
 
-Using the given dataset "USArrests", create a histogram that depicts the distribution of assaults, set the bar colour to "blue" and set it to 15 bins. The title of the plot should be "Histogram of Assaults", with the x-axis "Assaults".
+Using the given dataset `USArrests`, create a histogram that depicts the distribution of assaults, set the bar colour to "blue" and set it to 15 bins. The title of the plot should be "Histogram of Assaults", with the x-axis "Assaults".
 ```{r q1_hist, exercise.eval = TRUE, exercise=TRUE}
 head(USArrests)
 ```
