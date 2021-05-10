@@ -398,9 +398,9 @@ scatter <-
   orders %>% 
   ggplot(aes(x=promo_percent, y=order_total)) +
   geom_point(color = "#1b9e77", fill = "#1b9e77") +
-  ggtitle("Promo Code Discount vs. Order Total") +
+  ggtitle("Order Total vs. Promo Code Discount") +
   theme(axis.text.x = element_text(angle = 90)) +
-  xlab("Order Total") + ylab("Promo Code Discount")
+  xlab("Promo Code Discount") + ylab("Order Total")
 
 scatter
 ```
