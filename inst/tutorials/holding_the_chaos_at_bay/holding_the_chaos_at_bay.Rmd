@@ -271,7 +271,7 @@ In R, comments are written by adding a `#` before text, typically at the beginni
 # Writing code after an octothorp will have no effect, even if properly formatted
 ```
 
-If you want to comment more than one line of code, you can select the desired lines and then use the shortcut **"ctrl + shift + C"**
+If you want to comment more than one line of code, you can select the desired lines and then use the shortcut **"ctrl + shift + C"** (or **"cmd + shift + C"** on Mac).
 
 #### When to Comment
 
