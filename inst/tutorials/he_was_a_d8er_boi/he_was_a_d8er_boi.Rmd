@@ -3132,7 +3132,7 @@ remember what it does and why it does it).
 
 ### Hello world!
 
-Imagine youre on your first data internship, and your manager gives you your first
+Suppose youre on your first data internship, and your manager gives you your first
 project. They give you a single CSV file and tell you to spend a couple of hours exploring
 the file in R and come back to them with questions.
 
@@ -3142,19 +3142,21 @@ The variables are rows not columns, and the observations are columns not rows! Y
 deeper look and you see that some variables dont  show the data. It looks like
 theyre hidden behind some text. Lets take a look at an example of this data.
 
+Suppose you're given this data that you know is not in tidy format. 
+
 ```{r tidyr-data, include = FALSE}
-messy_data <- tibble(n_lines = list(100, 200, 300),
+nontidy_data <- tibble(n_lines = list(100, 200, 300),
                        n_figures = list(4, 5, 6),
                        n_scripts = list(10, 20, 30))
 
-messy_data <- messy_data %>%
+nontidy_data <- nontidy_data %>%
     rownames_to_column() %>%
     pivot_longer(-rowname, 'variable', 'value') %>%
     pivot_wider(variable, rowname)
 ```
 
 ```{r tidyr-1}
-messy_data
+nontidy_data
 ```
 
 This data is not in its tidy format. First, the columns and rows are switched, and
@@ -3163,7 +3165,7 @@ second, the cells are all hidden.
 Heres the entire piece of code we need to tidy it:
 
 ```{r tidyr-2}
-messy_data %>%
+nontidy_data %>%
   pivot_longer(cols = -variable, names_to = "name", values_to = "value") %>%
   pivot_wider(names_from = "variable") %>%
   unnest(everything())
@@ -3174,31 +3176,31 @@ But lets go through this step by step and check the output each time.
 To clean it, we will use our functions pivot_longer(), pivot_wider(), and unnest() from tidyr. 
 
 ```{r tidyr-3}
-# 1. Make it longer (i.e. "more vertical")
-long_messy_data <- messy_data %>%
+# 1. Convert to long format
+nontidy_data_l <- nontidy_data %>%
   pivot_longer(cols = -variable, names_to = 'name', values_to = 'value')
-long_messy_data
+nontidy_data_l
 ```
 
 Our dataset is in a long format now.
 
 ```{r tidyr-4}
-# 2. Make it wider (i.e. "more horizontal")
-wide_messy_data <- long_messy_data %>%
+# 2. Convert to wide format
+nontidy_data_w <- nontidy_data_l %>%
   pivot_wider(names_from = 'variable')
-wide_messy_data
+nontidy_data_w
 ```
 
 Notice how step 2 brings the variable names to the top.
 
 ```{r tidyr-4-again}
 # 3. Unnest (or unfold) the cells
-tidy_data <- wide_messy_data %>%
+tidy_data <- nontidy_data_w %>%
   unnest(everything())
 tidy_data
 ```
 
-Now its tidy data. You can also clean it up as follows:
+Now it is tidy data. You can also clean it up as follows:
 
 ```{r tidyr-5}
 tidy_data %>%
