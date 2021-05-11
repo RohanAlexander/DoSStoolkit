@@ -156,7 +156,7 @@ The `ggplot2` package is used to create graphics and to visualize data. With the
 
 For example, I can create a scatter plot using `ggplot()` with `geom_point` as follows:    
 ```{r}
-ggplot(x = mtcars, mapping = aes(mpg, disp)) + geom_point()
+ggplot(mtcars, mapping = aes(mpg, disp)) + geom_point()
 ```
   
 You can fine-tune your graph using faceting specifications, labeling, coordinate systems, changing colours, and more. You can plot almost any type of graphs you could imagine using the package, much more efficiently.    
@@ -338,13 +338,13 @@ Convert this into equivalent code using the pipe.
 ```
 
 ```{r pipe-5, echo = FALSE}
-ex1_sol <- penguins %>% 
+pipe_ex1_sol <- penguins %>% 
   filter(species == "Adelie",
          sex == "female") %>%
   summary()
 ```
 ```{r pipe-exercise-1-check}
-grade_result(pass_if(~identical(.result, ex1_sol)))
+grade_result(pass_if(~identical(.result, pipe_ex1_sol)))
 ```
 
 #### Exercise 2
@@ -369,13 +369,13 @@ Convert this into equivalent code using the pipe.
 ```
 
 ```{r pipe-7, echo = FALSE}
-ex2_sol <- penguins %>% 
+pipe_ex2_sol <- penguins %>% 
   filter(sex == "female",
          year == "2007") %>%
   count()
 ```
 ```{r pipe-exercise-2-check}
-grade_result(pass_if(~identical(.result, ex2_sol)))
+grade_result(pass_if(~identical(.result, pipe_ex2_sol)))
 ```
 
 #### Exercise 3
@@ -1198,26 +1198,25 @@ attendance, and revenue for theaters that are part of The Broadway League. You c
 more about the data set provided by Alex Cookson in [the data repository](https://github.com/tacookson/data) provided on GitHub, as well as this 
 corresponding [blog post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/).
 
-Let's start with loading the tidyverse.
+To start, we will load the data from GitHub, and take a subset.
 
-```{r load-tidyverse-again}
-library(tidyverse)
-```
-
-```{r summarise, include = FALSE}
+```{r summarise-hidden-load, include = FALSE}
 broadway <- read_csv(
   "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv",
   guess_max = 10000)
 
 broadway <- broadway %>%
-  select(week_ending,
-         show,
-         theatre,
-         weekly_gross,
-         avg_ticket_price,
-         top_ticket_price,
-         performances,
-         previews)
+  select(week_ending, show, theatre, weekly_gross, avg_ticket_price,
+         top_ticket_price, performances, previews)
+```
+```{r summarise-exercise-load, exercise = TRUE}
+broadway <- read_csv(
+  "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv",
+  guess_max = 10000)
+
+broadway <- broadway %>%
+  select(week_ending, show, theatre, weekly_gross, avg_ticket_price,
+         top_ticket_price, performances, previews)
 ```
 
 ```{r summarise-1}
@@ -1301,11 +1300,11 @@ n_distinct()
 ```
 
 ```{r summarise-8, echo = FALSE}
-ex1_sol <- broadway %>%
+summarise_ex1_sol <- broadway %>%
   summarise(n_theatres = n_distinct(theatre))
 ```
 ```{r summarise-exercise-1-check}
-grade_result(pass_if(~identical(.result, ex1_sol)))
+grade_result(pass_if(~identical(.result, summarise_ex1_sol)))
 ```
 
 #### Exercise 2
@@ -1324,12 +1323,12 @@ n_distinct()
 ```
 
 ```{r summarise-9, echo = FALSE}
-ex2_sol <- broadway %>%
+summarise_ex2_sol <- broadway %>%
   group_by(week_ending) %>%
   summarise(n_shows = n_distinct(show), .groups = 'drop')
 ```
 ```{r summarise-exercise-2-check}
-grade_result(pass_if(~identical(.result, ex2_sol)))
+grade_result(pass_if(~identical(.result, summarise_ex2_sol)))
 ```
 
 #### Exercise 3
@@ -1345,12 +1344,12 @@ What is the average number of performances across all theatres per week?
 ```
 
 ```{r summarise-10, echo = FALSE}
-ex3_sol <- broadway %>%
+summarise_ex3_sol <- broadway %>%
   group_by(week_ending) %>%
   summarise(avg_num_performances = mean(performances), .groups = 'drop')
 ```
 ```{r summarise-exercise-3-check}
-grade_result(pass_if(~identical(.result, ex3_sol)))
+grade_result(pass_if(~identical(.result, summarise_ex3_sol)))
 ```
 
 #### Exercise 4
@@ -1366,13 +1365,13 @@ across()
 ```
 
 ```{r summarise-11, echo = FALSE}
-ex4_sol <- broadway %>%
+summarise_ex4_sol <- broadway %>%
   group_by(week_ending) %>%
   summarise(across(.cols = "performances", 
                    .fns = list(min = min, max = max)), .groups = 'drop')
 ```
 ```{r summarise-exercise-4-check}
-grade_result(pass_if(~identical(.result, ex4_sol)))
+grade_result(pass_if(~identical(.result, summarise_ex4_sol)))
 ```
 
 #### Exercise 5
@@ -1388,12 +1387,12 @@ na.rm = TRUE
 ```
 
 ```{r summarise-12, echo = FALSE}
-ex5_sol <- broadway %>%
+summarise_ex5_sol <- broadway %>%
   summarise(avg_top_price = mean(top_ticket_price, na.rm = TRUE),
             .groups = 'drop')
 ```
 ```{r summarise-exercise-5-check}
-grade_result(pass_if(~identical(.result, ex5_sol)))
+grade_result(pass_if(~identical(.result, summarise_ex5_sol)))
 ```
 
 #### Exercise 6
@@ -1409,13 +1408,13 @@ arrange()
 ```
 
 ```{r summarise-13, echo = FALSE}
-ex6_sol <- broadway %>%
+summarise_ex6_sol <- broadway %>%
   group_by(show, week_ending) %>%
   summarise(appearances = performances + previews, .groups = 'drop') %>%
   arrange(appearances)
 ```
 ```{r summarise-exercise-6-check}
-grade_result(pass_if(~identical(.result, ex6_sol)))
+grade_result(pass_if(~identical(.result, summarise_ex6_sol)))
 ```
 
 #### Exercise 7
@@ -2138,16 +2137,21 @@ In this tutorial, we'll be using a data set about fictional character personalit
 reference. This data set already consists of simple, clear, and well-named variables, but
 we are going to try to simplify them even further using `rename()`.
 
-Let's start with loading the tidyverse.
+We'll start by loading the data from GitHub.
 
 ```{r load-tidyverse-yet-again}
 library(tidyverse)
 ```
 
-```{r rename, echo = FALSE, message = FALSE}
+```{r rename-hidden-load, echo = FALSE, message = FALSE}
 personalities <- read_tsv(
   "https://raw.githubusercontent.com/tacookson/data/master/fictional-character-personalities/personalities.txt")
 ```
+```{r rename-exercise-load, exercise = TRUE}
+personalities <- read_tsv(
+  "https://raw.githubusercontent.com/tacookson/data/master/fictional-character-personalities/personalities.txt")
+```
+
 
 Here is the dataset.
 
@@ -2202,13 +2206,13 @@ Rename the `personalities` data back to its original column names.
 ```
 
 ```{r rename-exercise-1-sol, echo = FALSE}
-ex1_sol <- personalities %>%
+rename_ex_sol <- personalities %>%
   rename(character_code = id,
          fictional_work = work,
          character_name = name)
 ```
 ```{r rename-exercise-1-check}
-grade_result(pass_if(~identical(.result, ex1_sol)))
+grade_result(pass_if(~identical(.result, rename_ex_sol)))
 ```
 
 #### Exercise 2
