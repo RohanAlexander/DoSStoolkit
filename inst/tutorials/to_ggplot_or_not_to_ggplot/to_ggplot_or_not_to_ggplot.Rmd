@@ -410,32 +410,32 @@ animals <- read_tsv("https://raw.githubusercontent.com/tacookson/data/master/duk
 
 Let's start with plotting a simple bar chart of the sex of the animals in the dataset. We will see that R names the x and y axis but does not add a title.
 ```{r bar-chart-1, exercise = T}
-animals %>% ggplot(aes(sex)) + 
+animals %>% ggplot(aes(x = sex)) + 
   geom_bar()
 ```
 
 We can also change the colours of the inside of the bars, using the fill argument. If we set it equal to green, we will get green bars.
 ```{r bar-chart-fill, exercise = T}
-animals %>% ggplot(aes(sex)) +
+animals %>% ggplot(aes(x = sex)) +
   geom_bar(fill = "green")
 ```
 
 Similarly, we can also change the colour of the outline of the bars. If we set it to red, the outline of the bars will be red.
 ```{r bar-chart-colour, exercise = T}
-animals %>% ggplot(aes(sex)) +
+animals %>% ggplot(aes(x = sex)) +
   geom_bar(colour = "red")
 ```
 
 Both the fill and colour arguments can be combined in the same call of the `geom_bar()` function
 
 ```{r bar-chart-fill-col, exercise = T}
-animals %>% ggplot(aes(sex)) +
+animals %>% ggplot(aes(x = sex)) +
   geom_bar(fill = "white", colour = "red")
 ```
 
 You can also change the colour/fill by adding the argument to the `aes()` expression. Doing this will give a specific colour for each value in your fill variable.
 ```{r bar-chart-fill-aes, exercise = T}
-animals %>% ggplot(aes(sex, fill = birth_type)) +
+animals %>% ggplot(aes(x = sex, fill = birth_type)) +
   geom_bar(colour = "black")
 ```
 
@@ -444,7 +444,7 @@ animals %>% ggplot(aes(sex, fill = birth_type)) +
 Using the same data, we can change the width of the bars. Using a width greater than 0.9 will make the bars wider, and using a width smaller than 0.9 will make them thinner.
 
 ```{r bar-chart-width, exercise = T}
-animals %>% ggplot(aes(sex)) +
+animals %>% ggplot(aes(x = sex)) +
   geom_bar(fill = "white", colour = "red", 
            width = 1) 
 ```
@@ -453,7 +453,7 @@ animals %>% ggplot(aes(sex)) +
 
 The `labs` function helps add labels such as titles, subtitles, and labels for the x and y axis.
 ```{r bar-chart-title, exercise = T}
-animals %>% ggplot(aes(sex)) +
+animals %>% ggplot(aes(x = sex)) +
   geom_bar(fill = "white", colour = "red") +
   labs(title = "My bar chart's title",
        subtitle = "Using animal data",
@@ -469,7 +469,7 @@ You can still create bar charts using numeric variables, provided that there are
 
 ```{r bar-chart-numeric, warning=F, exercise = T}
 animals %>% 
-  ggplot(aes(litter_size)) +
+  ggplot(aes(x = litter_size)) +
   geom_bar() +
   labs(title = "Distribution of Litter Sizes",
        x = "Litter Size")
@@ -481,7 +481,7 @@ The `coord_flip` function works to rotate the bar chart, giving a different view
 
 ```{r bar-graph-coord-flip, warning=F, exercise = T}
 animals %>% 
-  ggplot(aes(litter_size)) +
+  ggplot(aes(x = litter_size)) +
   geom_bar() +
   labs(title = "Distribution of Litter Sizes",
        x = "Litter Size") +
@@ -502,7 +502,7 @@ animals
 ```{r bar-chart-q1-solution}
 
 animals %>% 
-  ggplot(aes(birth_type)) +
+  ggplot(aes(x = birth_type)) +
   geom_bar()
 ```
 
@@ -517,7 +517,7 @@ For this exercise, pick any colour to fill the bars of the bar chart and another
 ```{r bar-chart-q2-solution}
 
 animals %>% 
-  ggplot(aes(species)) + 
+  ggplot(aes(x = species)) + 
   geom_bar(fill = "blue", colour = "green")
 ```
 
@@ -531,7 +531,7 @@ Since there were so many unique names in the species variable, it causes the x-a
 ```{r bar-chart-q2-2-solution}
 
 animals %>% 
-  ggplot(aes(species)) + 
+  ggplot(aes(x = species)) + 
   geom_bar(fill = "blue", colour = "green") + 
   coord_flip()
 ```
@@ -547,7 +547,7 @@ animals %>%
 ```{r bar-chart-q3-solution}
 
 animals %>% 
-  ggplot(aes(species, fill = sex)) + 
+  ggplot(aes(x = species, fill = sex)) + 
   geom_bar() + 
   coord_flip()
 ```
@@ -558,7 +558,7 @@ The next questions will focus on the plot below
 
 ```{r bar-chart-quiz, echo=FALSE}
 animals %>% 
-  ggplot(aes(taxonomic_code)) +
+  ggplot(aes(x = taxonomic_code)) +
   geom_bar() + 
   coord_flip() +
   labs(title = "Distribution of Taxonomic Codes",
