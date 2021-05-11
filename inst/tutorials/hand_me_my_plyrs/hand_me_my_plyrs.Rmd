@@ -18,6 +18,14 @@ library(flair)
 library(gradethis)
 gradethis::gradethis_setup()
 library(palmerpenguins)
+
+broadway <- read_csv(
+  "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv",
+  guess_max = 10000)
+
+broadway <- broadway %>%
+  select(week_ending, show, theatre, weekly_gross, avg_ticket_price,
+         top_ticket_price, performances, previews)
 ```
 
 
@@ -337,7 +345,7 @@ Convert this into equivalent code using the pipe.
 # You can filter multiple times within filter()
 ```
 
-```{r pipe-5, echo = FALSE}
+```{r pipe-5-exercise-1-solution, echo = FALSE}
 pipe_ex1_sol <- penguins %>% 
   filter(species == "Adelie",
          sex == "female") %>%
@@ -368,7 +376,7 @@ Convert this into equivalent code using the pipe.
 # You don't have to assign it to an object
 ```
 
-```{r pipe-7, echo = FALSE}
+```{r pipe-6-exercise-2-solution, echo = FALSE}
 pipe_ex2_sol <- penguins %>% 
   filter(sex == "female",
          year == "2007") %>%
@@ -1197,27 +1205,6 @@ We will be looking at a data set of Broadway shows with variables about the perf
 attendance, and revenue for theaters that are part of The Broadway League. You can learn
 more about the data set provided by Alex Cookson in [the data repository](https://github.com/tacookson/data) provided on GitHub, as well as this 
 corresponding [blog post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/).
-
-To start, we will load the data from GitHub, and take a subset.
-
-```{r summarise-hidden-load, include = FALSE}
-broadway <- read_csv(
-  "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv",
-  guess_max = 10000)
-
-broadway <- broadway %>%
-  select(week_ending, show, theatre, weekly_gross, avg_ticket_price,
-         top_ticket_price, performances, previews)
-```
-```{r summarise-exercise-load, exercise = TRUE}
-broadway <- read_csv(
-  "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv",
-  guess_max = 10000)
-
-broadway <- broadway %>%
-  select(week_ending, show, theatre, weekly_gross, avg_ticket_price,
-         top_ticket_price, performances, previews)
-```
 
 ```{r summarise-1}
 glimpse(broadway)

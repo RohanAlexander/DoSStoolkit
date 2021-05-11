@@ -18,6 +18,13 @@ library(flair)
 library(gradethis)
 gradethis::gradethis_setup()
 # library(palmerpenguins)
+
+broadway <- read_csv(
+  "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv")
+
+broadway <- broadway %>%
+  select(avg_ticket_price, performances, seats_in_theatre,
+         seats_sold, show, pct_capacity)
 ```
 
 
@@ -148,26 +155,12 @@ You can read more about the arguments in the `lm()` function's documentation
 
 ### Overview
 
-This section will demonstrate how to use the `lm()` function to build simple and multiple linear regression models. We will be looking at a subset of the Broadway Grosses data set provided by Alex Cookson in [the dataset repository](https://github.com/tacookson/data/tree/master/broadway-grosses)provided on GitHub. The Broadway Grosses data set comprises data on revenue and attendance figures for theaters that are part of The Broadway League.
-
-Let's start by loading and subsetting the data.
-
-```{r summary-hidden-load, include = FALSE}
-broadway <- read_csv(
-  "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv")
-
-broadway <- broadway %>%
-  select(avg_ticket_price, performances, seats_in_theatre,
-         seats_sold, show, pct_capacity)
-```
-```{r summary-exercise-load, exercise = TRUE}
-broadway <- read_csv(
-  "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv")
-
-broadway <- broadway %>%
-  select(avg_ticket_price, performances, seats_in_theatre,
-         seats_sold, show, pct_capacity)
-```
+This section will demonstrate how to use the `lm()` function to build simple and multiple
+linear regression models. We will be looking at a subset of the Broadway Grosses data set
+provided by Alex Cookson in [the dataset
+repository](https://github.com/tacookson/data/tree/master/broadway-grosses)provided on
+GitHub. The Broadway Grosses data set comprises data on revenue and attendance figures for
+theaters that are part of The Broadway League.
 
 ```{r summary-statistics-1}
 glimpse(broadway)
