@@ -64,7 +64,7 @@ To start a .Rmd file in RStudio, click *File*, then *New File*, and select *R Ma
 
 From there, we can select if we want our report to be in the form of an **HTML page**, **pdf**, or **Word document**, and give our report a title and author name.
 
-RStudio will then generate a .Rmd file with a little template for us
+RStudio will then generate a .Rmd file with a little template for us.
 
 #### YAML Header Chunk
 
@@ -79,7 +79,7 @@ output: pdf_document
 ---
 ```
 
-As you might guess, this creates a header for your report with the title, author and date specified.
+As you might guess, this creates a header for our report with the title, author and date specified.
 
 We can also change the output option if we have a change of heart and would prefer an HTML page or Word document:
 
@@ -254,7 +254,7 @@ like this:
 
 If you want to get *real* fancy, we can hyperlink images using a combination of the syntax we introduced above.
 
-For example,
+We simply nest the hyperlink syntax within the square brackets of the image syntax. For example,
 
 ```
 [![this embeds a clickable picture of the RStudio icon](https://d33wubrfki0l68.cloudfront.net/521a038ed009b97bf73eb0a653b1cb7e66645231/8e3fd/assets/img/rstudio-icon.png)](https://d33wubrfki0l68.cloudfront.net/521a038ed009b97bf73eb0a653b1cb7e66645231/8e3fd/assets/img/rstudio-icon.png)
@@ -271,7 +271,7 @@ In order to write this... | we'd have to write this
 \$                        | `\$`
 \&                        | `\&`
 \%                        | `\%`
-\##                        | `\#`
+\#                        | `\#`
 \_                        | `\_`
 \{                        | `\{`
 

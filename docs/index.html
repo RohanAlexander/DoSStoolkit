@@ -153,7 +153,7 @@
 <a href="#operating-in-an-error-prone-world" class="anchor"></a>Operating in an error prone world</h3>
 <p>How to run this module:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">learnr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/learnr/man/run_tutorial.html">run_tutorial</a></span><span class="op">(</span><span class="st">"holding_the_chaos_at_bay"</span>, package <span class="op">=</span> <span class="st">"DoSStoolkit"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">learnr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/learnr/man/run_tutorial.html">run_tutorial</a></span><span class="op">(</span><span class="st">"operating_in_an_error_prone_world"</span>, package <span class="op">=</span> <span class="st">"DoSStoolkit"</span><span class="op">)</span></code></pre></div>
 <p>Module content:</p>
 <ul>
 <li>Why I love R, by Monica Alexander.</li>
@@ -161,7 +161,6 @@
 <li>Using Google and Stack Overflow, by Michael Chong.</li>
 <li>Stack overflow, by Annie Collins.</li>
 <li>How to problem solve when your code doesn’t work, by Michael Chong.</li>
-<li>How to ask for help, by Michael Chong.</li>
 <li>Making reproducible examples, by Marija Pejcinovska.</li>
 <li>How to make the most of R’s cryptic error messages, by Shirley Deng.</li>
 </ul>
@@ -171,19 +170,24 @@
 <a href="#holding-the-chaos-at-bay" class="anchor"></a>Holding the chaos at bay</h3>
 <p>How to run this module:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">learnr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/learnr/man/run_tutorial.html">run_tutorial</a></span><span class="op">(</span><span class="st">"operating_in_an_error_prone_world"</span>, package <span class="op">=</span> <span class="st">"DoSStoolkit"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">learnr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/learnr/man/run_tutorial.html">run_tutorial</a></span><span class="op">(</span><span class="st">"holding_the_chaos_at_bay"</span>, package <span class="op">=</span> <span class="st">"DoSStoolkit"</span><span class="op">)</span></code></pre></div>
 <p>Module content:</p>
 <ul>
 <li>Why I love R, by Samantha-Jo Caetano.</li>
-<li>R projects (and setwd() and why you should not use it), by Isaac Ehrlich.</li>
-<li>Folder set up, by Isaac Ehrlich.</li>
+<li>R projects and <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>, by Isaac Ehrlich.</li>
+<li>Folder set-up, by Isaac Ehrlich.</li>
 <li>Writing comments, by Isaac Ehrlich.</li>
-<li>Installing packages from CRAN, by Haoluan Chen.</li>
-<li>Installing packages from GitHub, by Haoluan Chen.</li>
-<li>Calling libraries, by Mariam Walaa.</li>
-<li>Updating libraries, by Mariam Walaa.</li>
-<li>read_csv(), by Marija Pejcinovska.</li>
-<li>Other file types: read.table(), read_excel(), haven and read_dta(), read_rds(), load() with .Rda files, anything else useful in readr?, by Isaac Ehrlich.</li>
+<li>
+<code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>, by Haoluan Chen.</li>
+<li>
+<code>install_github()</code>, by Haoluan Chen.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/library.html">library()</a></code>, by Mariam Walaa.</li>
+<li>
+<code><a href="https://rdrr.io/r/utils/update.packages.html">update.packages()</a></code>, by Mariam Walaa.</li>
+<li>
+<code>read_csv()</code>, by Marija Pejcinovska. <!-- - Other file types: read.table(), read_excel(), haven and read_dta(), read_rds(), load() with .Rda files, anything else useful in readr?, by Isaac Ehrlich. -->
+</li>
 </ul>
 </div>
 <div id="hand-me-my-plyrs" class="section level3">
@@ -197,19 +201,30 @@
 <li>Why I love R, by Sabrina Sixta.</li>
 <li>What is the tidyverse?, by Yena Joo.</li>
 <li>The pipe, by Mariam Walaa.</li>
-<li>select(), by Yena Joo.</li>
-<li>filter(), by Shirley Deng.</li>
-<li>group_by() / ungroup(), by Matthew Wankiewicz.</li>
-<li>summarise(), by Mariam Walaa.</li>
-<li>arrange(), by Isaac Ehrlich.</li>
-<li>mutate(), by Haoluan Chen.</li>
-<li>pivot_wider() / pivot_longer(), by Annie Collins.</li>
-<li>rename(), by Mariam Walaa.</li>
-<li>count() and uncount(), by Annie Collins.</li>
-<li>slice(), by Annie Collins.</li>
-<li>class() and basics of data types - character, numeric, dates, logical, by Michael Chong.</li>
-<li>vectors, matrices, dataframes, and tibbles, by Matthew Wankiewicz.</li>
-<li>length(), nrow(), and ncol(), by Isaac Ehrlich.</li>
+<li>
+<code>select()</code>, by Yena Joo.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>, by Shirley Deng.</li>
+<li>
+<code>group_by()</code> and <code>ungroup()</code>, by Matthew Wankiewicz.</li>
+<li>
+<code>summarise()</code>, by Mariam Walaa.</li>
+<li>
+<code>arrange()</code>, by Isaac Ehrlich.</li>
+<li>
+<code>mutate()</code>, by Haoluan Chen.</li>
+<li>
+<code>pivot_wider()</code> and <code>pivot_longer()</code>, by Annie Collins.</li>
+<li>
+<code>rename()</code>, by Mariam Walaa.</li>
+<li>
+<code>count()</code> and <code>uncount()</code>, by Annie Collins.</li>
+<li>
+<code>slice()</code>, by Annie Collins.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/c.html">c()</a></code>, <code><a href="https://rdrr.io/r/base/matrix.html">matrix()</a></code>, <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>, and <code>tibble()</code>, by Matthew Wankiewicz.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/length.html">length()</a></code>, <code><a href="https://rdrr.io/r/base/nrow.html">nrow()</a></code>, and <code><a href="https://rdrr.io/r/base/nrow.html">ncol()</a></code>, by Isaac Ehrlich.</li>
 </ul>
 </div>
 <div id="totally-addicted-to-base" class="section level3">
@@ -221,12 +236,18 @@
 <p>Module content:</p>
 <ul>
 <li>Why I love R, by Rohan Alexander.</li>
-<li>mean(), median(), sd(), lm(), and summary(), by Mariam Walaa.</li>
-<li>functions, by Haoluan Chen.</li>
-<li>for and while, by Yena Joo.</li>
-<li>if, if_else() and case_when(), by Haoluan Chen.</li>
-<li>c(), seq(), seq_along() and rep(), by Matthew Wankiewicz.</li>
-<li>hist() and the other base graphing options including exporting base graphs, by Yena Joo.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html">median()</a></code>, <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>, <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>, and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, by Mariam Walaa.</li>
+<li>
+<code>function()</code>, by Haoluan Chen.</li>
+<li>
+<code>for()</code> and <code>while()</code>, by Yena Joo.</li>
+<li>
+<code>if()</code>, <code>if_else()</code> and <code>case_when()</code>, by Haoluan Chen.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/c.html">c()</a></code>, <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code>, <code><a href="https://rdrr.io/r/base/seq.html">seq_along()</a></code>, and <code><a href="https://rdrr.io/r/base/rep.html">rep()</a></code>, by Matthew Wankiewicz.</li>
+<li>
+<code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code>, <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>, and <code><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot()</a></code>, by Yena Joo.</li>
 </ul>
 </div>
 <div id="he-was-a-d8er-boi" class="section level3">
@@ -337,7 +358,7 @@
 <li>Paul Hodgetts is a Master of Information candidate concentrating in Human-Centred Data Science in the Faculty of Information, University of Toronto. He sincerely believes that Calvin and Hobbes is the greatest comic ever produced.</li>
 <li>Rohan Alexander is an assistant professor in the Faculty of Information and the Department of Statistical Sciences. Some people convert to catholicism upon marriage, Rohan converted to R. His greatest professional achievement is probably getting a pull request accepted into R for Data Science (it was just fixing a minor typo but still).</li>
 <li>Samantha-Jo Caetano is an assistant professor (teaching stream) in the Department of Statistical Sciences. She loves statistics, socializing, her family, and her dogs, not necessarily in that order.</li>
-<li>Shirley Deng - Shirley is an undergraduate student specializing in Statistics and majoring in Mathematics. Meticulous and soft-hearted, she often finds herself engrossed in new pastimes by the second at the influence of her peers. One of which that has remained a longtime constant - spending an excessive amount of time helping people debug their R code.</li>
+<li>Shirley Deng is an undergraduate student specializing in Statistics and majoring in Mathematics. Meticulous and soft-hearted, she often finds herself engrossed in new pastimes by the second at the influence of her peers. One of which that has remained a longtime constant - spending an excessive amount of time helping people debug their R code.</li>
 <li>Yena Joo is an undergraduate student majoring in Economics and double minoring in Statistics and Computer Science.</li>
 </ul>
 </div>
@@ -423,10 +444,11 @@
 <li>French language version</li>
 </ul>
 </div>
-<div id="citation" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#citation" class="anchor"></a>Citation</h1></div>
+<div id="citation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#citation" class="anchor"></a>Citation</h2>
 <p>We have a pre-print coming soon.</p>
+</div>
 <div id="how-to-contribute" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-to-contribute" class="anchor"></a>How to contribute</h2>
@@ -437,7 +459,6 @@
 <h2 class="hasAnchor">
 <a href="#contact" class="anchor"></a>Contact</h2>
 <p>Please contact Rohan (<a href="mailto:rohan.alexander@utoronto.ca" class="email">rohan.alexander@utoronto.ca</a>) with any questions, comments, and suggestions.</p>
-</div>
 </div>
 
   </div>
