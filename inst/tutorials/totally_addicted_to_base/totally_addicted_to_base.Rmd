@@ -150,18 +150,23 @@ You can read more about the arguments in the `lm()` function's documentation
 
 This section will demonstrate how to use the `lm()` function to build simple and multiple linear regression models. We will be looking at a subset of the Broadway Grosses data set provided by Alex Cookson in [the dataset repository](https://github.com/tacookson/data/tree/master/broadway-grosses)provided on GitHub. The Broadway Grosses data set comprises data on revenue and attendance figures for theaters that are part of The Broadway League.
 
-```{r summary-statistics, include = FALSE}
-library(tidyverse)
+Let's start by loading and subsetting the data.
+
+```{r summary-hidden-load, include = FALSE}
 broadway <- read_csv(
   "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv")
 
 broadway <- broadway %>%
-  select(avg_ticket_price,
-         performances,
-         seats_in_theatre,
-         seats_sold,
-         show,
-         pct_capacity)
+  select(avg_ticket_price, performances, seats_in_theatre,
+         seats_sold, show, pct_capacity)
+```
+```{r summary-exercise-load, exercise = TRUE}
+broadway <- read_csv(
+  "https://raw.githubusercontent.com/tacookson/data/master/broadway-grosses/grosses.csv")
+
+broadway <- broadway %>%
+  select(avg_ticket_price, performances, seats_in_theatre,
+         seats_sold, show, pct_capacity)
 ```
 
 ```{r summary-statistics-1}
@@ -925,13 +930,34 @@ question_checkbox(
 
 ### Common mistakes & errors
 
-- if you only have one statement to execute, you don't need to put the curly braces `{}`. However, if you have multiple statements, `{}` is necessary.  
-- Be aware of your use of the iterable object. For example, `for (i in student)` would not execute the result you want in the previous example.  
+- It is easy to forget to put curly braces after the loop statement. If you only have one statement to execute, you don't need to put the curly braces `{}`. However, if you have multiple statements, `{}` is necessary. You won't get the result you want without the curly braces.  
+
+- Be aware of your use of the iterable object. For example, `for (i in student)` would not execute the result you want in the previous example. Let's say you would want to give bonus marks to one of the courses. Then you should use `1:nrow(student)` as your iterable object as follows:  
+```{r}
+for (i in 1:nrow(student)) {
+  student$cs[i] = student$cs[i] + 1
+}
+head(student)
+```
+However, using `i in student` will iterate through the entire data, and the length of the iteration would be larger than the length of the number of the grades in the `cs` course.    
+
+```
+for (i in student) {
+  student$cs[i] = student$cs[i] + 1
+}
+student
+```
+And the code will execute the following error message, if not, similar:  
+```
+“Error: replacement has X rows, data has Y”.
+``` 
+This happens since the length of the vector you are trying to replace does not match the length of the iteration.  
+
 - Think carefully of what statement you're trying to iterate.  
 
 ### Next steps
 
-- Practice how to manipulate data using `for` loops.
+- Practice how to manipulate data using `for` and `while` loops.
 
 ### References  
 
@@ -1493,7 +1519,7 @@ head(mtcars)
 ```
 Now let's create the histogram using `hist()` function above. 
 ```{r}
-hist(mtcars$mpg)
+hist(x = mtcars$mpg)
 ```
 
 #### Number of Bins
@@ -1501,14 +1527,14 @@ hist(mtcars$mpg)
 You can change the number of bins to create a more accurate histogram since a large number of bins could hide important details about distribution which could make an error in the interpretation of the graph. To make a smaller number of bins, change the value of the argument `breaks = ` into how many bins you want to set in the histogram.  
 
 ```{r}
-hist(mtcars$mpg, 
+hist(x = mtcars$mpg, 
      breaks = 20)
 ```
 
 Another way is to put the exact break points in the argument.
 
 ```{r}
-hist(mtcars$mpg, 
+hist(x = mtcars$mpg, 
      breaks = c(10, 20, 30, 40))
 ```
 
@@ -1516,7 +1542,7 @@ hist(mtcars$mpg,
 
 To change the colour of the histogram, use `col = ` argument, such as `col = "pink"`. The colour of the border of the bars could also be changed with the argument `border =`. 
 ```{r}
-hist(mtcars$mpg, 
+hist(x = mtcars$mpg, 
      breaks = 20,
      col = "pink", 
      border = "blue")
@@ -1526,7 +1552,7 @@ hist(mtcars$mpg,
 
 Once you are done fine-tuning the histogram, you can add your own title and axis labels using `main`, `xlab`, and `ylab` arguments. 
 ```{r}
-hist(mtcars$mpg, 
+hist(x = mtcars$mpg, 
      breaks = 20,
      main = "This is a title", 
      xlab = "This is x-axis",
@@ -1544,14 +1570,14 @@ For more specific arguments, you can always run `help("hist")` in the console to
 A Scatter plot is another good way to visualize the data. There are many ways to create a scatterplot in R, but this is the most basic and the easiest way to create a scatterplot, using the function `plot(x, y)`. `x` and `y` arguments should be numerical values denoting (x,y) points. Using the same dataset, we can plot the scatterplot of `mpg` and `disp` as follows:  
 
 ```{r}
-plot(mtcars$mpg, mtcars$disp)
+plot(x = mtcars$mpg, y = mtcars$disp)
 ```
   
 To define the colour of the plot, you can use the argument `col = `. 
 The arguments are basically the same as when we create a histogram. 
 
 ```{r}
-plot(mtcars$mpg, mtcars$disp,
+plot(x = mtcars$mpg, y = mtcars$disp,
      col = "pink", 
      main = "This is a title", 
      xlab = "This is x-axis",
@@ -1569,13 +1595,13 @@ Boxplot is good for depicting groups of numerical data through their quartiles. 
 
 To create a boxplot, simply use the function `boxplot()`.  
 ```{r}
-boxplot(mpg~cyl, data = mtcars)
+boxplot(formula = mpg~cyl, data = mtcars)
 ```
 
 Changing the colour, or labeling a title and axes is easy, the same as how we did for histograms and scatter plots. Also, you can use `horizontal=TRUE` to reverse the axis orientation.  
 
 ```{r}
-boxplot(mpg~cyl, data = mtcars,
+boxplot(formula = mpg~cyl, data = mtcars,
         col = "pink", 
         main = "This is a title", 
         xlab = "This is x-axis",
@@ -1597,7 +1623,7 @@ We can set the resolution we want using the `width` and `height` arguments or se
 
 ```{r}
 png(file = "scatterplot.png", width = 500, height = 300)
-plot(mtcars$mpg, mtcars$disp)
+plot(x = mtcars$mpg, y = mtcars$disp)
 dev.off()
 ```
 
@@ -1612,7 +1638,7 @@ head(USArrests)
 ```
 
 ```{r q1_hist-solution}
-hist(USArrests$Assault, 
+hist(x = USArrests$Assault, 
      col = "blue", 
      main = "Histogram of Assaults", 
      xlab = "Assaults", 
@@ -1628,7 +1654,7 @@ Save the plot you created in Question 1 as png file. The file name should be `an
 
 ```{r q2_hist-solution}
 png(file = "answer2.png")
-hist(USArrests$Assault, 
+hist(x = USArrests$Assault, 
      col = "blue", 
      main = "Histogram of Assaults", 
      xlab = "Assaults", 
@@ -1645,7 +1671,7 @@ Create a scatter plot that depicts how the number of murders affects the number 
 ```
 
 ```{r q3_hist-solution}
-plot(USArrests$Murder, USArrests$Rape,
+plot(x = USArrests$Murder, y = USArrests$Rape,
      col = "pink", 
      main = "Scatterplot", 
      xlab = "Murder",

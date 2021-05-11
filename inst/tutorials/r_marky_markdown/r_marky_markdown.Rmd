@@ -64,7 +64,7 @@ To start a .Rmd file in RStudio, click *File*, then *New File*, and select *R Ma
 
 From there, we can select if we want our report to be in the form of an **HTML page**, **pdf**, or **Word document**, and give our report a title and author name.
 
-RStudio will then generate a .Rmd file with a little template for us
+RStudio will then generate a .Rmd file with a little template for us.
 
 #### YAML Header Chunk
 
@@ -79,7 +79,7 @@ output: pdf_document
 ---
 ```
 
-As you might guess, this creates a header for your report with the title, author and date specified.
+As you might guess, this creates a header for our report with the title, author and date specified.
 
 We can also change the output option if we have a change of heart and would prefer an HTML page or Word document:
 
@@ -254,7 +254,7 @@ like this:
 
 If you want to get *real* fancy, we can hyperlink images using a combination of the syntax we introduced above.
 
-For example,
+We simply nest the hyperlink syntax within the square brackets of the image syntax. For example,
 
 ```
 [![this embeds a clickable picture of the RStudio icon](https://d33wubrfki0l68.cloudfront.net/521a038ed009b97bf73eb0a653b1cb7e66645231/8e3fd/assets/img/rstudio-icon.png)](https://d33wubrfki0l68.cloudfront.net/521a038ed009b97bf73eb0a653b1cb7e66645231/8e3fd/assets/img/rstudio-icon.png)
@@ -271,7 +271,7 @@ In order to write this... | we'd have to write this
 \$                        | `\$`
 \&                        | `\&`
 \%                        | `\%`
-\##                        | `\#`
+\#                        | `\#`
 \_                        | `\_`
 \{                        | `\{`
 
@@ -791,7 +791,7 @@ If you want the full descriptions of each argument, click [here](https://www.rdo
 First, let's use a built-in dataset `mtcars` as an example. We simply put the dataset name as the argument x of the function `kbl` or `kable`. Then, it creates the most basic table output as follows. Note that for R Markdown documents, the function uses the format "pipe" by default.        
 
 ```{r}
-kable(head(mtcars))
+kable(x = head(mtcars))
 ```
   
 
@@ -807,7 +807,7 @@ Let's try to create an HTML table with a caption.
 
 ```{r}
 dt <- head(mtcars[1:3,])
-kable(dt, format = "html", caption = "Title of the table")
+kable(x = dt, format = "html", caption = "Title of the table")
 ```
   
 However, the basic HTML output of `kable` does not look so pretty, since it is just a plain HTML table without any styling.     
@@ -815,7 +815,7 @@ However, the basic HTML output of `kable` does not look so pretty, since it is j
 We can also change the column names or row names using `col.names` or `row.names`. Let's customize the table above into the format "simple", as well as with changed column names.  
 
 ```{r}
-kable(dt, format = "simple", caption = "Title of the table", col.names = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"))
+kable(x = dt, format = "simple", caption = "Title of the table", col.names = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"))
 ```
   
 Note that only the `pipe` and `simple` formats work in any output document format. Formats such as `latex` or `html` only work on the specific format of the document output.   
@@ -842,7 +842,7 @@ Details of the arguments can be found [here](https://www.rdocumentation.org/pack
 First, let's just try using the function without any argument. `kable_styling()` will automatically apply Twitter bootstrap theme to the table.  
 
 ```{r}
-kable(head(mtcars[1:3,]))  %>%
+kable(x = head(mtcars[1:3,]))  %>%
   kable_styling()
 ```
   
@@ -851,7 +851,7 @@ As you can see, it creates a nice and simple table.
 Using `kable_styling`, you can also adjust the size and position of the table, font sizes, etc. as the following:   
 
 ```{r}
-kable(dt, format = "html") %>%
+kable(x = dt, format = "html") %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "left", font_size = 10)
 ```
   
@@ -864,7 +864,7 @@ Here, I will split `mtcars` dataset into two tables, and put them side by side u
 data1 <- head(mtcars[1:3, 1:3])
 data2 <- head(mtcars[, 4:7])
 knitr::kable(
-  list(data1, data2), format = "html",
+  x = list(data1, data2), format = "html",
   caption = 'Tables side by side.',
   booktabs = TRUE, valign = 't'
 ) %>% kable_styling(bootstrap_options = "striped")
@@ -928,7 +928,7 @@ data <- head(mtcars)
 
 ```{r q1_kable-solution}
 data <- head(mtcars)
-kable(data, caption = "This is a table", position = "right", full_width = T)
+kable(x = data, caption = "This is a table", position = "right", full_width = T)
 ```
 
 #### Question 2
@@ -940,7 +940,7 @@ data <- head(mtcars)
 
 ```{r q2_kable-solution}
 data <- head(mtcars)
-kable(data, caption = "This is a table", position = "right", full_width = T) %>% kable_styling(bootstrap_options = 'striped')
+kable(x = data, caption = "This is a table", position = "right", full_width = T) %>% kable_styling(bootstrap_options = 'striped')
 ```
 
 #### Question 3
@@ -954,7 +954,7 @@ data_2 <- head(mtcars[, 5:7])
 
 ```{r q3_kable-solution}
 kable(
-  list(data_1, data_2),
+  x = list(data_1, data_2),
   caption = 'Tables are side by side.', digits = 0
 )
 ```
@@ -976,12 +976,10 @@ So be careful not to make these mistakes.
 
 
 
-### References
-
-#### Next Steps
+### Next Steps
 Create some fancy tables using kable & kableExtra :)
 
-#### Reference  
+### Reference  
 
 - [advanced information on kableextra()](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)   
 - [kableextra()](https://bookdown.org/yihui/rmarkdown-cookbook/kableextra.html)  
