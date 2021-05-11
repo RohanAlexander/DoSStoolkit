@@ -156,7 +156,7 @@ The `ggplot2` package is used to create graphics and to visualize data. With the
 
 For example, I can create a scatter plot using `ggplot()` with `geom_point` as follows:    
 ```{r}
-ggplot(x = mtcars, mapping = aes(mpg, disp)) + geom_point()
+ggplot(mtcars, mapping = aes(mpg, disp)) + geom_point()
 ```
   
 You can fine-tune your graph using faceting specifications, labeling, coordinate systems, changing colours, and more. You can plot almost any type of graphs you could imagine using the package, much more efficiently.    
