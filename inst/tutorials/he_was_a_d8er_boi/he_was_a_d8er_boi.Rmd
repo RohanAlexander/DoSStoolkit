@@ -3130,19 +3130,9 @@ bit about how they work behind the scenes (You might find it helpful to try to u
 what the function is doing behind the scenes, and that way, you'll be able to better
 remember what it does and why it does it).
 
-### Hello world!
+### Hello world
 
-Suppose youre on your first data internship, and your manager gives you your first
-project. They give you a single CSV file and tell you to spend a couple of hours exploring
-the file in R and come back to them with questions.
-
-The first thing you do, of course, is load and view the file in R. As you do this, youre
-immediately confused by the structure. This isnt what you've seen in your data courses!
-The variables are rows not columns, and the observations are columns not rows! You take a
-deeper look and you see that some variables dont  show the data. It looks like
-theyre hidden behind some text. Lets take a look at an example of this data.
-
-Suppose you're given this data that you know is not in tidy format. 
+Suppose you're given this data that is not in tidy format. 
 
 ```{r tidyr-data, include = FALSE}
 nontidy_data <- tibble(n_lines = list(100, 200, 300),
@@ -3159,10 +3149,9 @@ nontidy_data <- nontidy_data %>%
 nontidy_data
 ```
 
-This data is not in its tidy format. First, the columns and rows are switched, and
-second, the cells are all hidden.
+First, the columns and rows are switched, and second, the cells are all hidden.
 
-Heres the entire piece of code we need to tidy it:
+Here is the code we need to tidy it:
 
 ```{r tidyr-2}
 nontidy_data %>%
@@ -3171,7 +3160,7 @@ nontidy_data %>%
   unnest(everything())
 ```
 
-But lets go through this step by step and check the output each time.
+Lets go through this step by step and check the output each time.
 
 To clean it, we will use our functions pivot_longer(), pivot_wider(), and unnest() from tidyr. 
 
