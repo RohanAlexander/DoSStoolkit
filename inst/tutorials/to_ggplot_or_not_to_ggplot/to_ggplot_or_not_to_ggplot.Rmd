@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "To ggplot or not to ggplot"
-date: "5 May 2021"
+date: "12 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -69,7 +69,7 @@ We determine the position of each point based on the values of two numerical var
 
 #### Let's look at an example of a scatterplot
 
-We can make one right now using the builtin `mtcars` dataset to take a look - below is a scatterplot made with base R.
+We can make one right now using the built-in `mtcars` dataset to take a look - below is a scatterplot made with base R.
 
 ``` {r, ggplot-base-ex}
 plot(x = mtcars$wt, 
@@ -461,7 +461,7 @@ animals %>% ggplot(aes(x = sex)) +
        y = "Count")
 ```
 
-For the most part, you wont really need to change the y-axis as it just gives the count, but make sure to change the x-axis if it is a confusing variable name.
+For the most part, you won't really need to change the y-axis as it just gives the count, but make sure to change the x-axis if it is a confusing variable name.
 
 #### Plotting numeric variables
 
@@ -706,7 +706,7 @@ books %>%
 
 Here, I am setting the bin width equal to 1. This means that we divide the rating into bins of range 1. In this case, we have a bin with range [2.5,3.5), [3.5,4.5), and [4.5,5.5). Then, we count the number of ratings that lies within this range. From the above histogram, we can see that there is about 8000 books lies within the range of [3,4).
 
-Without specifying the binwidth, geom_histogram will automatically find an optimal bindwith. 
+Without specifying the binwidth, geom_histogram will automatically find an optimal binwidth. 
  
 
 ##### Color and fill
@@ -719,7 +719,7 @@ books %>%
 
 The color parameter specify the color of the boundary of each bin and the fill parameter specify the color of the bin. You can create change the color of your histogram to make more unique and appealing.
 
-##### Title, and name of the axises
+##### Title, and name of the axes
 
 Using the `labs()` function in ggplot2 we can change the title and the name of the axes. 
 ```{r lables}
@@ -738,7 +738,7 @@ In the `labs()` function, `title` specifies the title of your plot, `x` specifie
 #### Exercise 1
 
 Please create a histogram for the ratings of the books that are published in 2010
-**Hint: filter in dplyr package maybe helpful**
+**Hint: `filter()` in `dplyr` package maybe helpful**
 
 ```{r ex1, exercise=TRUE, exercise.lines = 3}
 
@@ -1003,13 +1003,13 @@ http://www.sthda.com/english/wiki/ggplot2-title-main-axis-and-legend-titles
 
 
 
-## Static maps using ggmap
+## Static maps using `ggmap`
 
 Written by Annie Collins.
 
 ### Introduction
 
-> ggmap is an R package that makes it easy to retrieve raster map tiles from popular online mapping services like Google Maps and Stamen Maps and plot them using the ggplot2 framework
+> `ggmap` is an R package that makes it easy to retrieve raster map tiles from popular online mapping services like Google Maps and Stamen Maps and plot them using the ggplot2 framework
 
 Now that you're familiar with `ggplot2` and its plotting capabilities, we can start looking at some more advanced data visualization options. Next up: maps.
 
@@ -1224,7 +1224,7 @@ knitr::include_graphics("images/64-google-3.png")
 
 
 
-## Various useful options including: facets, labels, and colours, breaks_pretty(), other
+## Various useful options
 
 Written by Yena Joo.
 
@@ -1240,7 +1240,7 @@ In this lesson, you will learn how to:
 
 Prerequisite skills include:  
 
-- You should be familiar with ggplot now.  
+- You should be familiar with `ggplot` now.  
 - You also should be able to read and manipulate datasets.  
 
 Highlights:  
@@ -1354,7 +1354,7 @@ japanese_blooming %>%
   y= "This is an y-axis label")
 ```
  
-#### Arguements for `labs()`
+#### Arguments for `labs()`
 
 - title: The text for the title.  
 - subtitle: The text for the subtitle for the plot which will be displayed below the title.  
@@ -1504,13 +1504,13 @@ Good visualizations can help the audience/readers remember the information or th
 
 
 
-## Saving graphs and changing their size and other options
+## Saving graphs
 
 Written by Yena Joo.
 
 
 ### Introduction
-There are some situations where you may need pictures of the plots when writing on blogs or sending emails about the data you're analyzing. In that case, you would wonder  how to save and upload the plots created in r.  
+There are some situations where you may need pictures of the plots when writing on blogs or sending emails about the data you're analyzing. In that case, you would wonder how to save and upload the plots created in R.  
 
 In this lesson, you will learn how to:  
 

@@ -258,22 +258,29 @@
 <code class="sourceCode R"><span class="fu">learnr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/learnr/man/run_tutorial.html">run_tutorial</a></span><span class="op">(</span><span class="st">"he_was_a_d8er_boi"</span>, package <span class="op">=</span> <span class="st">"DoSStoolkit"</span><span class="op">)</span></code></pre></div>
 <p>Module content:</p>
 <ul>
-<li>An overview of R and data and head(), tail(), glance() and summary(), by Haoluan Chen.</li>
-<li>strings: paste() and glue() and stringr generally but especially str_detect() and str_remove() etc, by Marija Pejcinovska.</li>
-<li>names(), cbind(), and rbind(), by Isaac Ehrlich.</li>
-<li>left_join(), anti_join(), full_join, distinct() and duplicated(), by Haoluan Chen.</li>
-<li>Looking for missing data, such as complete() and other ways, by Mariam Walaa.</li>
-<li>set.seed(), runif(), rnorm(), and sample(), by Haoluan Chen.</li>
-<li>Putting them together to simulate regression datasets for common scenarios, by Mariam Walaa.</li>
-<li>across() and conditional mutating and conditional summarise etc, by Mariam Walaa.</li>
-<li>tidying up datasets including recode(), replace_na(), coalesce(), n_distinct(), distinct(), fill(), lag() and lead(), by Mariam Walaa.</li>
-<li>pluck(), unnest(), pull(), by Isaac Ehrlich.</li>
-<li>forcats and factors espectially relevel() and fct_reorder(), by Matthew Wankiewicz.</li>
-<li>strings especially separate(), separate_rows(), text, str_match(), str_remove(), str_detect() (Check what is covered in the earlier module that gets started with strings (#43) and mention that also, by Annie Collins.</li>
-<li>regular expressions, by Shirley Deng.</li>
-<li>dates, especially lubridate, by Mariam Walaa.</li>
-<li>janitor, especially clean_names(), by Mariam Walaa.</li>
-<li>tidyr - TBD - <a href="https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf" class="uri">https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf</a> See if there’s anythign that should be added, by Mariam Walaa.</li>
+<li>
+<code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>, <code><a href="https://rdrr.io/r/utils/head.html">tail()</a></code>, <code>glimpse()</code>, and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, written by Haoluan Chen.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/paste.html">paste()</a></code>, <code><a href="https://rdrr.io/r/base/paste.html">paste0()</a></code>, <code><a href="https://glue.tidyverse.org/reference/glue.html">glue::glue()</a></code> and <code>stringr</code>, written by Marija Pejcinovska</li>
+<li>
+<code><a href="https://rdrr.io/r/base/names.html">names()</a></code>, <code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code> and <code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code>, written by Isaac Ehrlich.</li>
+<li>
+<code>left_join()</code>, <code>anti_join()</code>, <code>full_join()</code>, etc, written by Haoluan Chen.</li>
+<li>Looking for missing data, written by Mariam Walaa.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code>, <code><a href="https://rdrr.io/r/stats/Uniform.html">runif()</a></code>, <code><a href="https://rdrr.io/r/stats/Normal.html">rnorm()</a></code>, and <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code>, written by Haoluan Chen.</li>
+<li>Simulating datasets for regression, written by Mariam Walaa.</li>
+<li>Advanced mutating and summarising, written by Mariam Walaa.</li>
+<li>Tidying up datasets, written by Mariam Walaa.</li>
+<li>
+<code>forcats</code> and factors, written by Matthew Wankiewicz.</li>
+<li>More on strings, written by Annie Collins.</li>
+<li>Regular expressions, written by Shirley Deng.</li>
+<li>Working with dates, written by Mariam Walaa.</li>
+<li>
+<code>janitor</code>, written by Mariam Walaa.</li>
+<li>
+<code>tidyr</code>, written by Mariam Walaa.</li>
 </ul>
 </div>
 <div id="to-ggplot-or-not-to-ggplot" class="section level3">
@@ -284,13 +291,14 @@
 <code class="sourceCode R"><span class="fu">learnr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/learnr/man/run_tutorial.html">run_tutorial</a></span><span class="op">(</span><span class="st">"to_ggplot_or_not_to_ggplot"</span>, package <span class="op">=</span> <span class="st">"DoSStoolkit"</span><span class="op">)</span></code></pre></div>
 <p>Module content:</p>
 <ul>
-<li>What is ggplot, aes, etc, by Shirley Deng.</li>
-<li>Bar charts (one categorical variable), by Matthew Wankiewicz.</li>
-<li>Histograms (one continuous variable), by Haoluan Chen.</li>
-<li>Scatter plots (two variables), by Haoluan Chen.</li>
-<li>Static maps with ggmap, by Annie Collins.</li>
-<li>Various useful options including: facets, labels, and colours, breaks_pretty(), other?, by Yena Joo.</li>
-<li>Saving graphs in a ggplot world and changing their size and other options, by Yena Joo.</li>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code>, by Shirley Deng.</li>
+<li>Bar charts, by Matthew Wankiewicz.</li>
+<li>Histograms, by Haoluan Chen.</li>
+<li>Scatter plots, by Haoluan Chen.</li>
+<li>Static maps with <code>ggmap</code>, by Annie Collins.</li>
+<li>Various useful options, by Yena Joo.</li>
+<li>Saving graphs, by Yena Joo.</li>
 </ul>
 </div>
 <div id="r-marky-markdown-and-the-funky-docs" class="section level3">
@@ -301,15 +309,14 @@
 <code class="sourceCode R"><span class="fu">learnr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/learnr/man/run_tutorial.html">run_tutorial</a></span><span class="op">(</span><span class="st">"r_marky_markdown"</span>, package <span class="op">=</span> <span class="st">"DoSStoolkit"</span><span class="op">)</span></code></pre></div>
 <p>Module content:</p>
 <ul>
-<li>What is R Markdown and why might you use it, Sections, sub-section, etc, bold, italics, maths, by Shirley Deng.</li>
-<li>Figures and cross-references, by Isaac Ehrlich.</li>
-<li>Top matter: title, date, author, abstract, by Yena Joo.</li>
-<li>Tables, kable, kableextra and gt, by Yena Joo.</li>
-<li>Formatting regression results - modelsummary(), stargazer(), others????, by Isaac Ehrlich.</li>
-<li>Patchwork, by Michael Chong.</li>
-<li>References and bibtex, by Yena Joo.</li>
-<li>PDF outputs, by Yena Joo.</li>
-<li>here and filepaths, by Matthew Wankiewicz.</li>
+<li>Introduction to R Markdown, written by Shirley Deng.</li>
+<li>Top Matter: Title, Date, Author, Abstract, written by Yena Joo.</li>
+<li>Tables: <code>kable</code>, <code>kableextra</code>, <code>gt</code>, written by Yena Joo.</li>
+<li>Multiple plots with <code>patchwork</code>, written by Michael Chong</li>
+<li>References and Bibtex, written by Yena Joo.</li>
+<li>PDF outputs, written by Yena Joo.</li>
+<li>
+<code><a href="https://here.r-lib.org//reference/here.html">here::here()</a></code> and filepaths, written by Matthew Wankiewicz.</li>
 </ul>
 </div>
 <div id="git-outta-here" class="section level3">
@@ -320,11 +327,11 @@
 <code class="sourceCode R"><span class="fu">learnr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/learnr/man/run_tutorial.html">run_tutorial</a></span><span class="op">(</span><span class="st">"git_outta_here"</span>, package <span class="op">=</span> <span class="st">"DoSStoolkit"</span><span class="op">)</span></code></pre></div>
 <p>Module content:</p>
 <ul>
-<li>What is version control and GitHub?, by Mariam Walaa.</li>
-<li>Pull, status, add, commit, push, by Mariam Walaa.</li>
-<li>Branches, by Matthew Wankiewicz.</li>
-<li>Dealing with conflicts, by Matthew Wankiewicz.</li>
-<li>Doing all this in R Studio, by Matthew Wankiewicz.</li>
+<li>What is version control and GitHub?, written by Mariam Walaa.</li>
+<li>Git: pull, status, add, commit, push, written by Mariam Walaa.</li>
+<li>Branches in GitHub, written by Matthew Wankiewicz.</li>
+<li>Dealing with Conflicts, written by Matthew Wankiewicz.</li>
+<li>Putting (G)it All together in RStudio, written by Matthew Wankiewicz.</li>
 </ul>
 </div>
 <div id="indistinguishable-from-magic" class="section level3">
@@ -335,12 +342,10 @@
 <code class="sourceCode R"><span class="fu">learnr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/learnr/man/run_tutorial.html">run_tutorial</a></span><span class="op">(</span><span class="st">"indistinguishable_from_magic"</span>, package <span class="op">=</span> <span class="st">"DoSStoolkit"</span><span class="op">)</span></code></pre></div>
 <p>Module content:</p>
 <ul>
-<li>Iterating on iteration, by Michael Chong.</li>
-<li>Coding style, by Marija Pejcinovska.</li>
-<li>Writing R packages, by Matthew Wankiewicz.</li>
-<li>Getting started with Blogdown, by Annie Collins.</li>
-<li>Getting started with Shiny, by Matthew Wankiewicz.</li>
-<li>Installing Stan and related adventures, by Marija Pejcinovska.</li>
+<li>Coding style, written by Marija Pejcinovska.</li>
+<li>Writing R Packages, written by Matthew Wankiewicz.</li>
+<li>Getting started with Blogdown, written by Annie Collins.</li>
+<li>Getting started with Shiny, written by Matthew Wankiewicz.</li>
 </ul>
 </div>
 </div>
@@ -429,18 +434,7 @@
 <a href="#next-steps" class="anchor"></a>Next steps</h2>
 <ul>
 <li>Assessment</li>
-<li>Modules
-<ul>
-<li>Iteration</li>
-<li>Data II</li>
-<li>Strings</li>
-<li>Dates</li>
-<li>Stan</li>
-<li>Packages</li>
-<li>Shiny</li>
 <li>Teaching</li>
-</ul>
-</li>
 <li>French language version</li>
 </ul>
 </div>

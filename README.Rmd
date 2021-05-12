@@ -208,22 +208,21 @@ learnr::run_tutorial("he_was_a_d8er_boi", package = "DoSStoolkit")
 
 Module content:
 
-- An overview of R and data and head(), tail(), glance() and summary(), by Haoluan Chen.
-- strings: paste() and glue() and stringr generally but especially str_detect() and str_remove() etc, by Marija Pejcinovska.
-- names(), cbind(), and rbind(), by Isaac Ehrlich.
-- left_join(), anti_join(), full_join, distinct() and duplicated(), by Haoluan Chen.
-- Looking for missing data, such as complete() and other ways, by Mariam Walaa.
-- set.seed(), runif(), rnorm(), and sample(), by Haoluan Chen.
-- Putting them together to simulate regression datasets for common scenarios, by Mariam Walaa.
-- across() and conditional mutating and conditional summarise etc, by Mariam Walaa.
-- tidying up datasets including recode(), replace_na(), coalesce(), n_distinct(), distinct(), fill(), lag() and lead(), by Mariam Walaa.
-- pluck(), unnest(), pull(), by Isaac Ehrlich.
-- forcats and factors espectially relevel() and fct_reorder(), by Matthew Wankiewicz.
-- strings especially separate(), separate_rows(), text, str_match(), str_remove(), str_detect() (Check what is covered in the earlier module that gets started with strings (#43) and mention that also, by Annie Collins.
-- regular expressions, by Shirley Deng.
-- dates, especially lubridate, by Mariam Walaa.
-- janitor, especially clean_names(), by Mariam Walaa.
-- tidyr - TBD - https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf See if there's anythign that should be added, by Mariam Walaa.
+- `head()`, `tail()`, `glimpse()`, and `summary()`, written by Haoluan Chen.
+- `paste()`, `paste0()`, `glue::glue()` and `stringr`, written by Marija Pejcinovska
+- `names()`, `rbind()` and `cbind()`, written by Isaac Ehrlich.
+- `left_join()`, `anti_join()`, `full_join()`, etc, written by Haoluan Chen.
+- Looking for missing data, written by Mariam Walaa.
+- `set.seed()`, `runif()`, `rnorm()`, and `sample()`, written by Haoluan Chen.
+- Simulating datasets for regression, written by Mariam Walaa.
+- Advanced mutating and summarising, written by Mariam Walaa.
+- Tidying up datasets, written by Mariam Walaa.
+- `forcats` and factors, written by Matthew Wankiewicz.
+- More on strings, written by Annie Collins.
+- Regular expressions, written by Shirley Deng.
+- Working with dates, written by Mariam Walaa.
+- `janitor`, written by Mariam Walaa.
+- `tidyr`, written by Mariam Walaa.
 
 ### To ggplot or not to ggplot
 
@@ -235,13 +234,13 @@ learnr::run_tutorial("to_ggplot_or_not_to_ggplot", package = "DoSStoolkit")
 
 Module content:
 
-- What is ggplot, aes, etc, by Shirley Deng.
-- Bar charts (one categorical variable), by Matthew Wankiewicz.
-- Histograms (one continuous variable), by Haoluan Chen.
-- Scatter plots (two variables), by Haoluan Chen.
-- Static maps with ggmap, by Annie Collins.
-- Various useful options including: facets, labels, and colours, breaks_pretty(), other?, by Yena Joo.
-- Saving graphs in a ggplot world and changing their size and other options, by Yena Joo.
+- `ggplot2::ggplot()`, by Shirley Deng.
+- Bar charts, by Matthew Wankiewicz.
+- Histograms, by Haoluan Chen.
+- Scatter plots, by Haoluan Chen.
+- Static maps with `ggmap`, by Annie Collins.
+- Various useful options, by Yena Joo.
+- Saving graphs, by Yena Joo.
 
 ### R Marky Markdown and the Funky Docs
 
@@ -253,15 +252,13 @@ learnr::run_tutorial("r_marky_markdown", package = "DoSStoolkit")
 
 Module content:
 
-- What is R Markdown and why might you use it, Sections, sub-section, etc, bold, italics, maths, by Shirley Deng.
-- Figures and cross-references, by Isaac Ehrlich.
-- Top matter: title, date, author, abstract, by Yena Joo.
-- Tables, kable, kableextra and gt, by Yena Joo.
-- Formatting regression results - modelsummary(), stargazer(), others????, by Isaac Ehrlich.
-- Patchwork, by Michael Chong.
-- References and bibtex, by Yena Joo.
-- PDF outputs, by Yena Joo.
-- here and filepaths, by Matthew Wankiewicz.
+- Introduction to R Markdown, written by Shirley Deng.
+- Top Matter: Title, Date, Author, Abstract, written by Yena Joo.
+- Tables: `kable`, `kableextra`, `gt`, written by Yena Joo.
+- Multiple plots with `patchwork`, written by Michael Chong
+- References and Bibtex, written by Yena Joo.
+- PDF outputs, written by Yena Joo.
+- `here::here()` and filepaths, written by Matthew Wankiewicz.
 
 ### Git outta here
 
@@ -273,11 +270,11 @@ learnr::run_tutorial("git_outta_here", package = "DoSStoolkit")
 
 Module content:
 
-- What is version control and GitHub?, by Mariam Walaa.
-- Pull, status, add, commit, push, by Mariam Walaa.
-- Branches, by Matthew Wankiewicz.
-- Dealing with conflicts, by Matthew Wankiewicz.
-- Doing all this in R Studio, by Matthew Wankiewicz.
+- What is version control and GitHub?, written by Mariam Walaa.
+- Git: pull, status, add, commit, push, written by Mariam Walaa.
+- Branches in GitHub, written by Matthew Wankiewicz.
+- Dealing with Conflicts, written by Matthew Wankiewicz.
+- Putting (G)it All together in RStudio, written by Matthew Wankiewicz.
 
 ### Indistinguishable from magic
 
@@ -289,12 +286,10 @@ learnr::run_tutorial("indistinguishable_from_magic", package = "DoSStoolkit")
 
 Module content:
 
-- Iterating on iteration, by Michael Chong.
-- Coding style, by Marija Pejcinovska.
-- Writing R packages, by Matthew Wankiewicz.
-- Getting started with Blogdown, by Annie Collins.
-- Getting started with Shiny, by Matthew Wankiewicz.
-- Installing Stan and related adventures, by Marija Pejcinovska.
+- Coding style, written by Marija Pejcinovska.
+- Writing R Packages, written by Matthew Wankiewicz.
+- Getting started with Blogdown, written by Annie Collins.
+- Getting started with Shiny, written by Matthew Wankiewicz.
 
 
 
@@ -370,15 +365,7 @@ We draw on the open-source statistical programming language R and a variety of p
 ## Next steps 
 
 - Assessment
-- Modules
-	- Iteration
-	- Data II
-	- Strings
-	- Dates
-	- Stan
-	- Packages
-	- Shiny
-	- Teaching
+- Teaching
 - French language version
 
 

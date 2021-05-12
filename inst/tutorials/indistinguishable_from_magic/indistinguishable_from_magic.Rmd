@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Indistinguishable from magic"
-date: "5 May 2021"
+date: "12 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -27,7 +27,13 @@ gradethis::gradethis_setup()
 
 ## Introduction
 
-In this module, we are going to go through various aspects that are, and there's no word for this other than, magical.
+Written by Rohan Alexander.
+
+In this module, we are going to go through various aspects that are, and there's no word for this other than, magical. We learn R because we're forced to for a class or work, or because we have some problem that a 'friend' says we should solve in R. Eventually we get better at it, but it's a slog. But when you get to this module, we start to see the power of the foundation that we've established.
+
+We will be able to make websites using R! We will be able to make interactive applications using R. After using countless packages throughout these modules, we'll even be able to write out own packages! There are also a few aspects around style that are worth addressing at this point, and so there is also a lesson on that. 
+
+For me, it was when I got to this type of content, that I started to really 'get' R. And I hope that you feel similarly.
 
 
 
@@ -177,7 +183,7 @@ my_var <- y + 24 + (x * 0.5)
 my_var<-y+24+(x*0.5)
 ```
 
-  - There are, however, a few exception to the above rule. *Operators with high precedence*, such as those that access stuff in a namespace (`::`, `:::`), those used for extracting slots or components (`$`, `@`), those used for indexing (`[]`, `[[]]`), the exponentiation operator (`^`), or the sequence operator (`:`) *should not* be surrounded by space.
+  - There are, however, a few exceptions to the above rule. *Operators with high precedence*, such as those that access stuff in a namespace (`::`, `:::`), those used for extracting slots or components (`$`, `@`), those used for indexing (`[]`, `[[]]`), the exponentiation operator (`^`), or the sequence operator (`:`) *should not* be surrounded by space.
   
 ```{r, eval=FALSE}
 
@@ -197,7 +203,7 @@ z <- x ^ 2
 
   - When writing functions and conditional statements which are not short or simple you would need should be pacing your code in a block sectioned off by **curly braces**. Enclosing the "body" of your function or conditional statement inside curly braces allows one to more easily see the hierarchy of a piece of code. There are few things to keep in mind here: 
     + `{` should be the last character on a line. Once you open the left squiggly bracket start the actual body of the code in a new line. 
-    + The code content inside the curly braces should be indented by two spaces. By skimming the lefthand margin, this way you'll be able to see the hierarchy of the code block more easily
+    + The code content inside the curly braces should be indented by two spaces. By skimming the left-hand margin, this way you'll be able to see the hierarchy of the code block more easily
     + When you are done with specifying the code that defines your function or conditional statement place the closing curly brace on a new line, so that it's the first character on the line. In fact, unless it is followed by `else {`, the closing curly brace should be on its own line.
     
 ```{r, eval=FALSE}
@@ -324,7 +330,7 @@ While there are a few different ways to create package in R, the method we will 
 
 1. After you have installed `devtools` and `roxygen2`, create a new R project, then click new directory and then R package. Here you will name your R package and include any files to the creation of the package. Once you have selected any files, click "Create Package" to make the package. 
 
-2. Now that the package has been created, there will be files located in the lower right hand corner. The files include: "DESCRIPTION", "man" and "R". "DESCRIPTION" is where you can tell users about your package, including the name, description, and author. Next, the "man" folder is where you describe the functions in your package. These files are saved as ".Rd" files which stands for R documentation. The descriptions include the name, usage, description and a few examples of the functions. Lastly, the "R" folder will contain R scripts where you will write your functions. 
+2. Now that the package has been created, there will be files located in the lower right-hand corner. The files include: "DESCRIPTION", "man" and "R". "DESCRIPTION" is where you can tell users about your package, including the name, description, and author. Next, the "man" folder is where you describe the functions in your package. These files are saved as ".Rd" files which stands for R documentation. The descriptions include the name, usage, description and a few examples of the functions. Lastly, the "R" folder will contain R scripts where you will write your functions. 
     - You can create as many functions as you want, just make sure that there is a ".Rd" file for each of the functions you have created.
     - You don't need to edit the .Rd files on your own. The `roxygen` package can create this documentation based off of your functions. This is shown in the video later on. 
   
@@ -473,7 +479,7 @@ Some next steps for making packages include:
 
 
 
-## Getting Started with Blogdown
+## Getting started with Blogdown
 
 Written by Annie Collins.
 
@@ -597,7 +603,7 @@ For a more in-depth look at all things `blogdown`, check out the `blogdown` [onl
 
 
 
-## Getting Started with Shiny
+## Getting started with Shiny
 
 Written by Matthew Wankiewicz.
 
@@ -822,4 +828,8 @@ Some helpful links for creating Shiny apps include:
 
 ## Summary, and next steps
 
+Written by Rohan Alexander.
 
+At this point, you've covered the essentials of R. Chances are that you've been doing this toward some project or class and I hope that this has gone well for you.
+
+There are a bunch of next steps, but it really depends on what you want to do. For me, I found that the way that all of this came together for me was having to teach it. If you're able to start giving talks about your work, or being a TA for a class then that's probably a great way to go. 

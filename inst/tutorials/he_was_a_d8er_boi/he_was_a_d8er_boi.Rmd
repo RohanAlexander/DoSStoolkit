@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "He was a d8er boi"
-date: "7 May 2021"
+date: "12 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -47,7 +47,32 @@ broadway <- broadway %>%
 
 ## Introduction
 
-In this module, we are going to explore data in R. In its heart of hearts, R is a statistical programming language, so it was made for data. 
+Written by Rohan Alexander.
+
+In this module, we are going to explore data in R. R is a fully-featured programming language. However, it was developed to be a statistical programming language. This means that it was built to deal with data.
+
+It has a lot of functionality built into it to deal with data, but it has also benefited from having a stable ecosystem of packages. These have enhanced what we think of as data and now that not only means numbers, but also letter, words, and language more generally, images, even video.
+
+In this module we will cover an awful lot of content including:
+
+- `head()`, `tail()`, `glimpse()`, and `summary()`, written by Haoluan Chen.
+- `paste()`, `paste0()`, `glue::glue()` and `stringr`, written by Marija Pejcinovska
+- `names()`, `rbind()` and `cbind()`, written by Isaac Ehrlich.
+- `left_join()`, `anti_join()`, `full_join()`, etc, written by Haoluan Chen.
+- Looking for missing data, written by Mariam Walaa.
+- `set.seed()`, `runif()`, `rnorm()`, and `sample()`, written by Haoluan Chen.
+- Simulating datasets for regression, written by Mariam Walaa.
+- Advanced mutating and summarising, written by Mariam Walaa.
+- Tidying up datasets, written by Mariam Walaa.
+- `forcats` and factors, written by Matthew Wankiewicz.
+- More on strings, written by Annie Collins.
+- Regular expressions, written by Shirley Deng.
+- Working with dates, written by Mariam Walaa.
+- `janitor`, written by Mariam Walaa.
+- `tidyr`, written by Mariam Walaa.
+
+There's a lot of data out there, and we've got the roos off the green. We can't wait to see what you do with it.
+
 
 
 
@@ -947,7 +972,7 @@ Here is the documentation for all the joins function in dplyr package: https://d
 
 
 
-## Looking for Missing Data
+## Looking for missing data
 
 Written by Mariam Walaa.
 
@@ -1127,7 +1152,7 @@ If you would like to learn more about the complete() and fill() functions, you w
 
 
 
-## set.seed(), runif(), rnorm(), and sample()
+## `set.seed()`, `runif()`, `rnorm()`, and `sample()`
 
 Written by Haoluan Chen.
 
@@ -1419,7 +1444,7 @@ You can also generate binomial random variables using `rbinom()`, and Poisson ra
 
 
 
-## Simulating Datasets From Regression
+## Simulating datasets for regression
 
 Written by Mariam Walaa.
 
@@ -1427,7 +1452,7 @@ Written by Mariam Walaa.
 
 In this lesson, you will learn how to:
 
-- Simulate data from regression 
+- Simulate data for regression 
 
 Prerequisite skills include:
 
@@ -1441,7 +1466,7 @@ Highlights
 
 In the previous section, we learned about how to simulate data. We can build
 regression models from this simulated data. However, another thing we can do with these
-functions is build simulated data _from_ regression models.
+functions is build simulated data _for_ regression models.
 
 For example, suppose you were not given a data set but instead was told of the
 distributions of some variables and given their coefficients for a linear regression
@@ -2079,7 +2104,7 @@ If you are looking for more information on some of these functions, please check
 
 
 
-## Forcats and Factors
+## `forcats` and factors
 
 Written by Matthew Wankiewicz.
 
@@ -2717,7 +2742,279 @@ Now that you are familiar with some functions that work with strings, you are we
 
 
 
-## Working with Dates
+
+
+
+## Regular expressions
+
+Written by Shirley Deng.
+
+To use the `stringr` package, we can describe patterns in strings using regular expressions, or regex. This section will outline a variety of regex examples :\^)
+
+For the examples below, we have a grocery list stored as the vector `groceries`.
+
+```{r regex-data}
+groceries <- c("Bananas", "strawberries", "Sliced bread", 
+               "2 lb ground beef", "blueberries", "frozen raspberry", 
+               "red color plums", "frozen Mixed-Berries", "yellow colour plums")
+```
+
+### Starting with the basics
+
+Say we're interested in seeing how many different types of berries are on our list. 
+
+We can match exact strings by simply using them as the `pattern` argument in our chosen `stringr` function. Here, we are using `stringr::str_subset()`
+
+```{r regex-exact, exercise=T}
+str_subset(groceries, "berries")
+```
+
+### Wrapping our package
+
+When we use a plain string for the `pattern` argument, R reads it by wrapping it in the `regex()` function.
+
+```{r regex-wrap, exercise=T}
+str_subset(groceries, regex("berries"))
+```
+
+Notice that whether we use `stringr::str_subset()` with `"berries"` or `regex("berries")` as our pattern argument, the results are the same.
+
+### Insensitive about cases
+
+Notice that in the above examples, `str_subset()` was case sensitive and did not return the `"Mixed Berries"` item in our `groceries` list.
+
+However, if we include the argument `ignore_case=T` in `regex()`, it will.
+
+```{r regex-case, exercise=T}
+str_subset(groceries, regex("Berries", ignore_case=T))
+```
+
+Note: if we want to use options other than the default for `regex()`, we have to explicitly wrap our pattern criteria in the `regex()` function.
+
+### Period.
+
+Notice that the item `"frozen raspberry"` is a berry, but was not returned in the earlier examples because we were only searching for the plural spelling `"berries"`.
+
+The period `.` is used to match any character except the newline `\n`, so we can use the common part `"berr"` to include `"frozen raspberry"`.
+
+```{r regex-period, exercise=T}
+str_subset(groceries, ".berr.")
+```
+
+However, if we did want to include the newline `\n`, then we can explicitly state this in the `regex()` arguments as well using `dotall=T`. Here, we use the `stringr` function `str_detect()`:
+
+```{r regex-all, exercise=T}
+str_detect("\nGroceries\n", ".G.")
+str_detect("\nGroceries\n", regex(".G.", dotall=T))
+```
+
+### From start to finish
+
+Alternatively, we can also search for strings that start or end with a certain pattern by using anchors.
+
+For example, if we wanted all frozen items in `groceries`, we can use the caret `^` to indicate the start of a string and search for items beginning with "frozen":
+
+```{r regex-start, exercise=T}
+str_subset(groceries, "^frozen")
+```
+
+Or if we wanted all varieties of plums in `groceries`, we can use the dollar sign `$` to indicate the end of a string and search for all items ending with "plums":
+
+```{r regex-finish, exercise=T}
+str_subset(groceries, "plums$")
+```
+
+Some [additional anchors](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf) are as follows: 
+
+Syntax   |   Use 
+---|--- 
+`^` | start of the string 
+`$` | end of the string 
+`\\b` | empty string at either edge of a word 
+`\\B` | not the edge of a word 
+`\\<` | beginning of a word 
+`\\>` | end of a word 
+
+### Or how about...
+
+Or how about we try explicitly searching for all of `"berries"`,  `"Berries"`, and `"berry"`? We can do so with the alternation operator, `|`, which means "or".
+
+```{r regex-or, exercise=T}
+str_subset(groceries, "berries|Berries|berry")
+```
+
+Alternatively, we can also use parentheses `()` to write this more concisely. The parantheses essentially do the same thing they do in BEDMAS/PEDMAS for math: indicate grouping.
+
+```{r regex-or-parent, exercise=T}
+str_subset(groceries, "(b|B)err(ies|y)")
+```
+
+### Color or colour?
+
+Notice that in we have spelled both "color" and "colour" in `groceries`. Suppose we wanted to find all of the items that had their colour indicated.
+
+There are a variety of ways we could do this using the tools we have so far.
+
+For example, using the alternation operator `|`:
+
+```{r regex-colour-or, exercise=T}
+str_subset(groceries, "color|colour")
+```
+
+Or, using parentheses `()` too:
+
+```{r regex-colour-parent, exercise=T}
+str_subset(groceries, "colo(r|ur)")
+```
+
+Alternatively, we can also use repetition quantifiers.
+
+For example, the question mark `?` indicates that the preceding item is optional, and can be matched up to once. We can thus us `?` to indicate that the "u" in "colour" is optional:
+
+```{r regex-colour-q, exercise=T}
+str_subset(groceries, "colou?r")
+```
+
+Below is a list of some of these [repetition operators](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf): 
+
+Syntax   | Use
+---|---
+`?`   |   The preceding item is optional and will be matched at most once 
+`*`   |   The preceding item will be matched zero or more times 
+`+`   |   The preceding item will be matched one or more times 
+`{n}`   |   The preceding item is matched exactly n times 
+`{n,}`   |   The preceding item is matched n or more times 
+`{n,m}`   |   The preceding item is matched at least n times, but not more than m times 
+
+### Building character
+
+Suppose we wanted to search for all items in `groceries` that have amounts provided. How many lbs of beef do we need? Is the number of plums specified?
+
+One way we could do this is to search for digits altogether. Using our current knowledge of regex, we could use the following:
+
+```{r regex-bad-digits, exercise=T}
+str_subset(groceries, "0|1|2|3|4|5|6|7|8|9")
+```
+
+R has syntax for classes of characters, though. And in this case, the class of digits is referred to with `[:digit:]`. 
+
+Below is a list of some [character classes](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf):
+
+Syntax  |  Use
+---|---
+`[:alnum:]`   |   Alphanumeric characters: `[:alpha:]` and `[:digit:]` 
+`[:alpha:]`   |   Alphabetic characters: `[:lower:]` and `[:upper:]`
+`[:blank:]`   |   Blank characters: space and tab, and possibly other locale-dependent characters such as non-breaking space 
+`[:cntrl:]`   |   Control characters. In ASCII, these characters have octal codes 000 through 037, and 177 (DEL). In another character set, these are the equivalent characters, if any 
+`[:digit:]`   |   Digits: `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, and `9` 
+`[:graph:]`   |   Graphical characters: `[:alnum:]` and `[:punct:]` 
+`[:lower:]`   |   Lower-case letters in the current locale 
+`[:print:]`   |   Printable characters: `[:alnum:]`, `[:punct:]` and space 
+`[:punct:]`   |   Punctuation characters: `` ` ``, `!`, `"`, `#`, `$`, `%`, `&`, `'`, `(`, `)`, `*`, `+`, `,`, `-`, `.`, `/`, `:`, `;`, `<`, `=`, `>`, `?`, `@`, `[`, `\`, `]`, `^`, `_`, `{`, `|`, `}`, and `~`
+`[:space:]`   |   Space characters: tab, newline, vertical tab, form feed, carriage return, space, and possibly other locale-dependent characters 
+`[:upper:]`   |   Upper-case letters in the current locale 
+`[:xdigit:]`   |   Hexadecimal digits: `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `A`, `B`, `C`, `D`, `E`, `F`, `a`, `b`, `c`, `d`, `e`, `f`
+
+We can also build our own [character classes](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf), though. For example:
+
+Syntax  |  Use
+---|---
+`[xyz]`   |   would match `x`, `y`, or `z` 
+`[a-z]`   |   would match every character between `a` and `z` in Unicode code point order 
+`[^xyz]`  |   would match anything except `x`, `y`, or `z`
+`[\~\!]`   |   would match `~` or `!`
+
+Whenever we want to use a pre-built character class like `[:digit:]`, we have to wrap it in an extra set of square brackets `[]`. 
+
+Thus, we can use this:
+
+```{r regex-digit-pre, exercise=T}
+str_subset(groceries, "[[:digit:]]")
+```
+
+Or this:
+
+```{r regex-digit-built, exercise=T}
+str_subset(groceries, "[0123456789]")
+```
+
+To search for all items in `groceries` that have amounts provided:
+
+### Help me escape!
+
+Recall from the R markdown section that there were a number of special characters that we needed to escape with `\` in order to get them to show up, rather than perform some code-y function. These special characters are called **metacharacters**.
+
+Additionally, recall that the newline character is indicated with `\n`. However, it's not the only such character with this kind of special syntax. Below are some more of these special characters, also called [metacharacters](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf): 
+
+Syntax  |  Use
+---|---
+`\n`   |   new line 
+`\r`   |   carriage return 
+`\t`   |   tab 
+`\v`   |   vertical tab 
+`\f`   |   form feed
+
+Now, what if we wanted to match a pattern containing `*`, `+`, or `\t`, for example?
+
+Consider the following list `spam`:
+
+```{r regex-spam}
+spam <- c("2*2=4", "raining cats and dogs", "they\them", "they/them", "heurex.se", "peanut butter")
+```
+
+We can try to match these metacharacters as usual:
+
+```{r regex-fail, exercise=T}
+str_detect(spam, "*|+|\t")
+```
+
+But we get an error.
+
+In order to use these metacharacters as literal characters, we can either escape them by using `\\`:
+
+```{r regex-escape-slash, exercise=T}
+str_subset(spam, "(\\*)|(\\+)|(\\\t)")
+```
+
+Or by enclosing them between `\\Q` and `\\E`:
+
+```{r regex-escape-enclose, exercise=T}
+str_subset(spam, "\\Q*\\E|\\Q+\\E|\\Q\t\\E")
+```
+
+### Functioning functions
+
+Alternatively, instead of using the `stringr` package, we can also use some of the following [base R functions](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf): 
+
+Function   |   Use 
+---|---
+`grep()`, `grepl()`   |   These functions search for matches of a regular expression/pattern in a character vector. `grep()` returns the indices into the character vector that contain a match or the specific strings that happen to have the match. `grepl()` returns a `T`/`F` vector indicating which elements of the character vector contain a match
+`regexpr()`, `gregexpr()`   |    Search a character vector for regular expression matches and return the indices of the string where the match begins and the length of the match 
+`sub()`, `gsub()`   |    Search a character vector for regular expression matches and replace that match with another string
+`regexec()`   |    This function searches a character vector for a regular expression, much like `regexpr()`, but it will additionally return the locations of any parenthesized sub-expressions. Probably easier to explain through demonstration.
+
+### Additional resources and references
+
+- [R regex cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf)
+- [stringr cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/strings.pdf)
+- [stringr vignette](https://stringr.tidyverse.org/articles/regular-expressions.html)
+- [line breaks](https://stackoverflow.com/questions/21781014/remove-all-line-breaks-enter-symbols-from-the-string-using-r)
+- [escaping line breaks](https://meta.stackexchange.com/questions/82718/how-do-i-escape-a-backtick-within-in-line-code-in-markdown)
+- [Albert Y. Kim's "Regular Expressions in R"](https://rstudio-pubs-static.s3.amazonaws.com/74603_76cd14d5983f47408fdf0b323550b846.html)
+- [Hadley Wickham and Garrett Grolemund's *R for Data Science* section "Strings"](https://r4ds.had.co.nz/strings.html)
+- [Roger D. Peng's *R Programming for Data Science* section "Regular Expressions"](https://bookdown.org/rdpeng/rprogdatascience/regular-expressions.html)
+
+
+
+
+
+
+
+
+
+
+
+## Working with dates
 
 Written by Mariam Walaa.
 
@@ -2725,37 +3022,37 @@ Written by Mariam Walaa.
 
 In this lesson, you will learn how to:
 
-- Work with dates using the lubridate library
+- Work with dates using the `lubridate` library
 
 Prerequisite skills include:
 
 - Loading libraries
-- Using mutate() and summarise()
+- Using `mutate()` and `summarise()`
 
 Highlights:
 
-- Loading the lubridate library separately from tidyverse
-- Making use of lubridates today() and now() functions
+- Loading the `lubridate` library separately from `tidyverse`
+- Making use of the `today()` and `now()` functions
 - Learning how to extract information from a date-time column
 
 
 ### Overview
 
-Let's start by loading the tidyverse.
+Let's start by loading the `tidyverse`.
 
 ```{r dates-1, eval = TRUE}
 library(tidyverse)
 ```
 
-Notice that lubridate is not listed as one of the libraries loaded into your R session
-when you load tidyverse (which you can view in your output on your own RStudio), and this
-is because it is not part of the core tidyverse so it will need to be loaded separately.
+Notice that `lubridate` is not listed as one of the libraries loaded into your R session
+when you load `tidyverse` (which you can view in your output on your own RStudio), and this
+is because it is not part of the core `tidyverse` so it will need to be loaded separately.
 
 ```{r dates-2}
 library(lubridate)
 ```
 
-Two of the functions the lubridate library will give us is today() and now(), which we can
+Two of the functions the `lubridate` library will give us is `today()` and `now()`, which we can
 immediately start to use, without data or parameters.
 
 ```{r dates-3}
@@ -2776,11 +3073,11 @@ caribou <- read_csv("https://raw.githubusercontent.com/tacookson/data/master/car
 glimpse(caribou)
 ```
 
-We can see that the timestamp column has an associated data type dttm. This stands for
+We can see that the timestamp column has an associated data type 'dttm.' This stands for
 datetime.
 
 Given this is already the correct data type, we can extract a lot of information from it
-using lubridate functions.
+using `lubridate` functions.
 
 ```{r dates-7}
 # extracting year
@@ -2793,7 +3090,7 @@ caribou %>% mutate(week_day = wday(timestamp))
 caribou %>% mutate(leap_year = leap_year(timestamp))
 ```
 
-You can see there are many possibilities with the lubridate package. Check out the
+You can see there are many possibilities with the `lubridate` package. Check out the
 cheatsheet to learn more.
 
 ### Exercises
@@ -2828,18 +3125,17 @@ dates_ex2_sol <- caribou %>% summarise(min(timestamp), max(timestamp))
 grade_result(pass_if(~identical(.result, dates_ex2_sol)))
 ```
 
-**Hint**: Remember the summary functions you learned in summarize tutorial!
+**Hint**: Remember the summary functions you learned in `summarize()` tutorial!
 
 ### Common Mistakes & Errors
 
-- You might try to apply lubridate functions on to a column that looks like a timestamp
+- You might try to apply `lubridate` functions on to a column that looks like a timestamp
 column, but it may still not be of the appropriate data type, which is either 'dt', 'tm',
-or dttm. Be sure to convert to the proper data type first!
+or 'dttm'. Be sure to convert to the proper data type first!
 
 ### Next Steps
 
-If you would like to learn more about handling dates and times in R, as well as the
-tidyverse lubridate package, please read the following:
+If you would like to learn more about handling dates and times in R, as well as the `lubridate` package, please read the following:
 
 - [R For Data Science:  16 Dates and times](https://r4ds.had.co.nz/dates-and-times.html)
 - [Lubridate Package Documentation](https://lubridate.tidyverse.org/)
@@ -2856,7 +3152,7 @@ tidyverse lubridate package, please read the following:
 
 
 
-## Using the janitor package
+## `janitor`
 
 Written by Mariam Walaa.
 
@@ -2896,9 +3192,9 @@ work with your datasets is _duplication_. This is one area where the janitor pac
 help.
 
 Another more obvious area that the janitor package will help with is your column names. We
-dont always get to choose our column names (because most times, we are not creating our
+don't always get to choose our column names (because most times, we are not creating our
 own data, but were getting data from another source), so sometimes we might end up
-with column names that aren not easy to work with.
+with column names that are not easy to work with.
 
 You can also do more cool things with the janitor package like creating crosstabs, but for
 this tutorial, we will just focus mainly on how to make your dataset cleaner with better
@@ -3066,7 +3362,7 @@ If you would like to learn more, please read about the janitor package in its do
 
 
 
-## tidyr summary
+## `tidyr`
 
 Written by Mariam Walaa.
 
@@ -3075,15 +3371,15 @@ Written by Mariam Walaa.
 
 In this lesson, you will learn how to:
 
-- Do more with tidyr functions, such as advanced nesting
+- Do more with `tidyr` functions, such as advanced nesting
 
 Prerequisite skills include:
 
-- Previous tutorials involving tidyr functions
+- Previous tutorials involving `tidyr` functions
 
 Highlights:
 
-- Hello World: Using tidyr functions to clean a non-tidy dataset
+- Hello World: Using `tidyr` functions to clean a non-tidy dataset
 - Advanced nesting
 
 ### Overview
@@ -3096,10 +3392,10 @@ a harder time collaborating with each other and evaluating each other's results.
 why datasets must be *standardized*.
 
 You may ask yourself: How do we standardize a dataset, and to what extent? In [Hadley
-Wickhams Tidy Data paper](https://vita.had.co.nz/papers/tidy-data.html) from 2014, Hadley
+Wickham's Tidy Data paper](https://vita.had.co.nz/papers/tidy-data.html) from 2014, Hadley
 introduces 3 rules every dataset must follow in order to be considered tidy.
 
-This is a good paper to read, but if you dont have time, here is an illustration that
+This is a good paper to read, but if you don't have time, here is an illustration that
 summarizes these 3 rules, by Allison Horst.
 
 ```{r tidyr-image-1, echo = FALSE, out.width="90%"}
@@ -3121,8 +3417,8 @@ Credits: Allison Horst
 As you may have already heard, tidying data (and data preparation, in general) is a big
 part of data analysis! In fact, it may be even bigger than other parts of data analysis.
 So if you feel overwhelmed while learning how to tidy or clean a dataset, dont worry,
-its natural and theres a lot to digest, especially because datasets can be so uniquely
-messy (as Hadley Wickhams quote says in the picture above)
+its natural and there's a lot to digest, especially because datasets can be so uniquely
+messy (as Hadley Wickham's quote says in the picture above)
 
 Instead of worrying about how to clean your dataset, though, we can start off a little
 easier, and just try to get a grasp for what each function is for and maybe even a little

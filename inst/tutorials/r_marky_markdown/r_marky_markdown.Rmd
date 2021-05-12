@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "R Marky Markdown and the Funky Docs"
-date: "5 May 2021"
+date: "12 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -26,7 +26,11 @@ library(here)
 
 ## Introduction
 
-In this module, we are going to go through R Markdown. R Markdown is an incredibly powerful way of combining text and code, and you can produce html, pdf, word and many other outputs. Most of us learn it as a great way to write class assignments, but these days it's used for everything from making textbooks, websites, and is even the foundation on which these tutorials are based.
+Written by Rohan Alexander.
+
+In this module, we are going to go through R Markdown. 
+
+R Markdown is an incredibly powerful way of combining text and code, and you can produce html, pdf, word and many other outputs. Most of us learn it as a great way to write class assignments, but these days it's used for everything from making textbooks, websites, and is even the foundation on which these tutorials are based.
 
 
 
@@ -46,6 +50,8 @@ In this module, we are going to go through R Markdown. R Markdown is an incredib
 
 Written by Shirley Deng.
 
+### Introduction
+
 Have you ever found yourself typing up a report in Microsoft Word and tried to insert code, code output, images or math? It can be pretty cumbersome! 
 
 But it's *not a problem anymore*...
@@ -64,7 +70,7 @@ To start a .Rmd file in RStudio, click *File*, then *New File*, and select *R Ma
 
 From there, we can select if we want our report to be in the form of an **HTML page**, **pdf**, or **Word document**, and give our report a title and author name.
 
-RStudio will then generate a .Rmd file with a little template for us.
+RStudio will then generate a .Rmd file with a little template for us
 
 #### YAML Header Chunk
 
@@ -79,7 +85,7 @@ output: pdf_document
 ---
 ```
 
-As you might guess, this creates a header for our report with the title, author and date specified.
+As you might guess, this creates a header for your report with the title, author and date specified.
 
 We can also change the output option if we have a change of heart and would prefer an HTML page or Word document:
 
@@ -254,7 +260,7 @@ like this:
 
 If you want to get *real* fancy, we can hyperlink images using a combination of the syntax we introduced above.
 
-We simply nest the hyperlink syntax within the square brackets of the image syntax. For example,
+For example,
 
 ```
 [![this embeds a clickable picture of the RStudio icon](https://d33wubrfki0l68.cloudfront.net/521a038ed009b97bf73eb0a653b1cb7e66645231/8e3fd/assets/img/rstudio-icon.png)](https://d33wubrfki0l68.cloudfront.net/521a038ed009b97bf73eb0a653b1cb7e66645231/8e3fd/assets/img/rstudio-icon.png)
@@ -264,14 +270,14 @@ We simply nest the hyperlink syntax within the square brackets of the image synt
   
 #### Escapes
 
-There are some special characters that need an **escape** (a backslash, `\`), in order to display properly.
+There are some special characters, called **metacharacters**, that need an **escape** (a backslash, `\`), in order to display properly. For example,
 
 In order to write this... | we'd have to write this
 ------------------------- | -------------------------
 \$                        | `\$`
 \&                        | `\&`
 \%                        | `\%`
-\#                        | `\#`
+\##                        | `\#`
 \_                        | `\_`
 \{                        | `\{`
 
@@ -623,7 +629,6 @@ More code chunk options can be found [here](https://rmarkdown.rstudio.com/lesson
 
 
 
-
 ## Top Matter: Title, Date, Author, Abstract
 
 Written by Yena Joo.
@@ -731,7 +736,7 @@ You can now create a well-formatted first page of your paper. Try adding Introdu
 
 
 
-## Tables: kable, kableextra, gt
+## Tables: `kable`, `kableextra`, `gt`
 
 Written by Yena Joo.
 
@@ -1474,7 +1479,7 @@ Using all the functions we learned so far, try to write a paper of your interest
 
 
 
-## here::here() and filepaths
+## `here::here()` and filepaths
 
 Written by Matthew Wankiewicz.
 
