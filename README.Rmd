@@ -217,6 +217,7 @@ Module content:
 - Simulating datasets for regression, written by Mariam Walaa.
 - Advanced mutating and summarising, written by Mariam Walaa.
 - Tidying up datasets, written by Mariam Walaa.
+- `pull()`, `pluck()`, and `unnest()`, by Isaac Ehrlich.
 - `forcats` and factors, written by Matthew Wankiewicz.
 - More on strings, written by Annie Collins.
 - Regular expressions, written by Shirley Deng.

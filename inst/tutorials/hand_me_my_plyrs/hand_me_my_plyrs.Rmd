@@ -3087,7 +3087,7 @@ Now that you understand what vectors, matrices, dataframes and tibbles are. Some
 
 
 
-## `length()`, `nrow()`, and `ncol()`
+## length(), nrow() and ncol(), and dim()
 
 Written by Isaac Ehrlich.
 
@@ -3099,6 +3099,7 @@ In this lesson, you will learn how to
 
 - Use `length()` to find the length of vectors
 - Use `nrow()` and `ncol()` to find the dimensions of matrices and data frames
+- Use `dim()` to find and set dimensions
 
 Prerequisites:
 
@@ -3106,7 +3107,7 @@ Prerequisites:
 
 ### Arguments
 
-####length()
+#### length()
 `length()` returns the length (number of items) in a vector. The only argument that `length()` takes is the vector.
 
 ```{r lengthExample}
@@ -3117,7 +3118,7 @@ length(x)
 
 #### nrow() and ncol()
 
-`nrow()` and `ncol()` return the number of rows and columns of matrices and data frames, respectively. The only argument that `nrow()` and `ncol()` take is the matrix or data frame.
+`nrow()` and `ncol()` return the number of rows and columns of a matrix or data frame, respectively. The only argument that `nrow()` and `ncol()` take is the matrix or data frame.
 
 ```{r nrowExample}
 df <- data.frame(col1 = c("a", "b", "c", "d"), col2 = c(1,2,3,4))
@@ -3129,6 +3130,49 @@ nrow(df)
 # Number of Columns:
 ncol(df)
 ```
+
+#### dim()
+
+`dim()` returns a vector with two elements that denote the dimensions of a matrix or data frame, in the order 'number of rows', 'number of columns'. The first element is equivalent to the output of `nrow()` and the second to that of `ncol()`. Similarly to `nrow()` and `ncol()`, the only argument that `dim()` takes is the matrix or data frame.
+```{r dimExample1}
+# Dimensions of data frame:
+dim(df)
+
+# Note the relationship between 'dim()', 'nrow()', and 'ncol()'
+dim(df)[1] == nrow(df)
+dim(df)[2] == ncol(df)
+```
+
+Unlike `nrow()` and `ncol()` however, `dim()` can also be used to set the dimensions of a vector or matrix. Setting dimensions for a vector will turn it into a matrix.
+```{r dimExample2}
+# Create a vector
+x <- c("a", "b", "c", "d")
+# Check dimensions of x - should output NULL since vectors do not have dimensions
+dim (x)
+
+# Set and check new dimensions
+dim(x) <- c(2, 2)
+dim(x)
+
+# Output 'x'
+x
+```
+
+Setting new dimensions for an existing matrix will reshape it.
+```{r}
+# Create a matrix and check its dimensions
+m <- matrix(1:12)
+dim(m)
+
+# Set and check new dimensions
+dim(m) <- c(3,4)
+dim(m)
+```
+
+
+#### `dplyr::bind_rows()` and `dplyr::bind_cols()`
+
+Finally, it is worth mentioning that there are also `dplyr` versions of `rbind()` and `cbind()`. `dplyr::bind_rows()` is actually a bit more robust since it doesn't require the input data frames to have the same number of columns. If you are making extensive use of `rbind()` and `cbind()`, then exploring their `dplyr` counterparts would be worthwhile.
 
 
 ### Questions and Exercises
@@ -3177,7 +3221,7 @@ last_fruit <- fruit[length(fruit)]
 
 #### nrow() and ncol()
 
-For questions about `nrow()` and `ncol()` we will be using the data frame `starwars`, which contians Star Wars characters and information about them, and a secret matrix.
+For questions about `nrow()` and `ncol()` we will be using the data frame `starwars`, which contains Star Wars characters and information about them, and a secret matrix.
 
 **1. Save the number of rows and number of columns in `starwars`**
 
@@ -3225,6 +3269,30 @@ bottom_right_value
 bottom_right_value <- secret_matrix[nrow(secret_matrix), ncol(secret_matrix)]
 ```
 
+#### dim()
+
+**1.**
+```{r dim-q1, echo = FALSE}
+question("Which of the following are true about the relationship between 'dim()', 'nrow()', and 'ncol()'? Select all that apply.",
+answer("There is no relationship"),
+answer("The first element of the output of dim(x) is equal to the output of nrow(x)", correct = TRUE),
+answer("It depends on whether or not the input is a matrix or data frame"),
+answer("The second element of the output of dim(x) is equal to the output of ncol(x)", correct = TRUE),
+allow_retry = TRUE)
+```
+
+**2. Use `dim()` to turn the `fruit` vector into a matrix with 8 rows and 10 columns**
+```{r dim-q2, exercise = TRUE}
+# Enter your code here
+
+dim(fruit)
+```
+
+```{r dim-q2-solution}
+dim(fruit) <- c(8, 10)
+```
+
+
 ### Special Cases & Common Mistakes
 
 #### length()
@@ -3248,16 +3316,23 @@ length(secret_matrix) == nrow(secret_matrix) * ncol(secret_matrix)
 
 #### nrow() and ncol()
 
-* Using a vector as input to `nrow()` or `ncol()` will output `NULL`
+* Using a vector as input to `nrow()`, `ncol()`, or `dim()` will output `NULL`
 ```{r nrow-special}
-nrow(fruit)
-ncol(fruit)
+# Check dimensions of 'letters', a built-in vector of English letters
+nrow(letters)
+ncol(letters)
+dim(letters)
 ```
 
 
 ### Overview and Next Steps
 
 `length()`, `nrow()`, and `ncol()`, are useful functions for finding the dimensions of variables. In the next section, we will continue exploring data frames and how to manipulate them.
+
+
+
+
+
 
 
 
