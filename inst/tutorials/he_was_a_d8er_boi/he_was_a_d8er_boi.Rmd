@@ -596,8 +596,8 @@ For certain tasks, you may need to combine data frames and find information abou
 In this lesson, you will learn how to
 
 * Use `names()` to find the column names of data frames
-* Use `rbind()` to combine two or more data frames by row
-* Use `cbind()` to combine two or more data frames by column
+* Use `rbind()` to combine two or more data frames (or matrices) by row
+* Use `cbind()` to combine two or more data frames (or matrices) by column
 
 Prerequisites:
 
@@ -607,24 +607,35 @@ Prerequisites:
 
 #### `names()`
 
-The primary purpose of `names()` is to return the column names of a data frame. The only argument that `names()` takes is the data frame.
+The primary purpose of `names()` is to return the column names of a data frame. The only argument that `names()` takes is the data frame. `colnames()` is a similar function which outputs the same information, and works for matrices as well.
 
 ```{r names-ex}
 head(starwars)
 names(starwars)
+table(colnames(starwars) == names(starwars))
 ```
 
 Using indexing, `names()` can also be used to change the column names of a data frame.
 
 ```{r}
-# Change the tenth column name to home-planet
+# Change the homeworld column name (the tenth column) to home-planet
 names(starwars)[10] <- "home-planet"
 names(starwars)
 ```
 
+The tidyverse `rename()` function can also be used to change column names, and avoids indexing by specifying the column to rename, using the syntax `new_name = old_name`.
+
+```{r}
+# Change the starships column name to spaceships
+starwars <- starwars %>% rename(spaceships = starships)
+names(starwars)
+```
+ 
+
 #### `rbind()`
 
-The purpose of `rbind()` is to combine two (or more) data frames by row. The arguments to `rbind()` are two (or more) data frames. These data frames must have the same number of columns, and must have the same column names as well.
+The purpose of `rbind()` is to combine two (or more) data frames by row. The arguments to `rbind()` are two (or more) data frames. These data frames must have the same number of columns, and must have the same column names as well. `rbind()` can also be used to combine matrices which match the same requirements.
+
 ```{r}
 letter_df <- data.frame(numbers = 1:26, strings = letters)
 words_df <- data.frame(numbers = 27:1006, strings = words)
@@ -637,7 +648,10 @@ dim(character_df) # shows the number of rows and columns
 
 #### `cbind()`
 
-The purpose of `cbind()` is to combine two (or more) data frames by column. The arguments to `cbind()` are two (or more) data frames. These data frames must have the same number of rows, or the number of rows must be multiples of one another. Note, in the case that the number of rows are multiples, the rows in the smaller data frame are repeated so they match the longer data frame.
+The purpose of `cbind()` is to combine two (or more) data frames by column. The arguments to `cbind()` are two (or more) data frames. These data frames must have the same number of rows, or the number of rows must be multiples of one another. `cbind()` can also be used to combine matrices which match the same requirements. 
+
+Note, in the case that the number of rows are multiples, the rows in the smaller data frame are repeated so they match the longer data frame.
+
 ```{r}
 index_df <- data.frame(numbers = 1:5, letters = c("a", "b", "c", "d", "e"))
 names_df <- data.frame(vegetables = c("arugula", "broccoli", "cauliflower", "dill", "endive"),
