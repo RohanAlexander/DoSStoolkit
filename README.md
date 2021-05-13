@@ -154,7 +154,8 @@ Module content:
 -   `library()`, by Mariam Walaa.
 -   `update.packages()`, by Mariam Walaa.
 -   `read_csv()`, by Marija Pejcinovska.
-    <!-- - Other file types: read.table(), read_excel(), haven and read_dta(), read_rds(), load() with .Rda files, anything else useful in readr?, by Isaac Ehrlich. -->
+-   `read_table()`, `read_dta()`, and other data types, by Isaac
+    Ehrlich.
 
 ### Hand me my plyrs
 
