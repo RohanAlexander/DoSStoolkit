@@ -780,9 +780,11 @@ Correct the code in order to successfully call the package: `library("tidyverse'
 ```{r loading-packages-exercise-3-sol, echo = FALSE}
 ex3_sol <- library("tidyverse")
 ```
-```{r loading-packages-exercise-3-check}
-grade_result(pass_if(~identical(.result, ex3_sol)))
-```
+
+
+<!-- ```{r loading-packages-exercise-3-check} -->
+<!-- ?grade_result(pass_if(~identical(.result, ex3_sol))) -->
+<!-- ``` -->
 
 
 #### Exercise 4

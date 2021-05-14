@@ -15,9 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(learnr)
 library(flair)
-library(gradethis)
+# library(gradethis)
 library(sortable)
-gradethis::gradethis_setup()
+# gradethis::gradethis_setup()
 # library(palmerpenguins)
 ```
 
