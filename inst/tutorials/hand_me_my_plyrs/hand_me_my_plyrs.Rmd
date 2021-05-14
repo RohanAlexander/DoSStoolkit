@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Hand me my plyrs"
-date: "7 May 2021"
+date: "14 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -258,7 +258,7 @@ In this tutorial, we'll be using the `penguins` data to present the uses of the 
 data contains records on measurements for penguin species, including their size, sex, and
 where they live. There are 344 rows and 8 columns in this data set.
 
-```{r pipe-image-1, echo = FALSE, out.width="90%"}
+```{r pipe-image-1, echo = FALSE, out.width="75%"}
 knitr::include_graphics("images/32_penguins.png")
 ```
 
@@ -315,7 +315,7 @@ different steps or assign the filtered data to a new data frame object.
 
 You can learn more about the penguins through this illustration.
 
-```{r pipe-image-2, echo = FALSE, out.width="90%"}
+```{r pipe-image-2, echo = FALSE, out.width="75%"}
 knitr::include_graphics("images/32_culmen_depth.png")
 ```
 

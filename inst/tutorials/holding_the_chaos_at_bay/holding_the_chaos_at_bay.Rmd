@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Holding the chaos at bay"
-date: "13 May 2021"
+date: "14 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -91,7 +91,7 @@ You can use the function `getwd()` to find your current working directory.
 
 To change your working directory, you can use the function `setwd()` with the folder path of your new directory as the argument. For example, if I wanted to change my working directory to the folder `C:/Users/Documents/Scripts` I would use the command `setwd("C:/Users/Documents/Scripts")`. Alternatively, you can set the working directory through R's Toolbar, and then browse on your computer as shown in the image below (If you choose to do this, note what happens on the R console once you select your folder from the folder menu; you should see the `setwd()` function executed with your chosen folder path).
 
-```{r, echo = FALSE, out.width="90%"}
+```{r, echo = FALSE, out.width="75%"}
 knitr::include_graphics("images/setwd.png")
 ```
 
@@ -103,7 +103,7 @@ If you set your working directory manually in an R session (using either `setwd(
 
 R Projects are a type of file, labelled `.Rproj`, which designate a working directory. When an RStudio project is open, the working directory is automatically set to the folder path of the RStudio project. Now, the paths that you use to save and load files are all relative to the location of your RStudio project, rather than specific folder names on your computer. Therefore, instead of using `setwd()`, we encourage you to create an RStudio project at the beginning of any new project or assignment. This will improve your organization and reproducibility. The image below shows an example RStudio project setup. We will discuss recommended folder setups in the following section.
 
-```{r, echo = FALSE, out.width="90%"}
+```{r, echo = FALSE, out.width="75%"}
 knitr::include_graphics("images/r-project-example.png")
 ```
 
@@ -395,29 +395,25 @@ Prerequisite skills include:
 Highlights:
 
 - What is a package in R
-
 - What is CRAN
-
 - Install package from CRAN using **install.packages("package_name")** or **install.packages('package_name')**
-
 - Install package in RStudio
 
-### The content
 
-#### What is a package?
+### What is a package?
 
 R packages are collections of functions or datasets developed by the community. It is shared by the author and allows everyone to re-use. It increases and expands the tools we can use in R for various tasks, including graph generation, data manipulation, and statistical inference.
 
-#### What is CRAN
+### What is CRAN
 
 CRAN stands for Comprehensive R Archive Network. It is the official repository where the packages are located, and you can install them on your computer. All the package in CRAN needs to pass several tests that ensure the package is following CRAN policies. As of June 2019, there were over 14,000 packages available on the CRAN. 
 
-#### How to Install
+### How to install?
 
 To install a package from CRAN, you can either run `install.package("**package_name**")` or manually install it in RStudio. 
 
 
-#### Using code
+### Using code
 
 For example, you may want to install the ggplot2 package. (ggplot2 is a useful data visualization package in r you are likely to use them in the future)
 
@@ -435,7 +431,7 @@ Note that for some package it may ask you to input something in the console to c
 <iframe width="560" height="315" src="https://www.youtube.com/embed/c-8qOcLyxN4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-#### In RStudio 
+### In RStudio 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/D8A3Em5WFwU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -444,7 +440,7 @@ Note that for some package it may ask you to input something in the console to c
 #### Exercise 1
 
 ```{r cranex1, echo = FALSE}
-question("Which code can install the tidyverse package?",
+question("Which code can install the `tidyverse` package?",
           answer("packages(tidyverse)"),
           answer("install.packages(tidyverse)"),
           answer("install.packages('tidyverse')", correct = TRUE),
@@ -457,16 +453,16 @@ question("Which code can install the tidyverse package?",
 
 #### Exercise 2
 
-Please install the tidyverse package on your computer.
+Please install the `tidyverse` package on your computer.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/COFCB-MGaHw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 ### Common Mistakes & Errors
 
-- You have misspelled the package name
-- You missed the quotation mark around the package name
-- You missed the s in the install_packages function
+- You have misspelled the package name.
+- You missed the quotation mark around the package name.
+- You missed the s in the install_packages function.
 
 
 ### Next Steps
@@ -522,16 +518,15 @@ Highlights:
 
 - Install packages from GitHub
 
-### The content
 
-#### What is GitHub?
+### What is GitHub?
 
 GitHub is a popular repository for open-source projects. Many developers can share and collaborate their work with the world. Sometimes, you may need to use the package from GitHub for a specific task.
 
 Note: Unlike the packages from CRAN, there is no review process for GitHub packages, so you may encounter bugs or errors when using them.  
 
 
-#### Install packages from GitHub
+### Install packages from GitHub
 
 To install the package from GitHub, you will need the function `install_github()` in the `devtools` package. `devtools` contains tools for package developers to build and test their packages. 
 
@@ -539,7 +534,7 @@ So, you need to first install `devtools` package and load the package in order t
 
 This code means that you want to call the `devtools` package and use the function `install_github()`. This way, you do not have to install and load the `devtools` package.
 
-#### Example
+### Example
 
 https://github.com/sharlagelfand/dmc
 
@@ -692,7 +687,7 @@ You can use `require()` if you want your code to continue running even if the pa
 not load correctly. You can learn more about `require()` in its documentation 
 [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/library).
 
-```{r loading-packages, echo = FALSE, fig.height = 3, fig.width = 4}
+```{r loading-packages, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/17_packages.png")
 ```
 
@@ -926,11 +921,11 @@ When you run `update.packages()`, R will ask you if you want to update each of t
 packages currently installed one-by-one. Once it's done going through all of your
 packages, it will start updating the ones you asked to update. 
 
-```{r updating-packages-img-1, echo = FALSE, fig.height = 3, fig.width = 4}
+```{r updating-packages-img-1, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/20_updating-libraries-1.PNG")
 ```
 
-```{r updating-packages-img-2, echo = FALSE, fig.height = 3, fig.width = 4}
+```{r updating-packages-img-2, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/20_updating-libraries-2.PNG")
 ```
 

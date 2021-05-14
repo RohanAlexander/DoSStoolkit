@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "He was a d8er boi"
-date: "13 May 2021"
+date: "14 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -573,7 +573,7 @@ small_penguins %>%
 ### Next Steps
 
 
-- This tutorial only briefly introduced you to the capabilities of the `stringr` package. Future tutorials will revisit this package and dive deeper into some of its functions. In the meantime, you can learn more about this package in Hadley Wickham's book *"R for Data Science"*. The link here takes you to the chapter on strings which also introduces you to regular expressions (regular expressions are a bit tedious, but you might learn to like them if you end up working with text data a lot). https://r4ds.had.co.nz/strings.html 
+This tutorial only briefly introduced you to the capabilities of the `stringr` package. Future tutorials will revisit this package and dive deeper into some of its functions. In the meantime, you can learn more about this package in Hadley Wickham's book *"R for Data Science"*. The link here takes you to the chapter on strings which also introduces you to regular expressions (regular expressions are a bit tedious, but you might learn to like them if you end up working with text data a lot). https://r4ds.had.co.nz/strings.html 
 
 
 

@@ -68,7 +68,7 @@ library(tidyverse)
 library(flair)
 
 knitr::opts_chunk$set(echo = TRUE)
-gradethis::gradethis_setup()
+# gradethis::gradethis_setup()
 ```
 
 ### Introduction

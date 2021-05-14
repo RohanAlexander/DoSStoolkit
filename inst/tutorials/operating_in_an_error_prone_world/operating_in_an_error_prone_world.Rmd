@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Operating in an error prone world"
-date: "7 May 2021"
+date: "14 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -14,10 +14,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(learnr)
-library(flair)
+# library(flair)
 # library(gradethis)
 # gradethis::gradethis_setup()
-library(palmerpenguins)
+# library(palmerpenguins)
 ```
 
 
@@ -180,7 +180,7 @@ knitr::include_graphics("images/07_google-tools.png")
 
 then choose your date range:
 
-```{r, echo = FALSE, out.width="90%"}
+```{r, echo = FALSE, out.width="40%"}
 ## screenshot of date range selection
 knitr::include_graphics("images/07_google-dates.png")
 ```
@@ -255,7 +255,7 @@ Written by Annie Collins.
 
 ### Introduction
 
-```{r so-logo, out.width = "30%", fig.align='left'}
+```{r so-logo, out.width = "30%", fig.align='left', echo = FALSE}
 knitr::include_graphics("images/69_logo_stackoverflow.png")
 ```
 
@@ -289,7 +289,7 @@ Feel free to refer back to the lesson on *Using Google and Stack Overflow* for d
 - **Make sure you're looking at R code**: This will get easier as you gain experience in R and/or other coding languages, but there are some names, concepts, and functions that R shares with other languages and it can sometimes be hard to determine what exactly you're looking at if you're new to coding. If you find search results relating to your question, **make sure the responses apply to R and RStudio.** If you're unsure, you can check the tags at the bottom of the question for `r` or `rstudio`, or include [r] or [rstudio] in your search.
 - **Refine your search**: Try the following criteria when searching within Stack Overflow:
 
-```{r so-search, out.width = "75%", fig.align='center'}
+```{r so-search, out.width = "75%", fig.align='center', echo = FALSE}
 knitr::include_graphics("images/69_stackoverflow_search.png")
 ```
 
@@ -301,7 +301,7 @@ As a member of the Stack Overflow community, you have the opportunity to build a
 
 A reproducible example is a snippet of code that is self contained — it includes all necessary libraries, data, functions, and outputs that will allow another individual to look at your code, run it themselves, and understand any questions you have. R has a package called **reprex** that will help make this task easy (reprex also part of the tidyverse, so if you already have the tidyverse installed you're good to go!). The reprex package allows you to copy some code, run the command `reprex()` , and then paste a formatted, reproducible example into a site like Stack Overflow. For more details on creating a reproducible resource in R, see the [reprex documentation](https://reprex.tidyverse.org/) or view [Jenny Bryan's webinar](https://reprex.tidyverse.org/articles/articles/learn-reprex.html) on the topic.
 
-```{r reprex-image, out.width = "85%", fig.align='center'}
+```{r reprex-image, out.width = "85%", fig.align='center', echo = FALSE}
 knitr::include_graphics("images/69_reprex_example.png")
 ```
 
@@ -341,7 +341,9 @@ Prerequisite skills include:
 
 Highlights:
 
-```{r fig1, echo = FALSE}
+
+
+```{r fig1, out.width = "85%", fig.align='center', echo = FALSE}
 knitr::include_graphics("images/08_troubleshooting-image.png")
 ```
 
