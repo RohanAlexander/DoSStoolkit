@@ -14,11 +14,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(learnr)
+tutorial_options(exercise.eval = FALSE)
 library(flair)
 # library(gradethis)
 library(sortable)
 # gradethis::gradethis_setup()
 # library(palmerpenguins)
+library(ggmap)
 ```
 
 

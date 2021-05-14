@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(learnr)
 library(flair)
+tutorial_options(exercise.eval = FALSE)
 # library(gradethis)
 # gradethis::gradethis_setup()
 library(palmerpenguins)
@@ -1055,11 +1056,11 @@ The second group of code shows us what `ungroup` does. The `ungroup` function wa
 ### Exercises
 
 **1.** Use the group_by function to count how many penguins were studied each year and also group them by their sex. Remember the data frame is called "penguins" and the year variable is called "year", sex is called "sex".
-```{r worked-example1Groupby, exercise=TRUE}
+```{r workedexample1Groupby, exercise=TRUE}
 
 ```
 
-```{r worked-example1Groupby-solution}
+```{r workedexample1Groupby-solution}
 ## FINAL SOLUTION ## 
 penguins %>% 
   group_by(year, sex) %>% 
@@ -1073,11 +1074,11 @@ penguins %>%
 ```
 
 **2.** Using the penguins data frame, group by both `island`, `sex` and `species` and give the average bill length (`bill_length_mm`), average bill depth (`bill_depth_mm`) and the difference between average bill length and average bill depths.
-```{r worked-example2Groupby, exercise=TRUE}
+```{r workedexample2Groupby, exercise=TRUE}
  
 ```
 
-```{r worked-example2Groupby-solution}
+```{r workedexample2Groupby-solution}
 ## FINAL SOLUTION ## 
 penguins %>% 
   group_by(island, sex, species) %>% 
@@ -1088,22 +1089,22 @@ penguins %>%
 # your data contains NA's
 ```
 
-```{r worked-example2Groupby-hint-1}
+```{r workedexample2Groupby-hint-1}
 penguins %>% 
 ```
 
-```{r worked-example2Groupby-hint-2}
+```{r workedexample2Groupby-hint-2}
 penguins %>% 
   group_by(...)
 ```
 
-```{r worked-example2Groupby-hint-3}
+```{r workedexample2Groupby-hint-3}
 penguins %>% 
   group_by(island, sex, species) %>%
   summarise(...)
 ```
 
-```{r worked-example2Groupby-hint-4}
+```{r workedexample2Groupby-hint-4}
 penguins %>% 
   group_by(sex, species) %>% 
   summarise(avg_length = mean(bill_length_mm, na.rm = T))

@@ -15,11 +15,10 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(learnr)
 library(flair)
+tutorial_options(exercise.eval = FALSE)
 # library(gradethis)
 # gradethis::gradethis_setup()
 # library(palmerpenguins)
-
-library(ggmap)
 library(knitr)
 ```
 
