@@ -351,9 +351,11 @@ pipe_ex1_sol <- penguins %>%
          sex == "female") %>%
   summary()
 ```
-```{r pipe-exercise-1-check}
-grade_result(pass_if(~identical(.result, pipe_ex1_sol)))
-```
+
+
+<!-- ```{r pipe-exercise-1-check} -->
+<!-- grade_result(pass_if(~identical(.result, pipe_ex1_sol))) -->
+<!-- ``` -->
 
 #### Exercise 2
 
@@ -382,9 +384,11 @@ pipe_ex2_sol <- penguins %>%
          year == "2007") %>%
   count()
 ```
-```{r pipe-exercise-2-check}
-grade_result(pass_if(~identical(.result, pipe_ex2_sol)))
-```
+
+
+<!-- ```{r pipe-exercise-2-check} -->
+<!-- grade_result(pass_if(~identical(.result, pipe_ex2_sol))) -->
+<!-- ``` -->
 
 #### Exercise 3
 
@@ -1290,9 +1294,12 @@ n_distinct()
 summarise_ex1_sol <- broadway %>%
   summarise(n_theatres = n_distinct(theatre))
 ```
-```{r summarise-exercise-1-check}
-grade_result(pass_if(~identical(.result, summarise_ex1_sol)))
-```
+
+
+<!-- ```{r summarise-exercise-1-check} -->
+<!-- grade_result(pass_if(~identical(.result, summarise_ex1_sol))) -->
+<!-- ``` -->
+
 
 #### Exercise 2
 
@@ -1314,9 +1321,11 @@ summarise_ex2_sol <- broadway %>%
   group_by(week_ending) %>%
   summarise(n_shows = n_distinct(show), .groups = 'drop')
 ```
-```{r summarise-exercise-2-check}
-grade_result(pass_if(~identical(.result, summarise_ex2_sol)))
-```
+
+
+<!-- ```{r summarise-exercise-2-check} -->
+<!-- grade_result(pass_if(~identical(.result, summarise_ex2_sol))) -->
+<!-- ``` -->
 
 #### Exercise 3
 
@@ -1335,9 +1344,12 @@ summarise_ex3_sol <- broadway %>%
   group_by(week_ending) %>%
   summarise(avg_num_performances = mean(performances), .groups = 'drop')
 ```
-```{r summarise-exercise-3-check}
-grade_result(pass_if(~identical(.result, summarise_ex3_sol)))
-```
+
+
+<!-- ```{r summarise-exercise-3-check} -->
+<!-- grade_result(pass_if(~identical(.result, summarise_ex3_sol))) -->
+<!-- ``` -->
+
 
 #### Exercise 4
 
@@ -1357,9 +1369,11 @@ summarise_ex4_sol <- broadway %>%
   summarise(across(.cols = "performances", 
                    .fns = list(min = min, max = max)), .groups = 'drop')
 ```
-```{r summarise-exercise-4-check}
-grade_result(pass_if(~identical(.result, summarise_ex4_sol)))
-```
+
+
+<!-- ```{r summarise-exercise-4-check} -->
+<!-- grade_result(pass_if(~identical(.result, summarise_ex4_sol))) -->
+<!-- ``` -->
 
 #### Exercise 5
 
@@ -1378,9 +1392,11 @@ summarise_ex5_sol <- broadway %>%
   summarise(avg_top_price = mean(top_ticket_price, na.rm = TRUE),
             .groups = 'drop')
 ```
-```{r summarise-exercise-5-check}
-grade_result(pass_if(~identical(.result, summarise_ex5_sol)))
-```
+
+
+<!-- ```{r summarise-exercise-5-check} -->
+<!-- grade_result(pass_if(~identical(.result, summarise_ex5_sol))) -->
+<!-- ``` -->
 
 #### Exercise 6
 
@@ -1400,9 +1416,11 @@ summarise_ex6_sol <- broadway %>%
   summarise(appearances = performances + previews, .groups = 'drop') %>%
   arrange(appearances)
 ```
-```{r summarise-exercise-6-check}
-grade_result(pass_if(~identical(.result, summarise_ex6_sol)))
-```
+
+
+<!-- ```{r summarise-exercise-6-check} -->
+<!-- grade_result(pass_if(~identical(.result, summarise_ex6_sol))) -->
+<!-- ``` -->
 
 #### Exercise 7
 
@@ -2198,9 +2216,11 @@ rename_ex_sol <- personalities %>%
          fictional_work = work,
          character_name = name)
 ```
-```{r rename-exercise-1-check}
-grade_result(pass_if(~identical(.result, rename_ex_sol)))
-```
+
+
+<!-- ```{r rename-exercise-1-check} -->
+<!-- grade_result(pass_if(~identical(.result, rename_ex_sol))) -->
+<!-- ``` -->
 
 #### Exercise 2
 

@@ -373,9 +373,10 @@ lm(formula = seats_sold ~ performances,
    subset = performances < 12)
 ```
 
-```{r summary-statistics-exercise-2-code-check}
-grade_code()
-```
+
+<!-- ```{r summary-statistics-exercise-2-code-check} -->
+<!-- ??grade_code() -->
+<!-- ``` -->
 
 
 #### Exercise 3
