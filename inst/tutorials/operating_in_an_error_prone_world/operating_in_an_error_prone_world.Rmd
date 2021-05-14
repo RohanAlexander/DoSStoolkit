@@ -14,9 +14,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(learnr)
+tutorial_options(exercise.eval = FALSE)
 # library(flair)
 # library(gradethis)
-# gradethis::gradethis_setup()
+# ?gradethis::gradethis_setup()
 # library(palmerpenguins)
 ```
 
@@ -711,6 +712,7 @@ tibble(
 **PART B**  
 
 How might you fix it? Add any missing pieces and turn the code chunk below into a usable reprex.
+
 ```{r ex1_reprex_p2, exercise=TRUE, exercise.lines=10}
 
 #
