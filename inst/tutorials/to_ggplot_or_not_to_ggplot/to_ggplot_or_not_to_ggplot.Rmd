@@ -1323,7 +1323,7 @@ Highlights:
 #### Save as Jpeg image
 Set the file name for the plot you are going to save using the function `jpeg(file = filename.jpeg)`, if you want to save as jpeg image. 
 We need to call the function `dev.off()` after plotting, which will return control to the screen.  
-```{r}
+```{r, eval = FALSE}
 jpeg(file="plot1.jpeg")
 ggplot(data = mtcars, aes(x=wt, y=mpg, color= wt)) + geom_point()
 dev.off()
@@ -1344,7 +1344,7 @@ dev.off()
 #### Save as pdf file
 
 To save a plot as pdf format, we do the following using `pdf(file = 'filename.pdf')`. 
-```{r}
+```{r, eval = FALSE}
 pdf(file = "plot3.pdf", eval = FALSE)
 ggplot(data = mtcars, aes(mpg, wt)) + geom_point()
 dev.off()
@@ -1353,7 +1353,7 @@ dev.off()
 
 #### Delete the saved image/file
 What if we want to delete the file from the directory? We can delete the file using the function `base::unlink('FILE NAME')`. 
-```{r}
+```{r, eval = FALSE}
 unlink("plot3.pdf")
 ```
 
