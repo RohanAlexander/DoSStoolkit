@@ -154,10 +154,11 @@ For example, with our `mtcars` example from earlier, we wanted the `wt` variable
 
 ##### Exercise 1
 
-What if we wanted to switch the axes, with `mpg` on the x-axis and `wt` on the x-axis? Try completing the code below to generate the plot.
+What if we wanted to switch the axes, with `mpg` on the x-axis and `wt` on the x-axis? Try modifying the code below to generate the plot.
 
 ```{r ggplot-exercise1, exercise=TRUE}
-mtcars %>% ggplot(aes( , )) +
+mtcars %>% 
+  ggplot(aes(x = wt, y = mpg)) +
   geom_point() +
   labs(title = "Weight vs. Miles", 
        x = "Miles per US Gallon",
