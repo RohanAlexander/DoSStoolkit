@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Operating in an error prone world"
-date: "14 May 2021"
+date: "18 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -17,7 +17,7 @@ library(learnr)
 tutorial_options(exercise.eval = FALSE)
 # library(flair)
 # library(gradethis)
-# ?gradethis::gradethis_setup()
+# gradethis::gradethis_setup()
 # library(palmerpenguins)
 ```
 
@@ -700,7 +700,7 @@ tibble(
 
 **PART A**  
 
-```{r ex1_reprex_p1, echo=FALSE}
+```{r ex1reprexp1, echo=FALSE}
   question("As it is written, is the above snippet of code a viable reproducible example?",
            answer("Yes"), 
            answer("No", correct = TRUE)
@@ -713,10 +713,7 @@ tibble(
 
 How might you fix it? Add any missing pieces and turn the code chunk below into a usable reprex.
 
-```{r ex1_reprex_p2, exercise=TRUE, exercise.lines=10}
-
-#
-#
+```{r ex1reprexp2, exercise=TRUE, exercise.eval = FALSE}
 tibble(
   group = c("trtmnt", "control", "control", "control", "trtmnt", "control", "trtmnt", "trtmnt", "trtmnt", "control"),
   msrmnt = rnorm(10,5, 0.5), ## rnorm(10,5,1.5) generates 10 random normal variables centered at 5 with sd of 1.5
@@ -740,7 +737,7 @@ x non-numeric argument to binary operator
 
 Use the `reprex()` function in the code chunk below to check whether you've correctly modified the code in Part B. You can do this by copying and pasting the correct code inside the curly brackets provided in the `reprex` function. See what happens.
 
-```{r ex1_reprex_p3, exercise=TRUE, exercise.lines=15}
+```{r ex1reprexp3, exercise=TRUE, exercise.lines=15}
 
 reprex::reprex({
   
@@ -749,7 +746,7 @@ reprex::reprex({
 
 ```
 
-```{r ex1_reprex_p3-solution}
+```{r ex1reprexp3-solution}
 
 reprex::reprex({
   set.seed(789)

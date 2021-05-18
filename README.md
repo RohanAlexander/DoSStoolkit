@@ -88,8 +88,8 @@ We have ten modules. A complete collection is here:
 
 ``` r
 learnr::run_tutorial("hello_world", package = "DoSStoolkit")
-learnr::run_tutorial("holding_the_chaos_at_bay", package = "DoSStoolkit")
 learnr::run_tutorial("operating_in_an_error_prone_world", package = "DoSStoolkit")
+learnr::run_tutorial("holding_the_chaos_at_bay", package = "DoSStoolkit")
 learnr::run_tutorial("hand_me_my_plyrs", package = "DoSStoolkit")
 learnr::run_tutorial("totally_addicted_to_base", package = "DoSStoolkit")
 learnr::run_tutorial("he_was_a_d8er_boi", package = "DoSStoolkit")
@@ -248,7 +248,6 @@ Module content:
 -   Bar charts, by Matthew Wankiewicz.
 -   Histograms, by Haoluan Chen.
 -   Scatter plots, by Haoluan Chen.
--   Static maps with `ggmap`, by Annie Collins.
 -   Various useful options, by Yena Joo.
 -   Saving graphs, by Yena Joo.
 
@@ -298,6 +297,7 @@ learnr::run_tutorial("indistinguishable_from_magic", package = "DoSStoolkit")
 Module content:
 
 -   Coding style, written by Marija Pejcinovska.
+-   Static maps with `ggmap`, by Annie Collins.
 -   Writing R Packages, written by Matthew Wankiewicz.
 -   Getting started with Blogdown, written by Annie Collins.
 -   Getting started with Shiny, written by Matthew Wankiewicz.
