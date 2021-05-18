@@ -14,7 +14,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(learnr)
-tutorial_options(exercise.eval = FALSE)
+library(gradethis)
+gradethis::gradethis_setup()
+
+# tutorial_options(exercise.eval = FALSE)
 
 ## Pre-specify data at setup for learnr
 my_data <- 

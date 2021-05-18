@@ -12,8 +12,11 @@ description: "Get started with R"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, error = FALSE)
 library(learnr)
-tutorial_options(exercise.eval = FALSE)
+# tutorial_options(exercise.eval = FALSE)
 library(tidyverse)
+library(gradethis)
+gradethis::gradethis_setup()
+
 ```
 
 

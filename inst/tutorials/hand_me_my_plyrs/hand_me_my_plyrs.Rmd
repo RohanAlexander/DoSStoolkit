@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Hand me my plyrs"
-date: "14 May 2021"
+date: "18 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -15,9 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(learnr)
 library(flair)
-tutorial_options(exercise.eval = FALSE)
-# library(gradethis)
-# gradethis::gradethis_setup()
+# tutorial_options(exercise.eval = FALSE)
+library(gradethis)
+gradethis::gradethis_setup()
 library(palmerpenguins)
 
 broadway <- read_csv(
