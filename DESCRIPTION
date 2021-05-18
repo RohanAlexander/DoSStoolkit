@@ -59,6 +59,7 @@ Imports:
     ggplot2 (>= 3.3.3),
     ggpubr (>= 0.4.0),
     glue (>= 1.4.2),
+    gradethis (>= 0.2.2.9000),
     gt (>= 0.2.2),
     here (>= 1.0.1),
     janitor (>= 2.1.0),
@@ -75,23 +76,4 @@ Imports:
 Depends: 
     tidyverse
 Remotes:  
-    rstudio/blogdown,
-    tidyverse/dplyr,
-    kbodwin/flair,
-    dkahle/ggmap,
-    tidyverse/ggplot2,
-    kassambara/ggpubr,
-    tidyverse/glue,
-    rstudio/gt,
-    r-lib/here,
-    sfirke/janitor,
-    haozhu233/kableExtra,
-    yihui/knitr,
-    rstudio/learnr,
-    tidyverse/lubridate,
-    sharlagelfand/opendatatoronto,
-    allisonhorst/palmerpenguins,
-    thomasp85/patchwork,
-    r-lib/scales,
-    rstudio/sortable,
-    tidyverse/stringr
+    rstudio-education/gradethis
