@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(learnr)
-tutorial_options(exercise.eval = FALSE)
+# tutorial_options(exercise.eval = FALSE)
 # library(flair)
 library(gradethis)
 gradethis::gradethis_setup()
