@@ -16,8 +16,8 @@ library(tidyverse)
 library(learnr)
 tutorial_options(exercise.eval = FALSE)
 # library(flair)
-# library(gradethis)
-# gradethis::gradethis_setup()
+library(gradethis)
+gradethis::gradethis_setup()
 # library(palmerpenguins)
 ```
 
