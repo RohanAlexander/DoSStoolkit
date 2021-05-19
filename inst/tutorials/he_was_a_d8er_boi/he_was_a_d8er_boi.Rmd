@@ -477,13 +477,14 @@ small_penguins
 
 #### Exercise 1
 
-Use an appropriate function from the `glue` package to produce the following string "This penguin is of the species XXX from island XXX and has body mass of XXX g" describing the 6th penguin in `small_penguins`, where the three XXX should be species, island name, and body mass respectively.
+Change this function from the `glue` package to produce the following string "This penguin is of the species XXX from island XXX and has body mass of XXX g" describing the 6th penguin in `small_penguins`, where the three XXX should be species, island name, and body mass respectively.
 
 
 ```{r ex1_glue_data, exercise=TRUE, exercise.lines=8, exercise.eval=FALSE, exercise.setup = "small_penguins"}
 
 small_penguins %>% 
-
+  slice(6) %>% 
+  glue_data("This penguin is of the species {island} from island {body_mass_g} and has body mass of {species} g" )
   
 
 ```

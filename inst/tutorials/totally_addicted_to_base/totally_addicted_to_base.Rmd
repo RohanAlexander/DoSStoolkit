@@ -611,24 +611,9 @@ mean_of_two_numbers(3, 5)
 4
 ```
 
+
+
 ##### Exercise 5
-Predict the output of the following code.
-
-```{r functionex5, exercise=TRUE, exercise.lines = 5}
-mean_of_two_numbers <- function(a = 6, b){
-  y = (a + b)/2
-  y
-}
-mean_of_two_numbers(4)
-
-```
-
-```{r functionex5-solution}
-5
-```
-
-
-##### Exercise 6
 There are several problems with following code. Modify following code for it to run!
 ```{r functionex6, exercise=TRUE, exercise.lines = 5}
 tax_calculator <- tax_calculator(tax_ratio = 0.13){

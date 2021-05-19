@@ -1089,9 +1089,11 @@ penguins %>%
 # your data contains NA's
 ```
 
+ 
 ```{r workedexample2Groupby-hint-1}
-penguins %>% 
+# penguins %>% 
 ```
+ 
 
 ```{r workedexample2Groupby-hint-2}
 penguins %>% 
