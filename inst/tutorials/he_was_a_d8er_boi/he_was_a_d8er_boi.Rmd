@@ -1711,9 +1711,7 @@ grading_trend <- tibble(course = sample(x = c("STA130", "CSC109", "MAT137"),
                         evaluations_avg = course_avg * 4.5 + error)
 ```
 
-```{r simulate-data-exercise-2-code-check}
-grade_code()
-```
+
 
 ### Common Mistakes & Errors
 
@@ -1873,10 +1871,6 @@ Count the number of distinct shows and distinct theatres using summarise() and a
 across_ex1_sol <- broadway %>%
   summarise(across(where(is.character), n_distinct),
             .groups = 'drop')
-```
-
-```{r across-exercise-1-check}
-grade_result(pass_if(~identical(.result, across_ex1_sol)))
 ```
 
 ### Next Steps
@@ -2205,7 +2199,7 @@ table(synopsis_col == broadway_data[[3]][,2])
 ```
 Similarly, `pluck()` can be used for other data structures like lists of lists as well.
 
-### unnest()
+### `unnest()`
 The main purpose of `unnest()` is to flatten existing data frames. Like `pluck()`, `unnest()` handles complex data structures, but these complex structures are now made up of lists (or other structures) contained within a single data frame (known as list-columns). In other words, if a column of a data frame contains other data structures, such as other tibbles, `unnest()` can flatten the data frame to remove these structures.
 
 The arguments that `unnest()` takes are the data frame, as well as the columns to flatten, or unnest. For additional arguments, see documentation. 
@@ -2247,7 +2241,7 @@ head(color_rgb)
 ```
 We can see that once the rgb column is unnested, it is easier to read and grab each component individually.
 
-### Practice Questions
+### Practice questions
 ```{r pullq1, echo = FALSE}
 question("Using a negative index in 'pull()' will",
 answer("return an error"),
@@ -2274,7 +2268,7 @@ answer("'pluck()' can take multiple index arguments as input", correct = TRUE),
 allow_retry = TRUE)
 ```
 
-### Practice Coding
+### Practice coding
 It's your turn to try! In the code below, we've created a complex data structure, where `colors` is a list of the data frames `red`, `orange`, and `yellow`, where `yellow` also has nested data frames. See if you can complete the following questions!
 ```{r pull-coding-setup}
 red <- tibble(shade = c("brick", "bright", "burgundy", "cardinal", "cherry"),

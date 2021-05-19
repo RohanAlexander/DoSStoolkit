@@ -732,12 +732,13 @@ x non-numeric argument to binary operator
 Use the `reprex()` function in the code chunk below to check whether you've correctly modified the code in Part B. You can do this by copying and pasting the correct code inside the curly brackets provided in the `reprex` function. See what happens.
 
 ```{r ex1reprexp3, exercise=TRUE, exercise.lines=15}
-
 reprex::reprex({
-  
-  }
+  set.seed(789)
+  library(tidyverse)
+  tibble(
+  group = c("trtmnt", "control", "control", "control", "trtmnt", "control", "trtmnt", "trtmnt", "trtmnt", "control")
+) }
 )
-
 ```
 
 ```{r ex1reprexp3-solution}
