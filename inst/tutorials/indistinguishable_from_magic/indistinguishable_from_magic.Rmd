@@ -470,11 +470,9 @@ toronto_map <- get_stamenmap(c(-79.82364, 43.52281, -78.85145, 44.09669), zoom=1
 Using `toronto_map` as defined above and your knowledge of `ggplot2`, complete the code below to construct a map that shows each COVID-19 testing location as a dot, with the dots coloured according to the type of assessment center they are.
 
 ```{r ggmap-exercise-2, exercise=TRUE, message=FALSE, warning=FALSE}
-ggmap(toronto_map) + ...
+ggmap(toronto_map) + geom_point(data=covid_testing_locations, aes(x=lat, y=long))
 ```
-```{r ggmap-exercise-2-hint-1}
-ggmap(toronto_map) + geom_point(data=covid_testing_locations, aes(...))
-```
+
 ```{r ggmap-exercise-2-hint-2}
 # Solution
 ggmap(toronto_map) + geom_point(data=covid_testing_locations, aes(x=long, y=lat, color=locationType))
@@ -485,20 +483,26 @@ ggmap(toronto_map) + geom_point(data=covid_testing_locations, aes(x=long, y=lat,
 Finally, display several maps comparing the *density* of different types of testing locations. Title your plot "COVID-19 Testing Centers in Toronto, Ontario".
 
 ```{r ggmap-exercise-3, exercise=TRUE, message=FALSE, warning=FALSE}
-ggmap(toronto_map) + ...
-```
-
-```{r ggmap-exercise-3-hint-1}
-ggmap(toronto_map) + stat_density2d(...) + ...
-```
-
-```{r ggmap-exercise-3-hint-2}
-ggmap(toronto_map) + stat_density2d(...) + facet_wrap(...)
+ggmap(toronto_map) +
+  stat_density2d(data=covid_testing_locations, 
+                 aes(x=long, 
+                     y=lat, 
+                     fill=..level.., 
+                     alpha=0.5
+                     ), 
+                 geom="polygon")
 ```
 
 ```{r ggmap-exercise-3-solution}
 # Solution
-ggmap(toronto_map) +stat_density2d(data=covid_testing_locations, aes(x=long, y=lat, fill=..level.., alpha=0.5), geom="polygon") + 
+ggmap(toronto_map) +
+  stat_density2d(data=covid_testing_locations, 
+                 aes(x=long, 
+                     y=lat, 
+                     fill=..level.., 
+                     alpha=0.5
+                     ), 
+                 geom="polygon") + 
   facet_wrap(~locationType) +
   ggtitle("COVID-19 Testing Centers in Toronto, Ontario")
 ```

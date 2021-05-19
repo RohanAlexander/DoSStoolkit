@@ -613,25 +613,6 @@ mean_of_two_numbers(3, 5)
 
 
 
-##### Exercise 5
-There are several problems with following code. Modify following code for it to run!
-```{r functionex6, exercise=TRUE, exercise.lines = 5}
-tax_calculator <- tax_calculator(tax_ratio = 0.13){
-  tax = price * tax_ratio
-  tax
-}
-
-```
-
-```{r functionex6-solution}
-tax_calculator <- function(price, tax_ratio = 0.13){
-  tax = price * tax_ratio
-  tax
-}
-
-```
-
-
 
 ### Common mistakes & errors
 

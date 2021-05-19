@@ -532,11 +532,8 @@ Back to our `small_penguins` data from Exercise 1.
 Use `str_detect()` and `filter()` to subset the `small_penguins` data to include only female penguins. 
 
 ```{r ex3_str-detect, exercise=TRUE, exercise.lines=8, exercise.eval=FALSE, exercise.setup = "small_penguins"}
-
 small_penguins %>% 
-
-  
-
+  filter(str_detect(sex, "male"))
 ```
 
 ```{r ex3_str-detect-solution}
@@ -552,13 +549,12 @@ small_penguins %>%
 
 #### Exercise 4
 
-Use  `mutate()` to create a new variable `island_short` where with the help of `str_replace` you remove the pattern "ersen"  from the island name.
+Use  `mutate()` to create a new variable `island_short` where with the help of `str_replace` you remove the pattern "ersen" from the island name.
 
 ```{r ex4_str-remove, exercise=TRUE, exercise.lines=8, exercise.eval=FALSE, exercise.setup = "small_penguins"}
 
-small_penguins %>% 
-
-  
+ small_penguins %>% 
+  mutate(island_short = str_replace(island, pattern = "island", replacement = ""))
 
 ```
 
@@ -629,7 +625,9 @@ The tidyverse `rename()` function can also be used to change column names, and a
 
 ```{r}
 # Change the starships column name to spaceships
-starwars <- starwars %>% rename(spaceships = starships)
+starwars <- 
+  starwars %>% 
+  rename(spaceships = starships)
 names(starwars)
 ```
  

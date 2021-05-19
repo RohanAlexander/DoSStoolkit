@@ -1079,7 +1079,6 @@ penguins %>%
 ```
 
 ```{r workedexample2Groupby-solution}
-## FINAL SOLUTION ## 
 penguins %>% 
   group_by(island, sex, species) %>% 
   summarise(avg_length = mean(bill_length_mm, na.rm = T),
@@ -1089,28 +1088,6 @@ penguins %>%
 # your data contains NA's
 ```
 
- 
-```{r workedexample2Groupby-hint-1}
-# penguins %>% 
-```
- 
-
-```{r workedexample2Groupby-hint-2}
-penguins %>% 
-  group_by(...)
-```
-
-```{r workedexample2Groupby-hint-3}
-penguins %>% 
-  group_by(island, sex, species) %>%
-  summarise(...)
-```
-
-```{r workedexample2Groupby-hint-4}
-penguins %>% 
-  group_by(sex, species) %>% 
-  summarise(avg_length = mean(bill_length_mm, na.rm = T))
-```
 
 Solution to Exercise 1:
 
