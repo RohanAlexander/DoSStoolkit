@@ -966,8 +966,9 @@ Suppose we mistakenly run the same line of code it twice.
 Try running the following code and see what happens:
 
 ```{r errors-select, exercise=TRUE}
-mtcars <- mtcars %>% select(-mpg)
-mtcars <- mtcars %>% select(-mpg)
+# Uncomment it first
+# mtcars <- mtcars %>% select(-mpg)
+# mtcars <- mtcars %>% select(-mpg)
 ```
 
 We get an error! `Error: Must subset columns with a valid subscript vector.`

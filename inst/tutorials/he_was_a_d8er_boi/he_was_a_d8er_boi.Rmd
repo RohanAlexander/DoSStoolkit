@@ -1832,7 +1832,7 @@ You can learn more about `across()` by running `?across` in your console.
 
 How do we provide a numeric summary for every show happening in a particular week?
 
-```{r across-5}
+```{r across-5, eval = FALSE}
 broadway %>%
   group_by(week_ending, show) %>%
   summarise(across(where(is.numeric), mean, na.rm = TRUE),
@@ -3336,9 +3336,7 @@ dates_ex1_sol <- caribou %>% mutate(month = month(timestamp),
                               day = day(timestamp),
                               year = year(timestamp))
 ```
-```{r dates-exercise-1-check}
-grade_result(pass_if(~identical(.result, dates_ex1_sol)))
-```
+
 
 #### Exercise 2
 
@@ -3351,9 +3349,7 @@ Find the earliest and latest dates in the timestamp column.
 ```{r dates-exercise-2-sol, echo = FALSE}
 dates_ex2_sol <- caribou %>% summarise(min(timestamp), max(timestamp))
 ```
-```{r dates-exercise-2-check}
-grade_result(pass_if(~identical(.result, dates_ex2_sol)))
-```
+
 
 **Hint**: Remember the summary functions you learned in `summarize()` tutorial!
 
@@ -3421,7 +3417,7 @@ You can also do more cool things with the `janitor` package like creating crosst
 
 ### Arguments
 
-### clean_names()
+### `clean_names()`
 
 The `clean_names()` function takes the following as arguments:
 
@@ -3433,7 +3429,7 @@ The `clean_names()` function takes the following as arguments:
 You can read more about the arguments in the `clean_names()` function's documentation
 [here](https://garthtarr.github.io/meatR/janitor.html#clean_names()).
 
-### get_dupes()
+### `get_dupes()`
 
 The `get_dupes()` function takes the following as arguments:
 
@@ -3491,9 +3487,6 @@ grades %>%
   clean_names()
 ```
 
-```{r janitor-exercise-1-code-check}
-grade_code()
-```
 
 #### Exercise 2
 
@@ -3513,9 +3506,6 @@ clean <- grades %>% clean_names()
 clean %>% clean_names(case = "title")
 ```
 
-```{r janitor-exercise-2-code-check}
-grade_code()
-```
 
 #### Exercise 3
 
@@ -3533,9 +3523,7 @@ clean <- grades %>% clean_names()
 clean %>% get_dupes()
 ```
 
-```{r janitor-exercise-3-code-check}
-grade_code()
-```
+
 
 What was the result? Did you get anything?
 
@@ -3551,9 +3539,7 @@ Look at the data carefully and try to see why you didn't get anything even thoug
 clean %>% get_dupes(c("grade_midterm_1", "grade_midterm_2", "final_grade_percent"))
 ```
 
-```{r janitor-exercise-4-code-check}
-grade_code()
-```
+
 
 ### Next Steps
 
@@ -3728,9 +3714,7 @@ Try the nest() function. Do you get the expected result?
 ```{r tidyr-exercise-2-sol, echo = FALSE}
 tidyr_ex2_sol <- winter_garden %>% nest(data = c(show))
 ```
-```{r tidyr-exercise-2-check}
-grade_result(pass_if(~identical(.result, tidyr_ex2_sol)))
-```
+
 
 #### Exercise 3
 
