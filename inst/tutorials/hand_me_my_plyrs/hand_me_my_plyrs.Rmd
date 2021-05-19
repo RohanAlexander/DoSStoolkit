@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Hand me my plyrs"
-date: "18 May 2021"
+date: "19 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -1340,7 +1340,7 @@ What is the minimum and maximum number of performances per week?
 ```
 
 ```{r summarise-exercise-4-hint-1}
-across()
+# Try across()
 ```
 
 ```{r summarise-11, echo = FALSE}
@@ -1364,7 +1364,7 @@ What is the average top ticket price?
 ```
 
 ```{r summarise-exercise-5-hint-1}
-na.rm = TRUE
+# Try na.rm = TRUE
 ```
 
 ```{r summarise-12, echo = FALSE}
@@ -1373,10 +1373,6 @@ summarise_ex5_sol <- broadway %>%
             .groups = 'drop')
 ```
 
-
-<!-- ```{r summarise-exercise-5-check} -->
-<!-- grade_result(pass_if(~identical(.result, summarise_ex5_sol))) -->
-<!-- ``` -->
 
 #### Exercise 6
 
@@ -1387,7 +1383,7 @@ Which weeks did shows have no performances or previews?
 ```
 
 ```{r summarise-exercise-6-hint-1}
-arrange()
+# Try arrange()
 ```
 
 ```{r summarise-13, echo = FALSE}
@@ -1398,9 +1394,6 @@ summarise_ex6_sol <- broadway %>%
 ```
 
 
-<!-- ```{r summarise-exercise-6-check} -->
-<!-- grade_result(pass_if(~identical(.result, summarise_ex6_sol))) -->
-<!-- ``` -->
 
 #### Exercise 7
 

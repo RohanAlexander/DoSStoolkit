@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "He was a d8er boi"
-date: "18 May 2021"
+date: "19 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -675,8 +675,7 @@ Using the `presidential` data frame, save the column names, and then change the 
 # Enter your code below
 
 # Save column names
-presidential_col_names <- 
-presidential_col_names
+
   
 
 # Change the second column name
@@ -721,10 +720,10 @@ Bind the `presidential` data set to itself using `rbind()`.
 ```{r rbind-q4, echo = FALSE, exercise = TRUE}
 # Enter your code below
 
-double_presidential <- 
+# double_presidential <- 
   
-dim(presidential)  
-dim(double_presidential)
+dim(presidential)
+# dim(double_presidential)
 ```
 
 ```{r rbind-q4-solution}
@@ -749,10 +748,10 @@ Bind the `presidential` data set to itself using `cbind()`.
 ```{r cbind-q6, echo = FALSE, exercise = TRUE}
 # Enter your code below
 
-double_presidential <- 
+double_presidential <-
   
-dim(presidential)  
-dim(double_presidential)
+dim(presidential)
+# dim(double_presidential)
 ```
 
 ```{r cbind-q6-solution}
