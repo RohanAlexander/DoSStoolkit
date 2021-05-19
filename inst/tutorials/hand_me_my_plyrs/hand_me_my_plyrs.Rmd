@@ -2947,8 +2947,8 @@ question_checkbox( "1. Which data types are part of base R? Select all that appl
 **2.** This question will combine vectors and dataframes. Create two vectors, the first one (call it 'numbers') containing the numbers 10, 20, 30 and 40, and the second one (call it 'cities') containing the words: 'Toronto', 'New York', 'Boston' and 'Vancouver'. Now, take those two vectors and turn them into a dataframe. (Hint: The `c()` and `data.frame()` function will be very helpful.)
 ```{r quiz2-vectors, exercise = TRUE}
 ## Enter code below
-numbers <- 
-cities <- 
+numbers <- c(10)
+cities <- c('Toronto')
 ```
 
 ```{r quiz2-vectors-solution}
@@ -2962,7 +2962,7 @@ data.frame(numbers, cities)
 
 ```{r quiz3-vectors, exercise = TRUE}
 ## enter code below
-col1 <- 
+col1 <- c(1:2)
 ```
 
 ```{r quiz3-vectors-solution}
@@ -3188,15 +3188,13 @@ allow_retry = TRUE)
 **2. Save the length of the vector `fruit` as the variable `fruit_len`**
 
 ```{r length-q2, echo = FALSE, exercise = TRUE}
-# Enter your code below
-
-fruit_len <- 
+# Add a function around fruit
+fruit_len <- fruit
 fruit_len
 ```
 
 ```{r length-q2-solution}
 fruit_len <- length(fruit)
-
 ```
 
 **3. Using indexing and the `length()` function, return the final object in `fruit`**
@@ -3204,7 +3202,7 @@ fruit_len <- length(fruit)
 ```{r length-q3, echo = FALSE, exercise = TRUE}
 # Enter your code below
 
-last_fruit <- 
+last_fruit <- fruit
 last_fruit
 ```
 
@@ -3221,8 +3219,8 @@ For questions about `nrow()` and `ncol()` we will be using the data frame `starw
 ```{r nrow-q1, echo = FALSE, exercise = TRUE}
 # Enter your code below
 
-starwars_rows <- 
-starwars_cols <- 
+starwars_rows <- starwars
+starwars_cols <- starwars
 
 starwars_rows
 starwars_cols

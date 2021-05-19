@@ -714,13 +714,7 @@ tibble(
 How might you fix it? Add any missing pieces and turn the code chunk below into a usable reprex.
 
 ```{r ex1reprexp2, exercise=TRUE, exercise.eval = FALSE}
-tibble(
-  group = c("trtmnt", "control", "control", "control", "trtmnt", "control", "trtmnt", "trtmnt", "trtmnt", "control"),
-  msrmnt = rnorm(10,5, 0.5), ## rnorm(10,5,1.5) generates 10 random normal variables centered at 5 with sd of 1.5
-                             ## use ?rnorm to check out the function's arguments
-  improvement = c("yes", "no", "no", "no", "no", "no", "yes", "no", "no", "yes")
-) %>% 
-  mutate(new_var1 = msrmnt + improvement, new_var2=2*msrmnt)
+
 
 ```
 

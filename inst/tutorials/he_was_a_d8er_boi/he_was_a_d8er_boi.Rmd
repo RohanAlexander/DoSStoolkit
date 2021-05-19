@@ -1125,9 +1125,6 @@ missing_data_ex1_sol <- first_year %>%
   fill(grade, .direction = 'down')
 ```
 
-```{r missing-data-exercise-1-check}
-grade_result(pass_if(~identical(.result, missing_data_ex1_sol)))
-```
 
 #### Exercise 2
 
@@ -1143,9 +1140,6 @@ missing_data_ex2_sol <- first_year %>%
   complete(student_id, course, fill = list(grade = 0))
 ```
 
-```{r missing-data-exercise-2-check}
-grade_result(pass_if(~identical(.result, missing_data_ex2_sol)))
-```
 
 ### Next Steps
 
