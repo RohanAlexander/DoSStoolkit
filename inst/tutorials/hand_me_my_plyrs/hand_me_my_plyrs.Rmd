@@ -272,7 +272,7 @@ Let's start with loading the tidyverse.
 library(tidyverse)
 ```
 
-Here's a simple example using base R's `summary()` without the pipe.
+Here is an example using base R's `summary()` without the pipe.
 
 ```{r pipe}
 summary(penguins)
@@ -285,23 +285,23 @@ penguins %>% summary()
 ```
 
 As you can see, the pipe `%>%` operator takes the `penguins` data frame and pipes it into
-the `summary()` function, so you don't need to pass `penguins` as a parameter to
+the `summary()` function, so you do not need to pass `penguins` as a parameter to
 `summary()`.
 
-In this simple example, it's hard to see why using the pipe makes the code clean and
+In this example, it is hard to see why using the pipe makes the code clean and
 concise, but when you have multiple transformations that you want to apply to your data,
 it becomes clearer why using the pipe makes your code cleaner, more concise, and easier to
 read.
 
-Here's a similar example without the pipe, but this time we'll filter the data before we
-summarize.
+Here is a similar example without the pipe, but this time we will also filter the data 
+before we summarize it using the summary function.
 
 ```{r pipe-2}
 adelie <- filter(penguins, species == "Adelie")
 summary(adelie)
 ```
 
-Here's the same example using the pipe.
+Equivalently, here is code providing the same output, using the pipe instead.
 
 ```{r pipe-3}
 penguins %>%
@@ -309,12 +309,13 @@ penguins %>%
   summary()
 ```
 
-The code looks a lot cleaner, and we didn't have to separate the process into two
-different steps or assign the filtered data to a new data frame object.
+The code looks a lot cleaner, and we did not have to separate the process into two
+different steps or assign the filtered data to an object.
 
 ### Exercises
 
-You can learn more about the penguins through this illustration.
+You can learn more about the penguin characteristics and what they describe through this
+illustration by Allison Horst.
 
 ```{r pipe-image-2, echo = FALSE, out.width="75%"}
 knitr::include_graphics("images/32_culmen_depth.png")
@@ -325,7 +326,8 @@ Credits: Allison Horst
 
 #### Exercise 1
 
-Here is some code that filters the data by species and sex, and summarizes the data.
+Here is some code that filters the data first by species and then by sex, and summarizes 
+the data using the summary function from above.
 
 ```{r pipe-4}
 adelie <- filter(penguins, species == "Adelie")
@@ -333,7 +335,7 @@ female_adelie <- filter(adelie, sex == "female")
 summary(female_adelie)
 ```
 
-Convert this into equivalent code using the pipe.
+As an exercise, try to convert the code above into equivalent code using the pipe.
 
 ```{r pipe-exercise-1, exercise = TRUE}
 
@@ -360,8 +362,8 @@ pipe_ex1_sol <- penguins %>%
 
 #### Exercise 2
 
-Here is some code that filters the data by sex and year of study, and counts the number of
-penguins.
+Here is some code that filters the data, first by sex and then by year of study, and 
+counts the number of penguins using the count function.
 
 ```{r pipe-6}
 females <- filter(penguins, sex == "female")
@@ -369,7 +371,7 @@ females_2007 <- filter(females, year == "2007")
 count(females_2007)
 ```
 
-Convert this into equivalent code using the pipe.
+As another exericse, try to convert the code above into equivalent code using the pipe.
 
 ```{r pipe-exercise-2, exercise = TRUE}
 
@@ -415,7 +417,7 @@ Below are some common mistakes and errors you may come across:
 ### Next Steps
 
 If you would like to read more about the pipe operator, here are some additional
-resources you may find helpful:
+resources that you may find helpful:
 
 - [R For Data Science: Chapter 18 - Pipes](https://r4ds.had.co.nz/pipes.html)
 
@@ -1162,7 +1164,7 @@ Highlights:
 
 - `summarise()` is often used with `group_by()`
 - There are many summary functions you can use within `summarise()`
-- You can even create your own functions to use within `summarise()`
+- You can also define your own functions to use within `summarise()`
 
 ![Source: https://github.com/allisonhorst/stats-illustrations Credits: Allison
 Horst](https://github.com/allisonhorst/stats-illustrations/blob/master/other-stats-artwork/summary_statistics.png?raw=true){#id
@@ -1187,16 +1189,18 @@ and groups within a variable in a data set.
 
 We will be looking at a data set of Broadway shows with variables about the performances,
 attendance, and revenue for theaters that are part of The Broadway League. You can learn
-more about the data set provided by Alex Cookson in [the data repository](https://github.com/tacookson/data) provided on GitHub, as well as this 
-corresponding [blog post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/).
+more about the data set provided by Alex Cookson in [the data
+repository](https://github.com/tacookson/data) provided on GitHub, as well as this
+corresponding [blog
+post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/).
 
 ```{r summarise-1}
 glimpse(broadway)
 ```
 
 You'll notice that there are 47,524 rows and 8 columns. Each row uniquely represents a
-show that occurred on a specific week. Each column, then, contains information about a
-show on some particular week in some particular theatre.
+show that occurred on a specific week. Each column contains information about a
+show that occurred in a specific week in a specific theater.
 
 #### Question 1
 
@@ -1218,6 +1222,11 @@ broadway %>%
             .groups = 'drop')
 ```
 
+The code for answering this second question is similar to the first question, except that
+we need to group by the week_ending variable which describes each distinct week. After
+grouping by the week, we use the summarise function to sum up all the performances for
+each week.
+
 #### Question 3
 
 How many performances _and_ previews occurred per week?
@@ -1229,6 +1238,9 @@ broadway %>%
             total_num_previews = sum(previews),
             .groups = 'drop')
 ```
+
+Here, we are taking two sums, the sum of performances and the sum of previous, for each
+distinct week.
 
 #### Question 4
 
@@ -1245,6 +1257,12 @@ decorate("summarise-groups-drop") %>%
   flair(".groups = 'drop'", color = "red") %>%
   knit_print.with_flair()
 ```
+
+This is similar to the second question, except we are grouping by two variables this time.
+This means we first group the distinct weeks, and then for each week, we group by the
+theatres and sum up the performances for each theatre by week. For example, for Week 1,
+there were X performances for Theatre A, Y performances for Theatre B, and Z performances
+for Theatre C.
 
 Notice that we include the `.groups` argument within each `summarise()` function call
 (highlighted in red). We mostly do this to keep the output clean, but you can learn more
@@ -2086,13 +2104,13 @@ In this lesson, you will learn how to:
 
 Prerequisite skills include:
 
-- Using the pipe operator
+- Using the pipe %>% operator
 
 Highlights:
 
 - We can rename multiple columns at once using `rename()`.
-- It's helpful to rename columns into something simpler.
-- We can name columns that don't already have a name using `rename()`.
+- It is helpful to rename columns into something simpler.
+- We can name columns that do not already have a name using `rename()`.
 
 ### Arguments
 
@@ -2115,11 +2133,13 @@ In this tutorial, we'll be using a data set about fictional character personalit
 reference. This data set already consists of simple, clear, and well-named variables, but
 we are going to try to simplify them even further using `rename()`.
 
-We'll start by loading the data from GitHub.
+We will start by loading the data from GitHub.
 
 ```{r load-tidyverse-yet-again}
 library(tidyverse)
 ```
+
+We will also load the personalities dataset.
 
 ```{r rename-hidden-load, echo = FALSE, message = FALSE}
 personalities <- read_tsv(
@@ -2131,17 +2151,16 @@ personalities <- read_tsv(
 ```
 
 
-Here is the dataset.
+Here is the dataset. This data consists of 213,600 rows, each representing a fictional 
+character, and 11 columns describing the character and their personality.
 
 ```{r rename-1}
 glimpse(personalities)
 ```
 
-This data consists of 213,600 rows, each representing a fictional character, and 11
-columns describing the character and their personality.
-
 We can see that the first three columns are about the character's unique ID, the fictional
-work that they are from, and their name. We'll rename each of these to a single word.
+work that they are from, and their name. To demonstrate the use of the rename function, 
+we will rename each of these three variables to one word each.
 
 ```{r rename-2}
 personalities <- personalities %>%
@@ -2150,7 +2169,7 @@ personalities <- personalities %>%
          name = character_name)
 ```
 
-We've renamed 3 columns in the data frame and re-assigned it to `personalities`.
+We have renamed 3 columns in the data frame and re-assigned it to `personalities`.
 
 ```{r rename-3}
 glimpse(personalities)
@@ -2167,7 +2186,9 @@ personalities %>%
   rename(fictional_work = names(.)[2])
 ```
 
-Here, we change the "work" column back to "fictional_work" simply by indexing the second column in the personalities data frame. This column already had a name, but if it didn't, this method would have still successfully named it to "fictional_work".
+Here, we change the "work" column back to "fictional_work" simply by indexing the second
+column in the personalities data frame. This column already had a name, but if it didn't,
+this method would have still successfully named it to "fictional_work".
 
 ### Exercises
 
