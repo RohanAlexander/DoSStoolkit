@@ -1496,15 +1496,10 @@ y <- 0.3*x + rnorm(1) # calculate value of y
 
 ### Example
 
-Suppose that, while looking at course evaluations and course averages, we have observed
-that there may be some relationship between the course evaluation average and the overall
-course average. While we dont have access to the full data corresponding to a course,
-suppose we are given a *linear regression* for this data. I.e., we are given a slope and
-intercept.
-
-We want to use this information to simulate the data _from_ the linear regression.
-
-Lets start with loading the tidyverse.
+Suppose we are given distributions of weights and heights for a population of 50 people, 
+and a linear regression equation for this data, which is the slope and intercept. We can 
+then use this information to simulate the data _from_ the slope and intercept. Lets start 
+with loading the tidyverse.
 
 ```{r simulating-data-2}
 library(tidyverse)
@@ -1515,24 +1510,21 @@ We can simulate the data as follows.
 ```{r simulating-data-3, include = FALSE}
 set.seed(2)
 
-grading_trend <- tibble(course = sample(x = c("STA130", "CSC108", "MAT137"),
-                                        size = 50, replace = TRUE),
-                        term = sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
-                        course_avg = rnorm(n = 50, mean = 80, sd = 5),
-                        error = rnorm(n = 50, mean = 0, sd = 1),
-                        evaluations_avg = course_avg * 4.5 + error)
+data <- tibble(weight = rnorm(n = 50, mean = 125, sd = 5),
+               error = rnorm(n = 50, mean = 0, sd = 1),
+               height = weight * 1.2 + error)
 ```
 ```{r simulating-data-4, echo = FALSE}
 decorate("simulating-data-3") %>%
-  flair("evaluations_avg = course_avg * 4.5 + error", color = "hotpink") %>%
+  flair("height = weight * 1.2 + error", color = "hotpink") %>%
   knit_print.with_flair()
 ```
 
-Lets see what this relationship looks like visually, with the regression line.
+Lets see what this relationship looks like with the regression line and data points plotted.
 
 ```{r simulating-data-5}
-grading_trend %>% 
-  ggplot(aes(x = course_avg, y = evaluations_avg)) +
+data %>% 
+  ggplot(aes(x = weight, y = height)) +
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE, formula = 'y ~ x')
 ```
@@ -1540,58 +1532,11 @@ grading_trend %>%
 We may use this data set to build a regression models using the `lm()` function as follows.
 
 ```{r simulating-data-6}
-lm(evaluations_avg ~ course_avg, data = grading_trend)
+lm(height ~ weight, data = data)
 ```
 
-As we expect, creating this linear regression model successfully recovers the original
-slope of 4.5!
-
-**Question**: Why might we want to do this? One reason may be
-that we want to see how much we can vary our sample while maintaining that same regression
-line (this may be referred to as slope sensitivity, according to [this blog
-post](https://towardsdatascience.com/linear-regression-simulation-to-understand-slope-sensitivity-ab6887d45fe1)).
-
-Here is an illustration given three different samples generated to satisfy this regression line.
-
-```{r simulating-data-7, warning = FALSE, message = FALSE, echo = FALSE, fig.height = 4, fig.width = 10}
-# Resource for code: https://www.tellingstorieswithdata.com/its-just-a-linear-model.html#overview 
-tibble(
-  sample = c(
-    rep.int(x = "sample 1", times = 50),
-    rep.int(x = "sample 2", times = 50),
-    rep.int(x = "sample 3", times = 50)
-  ),
-  course = c(
-    sample(x = c("STA130", "CSC108", "MAT137"), size = 50, replace = TRUE),
-    sample(x = c("STA130", "CSC108", "MAT137"), size = 50, replace = TRUE),
-    sample(x = c("STA130", "CSC108", "MAT137"), size = 50, replace = TRUE)
-  ),
-  term = c(
-    sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
-    sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
-    sample(x = c("F", "W", "S"), size = 50, replace = TRUE)
-  ),
-  course_avg = c(
-    sample1 = rnorm(n = 50, mean = 80, sd = 5),
-    sample2 = rnorm(n = 50, mean = 80, sd = 5),
-    sample3 = rnorm(n = 50, mean = 80, sd = 5)
-  ),
-  error = c(
-    error1 = rnorm(n = 50, mean = 0, sd = 1),
-    error2 = rnorm(n = 50, mean = 0, sd = 1),
-    error3 = rnorm(n = 50, mean = 0, sd = 1)
-  ),
-  evaluations_avg = c(
-    course_avg[1:50] * 4.5 + error[1:50],
-    course_avg[51:100] * 4.5 + error[51:100],
-    course_avg[101:150] * 4.5 + error[101:150]
-  )
-) %>%
-  ggplot(aes(x = course_avg, y = evaluations_avg)) + 
-  geom_point() + 
-  geom_smooth(method = "lm", se = FALSE, formula = 'y ~ x') + 
-  facet_wrap(vars(sample))
-```
+As we expect, building this linear regression model successfully recovers the original
+slope of 1.2.
 
 ### Exercises
 
@@ -1703,8 +1648,6 @@ grading_trend <- tibble(course = sample(x = c("STA130", "CSC109", "MAT137"),
                         error = rnorm(n = 50, mean = 0, sd = 1),
                         evaluations_avg = course_avg * 4.5 + error)
 ```
-
-
 
 ### Common Mistakes & Errors
 
@@ -3422,7 +3365,7 @@ learn more.
 
 #### Exercise 1
 
-Extract month, day, and year into separate columns at once using mutate.
+Extract month, day, and year into separate columns at the same time using mutate.
 
 ```{r dates-exercise-1, exercise = TRUE}
 
@@ -3751,7 +3694,8 @@ nontidy_data %>%
 
 Lets go through this step by step and check the output each time.
 
-To clean it, we will use our functions pivot_longer(), pivot_wider(), and unnest() from tidyr. 
+To clean it, we will use our functions pivot_longer(), pivot_wider(), and unnest() from
+tidyr.
 
 ```{r tidyr-3}
 # 1. Convert to long format
@@ -3795,7 +3739,8 @@ We will be looking at a data set of Broadway shows with variables about the perf
 attendance, and revenue for theaters that are part of The Broadway League. You can learn
 more about the data set provided by Alex Cookson in this [Git
 repository](https://github.com/tacookson/data) as well as this corresponding [blog
-post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/). Take a look at a subset of this data for the Winter Garden Theatre.
+post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/). Take a
+look at a subset of this data for the Winter Garden Theatre.
 
 ```{r tidyr-8}
 winter_garden
