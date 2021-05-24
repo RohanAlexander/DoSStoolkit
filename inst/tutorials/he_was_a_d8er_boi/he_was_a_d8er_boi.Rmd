@@ -1007,31 +1007,26 @@ Highlights:
 
 ### Overview
 
-In applied statistics, when we think of looking for missing data, the first thought that
-may come to mind is that we are looking for NA values in the data set. However, that is
-not the only type of missing data that we may have. We may also want to ask ourselves: Are
-there missing _variables_ in the data? Are there missing _observations_ in the data?
+When we think of looking for missing data, we may think of looking for missing values, 
+but there is also another type of missing data that is implicit which we can look for.
+For example, are there missing variables or observations in the data? We can answer this
+question by looking at combinations of values and seeing if all the possible combinations
+exist.
 
-These may be difficult questions to ask, especially if we do not know what our data
-represents well. A simpler question that we may ask, however, is: does our data set
-contain all possible combinations of some collection of variables?
-
-While that may be a more directly answerable questionable, it is still difficult to try to
-understand what exactly this may mean. Let's try to break this down using some concrete,
-hypothetical data.
+#### Example
 
 Suppose we have a data set representing student grades for a collection of required first
 year courses for the statistics major: STA130, CSC108, MAT137, at the end of their first
 year. However, some students have not finished all three courses and may be taking some in
 the summer.
 
-Let's start by loading the tidyverse.
+Lets start by loading the tidyverse.
 
 ```{r missing-data-1}
 library(tidyverse)
 ```
 
-Here is our hypothetical data.
+Here is our hypothetical data of courses and grades.
 
 ```{r missing-data-2, include = FALSE}
 first_year <- tibble(student_id = c(1, 1, 1, 2, 2, 3, 4, 4, 4, 5, 5, 6),
@@ -1047,16 +1042,12 @@ first_year
 ```
 
 As you can see, our data is missing some rows that would correspond to courses that 
-students have yet to complete.
-
-Suppose, for some reason, that you want to count the number of courses that are left
-for all students to take until they have completed all their requirements, or maybe you
-want to try predicting the grades a student will get on their remaining courses.
-
-Regardless, you will need to "manipulate" this data set to make it so that you can see
-which courses students have yet to complete.
-
-The `complete()` function is the right tool to do this. We can do this as follows.
+students have yet to complete. Suppose, for some reason, that you want to count the number 
+of courses that are left for all students to take until they have completed all their 
+requirements, or maybe you want to try predicting the grades a student will get on their 
+remaining courses. Regardless, you will need to "manipulate" this data set to make it so 
+that you can see which courses students have yet to complete. The `complete()` function is 
+right tool to do this and we can do this as follows.
 
 ```{r missing-data-4, include = FALSE}
 first_year %>%
@@ -1087,7 +1078,7 @@ The `complete()` function takes the following as arguments:
 | …        | vector           | columns to find and complete all combinations for |
 | fill     | named list       | values to fill the cells for newly added rows     |
 
-You can read more about the arguments in the `complete()` function's reference
+You can read more about the arguments in the `complete()` function reference
 [here](https://tidyr.tidyverse.org/reference/complete.html) or with `?complete`.
 
 ### fill()
@@ -1100,14 +1091,14 @@ The `fill()` function takes the following as arguments:
 | …          | vector           | columns to find and complete all combinations for     |
 | .direction | string           | 'up', 'down', 'downup' for direction to fill values   |
 
-You can read more about the arguments in the `fill()` function's reference
+You can read more about the arguments in the `fill()` function reference
 [here](https://tidyr.tidyverse.org/reference/fill.html) or with `?fill`.
 
 ### Exercises
 
 There are many ways to fill the data we got above. If, for some reason, we wanted to fill
 it based on the past or the next value, we can use the fill() function. If, however, we 
-wanted to fill all the empty values with a specific number, we could use the 'fill' 
+wanted to fill all the empty values with a specific number, we could use the fill 
 parameter within the complete() function.
 
 #### Exercise 1
@@ -1129,7 +1120,7 @@ missing_data_ex1_sol <- first_year %>%
 #### Exercise 2
 
 Referencing the Arguments section, try to fill all the empty values with a specific number
-'0' using the 'fill' parameter within the complete() function.
+0 and using the fill parameter within the complete() function.
 
 ```{r missing-data-exercise-2, exercise = TRUE}
 
@@ -1143,10 +1134,12 @@ missing_data_ex2_sol <- first_year %>%
 
 ### Next Steps
 
-If you would like to learn more about the complete() and fill() functions, you will find these resources from tidyr very helpful:
+If you would like to learn more about the complete() and fill() functions, you will find
+these resources from tidyr very helpful:
 
 - [tidyr: Complete a data frame with missing combinations of data](https://tidyr.tidyverse.org/reference/complete.html)
-- [tidyr: Fill in missing values with previous or next value](https://tidyr.tidyverse.org/reference/fill.html)
+- [tidyr: Fill in missing values with previous or next
+value](https://tidyr.tidyverse.org/reference/fill.html)
 
 
 
@@ -1503,15 +1496,10 @@ y <- 0.3*x + rnorm(1) # calculate value of y
 
 ### Example
 
-Suppose that, while looking at course evaluations and course averages, we have observed
-that there may be some relationship between the course evaluation average and the overall
-course average. While we dont have access to the full data corresponding to a course,
-suppose we are given a *linear regression* for this data. I.e., we are given a slope and
-intercept.
-
-We want to use this information to simulate the data _from_ the linear regression.
-
-Lets start with loading the tidyverse.
+Suppose we are given distributions of weights and heights for a population of 50 people, 
+and a linear regression equation for this data, which is the slope and intercept. We can 
+then use this information to simulate the data _from_ the slope and intercept. Lets start 
+with loading the tidyverse.
 
 ```{r simulating-data-2}
 library(tidyverse)
@@ -1522,24 +1510,21 @@ We can simulate the data as follows.
 ```{r simulating-data-3, include = FALSE}
 set.seed(2)
 
-grading_trend <- tibble(course = sample(x = c("STA130", "CSC108", "MAT137"),
-                                        size = 50, replace = TRUE),
-                        term = sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
-                        course_avg = rnorm(n = 50, mean = 80, sd = 5),
-                        error = rnorm(n = 50, mean = 0, sd = 1),
-                        evaluations_avg = course_avg * 4.5 + error)
+data <- tibble(weight = rnorm(n = 50, mean = 125, sd = 5),
+               error = rnorm(n = 50, mean = 0, sd = 1),
+               height = weight * 1.2 + error)
 ```
 ```{r simulating-data-4, echo = FALSE}
 decorate("simulating-data-3") %>%
-  flair("evaluations_avg = course_avg * 4.5 + error", color = "hotpink") %>%
+  flair("height = weight * 1.2 + error", color = "hotpink") %>%
   knit_print.with_flair()
 ```
 
-Lets see what this relationship looks like visually, with the regression line.
+Lets see what this relationship looks like with the regression line and data points plotted.
 
 ```{r simulating-data-5}
-grading_trend %>% 
-  ggplot(aes(x = course_avg, y = evaluations_avg)) +
+data %>% 
+  ggplot(aes(x = weight, y = height)) +
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE, formula = 'y ~ x')
 ```
@@ -1547,58 +1532,11 @@ grading_trend %>%
 We may use this data set to build a regression models using the `lm()` function as follows.
 
 ```{r simulating-data-6}
-lm(evaluations_avg ~ course_avg, data = grading_trend)
+lm(height ~ weight, data = data)
 ```
 
-As we expect, creating this linear regression model successfully recovers the original
-slope of 4.5!
-
-**Question**: Why might we want to do this? One reason may be
-that we want to see how much we can vary our sample while maintaining that same regression
-line (this may be referred to as slope sensitivity, according to [this blog
-post](https://towardsdatascience.com/linear-regression-simulation-to-understand-slope-sensitivity-ab6887d45fe1)).
-
-Here is an illustration given three different samples generated to satisfy this regression line.
-
-```{r simulating-data-7, warning = FALSE, message = FALSE, echo = FALSE, fig.height = 4, fig.width = 10}
-# Resource for code: https://www.tellingstorieswithdata.com/its-just-a-linear-model.html#overview 
-tibble(
-  sample = c(
-    rep.int(x = "sample 1", times = 50),
-    rep.int(x = "sample 2", times = 50),
-    rep.int(x = "sample 3", times = 50)
-  ),
-  course = c(
-    sample(x = c("STA130", "CSC108", "MAT137"), size = 50, replace = TRUE),
-    sample(x = c("STA130", "CSC108", "MAT137"), size = 50, replace = TRUE),
-    sample(x = c("STA130", "CSC108", "MAT137"), size = 50, replace = TRUE)
-  ),
-  term = c(
-    sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
-    sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
-    sample(x = c("F", "W", "S"), size = 50, replace = TRUE)
-  ),
-  course_avg = c(
-    sample1 = rnorm(n = 50, mean = 80, sd = 5),
-    sample2 = rnorm(n = 50, mean = 80, sd = 5),
-    sample3 = rnorm(n = 50, mean = 80, sd = 5)
-  ),
-  error = c(
-    error1 = rnorm(n = 50, mean = 0, sd = 1),
-    error2 = rnorm(n = 50, mean = 0, sd = 1),
-    error3 = rnorm(n = 50, mean = 0, sd = 1)
-  ),
-  evaluations_avg = c(
-    course_avg[1:50] * 4.5 + error[1:50],
-    course_avg[51:100] * 4.5 + error[51:100],
-    course_avg[101:150] * 4.5 + error[101:150]
-  )
-) %>%
-  ggplot(aes(x = course_avg, y = evaluations_avg)) + 
-  geom_point() + 
-  geom_smooth(method = "lm", se = FALSE, formula = 'y ~ x') + 
-  facet_wrap(vars(sample))
-```
+As we expect, building this linear regression model successfully recovers the original
+slope of 1.2.
 
 ### Exercises
 
@@ -1681,37 +1619,29 @@ quiz(question("What should the first blank be?",
 
 #### Exercise 2
 
-Suppose we are given a regression model with a slope of 4.5, and we want to simulate a 
-dataset from the regression model with the previous scenario. What is wrong with this
-data-generating code?
+Suppose we are given a regression model with a slope of 1.2, and we want to simulate a 
+dataset from the regression model similar to the previous scenario. We have the below code
+to generate the data. What is wrong with this data-generating code below?
 
 ```{r simulate-data-exercise-2, exercise = TRUE, exercise.eval = TRUE}
 set.seed(2)
-grading_trend <- tibble(course = sample(x = c("STA130", "CSC109", "MAT137"),
-                                        size = 50, replace = TRUE),
-                        term = sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
-                        course_avg = rnorm(n = 50, mean = 80, sd = 5),
-                        evaluations_avg = rnorm(n = 50, mean = 4, sd = 2))
+data <- tibble(weight = rnorm(n = 50, mean = 125, sd = 5),
+               height = rnorm(n = 50, mean = 150, sd = 4))
 ```
 
 ```{r simulate-data-exercise-2-hint-1}
-# It "works", in the sense that we get meaningful output, but it is not the output we want for this problem!
+# It works in the sense that we get meaningful output, but it is not the output we want for this problem
 ```
 ```{r simulate-data-exercise-2-hint-2}
-# If you're really stuck, try looking at the code we used for this above, and determine what's different
+# If you are stuck, try looking at the code we used for this above, and determine what's different
 ```
 
 ```{r simulate-data-exercise-2-solution, exercise = FALSE}
 set.seed(2)
-grading_trend <- tibble(course = sample(x = c("STA130", "CSC109", "MAT137"),
-                                        size = 50, replace = TRUE),
-                        term = sample(x = c("F", "W", "S"), size = 50, replace = TRUE),
-                        course_avg = rnorm(n = 50, mean = 80, sd = 5),
-                        error = rnorm(n = 50, mean = 0, sd = 1),
-                        evaluations_avg = course_avg * 4.5 + error)
+data <- tibble(weight = rnorm(n = 50, mean = 125, sd = 5),
+               error = rnorm(n = 50, mean = 0, sd = 1),
+               height = weight * 1.2 + error)
 ```
-
-
 
 ### Common Mistakes & Errors
 
@@ -1749,7 +1679,7 @@ from a regression model, please take a look at the following:
 
 
 
-## Advanced mutating and summarising
+## Conditional mutating and summarising
 
 Written by Mariam Walaa.
 
@@ -1757,29 +1687,29 @@ Written by Mariam Walaa.
 
 In this lesson, you will learn how to:
 
-- Use across() with summarise()
-- Apply conditions within summarise() and mutate() (_coming soon!_)
+- Use across() with summarise() 
+- Use mutate_if() 
+- Use if_else() and na_if() 
 
 Prerequisite skills include:
 
-- Familiarity with summarize().
-- Familiarity with mutate().
-- Familiarity with conditional statements (_coming soon!_).
+- Familiarity with summarize() and mutate()
+- Familiarity with conditional statements if_else()
 
 Highlights:
 
 - Use across() to summarize across a defined selection of columns
-- Use summarize() and mutate() along with conditional statements (_coming soon!_)
+- Mutate column types based on conditions using mutate_if()
+- Mutate columns based on conditions using if_else() and na_if() within mutate()
 
 ### Overview
 
 This section will demonstrate how to use the `summarise()` function with `across()` to 
-summarize variables and groups within a variable in a data set.
-
-We will be looking at a data set of Broadway shows with variables about the performances,
-attendance, and revenue for theaters that are part of The Broadway League. You can learn
-more about the data set provided by Alex Cookson in [the dataset
-repository](https://github.com/tacookson/data) as well as this corresponding [blog
+summarize variables and groups within a variable in a data set. We will be looking at a
+data set of Broadway shows with variables about the performances, attendance, and revenue
+for theaters that are part of The Broadway League. You can learn more about the data set
+provided by Alex Cookson in [the dataset repository](https://github.com/tacookson/data) as
+well as this corresponding [blog
 post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/).
 
 #### Video
@@ -1800,10 +1730,8 @@ broadway
 
 #### Question 1
 
-What is the minimum and maximum number of performances _and_ previews per week?
-
-Method: Use `across()` to select specific columns to summarize them with multiple
-summary functions.
+What is the minimum and maximum number of performances _and_ previews per week? We can use
+`across()` to select specific columns to summarize them with multiple summary functions.
 
 ```{r across-3, include = FALSE}
 broadway %>%
@@ -1820,29 +1748,56 @@ decorate("across-3") %>%
   knit_print.with_flair()
 ```
 
-Heres what this chunk of code does:
+Here is what the above chunk of code does:
 
 * Groups the data by week using `group_by()` 
 * Selects columns to summarize by passing a vector to `.cols` in `across()` (Highlighted in pink) 
 * Defines summary functions by passing a list to `.fns` in `across()` (Highlighted in orange)
 
-You can learn more about `across()` by running `?across` in your console.
+You can also learn more about `across()` by running `?across` in your console.
 
 #### Question 2
 
 How do we provide a numeric summary for every show happening in a particular week?
 
-```{r across-5, eval = FALSE}
+```{r across-5}
 broadway %>%
   group_by(week_ending, show) %>%
   summarise(across(where(is.numeric), mean, na.rm = TRUE),
             .groups = 'drop')
 ```
 
-This chunk of code summarizes every show happening in some particular week by every numeric variable that is available in the data set. This helps us easily see things like the average ticket price and the number of performances each show had in a particular
+This chunk of code summarizes every show happening in some particular week by every
+numeric variable that is available in the data set. This helps us compute things like
+the average ticket price and the number of performances each show had in a particular
 week.
 
+#### Question 3
+
+We can use mutate() and if_else() to change values within a column. For example, here
+is what we would write if we wanted to change all rows with theatre Studio 54 to be 
+called Studio 54 Theatre.
+
+```{r across-6}
+broadway %>% 
+    mutate(theatre = if_else(theatre == "Studio 54", "Studio 54 Theatre", theatre))
+```
+
+We can confirm this by filtering for these theatre names.
+
+```{r across-7}
+broadway %>%
+  mutate(theatre = if_else(theatre == "Studio 54", "Studio 54 Theatre", theatre)) %>%
+  filter(theatre %in% c("Studio 54", "Studio 54 Theatre"))
+```
+
+Notice that we did not save the initial modified data frame. We are also using a new
+operator %in% which checks for the value Studio 54 in a vector of values including
+Studio 54 and Studio 54 Theatre.
+
 ### Arguments
+
+#### `across()`
 
 The `across()` function takes the following as arguments:
 
@@ -1851,15 +1806,43 @@ The `across()` function takes the following as arguments:
 | .fns     |           | can pass a list of functions or a single function |
 | .cols    | vector    | vector with column names to apply functions to    |
 
-You can read more about the arguments in the `across()` functions documentation
-[here](https://dplyr.tidyverse.org/reference/across.html). Note that the arguments for 
-across() will depend on your use case.
+You can read more about the arguments in the `across()` function documentation
+[here](https://dplyr.tidyverse.org/reference/across.html). Please note that the arguments 
+for across() will also depend on your use case.
 
-#### Exercise
+#### `mutate_if()`
 
-Count the number of distinct shows and distinct theatres using summarise() and across(). 
+The `mutate_if()` function takes the following as arguments:
 
-**Tip**: Try to use the data type for shows and theatres columns!
+| Argument  | Details                                            |
+| --------- | -------------------------------------------------- |
+| selection | selection of variables by type, i.e., is.character |
+| function  |  function to apply to the selection of variables   |
+
+You can read more about the arguments in the `mutate_if()` function documentation
+[here](https://dplyr.tidyverse.org/reference/mutate_all.html). 
+
+#### `na_if()`
+
+The `na_if()` function takes the following as arguments:
+
+| Argument  | Details                                            |
+| --------- | -------------------------------------------------- |
+| vector    | vector to look for values we want to change        |
+| value     | value in the vector that we want to change to NA   |
+
+You can read more about the arguments in the `na_if()` function documentation
+[here](https://dplyr.tidyverse.org/reference/na_if.html).
+
+You can read more about `if_else()` in the corresponding tutorial on conditional
+statements.
+
+### Exercises
+
+#### Exercise 1
+
+Count the number of distinct shows and distinct theatres using summarise() and across().
+As a tip, try to use the data type for shows and theatres columns.
 
 ```{r across-exercise-1, exercise = TRUE}
 
@@ -1871,14 +1854,43 @@ across_ex1_sol <- broadway %>%
             .groups = 'drop')
 ```
 
+#### Exercise 2
+
+Use the mutate_if() function to select all the variables of type double and convert them
+to character.
+
+```{r across-exercise-2, exercise = TRUE}
+
+```
+
+```{r across-exercise-2-sol, echo = FALSE}
+across_ex1_sol <- broadway %>% mutate_if(is.double, as.character)
+```
+
+#### Exercise 3
+
+There are some shows with a value of [title of show] under the show column. Use the
+na_if() conditional statement within mutate() to convert this to NA.
+
+```{r across-exercise-3, exercise = TRUE}
+
+```
+
+```{r across-exercise-3-sol, echo = FALSE}
+across_ex1_sol <- broadway %>%
+    mutate(show = na_if(show, "[title of show]"))
+```
+
+
 ### Next Steps
 
-If you would like to learn more about using across() with summarise, you may find the following resource helpful:
+If you would like to learn more about the functions in this tutorial, you may find the
+following resource helpful:
 
-- [dplyr: Apply a function (or functions) across multiple columns](https://dplyr.tidyverse.org/reference/across.html) 
-
-
-
+- [dplyr: Apply a function (or functions) across multiple
+columns](https://dplyr.tidyverse.org/reference/across.html)
+- [Mutate multiple columns](https://dplyr.tidyverse.org/reference/mutate_all.html)
+- [Convert values to NA](https://dplyr.tidyverse.org/reference/na_if.html)
 
 
 
@@ -2081,15 +2093,20 @@ quiz(question("Which function is A?",
 
 ### Next Steps
 
-If you are looking for more information on some of these functions, please check out the following resources:
+If you are looking for more information on some of these functions, please check out the
+following resources:
 
-- [dplyr: Compute lagged or leading values](https://dplyr.tidyverse.org/reference/lead-lag.html)
-- [dplyr: Recode values](https://dplyr.tidyverse.org/reference/recode.html)
-- [tidyr: Replace NAs with specified values](https://tidyr.tidyverse.org/reference/replace_na.html)
-- [dplyr: Find first non-missing element](https://dplyr.tidyverse.org/reference/coalesce.html)
-- [n_distinct: Efficiently count the number of unique values in a set of vector](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/n_distinct)
-- [distinct: Select distinct/unique rows](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/distinct)
-- [drop_na: Drop rows containing missing values](https://www.rdocumentation.org/packages/tidyr/versions/0.8.0/topics/drop_na)
+- [dplyr: Compute lagged or leading
+values](https://dplyr.tidyverse.org/reference/lead-lag.html) - [dplyr: Recode
+values](https://dplyr.tidyverse.org/reference/recode.html) - [tidyr: Replace NAs with
+specified values](https://tidyr.tidyverse.org/reference/replace_na.html) - [dplyr: Find
+first non-missing element](https://dplyr.tidyverse.org/reference/coalesce.html) -
+[n_distinct: Efficiently count the number of unique values in a set of
+vector](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/n_distinct) -
+[distinct: Select distinct/unique
+rows](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/distinct) -
+[drop_na: Drop rows containing missing
+values](https://www.rdocumentation.org/packages/tidyr/versions/0.8.0/topics/drop_na)
 
 
 
@@ -3260,13 +3277,13 @@ In this lesson, you will learn how to:
 
 Prerequisite skills include:
 
-- Loading libraries
+- Installing and loading packages
 - Using `mutate()` and `summarise()`
 
 Highlights:
 
 - Loading the `lubridate` library separately from `tidyverse`
-- Making use of the `today()` and `now()` functions
+- Using the `today()` and `now()` functions
 - Learning how to extract information from a date-time column
 
 
@@ -3278,13 +3295,17 @@ Let's start by loading the `tidyverse`.
 library(tidyverse)
 ```
 
-Notice that `lubridate` is not listed as one of the libraries loaded into your R session when you load `tidyverse` (which you can view in your output on your own RStudio), and this is because it is not part of the core `tidyverse` so it will need to be loaded separately.
+Notice that `lubridate` is not listed as one of the libraries loaded into your R session
+when you load `tidyverse` (which you can view in your output on your own RStudio), and
+this is because it is not part of the core `tidyverse` so it will need to be loaded
+separately.
 
 ```{r dates-2}
 library(lubridate)
 ```
 
-Two of the functions the `lubridate` library will give us is `today()` and `now()`, which we can immediately start to use, without data or parameters.
+Two of the functions the `lubridate` library will give us is `today()` and `now()`, which
+we can immediately start to use, without data or parameters.
 
 ```{r dates-3}
 today()
@@ -3294,19 +3315,29 @@ today()
 now()
 ```
 
+You may want to use these functions today() and now() for various reasons, such as 
+including the date and time in a file name. You can do that as follows.
+
+```{r}
+paste0(today(), "_datafile.csv")
+```
+
+#### Example
+
 We will look at Caribou data from Alex Cooksons dataset repository for this tutorial.
 
 ```{r dates-5, include = FALSE}
-caribou <- read_csv("https://raw.githubusercontent.com/tacookson/data/master/caribou-location-tracking/locations.csv")
+caribou <-
+  read_csv("https://raw.githubusercontent.com/tacookson/data/master/caribou-location-tracking/locations.csv")
 ```
 
 ```{r dates-6}
 glimpse(caribou)
 ```
 
-We can see that the timestamp column has an associated data type 'dttm.' This stands for datetime.
-
-Given this is already the correct data type, we can extract a lot of information from it using `lubridate` functions.
+We can see that the timestamp column has an associated data type 'dttm.' This stands for
+datetime. Given that this is already the correct data type, we can extract a lot of
+information from it using `lubridate` functions.
 
 ```{r dates-7}
 # extracting year
@@ -3319,13 +3350,16 @@ caribou %>% mutate(week_day = wday(timestamp))
 caribou %>% mutate(leap_year = leap_year(timestamp))
 ```
 
-You can see there are many possibilities with the `lubridate` package. Check out the cheatsheet to learn more.
+You can see there are many additional variables we can extract with the `lubridate` 
+package. You can check out the [lubridate
+cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/lubridate.pdf) to
+learn more.
 
 ### Exercises
 
 #### Exercise 1
 
-Extract month, day, and year into separate columns at once using mutate.
+Extract month, day, and year into separate columns at the same time using mutate.
 
 ```{r dates-exercise-1, exercise = TRUE}
 
@@ -3355,11 +3389,14 @@ dates_ex2_sol <- caribou %>% summarise(min(timestamp), max(timestamp))
 
 ### Common Mistakes & Errors
 
-- You might try to apply `lubridate` functions on to a column that looks like a timestamp column, but it may still not be of the appropriate data type, which is either 'dt', 'tm', or 'dttm'. Be sure to convert to the proper data type first!
+- You might try to apply `lubridate` functions on to a column that looks like a timestamp
+column, but it may still not be of the appropriate data type, which is either 'dt', 'tm',
+or 'dttm'. Be sure to convert to the proper data type first!
 
 ### Next Steps
 
-If you would like to learn more about handling dates and times in R, as well as the `lubridate` package, please read the following:
+If you would like to learn more about handling dates and times in R, as well as the
+`lubridate` package, please read the following:
 
 - [R For Data Science:  16 Dates and times](https://r4ds.had.co.nz/dates-and-times.html)
 - [Lubridate Package Documentation](https://lubridate.tidyverse.org/)
@@ -3376,7 +3413,7 @@ If you would like to learn more about handling dates and times in R, as well as 
 
 
 
-## `janitor`
+## `janitor` package
 
 Written by Mariam Walaa.
 
@@ -3384,12 +3421,14 @@ Written by Mariam Walaa.
 
 In this lesson, you will learn how to:
 
-- Improve column names in your dataset
-- Handle duplicate or partially-duplicate data
+- Tidy up variable names that are in your dataset
+- Deal with duplicate or partially duplicate data
 
 Prerequisite skills include:
 
 - Installing and loading packages
+- Understanding duplicate data
+- Working with column names, such as `names()` and `rename()`
 
 Highlights:
 
@@ -3403,17 +3442,18 @@ that has simple functions for examining and cleaning dirty data. The main janito
 functions: perfectly format data frame column names; isolate partially-duplicate records;
 and provide quick tabulations (i.e., frequency tables and crosstabs)."
 
-As the description says, the `janitor` package will help you with cleaning any dirty dataset you have. It is not part of the `tidyverse` so you will have to install it and then load it separately as follows.
+As the description says, the `janitor` package will help you with cleaning your data. 
+It is not part of the `tidyverse` so you will have to install it and then load it 
+separately as follows.
 
 ```{r janitor-1}
 library(janitor)
 ```
 
-One important thing in data analysis that you will see up come up very frequently when you work with your datasets is _duplication_. This is one area where the `janitor` package will help.
-
-Another more obvious area that the `janitor` package will help with is your column names. We don't always get to choose our column names (because most times, we are not creating our own data, but were getting data from another source), so sometimes we might end up with column names that are not easy to work with.
-
-You can also do more cool things with the `janitor` package like creating crosstabs, but for this tutorial, we will just focus mainly on how to make your dataset cleaner with better variable names and handling duplicate data.
+In data analysis, you will frequently across across the issue of duplication, as well as 
+the issue of having difficult column names to work with. One way to deal with difficult
+column names is to rename them using `rename()` but you can also use the janitor package
+to perform multiple cleaning steps on the column names.
 
 ### Arguments
 
@@ -3424,9 +3464,9 @@ The `clean_names()` function takes the following as arguments:
 | Argument | Parameter            | Details                                        |
 | -------- | -------------------- | ---------------------------------------------- |
 | dat*     | input data frame     |                                                |
-| case     | 'title' for big caps | default is 'snake'; see to_any_case for more   |
+| case     | 'title' for big caps | default is 'snake'; see to_any_case for detail |
 
-You can read more about the arguments in the `clean_names()` function's documentation
+You can read more about the arguments in the `clean_names()` function documentation
 [here](https://garthtarr.github.io/meatR/janitor.html#clean_names()).
 
 ### `get_dupes()`
@@ -3438,12 +3478,12 @@ The `get_dupes()` function takes the following as arguments:
 | dat*     | input data frame |                                                 |
 | …        | vector           | vector containing column names we want to check |
 
-You can read more about the arguments in the `get_dupes()` function's documentation
+You can read more about the arguments in the `get_dupes()` function documentation
 [here](https://garthtarr.github.io/meatR/janitor.html#get_dupes()).
 
 ### Exercises
 
-Let's start by loading `tidyverse` since we'll be needing the pipe function, etc.
+Lets start by loading `tidyverse` since we will be using the pipe %>% operator and more.
 
 ```{r janitor-2}
 library(tidyverse)
@@ -3468,14 +3508,18 @@ Using the `clean_names()` function from janitor, we get:
 grades %>% clean_names()
 ```
 
-Notice how now everything is lowercased with _ as a separator, and any special characters like % are converted to words to retain their meaning. `clean_names()` would also handle column names that are duplicated, but that's not demonstrated here since we already had
+Notice how now everything is lowercased with _ as a separator, and any special characters
+like % are converted to words to retain their meaning. `clean_names()` would also handle
+column names that are duplicated, but that is not demonstrated here since we already had
 unique columns.
 
 #### Exercise 1
 
-If, for some reason, you wanted to preserve some existing columns from being cleaned, how would you use the `clean_names()` function on only the columns you want to clean? For example, supposed you wanted to keep the Final Grade % column as is.
-
-**Hint**: You'll need to use functions outside of the janitor package to help with this! Remember the `dplyr` functions.
+If, for some reason, you wanted to preserve some existing columns from being cleaned, how
+would you use the `clean_names()` function on only the columns you want to clean? For
+example, supposed you wanted to keep the Final Grade % column as is. As a hint, you will
+need to use functions outside of the janitor package to help with this. Remember the
+`dplyr` functions.
 
 ```{r janitor-exercise-1, exercise = TRUE}
 
@@ -3490,11 +3534,10 @@ grades %>%
 
 #### Exercise 2
 
-If you wanted to restore the upper casing for some columns, how would you do that?
-
-**Tip**: Take a look at the 'Arguments' section and see what you can use!
-
-Store the cleaned data from above in an object called 'clean', then apply the new cleaning step to it.
+If you wanted to restore the upper casing for some columns, how would you do that? As a
+tip, take a look at the Arguments section and see what you can use. Make sure you store
+the cleaned data from above in an object called clean, and then apply the new cleaning
+step to it.
 
 ```{r janitor-exercise-2, exercise = TRUE}
 clean <- 
@@ -3509,7 +3552,8 @@ clean %>% clean_names(case = "title")
 
 #### Exercise 3
 
-Try using the `get_dupes()` function to get duplicate rows from the cleaned grades data `clean`.
+Try using the `get_dupes()` function to get duplicate rows from the cleaned grades data
+`clean`.
 
 ```{r include = FALSE}
 clean <- grades %>% clean_names()
@@ -3523,13 +3567,13 @@ clean <- grades %>% clean_names()
 clean %>% get_dupes()
 ```
 
-
-
 What was the result? Did you get anything?
 
 #### Exercise 4
 
-Look at the data carefully and try to see why you didn't get anything even though it looks like two rows are very similar. How can you modify the function call so that you get the _partially_ duplicate data?
+Look at the data above and try to see why you did not get anything even though it looks
+like two rows are very similar. How can you modify the function call so that you get the
+_partially_ duplicate data?
 
 ```{r janitor-exercise-4, exercise = TRUE}
 
@@ -3543,7 +3587,8 @@ clean %>% get_dupes(c("grade_midterm_1", "grade_midterm_2", "final_grade_percent
 
 ### Next Steps
 
-If you would like to learn more, please read about the janitor package in its documentation [here](https://garthtarr.github.io/meatR/janitor.html).
+If you would like to learn more, please read about the janitor package in its
+documentation [here](https://garthtarr.github.io/meatR/janitor.html).
 
 
 
@@ -3559,7 +3604,7 @@ If you would like to learn more, please read about the janitor package in its do
 
 
 
-## `tidyr`
+## `tidyr` package
 
 Written by Mariam Walaa.
 
@@ -3568,7 +3613,7 @@ Written by Mariam Walaa.
 
 In this lesson, you will learn how to:
 
-- Do more with `tidyr` functions, such as advanced nesting
+- Use additional `tidyr` functions, such as `unnest_wider()` and `unnest_longer()`
 
 Prerequisite skills include:
 
@@ -3576,18 +3621,24 @@ Prerequisite skills include:
 
 Highlights:
 
-- Hello World: Using `tidyr` functions to clean a non-tidy dataset
-- Advanced nesting
+- We can use `tidyr` functions to put a non-tidy dataset into tidy format.
+- unnest_wider() and unnest_longer() give flexibility in terms of how to unnest data.
 
 ### Overview
 
-When it comes to creating and working with datasets, one key point is *standardization*.
+A common theme across working with datasets is standardizing the dataset format. Datasets
+must be standardized. If every dataset was unique in its format, it would be difficult for
+data scientists and data analysts to work on them. Everyone would have a vastly
+different workflow needed to reach the analysis step, and people would have a harder time
+collaborating with each other and evaluating each other's results. That is why datasets
+must be *standardized*.
 
-Datasets must be standardized! Imagine if every dataset was unique in its structure, how difficult it would be for data scientists and analysts to work on them. Everyone would have a vastly different workflow needed to reach the analysis step, and people would have a harder time collaborating with each other and evaluating each other's results. That is why datasets must be *standardized*.
-
-You may ask yourself: How do we standardize a dataset, and to what extent? In [Hadley Wickham's Tidy Data paper](https://vita.had.co.nz/papers/tidy-data.html) from 2014, Hadley introduces 3 rules every dataset must follow in order to be considered tidy.
-
-This is a good paper to read, but if you don't have time, here is an illustration that summarizes these 3 rules, by Allison Horst.
+You may wonder how we can standardize a dataset when we have one, and to what extent we 
+can standardize it. In [Hadley Wickham's Tidy Data
+paper](https://vita.had.co.nz/papers/tidy-data.html) from 2014, Hadley introduces 3 rules
+every dataset must follow in order to be considered tidy: Every row must be an observation,
+every column must be a variable, and every cell is a single measurement. Here is an 
+illustration that summarizes these 3 rules, by Allison Horst.
 
 ```{r tidyr-image-1, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/59_tidy-data.jpg")
@@ -3595,7 +3646,9 @@ knitr::include_graphics("images/59_tidy-data.jpg")
 
 Credits: Allison Horst
 
-As the title says, this section will provide you with a summary of some functions you have met in previous tutorials, as well as introduce you to some more functions from tidyr that you haven't met yet.
+As the title says, this section will provide you with a summary of some functions you have
+seen in previous tutorials, as well as introduce you to more functions from tidyr that
+you have not seen yet.
 
 ```{r tidyr-image-2, echo = FALSE, out.width="90%"}
 knitr::include_graphics("images/59_tidy-data-2.jpg")
@@ -3603,13 +3656,9 @@ knitr::include_graphics("images/59_tidy-data-2.jpg")
 
 Credits: Allison Horst
 
-As you may have already heard, tidying data (and data preparation, in general) is a big part of data analysis! In fact, it may be even bigger than other parts of data analysis. So if you feel overwhelmed while learning how to tidy or clean a dataset, don't worry, it's natural and there's a lot to digest, especially because datasets can be so uniquely messy (as Hadley Wickham's quote says in the picture above)
+### Example 
 
-Instead of worrying about how to clean your dataset, though, we can start off a little easier, and just try to get a grasp for what each function is for and maybe even a little bit about how they work behind the scenes (You might find it helpful to try to understand what the function is doing behind the scenes, and that way, you'll be able to better remember what it does and why it does it).
-
-### Hello world
-
-Suppose you're given this data that is not in tidy format. 
+Suppose you are given this data that is not in tidy format. 
 
 ```{r tidyr-data, include = FALSE}
 nontidy_data <- tibble(n_lines = list(100, 200, 300),
@@ -3639,7 +3688,8 @@ nontidy_data %>%
 
 Lets go through this step by step and check the output each time.
 
-To clean it, we will use our functions pivot_longer(), pivot_wider(), and unnest() from tidyr. 
+To clean it, we will use our functions pivot_longer(), pivot_wider(), and unnest() from
+tidyr.
 
 ```{r tidyr-3}
 # 1. Convert to long format
@@ -3675,21 +3725,22 @@ tidy_data %>%
 
 ### Exercises
 
-Lets start with loading the tidyverse.
-
 ```{r tidyr-6, echo = FALSE}
 library(tidyverse)
 ```
 
-We will be looking at a data set of Broadway shows with variables about the performances, attendance, and revenue for theaters that are part of The Broadway League. You can learn more about the data set provided by Alex Cookson in this [Git repository](https://github.com/tacookson/data) as well as this corresponding [blog post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/).
-
-Take a look at a subset of this data for the Winter Garden Theatre.
+We will be looking at a data set of Broadway shows with variables about the performances,
+attendance, and revenue for theaters that are part of The Broadway League. You can learn
+more about the data set provided by Alex Cookson in this [Git
+repository](https://github.com/tacookson/data) as well as this corresponding [blog
+post](https://www.alexcookson.com/post/most-successful-broadway-show-of-all-time/). Take a
+look at a subset of this data for the Winter Garden Theatre.
 
 ```{r tidyr-8}
 winter_garden
 ```
 
-Click Next to look through the observations.
+You can Click Next to look through the observations.
 
 #### Exercise 1
 
@@ -3760,7 +3811,8 @@ question("Which of these functions gives us 12 rows and 2 columns?",
 
 ### Next Steps
 
-- Try looking at `vignette("rectangle")`! This is more advanced than what you have seen in this tutorial, but if you are interested, then this might be helpful.
+- Try looking at `vignette("rectangle")`! This is more advanced than what you have seen in
+this tutorial, but if you are interested, then this might be helpful.
 
 
 
