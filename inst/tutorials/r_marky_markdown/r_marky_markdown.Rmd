@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "R Marky Markdown and the Funky Docs"
-date: "19 May 2021"
+date: "25 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -16,8 +16,8 @@ library(tidyverse)
 library(learnr)
 # tutorial_options(exercise.eval = FALSE)
 library(flair)
-library(gradethis)
-gradethis::gradethis_setup()
+# library(gradethis)
+# gradethis::gradethis_setup()
 library(here)
 ```
 

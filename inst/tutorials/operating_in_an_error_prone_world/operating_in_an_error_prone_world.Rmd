@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Operating in an error prone world"
-date: "19 May 2021"
+date: "25 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -16,8 +16,8 @@ library(tidyverse)
 library(learnr)
 # tutorial_options(exercise.eval = FALSE)
 # library(flair)
-library(gradethis)
-gradethis::gradethis_setup()
+# library(gradethis)
+# gradethis::gradethis_setup()
 # library(palmerpenguins)
 ```
 
@@ -984,7 +984,7 @@ mtcars <- mtcars %>% select(-mpg)
 
 Let's take a closer look at what the line `mtcars <- mtcars %>% select(-mpg)` is doing, and why running it twice causes us issues.
 
-```{r errors-glimpse, exercise=TRUE}
+```{r errors-glimpse, eval = FALSE}
 .rs.restartR()
 glimpse(mtcars)
 mtcars <- mtcars %>% select(-mpg)
@@ -993,7 +993,7 @@ glimpse(mtcars)
 
 We see that the line `.mtcars <- mtcars %>% select(-mpg)` removes the variable `mpg` from `mtcars`. Hence, if we run it once, there is no `mpg` left to be removed the second time.
 
-Sometimes we just have code that won't work if we run it more than once, and this is a situation where  the old *turn it off and back on* trick helps us **solve** our problems, rather than just get rid of them.
+Sometimes we just have code that won't work if we run it more than once, and this is a situation where the old *turn it off and back on* trick helps us **solve** our problems, rather than just get rid of them.
 
 Similarly, sometimes we run code in the console but *don't* have it written in any chunks of our R Markdown document - maybe it was accidentally removed. If you were able to run the code before knitting, these are plausible situations. As a result, we may run into errors when R tries to knit our document. 
 

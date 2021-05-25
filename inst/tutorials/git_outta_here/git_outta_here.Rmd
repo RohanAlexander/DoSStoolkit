@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Git outta here"
-date: "19 May 2021"
+date: "25 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -18,7 +18,7 @@ library(learnr)
 library(flair)
 # library(gradethis)
 library(sortable)
-gradethis::gradethis_setup()
+# gradethis::gradethis_setup()
 library(palmerpenguins)
 ```
 

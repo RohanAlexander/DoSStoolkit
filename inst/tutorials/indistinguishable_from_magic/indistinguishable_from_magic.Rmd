@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Indistinguishable from magic"
-date: "19 May 2021"
+date: "25 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -16,9 +16,9 @@ library(tidyverse)
 library(learnr)
 # tutorial_options(exercise.eval = FALSE)
 library(flair)
-library(gradethis)
+# library(gradethis)
 library(sortable)
-gradethis::gradethis_setup()
+# gradethis::gradethis_setup()
 # library(palmerpenguins)
 library(ggmap)
 ```

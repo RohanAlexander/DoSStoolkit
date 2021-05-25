@@ -1,7 +1,7 @@
 ---
 title: "DoSS Toolkit"
 subtitle: "Hello World!"
-date: "19 May 2021"
+date: "25 May 2021"
 output: 
   learnr::tutorial:
     allow_skip: true
@@ -14,9 +14,8 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, error = FALSE)
 library(learnr)
 # tutorial_options(exercise.eval = FALSE)
 library(tidyverse)
-library(gradethis)
-gradethis::gradethis_setup()
-
+# library(gradethis)
+# gradethis::gradethis_setup()
 ```
 
 
