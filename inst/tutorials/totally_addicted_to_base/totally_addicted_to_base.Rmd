@@ -94,7 +94,7 @@ Highlights:
 
 ### Arguments
 
-#### `mean()`
+#### mean()
 
 The `mean()` function takes the following as arguments:
 
@@ -106,7 +106,7 @@ The `mean()` function takes the following as arguments:
 You can read more about the arguments in the `mean()` function's documentation
 [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/mean).
 
-#### `median()`
+#### median()
 
 The `median()` function takes the following as arguments:
 
@@ -118,7 +118,7 @@ The `median()` function takes the following as arguments:
 You can read more about the arguments in the `median()` function's documentation
 [here](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/median).
 
-#### `sd()`
+#### sd()
 
 The `sd()` function takes the following as arguments:
 
@@ -130,7 +130,7 @@ The `sd()` function takes the following as arguments:
 You can read more about the arguments in the `sd()` function's documentation
 [here](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/sd).
 
-#### `summary()`
+#### summary()
 
 The `summary()` function takes the following as arguments:
 
@@ -141,7 +141,7 @@ The `summary()` function takes the following as arguments:
 You can read more about the arguments in the `summary()` function's documentation
 [here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/summary).
 
-#### `lm()`
+#### lm()
 
 The `lm()` function takes the following as arguments:
 
@@ -259,38 +259,6 @@ We can view the results from the model again using `summary()`.
 ```{r summary-statistics-7}
 summary(simple_regression)
 ```
-
-#### Example: Combining `mean()`, `median()`, and `lm()`
-
-We can even use `mean()` and `median()` together with `lm()`. For example, we can make
-predictions for the mean and median value of an independent variable.
-
-```{r mean-lm, include = FALSE}
-predict(simple_regression,
-        data.frame(pct_capacity = mean(broadway$pct_capacity),
-                   na.rm = TRUE))
-```
-
-```{r mean-lm-1, echo = FALSE}
-decorate("mean-lm") %>%
-  flair("mean") %>%
-  knit_print.with_flair()
-```
-
-```{r median-lm, include = FALSE}
-predict(simple_regression,
-        data.frame(pct_capacity = median(broadway$pct_capacity),
-                   na.rm = TRUE))
-```
-```{r median-lm-1, echo = FALSE}
-decorate("median-lm") %>%
-  flair("median") %>%
-  knit_print.with_flair()
-```
-
-Notice that this code uses the `predict()` function which is not covered in this tutorial,
-but you can learn more about it in the documentation provided
-[here](https://www.rdocumentation.org/packages/raster/versions/3.4-5/topics/predict).
 
 ### Exercises
 
