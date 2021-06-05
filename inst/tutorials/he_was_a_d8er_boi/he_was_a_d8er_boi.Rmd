@@ -3540,8 +3540,7 @@ the cleaned data from above in an object called clean, and then apply the new cl
 step to it.
 
 ```{r janitor-exercise-2, exercise = TRUE}
-clean <- 
-clean %>%
+
 ```
 
 ```{r janitor-exercise-2-solution, exercise = FALSE}
